@@ -1,10 +1,14 @@
-import 'package:deep_connections/services/auth.dart';
 import 'package:deep_connections/screens/components/BaseScreen.dart';
+import 'package:deep_connections/screens/components/form/FieldInput.dart';
+import 'package:deep_connections/services/auth.dart';
 import 'package:flutter/material.dart';
+
 import '../../config/constants.dart';
+import '../components/form/DcTextFormField.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function navigateRegister;
+
   const LoginScreen({super.key, required this.navigateRegister});
 
   @override
@@ -12,10 +16,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthService _auth = AuthService();
+  final _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
-  String email = "";
-  String password = "";
+  final email = EmailInput();
+  var password = PasswordInput();
 
   @override
   Widget build(BuildContext context) {
@@ -32,30 +37,26 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  onChanged: (val) {
-                    setState(() {
-                      email = val;
-                    });
-                  },
+                DcTextFormField(
+                  fieldInput: email,
                 ),
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  obscureText: true,
-                  onChanged: (val) {
-                    setState(() {
-                      password = val;
-                    });
-                  },
+                DcTextFormField(
+                  fieldInput: password,
+                  textInputAction: TextInputAction.done,
                 ),
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   child: const Text("Sign in"),
                   onPressed: () async {
-                    _auth.loginWithEmail(email: email, password: password);
+                    if (_formKey.currentState?.validate() == true) {
+                      _auth.loginWithEmail(
+                          email: email.value, password: password.value);
+                    }
                   },
                 )
               ],

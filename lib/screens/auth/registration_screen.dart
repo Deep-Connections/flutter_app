@@ -1,7 +1,10 @@
-import 'package:deep_connections/services/auth.dart';
 import 'package:deep_connections/screens/components/BaseScreen.dart';
+import 'package:deep_connections/screens/components/form/DcTextFormField.dart';
+import 'package:deep_connections/services/auth.dart';
 import 'package:flutter/material.dart';
+
 import '../../config/constants.dart';
+import '../components/form/FieldInput.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final Function navigateLogin;
@@ -15,8 +18,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final AuthService _auth = AuthService();
 
-  String email = "";
-  String password = "";
+  final email = EmailInput();
+  final password = PasswordInput();
 
   @override
   Widget build(BuildContext context) {
@@ -36,27 +39,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  onChanged: (val) {
-                    setState(() {
-                      email = val;
-                    });
-                  },
-                ),
+                DcTextFormField(fieldInput: email),
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  obscureText: true,
-                  onChanged: (val) {
-                    setState(() {
-                      password = val;
-                    });
-                  },
+                DcTextFormField(
+                  fieldInput: password,
+                  textInputAction: TextInputAction.done,
                 ),
                 const SizedBox(height: 20.0),
                 ElevatedButton(
                   child: const Text("Register"),
                   onPressed: () async {
-                    _auth.registerWithEmail(email: email, password: password);
+                    _auth.registerWithEmail(
+                        email: email.value, password: password.value);
                   },
                 )
               ],
