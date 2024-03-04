@@ -1,5 +1,6 @@
 import 'package:deep_connections/utils/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import '../models/User.dart';
 
 class AuthService {
@@ -34,6 +35,14 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       print(e.toString());
       return null;
+    }
+  }
+
+  Future sendPasswordResetEmail({required String email}) async {
+    try {
+      return await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
     }
   }
 

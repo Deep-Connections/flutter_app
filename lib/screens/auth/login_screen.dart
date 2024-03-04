@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../config/constants.dart';
 import '../components/form/DcTextFormField.dart';
+import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final void Function() navigateRegister;
@@ -21,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final email = EmailInput();
-  var password = PasswordInput();
+  final password = PasswordInput();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       email: email.value, password: password.value);
                 }
               },
-            )
+            ),
+            TextButton(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ForgotPasswordScreen())),
+                child: const Text("Forgot password?"))
           ],
         ),
       ),

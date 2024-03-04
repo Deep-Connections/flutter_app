@@ -21,9 +21,7 @@ abstract class TextFieldInput {
 
 class EmailInput extends TextFieldInput {
   EmailInput()
-      : super(
-            keyboardType: TextInputType.emailAddress,
-            placeholder: "Enter your email");
+      : super(keyboardType: TextInputType.emailAddress, placeholder: "Email");
 
   @override
   String? validator(String? value) {
@@ -38,7 +36,7 @@ class PasswordInput extends TextFieldInput {
   PasswordInput()
       : super(
             keyboardType: TextInputType.visiblePassword,
-            placeholder: "Enter your password");
+            placeholder: "Password");
 
   @override
   String? validator(String? value) {
