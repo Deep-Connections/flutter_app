@@ -1,3 +1,4 @@
+import 'package:deep_connections/services/error_handling.dart';
 import 'package:deep_connections/utils/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -10,40 +11,41 @@ class AuthService {
     return user?.let(DcUser.fromFirebaseUser);
   }
 
-  Future<DcUser?> loginWithEmail({
-    required String email,
-    required String password,
-  }) async {
+  Future<T?> handleAuthErrors<T>(Future<T> Function() callback) async {
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return _fromFirebaseUser(result.user);
+      return await callback();
     } on FirebaseAuthException catch (e) {
+      print(e.message);
+      MessageHandler.showError(e.message ?? 'An error occurred');
+    } catch (e) {
       print(e.toString());
-      return null;
+      MessageHandler.showError('An error occurred');
     }
+    return null;
   }
 
-  Future<DcUser?> registerWithEmail({
+  Future<UserCredential?> loginWithEmail({
     required String email,
     required String password,
   }) async {
-    try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      return _fromFirebaseUser(result.user);
-    } on FirebaseAuthException catch (e) {
-      print(e.toString());
-      return null;
-    }
+    return handleAuthErrors(() => _auth.signInWithEmailAndPassword(
+          email: email,
+          password: password,
+        ));
+  }
+
+  Future<UserCredential?> registerWithEmail({
+    required String email,
+    required String password,
+  }) async {
+    return handleAuthErrors(() => _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        ));
   }
 
   Future sendPasswordResetEmail({required String email}) async {
-    try {
-      return await _auth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      print(e.toString());
-    }
+    handleAuthErrors(() => _auth.sendPasswordResetEmail(email: email));
   }
 
   Stream<DcUser?> get userStream {
@@ -51,10 +53,6 @@ class AuthService {
   }
 
   Future signOut() async {
-    try {
-      return await _auth.signOut();
-    } catch (e) {
-      print(e.toString());
-    }
+    return handleAuthErrors(() => _auth.signOut());
   }
 }

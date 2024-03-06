@@ -2,6 +2,7 @@ import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/services/auth.dart';
+import 'package:deep_connections/services/error_handling.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/constants.dart';
@@ -56,7 +57,13 @@ class _LoginScreenState extends State<LoginScreen> {
             TextButton(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const ForgotPasswordScreen())),
-                child: const Text("Forgot password?"))
+                child: const Text("Forgot password?")),
+            ElevatedButton(
+              child: const Text("Test Error"),
+              onPressed: () async {
+                MessageHandler.showError("message");
+              },
+            ),
           ],
         ),
       ),
