@@ -1,11 +1,11 @@
-import 'package:deep_connections/screens/components/BaseScreen.dart';
-import 'package:deep_connections/screens/components/DcColumn.dart';
-import 'package:deep_connections/screens/components/form/FieldInput.dart';
+import 'package:deep_connections/screens/components/base_screen.dart';
+import 'package:deep_connections/screens/components/dc_column.dart';
+import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/services/auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/constants.dart';
-import '../components/form/DcTextFormField.dart';
+import '../components/form/dc_text_form_field.dart';
 import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {

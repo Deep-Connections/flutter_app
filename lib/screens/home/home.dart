@@ -1,5 +1,5 @@
+import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/services/auth.dart';
-import 'package:deep_connections/screens/components/BaseScreen.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {

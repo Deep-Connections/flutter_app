@@ -1,4 +1,4 @@
-import 'package:deep_connections/models/User.dart';
+import 'package:deep_connections/models/user.dart';
 import 'package:deep_connections/screens/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

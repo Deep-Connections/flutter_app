@@ -1,7 +1,7 @@
-import 'package:deep_connections/screens/components/BaseScreen.dart';
-import 'package:deep_connections/screens/components/DcColumn.dart';
-import 'package:deep_connections/screens/components/form/DcTextFormField.dart';
-import 'package:deep_connections/screens/components/form/FieldInput.dart';
+import 'package:deep_connections/screens/components/base_screen.dart';
+import 'package:deep_connections/screens/components/dc_column.dart';
+import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
+import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/auth.dart';
