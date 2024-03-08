@@ -5,13 +5,17 @@ abstract class TextFieldInput {
   final int? maxLength;
   final String? placeholder;
   final TextInputAction? textInputAction;
+  final bool obscureText;
+
   final TextEditingController controller = TextEditingController();
+  final ValueNotifier<bool> enabled = ValueNotifier(true);
 
   TextFieldInput({
     required this.keyboardType,
     this.maxLength,
     this.placeholder,
     this.textInputAction,
+    this.obscureText = false,
   });
 
   String? validator(String? value) => null;
@@ -36,7 +40,8 @@ class PasswordInput extends TextFieldInput {
   PasswordInput()
       : super(
             keyboardType: TextInputType.visiblePassword,
-            placeholder: "Password");
+            placeholder: "Password",
+            obscureText: true);
 
   @override
   String? validator(String? value) {

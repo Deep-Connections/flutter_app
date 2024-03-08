@@ -1,10 +1,12 @@
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
+import 'package:deep_connections/screens/components/form/form_button.dart';
 import 'package:deep_connections/services/auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/constants.dart';
+import '../components/form/button_input.dart';
 import '../components/form/field_input.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -18,10 +20,10 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final AuthService _auth = AuthService();
-  final _formKey = GlobalKey<FormState>();
 
   final email = EmailInput();
   final password = PasswordInput();
+  late final buttonInput = ButtonInput(fields: [email, password]);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             label: const Text("Sign in"))
       ],
       body: Form(
-        key: _formKey,
+        key: buttonInput.formKey,
         child: DcColumn(
           children: [
             const SizedBox(height: BASE_PADDING),
@@ -43,15 +45,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               fieldInput: password,
               textInputAction: TextInputAction.done,
             ),
-            ElevatedButton(
-              child: const Text("Register"),
-              onPressed: () async {
-                if (_formKey.currentState?.validate() == true) {
+            FormButton(
+                text: "Register",
+                buttonInput: buttonInput,
+                action: () async {
                   _auth.registerWithEmail(
                       email: email.value, password: password.value);
-                }
-              },
-            )
+                })
           ],
         ),
       ),
