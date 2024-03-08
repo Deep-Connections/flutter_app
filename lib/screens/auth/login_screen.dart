@@ -5,6 +5,7 @@ import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
 import 'package:deep_connections/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../config/constants.dart';
 import '../components/form/dc_text_form_field.dart';
@@ -28,13 +29,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return BaseScreen(
-      title: 'Sign in to $APP_NAME',
+      title: loc.login_title,
       actions: [
         TextButton.icon(
             onPressed: widget.navigateRegister,
             icon: const Icon(Icons.person),
-            label: const Text("Register"))
+            label: Text(loc.login_registerLink))
       ],
       body: Form(
         key: buttonInput.formKey,
@@ -47,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
               textInputAction: TextInputAction.done,
             ),
             FormButton(
-              text: "Sign in",
+              text: loc.login_loginButton,
               buttonInput: buttonInput,
               action: () async {
                 _auth.loginWithEmail(
@@ -57,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextButton(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const ForgotPasswordScreen())),
-                child: const Text("Forgot password?")),
+                child: Text(loc.login_forgotPasswordLink)),
           ],
         ),
       ),

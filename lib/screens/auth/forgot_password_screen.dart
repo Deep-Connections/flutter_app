@@ -3,6 +3,7 @@ import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../services/auth.dart';
 
@@ -20,10 +21,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return BaseScreen(
-      title: "Reset Password",
+      title: loc.forgotPassword_title,
       body: DcColumn(children: [
-        const Text("Enter your email to reset your password"),
+        Text(loc.forgotPassword_infoText),
         DcTextFormField(fieldInput: email, key: _formKey),
         ElevatedButton(
           onPressed: () async {
@@ -31,7 +33,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               _auth.sendPasswordResetEmail(email: email.value);
             }
           },
-          child: const Text("Reset Password"),
+          child: Text(loc.forgotPassword_resetButton),
         )
       ]),
     );

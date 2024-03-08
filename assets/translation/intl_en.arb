@@ -1,0 +1,14 @@
+{
+  "input_emailPlaceholder": "Email",
+  "input_passwordPlaceholder": "Password",
+  "login_loginButton": "Sign in",
+  "login_title": "Sign in to your account",
+  "login_forgotPasswordLink": "Forgot password?",
+  "login_registerLink": "Sign up",
+  "register_title": "Create an account",
+  "register_loginLink": "Sign in",
+  "register_registerButton": "Sign up",
+  "forgotPassword_title": "Reset password",
+  "forgotPassword_resetButton": "Reset password",
+  "forgotPassword_infoText": "Enter your email to reset your password"
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../global.dart';
+
 abstract class TextFieldInput {
   final TextInputType keyboardType;
   final int? maxLength;
@@ -25,7 +27,9 @@ abstract class TextFieldInput {
 
 class EmailInput extends TextFieldInput {
   EmailInput()
-      : super(keyboardType: TextInputType.emailAddress, placeholder: "Email");
+      : super(
+            keyboardType: TextInputType.emailAddress,
+            placeholder: Global.loc.input_emailPlaceholder);
 
   @override
   String? validator(String? value) {
@@ -39,8 +43,8 @@ class EmailInput extends TextFieldInput {
 class PasswordInput extends TextFieldInput {
   PasswordInput()
       : super(
-            keyboardType: TextInputType.visiblePassword,
-            placeholder: "Password",
+      keyboardType: TextInputType.visiblePassword,
+            placeholder: Global.loc.input_passwordPlaceholder,
             obscureText: true);
 
   @override

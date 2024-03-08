@@ -4,6 +4,7 @@ import 'package:deep_connections/screens/components/form/dc_text_form_field.dart
 import 'package:deep_connections/screens/components/form/form_button.dart';
 import 'package:deep_connections/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../config/constants.dart';
 import '../components/form/button_input.dart';
@@ -27,13 +28,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return BaseScreen(
-      title: 'Sign up to $APP_NAME',
+      title: loc.register_title,
       actions: [
         TextButton.icon(
             onPressed: widget.navigateLogin,
             icon: const Icon(Icons.person),
-            label: const Text("Sign in"))
+            label: Text(loc.register_loginLink))
       ],
       body: Form(
         key: buttonInput.formKey,
@@ -46,7 +48,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               textInputAction: TextInputAction.done,
             ),
             FormButton(
-                text: "Register",
+                text: loc.register_registerButton,
                 buttonInput: buttonInput,
                 action: () async {
                   _auth.registerWithEmail(

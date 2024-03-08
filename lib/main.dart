@@ -5,9 +5,12 @@ import 'package:deep_connections/services/auth.dart';
 import 'package:deep_connections/services/error_handling.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'config/constants.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +29,11 @@ class App extends StatelessWidget {
       value: AuthService().userStream,
       child: MaterialApp(
         scaffoldMessengerKey: globalSnackBarMessengerKey,
+        navigatorKey: navigatorKey,
         title: APP_NAME,
         theme: theme(),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
         home: const Wrapper(),
       ),
     );
