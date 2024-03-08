@@ -10,10 +10,10 @@ class FormButton extends StatefulWidget {
       {super.key,
       required String text,
       required ButtonInput buttonInput,
-      required Function action})
+      required Function actionIfValid})
       : _text = text,
         _buttonInput = buttonInput,
-        _action = action;
+        _action = actionIfValid;
 
   @override
   State<FormButton> createState() => _FormButtonState();

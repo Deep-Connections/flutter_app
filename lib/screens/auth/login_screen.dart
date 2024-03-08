@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
             FormButton(
               text: loc.login_loginButton,
               buttonInput: buttonInput,
-              action: () async {
+              actionIfValid: () async {
                 _auth.loginWithEmail(
                     email: email.value, password: password.value);
               },

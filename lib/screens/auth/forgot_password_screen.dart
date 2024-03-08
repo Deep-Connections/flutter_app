@@ -34,7 +34,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         FormButton(
             text: loc.forgotPassword_resetButton,
             buttonInput: buttonInput,
-            action: () async {
+            actionIfValid: () async {
               _auth.sendPasswordResetEmail(email: email.value);
             })
       ]),

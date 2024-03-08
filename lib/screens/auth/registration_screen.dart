@@ -50,7 +50,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             FormButton(
                 text: loc.register_registerButton,
                 buttonInput: buttonInput,
-                action: () async {
+                actionIfValid: () async {
                   _auth.registerWithEmail(
                       email: email.value, password: password.value);
                 })
