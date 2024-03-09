@@ -1,6 +1,8 @@
 {
   "input_emailPlaceholder": "Email",
+  "input_emailValidError": "Please enter a valid email",
   "input_passwordPlaceholder": "Password",
+  "input_passwordLengthError": "Password must be at least 8 characters",
   "login_loginButton": "Sign in",
   "login_title": "Sign in to your account",
   "login_forgotPasswordLink": "Forgot password?",

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../../global.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 abstract class TextFieldInput {
   final TextInputType keyboardType;
   final int? maxLength;
-  final String? placeholder;
+  final String? Function(AppLocalizations)? getPlaceholder;
   final TextInputAction? textInputAction;
   final bool obscureText;
 
@@ -15,12 +14,12 @@ abstract class TextFieldInput {
   TextFieldInput({
     required this.keyboardType,
     this.maxLength,
-    this.placeholder,
+    this.getPlaceholder,
     this.textInputAction,
     this.obscureText = false,
   });
 
-  String? validator(String? value) => null;
+  String? validator(String? value, AppLocalizations loc) => null;
 
   String get value => controller.text;
 }
@@ -29,12 +28,12 @@ class EmailInput extends TextFieldInput {
   EmailInput()
       : super(
             keyboardType: TextInputType.emailAddress,
-            placeholder: Global.loc.input_emailPlaceholder);
+            getPlaceholder: (loc) => loc.input_emailPlaceholder);
 
   @override
-  String? validator(String? value) {
+  String? validator(String? value, AppLocalizations loc) {
     if (value == null || !value.contains('@') || !value.contains('.')) {
-      return 'Please enter a valid email';
+      return loc.input_emailValidError;
     }
     return null;
   }
@@ -43,14 +42,14 @@ class EmailInput extends TextFieldInput {
 class PasswordInput extends TextFieldInput {
   PasswordInput()
       : super(
-      keyboardType: TextInputType.visiblePassword,
-            placeholder: Global.loc.input_passwordPlaceholder,
+            keyboardType: TextInputType.visiblePassword,
+            getPlaceholder: (loc) => loc.input_passwordPlaceholder,
             obscureText: true);
 
   @override
-  String? validator(String? value) {
+  String? validator(String? value, AppLocalizations loc) {
     if (value == null || value.length < 8) {
-      return 'Please enter a password with 8+ characters';
+      return loc.input_passwordLengthError;
     }
     return null;
   }
