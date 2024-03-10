@@ -3,11 +3,11 @@ import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/button_input.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
-import 'package:deep_connections/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../config/constants.dart';
+import '../../services/auth/auth_service.dart';
 import '../components/form/dc_text_form_field.dart';
 import 'forgot_password_screen.dart';
 

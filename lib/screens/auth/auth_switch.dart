@@ -3,7 +3,7 @@ import 'package:deep_connections/screens/auth/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/injectable.dart';
-import '../../services/auth.dart';
+import '../../services/auth/auth_service.dart';
 
 class AuthSwitch extends StatefulWidget {
   const AuthSwitch({super.key});

@@ -36,3 +36,11 @@ class ExceptionRes<T> extends Response<T> {
   @override
   String? getUiErrOrNull() => uiMessage;
 }
+
+Response<T> createResponse<T>(T? value) {
+  if (value != null) {
+    return SuccessRes<T>(value);
+  } else {
+    return ErrorRes<T>("createResponse: value is null");
+  }
+}
