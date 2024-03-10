@@ -12,11 +12,10 @@ import '../components/form/dc_text_form_field.dart';
 import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  final void Function() navigateRegister;
+  final void Function()? navigateRegister;
   final AuthService auth;
 
-  const LoginScreen(
-      {super.key, required this.navigateRegister, required this.auth});
+  const LoginScreen({super.key, this.navigateRegister, required this.auth});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
