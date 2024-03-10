@@ -12,16 +12,16 @@ import '../components/form/field_input.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final void Function() navigateLogin;
+  final AuthService auth;
 
-  const RegistrationScreen({super.key, required this.navigateLogin});
+  const RegistrationScreen(
+      {super.key, required this.navigateLogin, required this.auth});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final AuthService _auth = AuthService();
-
   final email = EmailInput();
   final password = PasswordInput();
   late final buttonInput = ButtonInput(fields: [email, password]);
@@ -51,7 +51,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 text: loc.register_registerButton,
                 buttonInput: buttonInput,
                 actionIfValid: () async {
-                  _auth.registerWithEmail(
+                  widget.auth.registerWithEmail(
                       email: email.value, password: password.value);
                 })
           ],

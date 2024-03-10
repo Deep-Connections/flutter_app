@@ -1,6 +1,9 @@
-import 'package:deep_connections/screens/auth/registration_screen.dart';
 import 'package:deep_connections/screens/auth/login_screen.dart';
+import 'package:deep_connections/screens/auth/registration_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../../config/injectable.dart';
+import '../../services/auth.dart';
 
 class AuthSwitch extends StatefulWidget {
   const AuthSwitch({super.key});
@@ -10,6 +13,7 @@ class AuthSwitch extends StatefulWidget {
 }
 
 class _AuthSwitchState extends State<AuthSwitch> {
+  final auth = getIt<AuthService>();
   bool showSignIn = true;
 
   void switchView() {
@@ -21,9 +25,9 @@ class _AuthSwitchState extends State<AuthSwitch> {
   @override
   Widget build(BuildContext context) {
     if (showSignIn) {
-      return LoginScreen(navigateRegister: switchView);
+      return LoginScreen(navigateRegister: switchView, auth: auth);
     } else {
-      return RegistrationScreen(navigateLogin: switchView);
+      return RegistrationScreen(navigateLogin: switchView, auth: auth);
     }
   }
 }

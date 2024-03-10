@@ -1,9 +1,11 @@
 import 'package:deep_connections/services/error_handling.dart';
 import 'package:deep_connections/utils/helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:injectable/injectable.dart';
 
 import '../models/user.dart';
 
+@singleton
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -29,9 +31,9 @@ class AuthService {
     required String password,
   }) async {
     return handleAuthErrors(() => _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        ));
+      email: email,
+      password: password,
+    ));
   }
 
   Future<UserCredential?> registerWithEmail({
@@ -39,9 +41,9 @@ class AuthService {
     required String password,
   }) async {
     return handleAuthErrors(() => _auth.createUserWithEmailAndPassword(
-          email: email,
-          password: password,
-        ));
+      email: email,
+      password: password,
+    ));
   }
 
   Future sendPasswordResetEmail({required String email}) async {

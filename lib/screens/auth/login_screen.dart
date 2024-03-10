@@ -13,16 +13,16 @@ import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final void Function() navigateRegister;
+  final AuthService auth;
 
-  const LoginScreen({super.key, required this.navigateRegister});
+  const LoginScreen(
+      {super.key, required this.navigateRegister, required this.auth});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _auth = AuthService();
-
   final email = EmailInput();
   final password = PasswordInput();
   late final buttonInput = ButtonInput(fields: [email, password]);
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               text: loc.login_loginButton,
               buttonInput: buttonInput,
               actionIfValid: () async {
-                _auth.loginWithEmail(
+                widget.auth.loginWithEmail(
                     email: email.value, password: password.value);
               },
             ),

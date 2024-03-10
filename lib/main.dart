@@ -9,12 +9,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'config/constants.dart';
+import 'config/injectable.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  configureDependencies();
 
   runApp(const App());
 }
@@ -26,7 +28,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider.value(
       initialData: null,
-      value: AuthService().userStream,
+      value: getIt<AuthService>().userStream,
       child: MaterialApp(
         scaffoldMessengerKey: globalSnackBarMessengerKey,
         navigatorKey: navigatorKey,
