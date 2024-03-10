@@ -1,4 +1,4 @@
-name: Flutter
+name: Flutter Test
 
 on:
   push:
@@ -27,20 +27,3 @@ jobs:
 
       - name: Run tests
         run: flutter test
-
-      - name: Build Web
-        run: flutter build web --release
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: flutter-web-build
-          path: build/web/**
-
-      - name: Deploy to Firebase Hosting
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: ${{ vars.FIREBASE_PROJECT_ID }}
