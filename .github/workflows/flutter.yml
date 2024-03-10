@@ -30,3 +30,9 @@ jobs:
 
       - name: Build Web
         run: flutter build web
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: flutter-web-build
+          path: build/web/**
