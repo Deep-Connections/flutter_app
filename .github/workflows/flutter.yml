@@ -14,28 +14,28 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.16.9'
+          cache: true
+          cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+          cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+          pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
+          pub-cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+
       - name: Install dependencies
         run: flutter pub get
-      - name: Cache Flutter dependencies
-        uses: actions/upload-artifact@v2
-        with:
-          name: flutter-dependencies
-          path: |
-            ${{ github.workspace }}/.dart_tool
-            ${{ github.workspace }}/pubspec.lock
 
   test:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v2
-        with:
-          name: flutter-dependencies
-          path: ${{ github.workspace }}
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.16.9'
+          cache: true
+          cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+          cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+          pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
+          pub-cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
       - name: Run tests
         run: flutter test
 
@@ -46,13 +46,16 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v2
-        with:
-          name: flutter-dependencies
-          path: ${{ github.workspace }}
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.16.9'
+          with:
+            flutter-version: '3.16.9'
+            cache: true
+            cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+            cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+            pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
+            pub-cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
 
       - name: Flutter Build Web
         run: flutter build web --release
