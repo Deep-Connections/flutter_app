@@ -5,23 +5,24 @@ import '../../services/mock_auth_service.dart';
 import '../../test_extensions.dart';
 
 void main() {
-  testWidgets('Login screen test ', (WidgetTester tester) async {
+  testWidgets('Test login screen with wrong and correct credentials ',
+      (WidgetTester tester) async {
     final auth = MockAuthService();
 
     final loc = await tester
         .pumpLocalizedWidget(LoginScreen(navigateRegister: () {}, auth: auth));
     expect(find.text(loc.login_title), findsOneWidget);
-    expect(find.text(loc.input_emailValidError), findsNothing);
-    expect(find.text(loc.input_passwordLengthError), findsNothing);
+    expect(find.text(loc.auth_emailInvalidError), findsNothing);
+    expect(find.text(loc.login_wrongCredentialsError), findsNothing);
 
     // click login button without entering anything
     await tester.tap(find.text(loc.login_loginButton));
     await tester.pumpAndSettle();
-    expect(find.text(loc.input_emailValidError), findsOneWidget);
-    expect(find.text(loc.input_passwordLengthError), findsOneWidget);
+    expect(find.text(loc.auth_emailInvalidError), findsOneWidget);
+    expect(find.text(loc.auth_passwordLengthError), findsOneWidget);
 
     expect(find.text(loc.input_emailPlaceholder), findsOneWidget);
-    expect(find.text(loc.input_passwordPlaceholder), findsOneWidget);
+    expect(find.text(loc.auth_passwordLengthError), findsOneWidget);
 
     // enter wrong email and password
     await tester.enterText(
@@ -34,13 +35,13 @@ void main() {
     await tester.tap(find.text(loc.login_loginButton));
     await tester.pumpAndSettle();
 
-    // todo check that error message is shown
+    expect(find.text(loc.login_wrongCredentialsError), findsOneWidget);
     expect(auth.isSignedIn, false);
 
     // enter correct email and password
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_emailPlaceholder),
-        CORRECT_EMAIL);
+        CORRECT_EMAIL + " "); // Check that email is trimmed
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_passwordPlaceholder),
         CORRECT_PASSWORD);

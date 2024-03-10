@@ -1,9 +1,10 @@
 import 'package:deep_connections/models/response.dart';
 import 'package:deep_connections/models/user.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
+import 'package:deep_connections/utils/localization_helper.dart';
 
 const CORRECT_EMAIL = 'correct@email.com';
-const CORRECT_PASSWORD = 'correct123.';
+const CORRECT_PASSWORD = 'correct123. ';
 
 class MockAuthService implements AuthService {
   var isSignedIn = false;
@@ -18,7 +19,8 @@ class MockAuthService implements AuthService {
         uid: '1',
       )));
     } else {
-      return Future.value(ExceptionRes(Exception('Invalid credentials')));
+      return Future.value(ExceptionRes(Exception('Invalid credentials'),
+          uiMessage: LocKey((loc) => loc.login_wrongCredentialsError)));
     }
   }
 

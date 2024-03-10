@@ -6,11 +6,14 @@ import 'field_input.dart';
 class DcTextFormField extends StatefulWidget {
   final TextFieldInput fieldInput;
   final TextInputAction textInputAction;
+  final String? error;
 
-  const DcTextFormField({Key? key,
+  const DcTextFormField({
+    Key? key,
     required this.fieldInput,
-    this.textInputAction = TextInputAction.next})
-      : super(key: key);
+    this.textInputAction = TextInputAction.next,
+    this.error,
+  }) : super(key: key);
 
   @override
   State<DcTextFormField> createState() => _DcTextFormFieldState();
@@ -28,9 +31,11 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
           keyboardType: widget.fieldInput.keyboardType,
           maxLength: widget.fieldInput.maxLength,
           decoration: InputDecoration(
-            hintText: widget.fieldInput.getPlaceholder?.call(loc),
+            hintText: widget.fieldInput.placeholder?.localize(loc),
+            errorText: widget.error,
           ),
-          validator: (value) => widget.fieldInput.validator(value, loc),
+          validator: (value) => widget.fieldInput
+              .validator(widget.fieldInput.preProcess(value), loc),
           textInputAction: widget.textInputAction,
           enabled: enabled,
           obscureText: widget.fieldInput.obscureText,

@@ -25,6 +25,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final email = EmailInput();
   final password = PasswordInput();
   late final buttonInput = ButtonInput(fields: [email, password]);
+  String? apiError;
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +45,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             const SizedBox(height: BASE_PADDING),
             DcTextFormField(fieldInput: email),
             DcTextFormField(
-              fieldInput: password,
-              textInputAction: TextInputAction.done,
-            ),
+                fieldInput: password,
+                textInputAction: TextInputAction.done,
+                error: apiError),
             FormButton(
                 text: loc.register_registerButton,
                 buttonInput: buttonInput,
                 actionIfValid: () async {
-                  widget.auth.registerWithEmail(
+                  final response = await widget.auth.registerWithEmail(
                       email: email.value, password: password.value);
+                  setState(() {
+                    apiError = response.getUiErrOrNull(loc);
+                  });
                 })
           ],
         ),

@@ -1,7 +1,10 @@
+import 'package:deep_connections/utils/localization_helper.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 abstract class Response<T> {
   T? getOrNull() => null;
 
-  String? getUiErrOrNull() => null;
+  String? getUiErrOrNull(AppLocalizations loc) => null;
 
   bool get isSuccess => this is SuccessRes<T>;
 
@@ -19,22 +22,22 @@ class SuccessRes<T> extends Response<T> {
 
 class ErrorRes<T> extends Response<T> {
   final String errorMessage;
-  final String? uiMessage;
+  LocKey? uiMessage = DefaultError;
 
   ErrorRes(this.errorMessage, {this.uiMessage});
 
   @override
-  String? getUiErrOrNull() => uiMessage;
+  String? getUiErrOrNull(AppLocalizations loc) => uiMessage?.localize(loc);
 }
 
 class ExceptionRes<T> extends Response<T> {
   final Exception exception;
-  final String? uiMessage;
+  LocKey? uiMessage = DefaultError;
 
   ExceptionRes(this.exception, {this.uiMessage});
 
   @override
-  String? getUiErrOrNull() => uiMessage;
+  String? getUiErrOrNull(AppLocalizations loc) => uiMessage?.localize(loc);
 }
 
 Response<T> createResponse<T>(T? value) {

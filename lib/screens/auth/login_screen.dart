@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final email = EmailInput();
   final password = PasswordInput();
   late final buttonInput = ButtonInput(fields: [email, password]);
+  String? apiError;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +47,17 @@ class _LoginScreenState extends State<LoginScreen> {
             DcTextFormField(
               fieldInput: password,
               textInputAction: TextInputAction.done,
+              error: apiError,
             ),
             FormButton(
               text: loc.login_loginButton,
               buttonInput: buttonInput,
               actionIfValid: () async {
-                widget.auth.loginWithEmail(
+                final response = await widget.auth.loginWithEmail(
                     email: email.value, password: password.value);
+                setState(() {
+                  apiError = response.getUiErrOrNull(loc);
+                });
               },
             ),
             TextButton(
