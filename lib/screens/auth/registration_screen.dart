@@ -11,11 +11,9 @@ import '../components/form/button_input.dart';
 import '../components/form/field_input.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  final void Function() navigateLogin;
   final AuthService auth;
 
-  const RegistrationScreen(
-      {super.key, required this.navigateLogin, required this.auth});
+  const RegistrationScreen({super.key, required this.auth});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -32,9 +30,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final loc = AppLocalizations.of(context);
     return BaseScreen(
       title: loc.register_title,
+      showBackButton: false,
       actions: [
         TextButton.icon(
-            onPressed: widget.navigateLogin,
+            onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.person),
             label: Text(loc.register_loginLink))
       ],

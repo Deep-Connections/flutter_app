@@ -1,8 +1,10 @@
+import 'package:deep_connections/screens/auth/registration_screen.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/button_input.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
+import 'package:deep_connections/utils/extensions/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -12,10 +14,9 @@ import '../components/form/dc_text_form_field.dart';
 import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  final void Function()? navigateRegister;
   final AuthService auth;
 
-  const LoginScreen({super.key, this.navigateRegister, required this.auth});
+  const LoginScreen({super.key, required this.auth});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -34,7 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
       title: loc.login_title,
       actions: [
         TextButton.icon(
-            onPressed: widget.navigateRegister,
+            onPressed: () =>
+                context.navigate(RegistrationScreen(auth: widget.auth)),
             icon: const Icon(Icons.person),
             label: Text(loc.login_registerLink))
       ],
@@ -61,8 +63,9 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
             TextButton(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ForgotPasswordScreen())),
+                onPressed: () {
+                  context.navigate(const ForgotPasswordScreen());
+                },
                 child: Text(loc.login_forgotPasswordLink)),
           ],
         ),
