@@ -9,8 +9,7 @@ void main() {
       (WidgetTester tester) async {
     final auth = MockAuthService();
 
-    final loc = await tester
-        .pumpLocalizedWidget(LoginScreen(navigateRegister: () {}, auth: auth));
+    final loc = await tester.pumpLocalizedWidget(LoginScreen(auth: auth));
     expect(find.text(loc.login_title), findsOneWidget);
     expect(find.text(loc.auth_emailInvalidError), findsNothing);
     expect(find.text(loc.login_wrongCredentialsError), findsNothing);
