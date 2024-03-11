@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'field_input.dart';
 
 class DcTextFormField extends StatefulWidget {
-  final TextFieldInput fieldInput;
+  final FieldInput fieldInput;
   final TextInputAction textInputAction;
   final String? error;
 
@@ -30,6 +30,7 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
           controller: widget.fieldInput.controller,
           keyboardType: widget.fieldInput.keyboardType,
           maxLength: widget.fieldInput.maxLength,
+          inputFormatters: widget.fieldInput.inputFormatter,
           decoration: InputDecoration(
             hintText: widget.fieldInput.placeholder?.localize(loc),
             errorText: widget.error,

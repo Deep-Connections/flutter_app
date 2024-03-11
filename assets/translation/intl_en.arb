@@ -1,11 +1,13 @@
 {
   "general_error": "An error occurred",
+  "general_submitButton": "Submit",
   "auth_emailInvalidError": "Please enter a valid email",
   "auth_passwordLengthError": "Password must be at least 8 characters long",
   "login_userDisabledError": "Your account is currently unavailable. Please contact support for assistance.",
   "login_wrongCredentialsError": "The email or password you entered is incorrect.",
   "register_emailExistsError": "An account with this email already exists.",
   "register_passwordWeakError": "The provided password is too weak. Please try again with a stronger password.",
+  "profile_sizeError": "Please provide your height in centimeters, between 50 and 250 cm.",
   "forgotPassword_success": "An email with instructions to reset your password has been sent to you.",
   "forgotPassword_emailNotFoundError": "No account with this email was found.",
   "input_emailPlaceholder": "Email",
@@ -19,5 +21,7 @@
   "register_registerButton": "Sign up",
   "forgotPassword_title": "Reset password",
   "forgotPassword_resetButton": "Reset password",
-  "forgotPassword_infoText": "Enter your email to reset your password"
+  "forgotPassword_infoText": "Enter your email to reset your password",
+  "profile_sizeTitle": "Enter your height",
+  "profile_sizePlaceholder": "Your height in cm"
 }

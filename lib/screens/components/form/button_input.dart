@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class ButtonInput {
   bool _isLoading = false;
-  final List<TextFieldInput> _fields;
+  final List<FieldInput> _fields;
   final formKey = GlobalKey<FormState>();
 
-  ButtonInput({required List<TextFieldInput> fields}) : _fields = fields;
+  ButtonInput({required List<FieldInput> fields}) : _fields = fields;
 
   void setLoading(bool isLoading) {
     _isLoading = isLoading;
