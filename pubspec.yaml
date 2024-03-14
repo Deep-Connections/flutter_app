@@ -39,7 +39,7 @@ dependencies:
   firebase_auth: ^4.17.4
   cloud_firestore: ^4.15.8
   provider: ^6.1.1
-
+  json_annotation: ^4.8.0
 
   flutter_localizations:
     sdk: flutter
@@ -59,6 +59,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   build_runner: ^2.4.8
   injectable_generator: 2.3.0 # todo increase once library issue is fixed
+  json_serializable: ^6.6.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
