@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 abstract class FieldInput<T> {
-  final TextInputType keyboardType;
+  final TextInputType? keyboardType;
   final int? maxLength;
   final LocKey? placeholder;
   final List<TextInputFormatter>? inputFormatter;
@@ -14,7 +14,7 @@ abstract class FieldInput<T> {
   final ValueNotifier<bool> enabled = ValueNotifier(true);
 
   FieldInput({
-    required this.keyboardType,
+    this.keyboardType,
     this.maxLength,
     this.placeholder,
     this.inputFormatter,
@@ -35,7 +35,7 @@ abstract class FieldInput<T> {
 
 class TextFieldInput extends FieldInput<String> {
   TextFieldInput({
-    required TextInputType keyboardType,
+    TextInputType? keyboardType,
     LocKey? placeholder,
     List<TextInputFormatter>? inputFormatters,
     bool obscureText = false,
@@ -45,9 +45,6 @@ class TextFieldInput extends FieldInput<String> {
           obscureText: obscureText,
           inputFormatter: inputFormatters,
         );
-
-  @override
-  String? validator(String? value, AppLocalizations loc) => null;
 
   @override
   String convert(String value) => value;
@@ -113,7 +110,7 @@ class PasswordInput extends TextFieldInput {
 class HeightInput extends IntegerFieldInput {
   HeightInput()
       : super(
-            placeholder: LocKey((loc) => loc.profile_sizePlaceholder),
+      placeholder: LocKey((loc) => loc.input_sizePlaceholder),
             maxLength: 3);
 
   @override
@@ -124,7 +121,23 @@ class HeightInput extends IntegerFieldInput {
         size == null ||
         size < 50 ||
         size > 250) {
-      return loc.profile_sizeError;
+      return loc.input_sizeError;
+    }
+    return null;
+  }
+}
+
+class GenderInput extends TextFieldInput {
+  GenderInput()
+      : super(placeholder: LocKey((loc) => loc.input_genderPlaceholder));
+}
+
+class FirstNameInput extends TextFieldInput {
+  @override
+  String? validator(String? value, AppLocalizations loc) {
+    final RegExp emailRegex = RegExp(r'^[A-Za-z\s\-]+$');
+    if (value == null || !emailRegex.hasMatch(value)) {
+      return loc.input_firstNameError;
     }
     return null;
   }
