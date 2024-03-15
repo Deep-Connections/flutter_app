@@ -1,6 +1,6 @@
-import 'package:deep_connections/models/response.dart';
 import 'package:deep_connections/models/user.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
+import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 const CORRECT_EMAIL = 'correct@email.com';

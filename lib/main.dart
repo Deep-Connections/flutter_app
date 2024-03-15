@@ -2,7 +2,7 @@ import 'package:deep_connections/config/theme.dart';
 import 'package:deep_connections/firebase_options.dart';
 import 'package:deep_connections/screens/wrapper.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
-import 'package:deep_connections/services/error_handling.dart';
+import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

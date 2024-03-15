@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../models/response.dart';
+import 'response.dart';
 
 Future<Response<T>> handleFirebaseErrors<T>(
   Future<T> Function() callback,

@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_connections/services/user_exception.dart';
+import 'package:deep_connections/services/utils/user_exception.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../models/profile.dart';
-import '../../models/response.dart';
-import '../handle_firebase_errors.dart';
+import '../utils/handle_firebase_errors.dart';
+import '../utils/response.dart';
 
 const String _PROFILES_COLLECTION = 'profiles';
 
