@@ -7,18 +7,21 @@ part of 'profile.dart';
 // **************************************************************************
 
 Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
-      name: json['name'] as String,
-      gender: json['gender'] as String,
-      genderLookingFor: (json['genderLookingFor'] as List<dynamic>)
-          .map((e) => e as String)
+      uid: json['uid'] as String?,
+      name: json['name'] as String?,
+      gender: json['gender'] as String?,
+      genderLookingFor: (json['genderLookingFor'] as List<dynamic>?)
+          ?.map((e) => e as String)
           .toList(),
       dateOfBirth: json['dateOfBirth'] == null
           ? null
           : DateTime.parse(json['dateOfBirth'] as String),
-      height: json['height'] as int,
+      height: json['height'] as int?,
     );
 
-Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
+Map<String, dynamic> _$ProfileToJson(Profile instance) =>
+    <String, dynamic>{
+      'uid': instance.uid,
       'name': instance.name,
       'gender': instance.gender,
       'genderLookingFor': instance.genderLookingFor,

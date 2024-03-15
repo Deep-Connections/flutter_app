@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../models/user.dart';
-import '../../utils/localization_helper.dart';
+import '../../utils/loc_key.dart';
 
 @Singleton(as: AuthService)
 class FirebaseAuthService implements AuthService {

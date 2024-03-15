@@ -15,7 +15,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return LoginScreen(auth: getIt());
     } else {
-      return HeightProfileScreen();
+      return HeightProfileScreen(profileService: getIt());
     }
   }
 }
