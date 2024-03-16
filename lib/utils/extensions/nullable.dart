@@ -18,7 +18,7 @@
 extension LetExtension<T> on T? {
   R? let<R>(R Function(T it) operation) {
     if (this != null) {
-      return operation(this!);
+      return operation(this as T);
     }
     return null;
   }

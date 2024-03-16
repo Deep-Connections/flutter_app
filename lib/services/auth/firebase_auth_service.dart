@@ -1,12 +1,12 @@
-import 'package:deep_connections/models/response.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
-import 'package:deep_connections/services/error_handling.dart';
+import 'package:deep_connections/services/utils/error_handling.dart';
+import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../models/user.dart';
-import '../../utils/localization_helper.dart';
+import '../../utils/loc_key.dart';
 
 @Singleton(as: AuthService)
 class FirebaseAuthService implements AuthService {

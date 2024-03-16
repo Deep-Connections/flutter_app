@@ -16,7 +16,7 @@ class LocKey {
   /// This function is used to retrieve the localized string for a specific key from the `AppLocalizations` instance.
   final String Function(AppLocalizations loc) localize;
 
-  LocKey(this.localize);
+  const LocKey(this.localize);
 }
 
 final DefaultError = LocKey((loc) => loc.general_error);

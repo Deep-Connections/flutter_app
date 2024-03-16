@@ -1,6 +1,6 @@
 import 'package:deep_connections/models/user.dart';
 
-import '../../models/response.dart';
+import '../utils/response.dart';
 
 abstract class AuthService {
   Future<Response<DcUser>> loginWithEmail({

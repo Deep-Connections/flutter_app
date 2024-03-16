@@ -11,19 +11,18 @@ import '../components/form/button_input.dart';
 import '../components/form/dc_text_form_field.dart';
 import '../components/form/form_button.dart';
 
-class HeightProfileScreen extends StatefulWidget {
+class GenderProfileScreen extends StatefulWidget {
   final FirebaseProfileService profileService;
 
-  const HeightProfileScreen({super.key, required this.profileService});
+  const GenderProfileScreen({super.key, required this.profileService});
 
   @override
-  State<HeightProfileScreen> createState() => _HeightProfileScreenState();
+  State<GenderProfileScreen> createState() => _GenderProfileScreenState();
 }
 
-class _HeightProfileScreenState extends State<HeightProfileScreen> {
-  final height = HeightInput();
-  late final buttonInput = ButtonInput(fields: [height]);
-  String? apiError;
+class _GenderProfileScreenState extends State<GenderProfileScreen> {
+  final gender = GenderInput();
+  late final buttonInput = ButtonInput(fields: [gender]);
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +35,13 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
             children: [
               const SizedBox(height: BASE_PADDING),
               DcTextFormField(
-                  fieldInput: height,
-                  textInputAction: TextInputAction.done,
-                  error: apiError),
+                  fieldInput: gender, textInputAction: TextInputAction.done),
               FormButton(
                 text: loc.general_submitButton,
                 buttonInput: buttonInput,
                 actionIfValid: () async {
                   final response = await widget.profileService
-                      .updateProfile(Profile(height: height.value));
+                      .updateProfile(Profile(gender: gender.value));
                 },
               ),
             ],
