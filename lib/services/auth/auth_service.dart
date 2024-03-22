@@ -15,7 +15,5 @@ abstract class AuthService {
 
   Future sendPasswordResetEmail({required String email});
 
-  Stream<DcUser?> get userStream;
-
   Future signOut();
 }

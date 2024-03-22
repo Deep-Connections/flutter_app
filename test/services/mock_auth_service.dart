@@ -42,7 +42,4 @@ class MockAuthService implements AuthService {
     // TODO: implement signOut
     throw UnimplementedError();
   }
-
-  @override
-  Stream<DcUser?> get userStream => throw UnimplementedError();
 }

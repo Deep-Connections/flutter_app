@@ -113,11 +113,6 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Stream<DcUser?> get userStream {
-    return _auth.authStateChanges().map(_fromFirebaseUser);
-  }
-
-  @override
   Future signOut() async {
     return handleAuthErrors(() => _auth.signOut());
   }
