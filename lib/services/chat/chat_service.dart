@@ -1,22 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_connections/services/utils/user_exception.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:deep_connections/services/utils/firebase_doc_with_id.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../models/chat.dart';
 import '../firebase_constants.dart';
+import '../user/user_service.dart';
 
 @lazySingleton
 class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserService userService;
 
-  /*final BehaviorSubject<List<Chat>> _chatSubject =
-  BehaviorSubject<List<Chat>>.seeded([]);*/
+  ChatService(this.userService);
 
   Query<Map<String, dynamic>> _getChatRef() {
-    final currentUserId = _auth.currentUser?.uid;
-    if (currentUserId == null) throw UserNotFoundException();
+    final currentUserId = userService.userId;
     return _firestore
         .collection(Collection.chats)
         .where('participantIds', arrayContains: currentUserId);
@@ -24,7 +22,14 @@ class ChatService {
 
   Stream<List<Chat>> getChatStream() {
     return _getChatRef()
-        .snapshots()
-        .map((snap) => snap.docs.map((e) => Chat.fromJson(e.data())).toList());
+        .snapshots().map(
+        (snap) => snap.docs.map((doc) => Chat.fromJson(doc.withId())).toList());
+  }
+
+  Future<void> createChat(String otherUserId) async {
+    final chat = Chat(
+      participantIds: [userService.userId, otherUserId],
+    );
+    await _firestore.collection(Collection.chats).add(chat.toJson());
   }
 }

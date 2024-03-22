@@ -5,7 +5,7 @@ part 'chat.g.dart';
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class Chat {
   String? id;
-  List<String>? participantIds;
+  final List<String>? participantIds;
 
   Chat({this.id, this.participantIds});
 
