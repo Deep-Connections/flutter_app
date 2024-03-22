@@ -19,8 +19,7 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
       height: json['height'] as int?,
     );
 
-Map<String, dynamic> _$ProfileToJson(Profile instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
       'uid': instance.uid,
       'name': instance.name,
       'gender': instance.gender,
