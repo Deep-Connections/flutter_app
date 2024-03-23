@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import '../../config/injectable.dart';
 
 class Home extends StatelessWidget {
-  Home({super.key});
+  final VoidCallback navigateCallback;
+
+  Home({super.key, required this.navigateCallback});
 
   final AuthService _auth = getIt<AuthService>();
 
@@ -13,10 +15,14 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScreen(
         title: "Home",
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await _auth.signOut();
+              },
+              icon: const Icon(Icons.logout))
+        ],
         body: ElevatedButton(
-            onPressed: () async {
-              await _auth.signOut();
-            },
-            child: const Text("logout")));
+            onPressed: navigateCallback, child: const Text("create route")));
   }
 }
