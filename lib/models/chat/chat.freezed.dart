@@ -21,11 +21,9 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chat {
   String? get id => throw _privateConstructorUsedError;
-
   List<String>? get participantIds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
   $ChatCopyWith<Chat> get copyWith => throw _privateConstructorUsedError;
 }
@@ -34,7 +32,6 @@ mixin _$Chat {
 abstract class $ChatCopyWith<$Res> {
   factory $ChatCopyWith(Chat value, $Res Function(Chat) then) =
       _$ChatCopyWithImpl<$Res, Chat>;
-
   @useResult
   $Res call({String? id, List<String>? participantIds});
 }
@@ -46,7 +43,6 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -74,7 +70,6 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
   factory _$$ChatImplCopyWith(
           _$ChatImpl value, $Res Function(_$ChatImpl) then) =
       __$$ChatImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({String? id, List<String>? participantIds});
@@ -118,7 +113,6 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
   @override
   final String? id;
   final List<String>? _participantIds;
-
   @override
   List<String>? get participantIds {
     final value = _participantIds;
@@ -179,10 +173,8 @@ abstract class _Chat implements Chat {
 
   @override
   String? get id;
-
   @override
   List<String>? get participantIds;
-
   @override
   @JsonKey(ignore: true)
   _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>

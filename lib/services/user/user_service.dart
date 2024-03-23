@@ -9,6 +9,8 @@ import '../firebase/firebase_exceptions.dart';
 class UserService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  get isLoggedIn => _auth.currentUser != null;
+
   String get userId {
     final userId = _auth.currentUser?.uid;
     if (userId == null) {

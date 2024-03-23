@@ -21,19 +21,13 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Profile {
   String? get uid => throw _privateConstructorUsedError;
-
   String? get firstName => throw _privateConstructorUsedError;
-
   String? get gender => throw _privateConstructorUsedError;
-
   List<String>? get genderLookingFor => throw _privateConstructorUsedError;
-
   DateTime? get dateOfBirth => throw _privateConstructorUsedError;
-
   int? get height => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
   $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
 }
@@ -42,7 +36,6 @@ mixin _$Profile {
 abstract class $ProfileCopyWith<$Res> {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
       _$ProfileCopyWithImpl<$Res, Profile>;
-
   @useResult
   $Res call(
       {String? uid,
@@ -60,7 +53,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -108,7 +100,6 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   factory _$$ProfileImplCopyWith(
           _$ProfileImpl value, $Res Function(_$ProfileImpl) then) =
       __$$ProfileImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -189,7 +180,6 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @override
   final String? gender;
   final List<String>? _genderLookingFor;
-
   @override
   List<String>? get genderLookingFor {
     final value = _genderLookingFor;
@@ -277,22 +267,16 @@ abstract class _Profile implements Profile {
 
   @override
   String? get uid;
-
   @override
   String? get firstName;
-
   @override
   String? get gender;
-
   @override
   List<String>? get genderLookingFor;
-
   @override
   DateTime? get dateOfBirth;
-
   @override
   int? get height;
-
   @override
   @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>

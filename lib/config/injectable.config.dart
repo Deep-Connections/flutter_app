@@ -30,7 +30,7 @@ extension GetItInjectableX on _i1.GetIt {
       environment,
       environmentFilter,
     );
-    gh.singleton<_i3.AuthService>(_i4.FirebaseAuthService());
+    gh.factory<_i3.AuthService>(() => _i4.FirebaseAuthService());
     gh.singleton<_i5.UserService>(_i5.UserService());
     gh.lazySingleton<_i6.ChatService>(
         () => _i6.ChatService(gh<_i5.UserService>()));

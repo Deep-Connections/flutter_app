@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 import '../../models/user.dart';
 import '../../utils/loc_key.dart';
 
-@Singleton(as: AuthService)
+@Injectable(as: AuthService)
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
