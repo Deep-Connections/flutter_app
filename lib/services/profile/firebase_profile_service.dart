@@ -32,7 +32,7 @@ class FirebaseProfileService {
 
   Future<Response<void>> updateProfile(
       Profile Function(Profile) callback) async {
-    var newProfile = callback((await profile) ?? Profile());
+    var newProfile = callback((await profile) ?? const Profile());
     _profile = newProfile;
     return handleFirebaseErrors(
         () => _profileReference.set(newProfile, SetOptions(merge: true)));

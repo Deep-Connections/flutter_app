@@ -3,8 +3,10 @@ import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/services/profile/firebase_profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../config/constants.dart';
+import '../../navigation/route_constants.dart';
 import '../components/base_screen.dart';
 import '../components/form/button_input.dart';
 import '../components/form/dc_text_form_field.dart';
@@ -41,6 +43,8 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
                 actionIfValid: () async {
                   final response = await widget.profileService
                       .updateProfile((p) => p.copyWith(gender: gender.value));
+                  response.onSuccess(
+                      (_) => context.go(ProfileRoutes.height.fullPath));
                 },
               ),
             ],

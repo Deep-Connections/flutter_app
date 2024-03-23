@@ -1,10 +1,11 @@
+import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/screens/profile/BaseProfileScreen.dart';
 import 'package:deep_connections/services/profile/firebase_profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
-import '../components/form/button_input.dart';
 import '../components/form/dc_text_form_field.dart';
 
 class NameProfileScreen extends StatefulWidget {
@@ -18,7 +19,6 @@ class NameProfileScreen extends StatefulWidget {
 
 class _NameProfileScreenState extends State<NameProfileScreen> {
   final name = FirstNameInput();
-  late final buttonInput = ButtonInput(fields: [name]);
 
   @override
   void initState() {
@@ -37,6 +37,7 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
       onNext: () async {
         final response = await widget.profileService
             .updateProfile((p) => p.copyWith(firstName: name.value));
+        response.onSuccess((_) => context.go(ProfileRoutes.gender.fullPath));
       },
       children: [
         DcTextFormField(fieldInput: name, textInputAction: TextInputAction.done)

@@ -34,7 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: loc.login_title,
       actions: [
         TextButton.icon(
-            onPressed: () => context.go(AuthRoutes.register.link),
+            onPressed: () => context.go(AuthRoutes.register.fullPath),
             icon: const Icon(Icons.person),
             label: Text(loc.login_registerLink))
       ],
@@ -55,6 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
               actionIfValid: () async {
                 final response = await widget.auth.loginWithEmail(
                     email: email.value, password: password.value);
+                response
+                    .onSuccess((_) => context.go(ProfileRoutes.name.fullPath));
                 setState(() {
                   apiError = response.getUiErrOrNull(loc);
                 });
@@ -62,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
                 onPressed: () {
-                  context.go(AuthRoutes.forgotPassword.link);
+                  context.go(AuthRoutes.forgotPassword.fullPath);
                 },
                 child: Text(loc.login_forgotPasswordLink)),
           ],

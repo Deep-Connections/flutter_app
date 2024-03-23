@@ -1,6 +1,6 @@
 import 'package:deep_connections/config/theme.dart';
 import 'package:deep_connections/firebase_options.dart';
-import 'package:deep_connections/navigation/router.dart';
+import 'package:deep_connections/navigation/main_navigation.dart';
 import 'package:deep_connections/services/user/user_service.dart';
 import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:firebase_core/firebase_core.dart';

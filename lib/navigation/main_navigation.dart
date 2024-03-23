@@ -1,3 +1,4 @@
+import 'package:deep_connections/navigation/profile_navigation.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/auth/registration_screen.dart';
 import 'package:deep_connections/services/user/user_service.dart';
@@ -19,8 +20,8 @@ final appRouter = GoRouter(
     // if the user is not logged in, they need to login
     final loggedIn = getIt<UserService>().isLoggedIn;
     final loggingIn = topPath == AuthRoutes.login.path;
-    if (!loggedIn && !loggingIn) return AuthRoutes.login.link;
-    if (loggedIn && loggingIn) return HomeRoutes.home.link;
+    if (!loggedIn && !loggingIn) return AuthRoutes.login.fullPath;
+    if (loggedIn && loggingIn) return HomeRoutes.home.fullPath;
 
     return null;
   },
@@ -47,9 +48,10 @@ final appRouter = GoRouter(
       path: HomeRoutes.home.path,
       builder: (context, state) {
         return Home(
-          navigateCallback: () => context.go(HomeRoutes.home.link),
+          navigateCallback: () => context.go(HomeRoutes.home.fullPath),
         );
       },
     ),
+    ...profileRoutes,
   ],
 );
