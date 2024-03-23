@@ -31,6 +31,10 @@ abstract class FieldInput<T> {
   T convert(String value) => throw UnimplementedError();
 
   T get value => convert(preProcess(controller.text)!);
+
+  set value(T? value) {
+    if (value != null) controller.text = value.toString();
+  }
 }
 
 class TextFieldInput extends FieldInput<String> {
@@ -91,7 +95,7 @@ class EmailInput extends TextFieldInput {
 class PasswordInput extends TextFieldInput {
   PasswordInput()
       : super(
-      keyboardType: TextInputType.visiblePassword,
+            keyboardType: TextInputType.visiblePassword,
             placeholder: LocKey((loc) => loc.input_passwordPlaceholder),
             obscureText: true);
 
@@ -110,7 +114,7 @@ class PasswordInput extends TextFieldInput {
 class HeightInput extends IntegerFieldInput {
   HeightInput()
       : super(
-      placeholder: LocKey((loc) => loc.input_sizePlaceholder),
+            placeholder: LocKey((loc) => loc.input_sizePlaceholder),
             maxLength: 3);
 
   @override

@@ -1,4 +1,3 @@
-import 'package:deep_connections/models/profile.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/services/profile/firebase_profile_service.dart';
@@ -43,8 +42,8 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
                 text: loc.general_submitButton,
                 buttonInput: buttonInput,
                 actionIfValid: () async {
-                  final response = await widget.profileService
-                      .updateProfile(Profile(height: height.value));
+                  final response =
+                      await widget.profileService.updateProfile((p) => p);
                 },
               ),
             ],

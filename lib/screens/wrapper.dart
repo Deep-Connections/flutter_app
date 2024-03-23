@@ -1,10 +1,9 @@
 import 'package:deep_connections/config/injectable.dart';
 import 'package:deep_connections/models/user.dart';
 import 'package:deep_connections/screens/auth/login_screen.dart';
+import 'package:deep_connections/screens/profile/name_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'chat/chat_list_screen.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({super.key});
@@ -16,7 +15,8 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return LoginScreen(auth: getIt());
     } else {
-      return ChatListScreen(chatService: getIt());
+      return NameProfileScreen(profileService: getIt());
+      // ChatListScreen(chatService: getIt());
     }
   }
 }

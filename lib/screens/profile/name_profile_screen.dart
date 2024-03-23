@@ -1,4 +1,3 @@
-import 'package:deep_connections/models/profile.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/screens/profile/BaseProfileScreen.dart';
 import 'package:deep_connections/services/profile/firebase_profile_service.dart';
@@ -22,18 +21,24 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
   late final buttonInput = ButtonInput(fields: [name]);
 
   @override
+  void initState() {
+    super.initState();
+    widget.profileService.profile.then((value) {
+      name.value = value?.firstName;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return ProfileBaseScreen(
       title: loc.profile_firstNameTitle,
       fields: [name],
       onNext: () async {
-        final response = await widget.profileService
-            .updateProfile(Profile(gender: name.value));
+        final response = await widget.profileService.updateProfile((p) => p);
       },
       children: [
-        DcTextFormField(
-            fieldInput: name, textInputAction: TextInputAction.done),
+        DcTextFormField(fieldInput: name, textInputAction: TextInputAction.done)
       ],
     );
   }

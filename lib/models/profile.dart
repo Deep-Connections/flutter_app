@@ -4,14 +4,14 @@ part 'profile.g.dart';
 
 @JsonSerializable()
 class Profile {
-  final String? uid, name, gender;
+  final String? uid, firstName, gender;
   final List<String>? genderLookingFor;
   final DateTime? dateOfBirth;
   final int? height;
 
   Profile({
     this.uid,
-    this.name,
+    this.firstName,
     this.gender,
     this.genderLookingFor,
     this.dateOfBirth,

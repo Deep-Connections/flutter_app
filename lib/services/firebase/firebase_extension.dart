@@ -20,3 +20,12 @@ extension DocumentSnapshotExtension on DocumentSnapshot<Map<String, dynamic>> {
     return dataWithId;
   }
 }
+
+// generic extension thet gets the data or throws an exception
+extension DocumentSnapshotDataExtension<T> on DocumentSnapshot<T> {
+  T get dataOrThrow {
+    var data = this.data();
+    if (data == null) throw DocumentSnapshotNullException();
+    return data;
+  }
+}
