@@ -42,8 +42,8 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
                 text: loc.general_submitButton,
                 buttonInput: buttonInput,
                 actionIfValid: () async {
-                  final response =
-                      await widget.profileService.updateProfile((p) => p);
+                  final response = await widget.profileService
+                      .updateProfile((p) => p.copyWith(height: height.value));
                 },
               ),
             ],

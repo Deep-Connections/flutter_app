@@ -39,7 +39,8 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
                 text: loc.general_submitButton,
                 buttonInput: buttonInput,
                 actionIfValid: () async {
-                  final response = await widget.profileService.updateProfile((p) => p);
+                  final response = await widget.profileService
+                      .updateProfile((p) => p.copyWith(gender: gender.value));
                 },
               ),
             ],
