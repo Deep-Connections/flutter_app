@@ -1,9 +1,9 @@
-import 'package:deep_connections/services/user/user_exception.dart';
 import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../models/user.dart';
+import '../firebase/firebase_exceptions.dart';
 
 @singleton
 class UserService {

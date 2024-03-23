@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_connections/services/utils/firebase_doc_with_id.dart';
+import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../models/chat.dart';
