@@ -6,23 +6,15 @@ part of 'chat.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Chat _$ChatFromJson(Map<String, dynamic> json) => Chat(
+_$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       id: json['id'] as String?,
       participantIds: (json['participantIds'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
     );
 
-Map<String, dynamic> _$ChatToJson(Chat instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('participantIds', instance.participantIds);
-  return val;
-}
+Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'participantIds': instance.participantIds,
+    };

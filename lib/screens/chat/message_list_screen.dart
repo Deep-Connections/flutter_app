@@ -3,7 +3,7 @@ import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/message.dart';
+import '../../models/message/message.dart';
 
 class MessageListScreen extends StatelessWidget {
   final String chatId;

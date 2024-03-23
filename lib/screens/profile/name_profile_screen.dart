@@ -35,7 +35,8 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
       title: loc.profile_firstNameTitle,
       fields: [name],
       onNext: () async {
-        final response = await widget.profileService.updateProfile((p) => p);
+        final response = await widget.profileService
+            .updateProfile((p) => p.copyWith(firstName: name.value));
       },
       children: [
         DcTextFormField(fieldInput: name, textInputAction: TextInputAction.done)

@@ -6,7 +6,8 @@ part of 'message.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Message _$MessageFromJson(Map<String, dynamic> json) => Message(
+_$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
+    _$MessageImpl(
       id: json['id'] as String?,
       senderId: json['senderId'] as String?,
       text: json['text'] as String?,
@@ -15,18 +16,10 @@ Message _$MessageFromJson(Map<String, dynamic> json) => Message(
           : DateTime.parse(json['timestamp'] as String),
     );
 
-Map<String, dynamic> _$MessageToJson(Message instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  writeNotNull('senderId', instance.senderId);
-  writeNotNull('text', instance.text);
-  writeNotNull('timestamp', instance.timestamp?.toIso8601String());
-  return val;
-}
+Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'senderId': instance.senderId,
+      'text': instance.text,
+      'timestamp': instance.timestamp?.toIso8601String(),
+    };

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/services/firebase_constants.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../../models/message.dart';
+import '../../models/message/message.dart';
 
 class OptimizedMessageService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

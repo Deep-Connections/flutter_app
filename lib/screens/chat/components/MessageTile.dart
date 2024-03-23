@@ -1,4 +1,4 @@
-import 'package:deep_connections/models/message.dart';
+import 'package:deep_connections/models/message/message.dart';
 import 'package:flutter/material.dart';
 
 class MessageTile extends StatelessWidget {

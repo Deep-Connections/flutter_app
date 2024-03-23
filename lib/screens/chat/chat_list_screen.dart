@@ -1,4 +1,4 @@
-import 'package:deep_connections/models/chat.dart';
+import 'package:deep_connections/models/chat/chat.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/utils/extensions/navigation.dart';
