@@ -1,4 +1,4 @@
-import 'package:deep_connections/services/user/user_status.dart';
+import 'package:deep_connections/services/user/user_state.dart';
 
 import '../utils/response.dart';
 

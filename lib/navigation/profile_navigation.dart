@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
 import '../services/user/user_service.dart';
-import '../services/user/user_status.dart';
+import '../services/user/user_state.dart';
 
 final profileRoutes = GoRoute(
     path: ProfileRoutes.main.path,

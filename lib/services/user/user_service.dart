@@ -1,4 +1,4 @@
-import 'package:deep_connections/services/user/user_status.dart';
+import 'package:deep_connections/services/user/user_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,7 +18,7 @@ class UserService {
     return userId;
   }
 
-  Stream<UserState?> get userStream {
+  Stream<UserState?> get userStateStream {
     return _auth.authStateChanges().map(userStateFromFirebaseUser);
   }
 }

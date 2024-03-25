@@ -1,21 +1,15 @@
 import 'package:deep_connections/services/auth/auth_service.dart';
-import 'package:deep_connections/services/user/user_status.dart';
+import 'package:deep_connections/services/user/user_state.dart';
 import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:deep_connections/services/utils/response.dart';
-import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../models/user.dart';
 import '../../utils/loc_key.dart';
 
 @Injectable(as: AuthService)
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  DcUser? _fromFirebaseUser(User? user) {
-    return user?.let(DcUser.fromFirebaseUser);
-  }
 
   Future<Response<T>> handleAuthErrors<T>(Future<T?> Function() callback,
       {LocKey Function(FirebaseAuthException)? getUiErrorMessage}) async {
