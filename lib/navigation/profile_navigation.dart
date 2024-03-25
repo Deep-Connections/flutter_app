@@ -6,29 +6,41 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
+import '../services/user/user_service.dart';
+import '../services/user/user_status.dart';
 
-final profileRoutes = [
-  GoRoute(
-    path: ProfileRoutes.name.fullPath,
-    builder: (context, state) {
-      return NameProfileScreen(profileService: getIt());
+final profileRoutes = GoRoute(
+    path: ProfileRoutes.main.path,
+    redirect: (context, state) {
+      final UserState userState = getIt<UserService>().userState;
+      if (userState.isProfileComplete) return HomeRoutes.home.fullPath;
+      if (state.fullPath == ProfileRoutes.main.path) {
+        return ProfileRoutes.name.fullPath;
+      }
+      return null;
     },
-  ),
-  GoRoute(
-    path: ProfileRoutes.birthday.fullPath,
-    builder: (context, state) {
-      return Container();
-    },
-  ),
-  GoRoute(
-    path: ProfileRoutes.height.fullPath,
-    builder: (context, state) {
-      return HeightProfileScreen(profileService: getIt());
-    },
-  ),
-  GoRoute(
-      path: ProfileRoutes.gender.fullPath,
-      builder: (context, state) {
-        return GenderProfileScreen(profileService: getIt());
-      }),
-];
+    routes: [
+      GoRoute(
+        path: ProfileRoutes.name.path,
+        builder: (context, state) {
+          return NameProfileScreen(profileService: getIt());
+        },
+      ),
+      GoRoute(
+        path: ProfileRoutes.birthday.path,
+        builder: (context, state) {
+          return Container();
+        },
+      ),
+      GoRoute(
+        path: ProfileRoutes.height.path,
+        builder: (context, state) {
+          return HeightProfileScreen(profileService: getIt());
+        },
+      ),
+      GoRoute(
+          path: ProfileRoutes.gender.path,
+          builder: (context, state) {
+            return GenderProfileScreen(profileService: getIt());
+          })
+    ]);

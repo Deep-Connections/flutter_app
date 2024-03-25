@@ -1,15 +1,14 @@
-import 'package:deep_connections/utils/extensions/nullable.dart';
+import 'package:deep_connections/services/user/user_status.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../models/user.dart';
 import '../firebase/firebase_exceptions.dart';
 
 @singleton
 class UserService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  get isLoggedIn => _auth.currentUser != null;
+  UserState get userState => userStateFromFirebaseUser(_auth.currentUser);
 
   String get userId {
     final userId = _auth.currentUser?.uid;
@@ -19,11 +18,7 @@ class UserService {
     return userId;
   }
 
-  DcUser? _fromFirebaseUser(User? user) {
-    return user?.let(DcUser.fromFirebaseUser);
-  }
-
-  Stream<DcUser?> get userStream {
-    return _auth.authStateChanges().map(_fromFirebaseUser);
+  Stream<UserState?> get userStream {
+    return _auth.authStateChanges().map(userStateFromFirebaseUser);
   }
 }

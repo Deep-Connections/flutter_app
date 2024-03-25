@@ -1,4 +1,5 @@
 import 'package:deep_connections/services/auth/auth_service.dart';
+import 'package:deep_connections/services/user/user_status.dart';
 import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/nullable.dart';
@@ -29,7 +30,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<Response<DcUser>> loginWithEmail({
+  Future<Response<UserState>> loginWithEmail({
     required String email,
     required String password,
   }) async {
@@ -38,7 +39,7 @@ class FirebaseAuthService implements AuthService {
         email: email,
         password: password,
       );
-      return createResponse(_fromFirebaseUser(userCredential.user));
+      return createResponse(userStateFromFirebaseUser(userCredential.user));
     } on FirebaseAuthException catch (e) {
       print("${e.message}  ${e.code}");
       final uiMessage = getLoginUiMessage(e);
@@ -60,7 +61,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future<Response<DcUser>> registerWithEmail({
+  Future<Response<UserState>> registerWithEmail({
     required String email,
     required String password,
   }) async {
@@ -69,7 +70,7 @@ class FirebaseAuthService implements AuthService {
         email: email,
         password: password,
       );
-      return createResponse(_fromFirebaseUser(userCredential.user));
+      return createResponse(userStateFromFirebaseUser(userCredential.user));
     } on FirebaseAuthException catch (e) {
       print(e.message);
       final uiMessage = getRegisterUiMessage(e);

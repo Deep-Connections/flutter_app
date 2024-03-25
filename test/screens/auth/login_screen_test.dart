@@ -8,8 +8,10 @@ void main() {
   testWidgets('Test login screen with wrong and correct credentials ',
       (WidgetTester tester) async {
     final auth = MockAuthService();
+    var loginSuccess = false;
 
-    final loc = await tester.pumpLocalizedWidget(LoginScreen(auth: auth));
+    final loc = await tester.pumpLocalizedWidget(
+        LoginScreen(auth: auth, onLoginSuccess: () => loginSuccess = true));
     expect(find.text(loc.login_title), findsOneWidget);
     expect(find.text(loc.auth_emailInvalidError), findsNothing);
     expect(find.text(loc.login_wrongCredentialsError), findsNothing);
@@ -49,5 +51,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(auth.isSignedIn, true);
+    expect(loginSuccess, true);
   });
 }

@@ -20,9 +20,10 @@ class HomeRoutes {
 }
 
 class AuthRoutes {
-  static const Route login = Route('login', null);
-  static const Route register = Route('register', login);
-  static const Route forgotPassword = Route('forgot_password', login);
+  static const Route main = Route('auth', null);
+  static const Route login = Route('login', main);
+  static const Route register = Route('register', main);
+  static const Route forgotPassword = Route('forgot_password', main);
 }
 
 class ProfileRoutes {

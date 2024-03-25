@@ -1,57 +1,36 @@
+import 'package:deep_connections/navigation/auth_navigation.dart';
 import 'package:deep_connections/navigation/profile_navigation.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:deep_connections/screens/auth/registration_screen.dart';
-import 'package:deep_connections/services/user/user_service.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
-import '../screens/auth/forgot_password_screen.dart';
-import '../screens/auth/login_screen.dart';
 import '../screens/home/home.dart';
+import '../services/user/user_service.dart';
 
 final appRouter = GoRouter(
-  initialLocation: AuthRoutes.login.path,
+  initialLocation: AuthRoutes.main.path,
   debugLogDiagnostics: true,
-  redirect: (context, GoRouterState state) {
-    final currentPath = state.fullPath;
-    if (currentPath == null) return null;
-    final topPath = "/${currentPath.split("/")[1]}";
-
-    // if the user is not logged in, they need to login
-    final loggedIn = getIt<UserService>().isLoggedIn;
-    final loggingIn = topPath == AuthRoutes.login.path;
-    if (!loggedIn && !loggingIn) return AuthRoutes.login.fullPath;
-    if (loggedIn && loggingIn) return HomeRoutes.home.fullPath;
-
-    return null;
-  },
   routes: [
     GoRoute(
-      path: AuthRoutes.login.path,
-      builder: (context, state) {
-        return LoginScreen(auth: getIt());
-      },
-      routes: [
-        GoRoute(
-            path: AuthRoutes.register.path,
-            builder: (context, state) {
-              return RegistrationScreen(auth: getIt());
-            }),
-        GoRoute(
-            path: AuthRoutes.forgotPassword.path,
-            builder: (context, state) {
-              return const ForgotPasswordScreen();
-            }),
-      ],
-    ),
-    GoRoute(
       path: HomeRoutes.home.path,
+      redirect: (BuildContext context, GoRouterState state) {
+        final userState = getIt<UserService>().userState;
+        if (!userState.isAuthenticated) {
+          return AuthRoutes.main.fullPath;
+        }
+        if (!userState.isProfileComplete) {
+          return ProfileRoutes.main.fullPath;
+        }
+        return null;
+      },
       builder: (context, state) {
         return Home(
           navigateCallback: () => context.go(HomeRoutes.home.fullPath),
         );
       },
     ),
-    ...profileRoutes,
+    authRoutes,
+    profileRoutes,
   ],
 );
