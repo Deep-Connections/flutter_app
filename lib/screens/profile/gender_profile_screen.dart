@@ -1,6 +1,6 @@
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
-import 'package:deep_connections/services/profile/firebase_profile_service.dart';
+import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +13,7 @@ import '../components/form/dc_text_form_field.dart';
 import '../components/form/form_button.dart';
 
 class GenderProfileScreen extends StatefulWidget {
-  final FirebaseProfileService profileService;
+  final ProfileService profileService;
 
   const GenderProfileScreen({super.key, required this.profileService});
 

@@ -23,7 +23,11 @@ final profileRoutes = GoRoute(
       GoRoute(
         path: ProfileRoutes.name.path,
         builder: (context, state) {
-          return NameProfileScreen(profileService: getIt());
+          return NameProfileScreen(
+              profileService: getIt(),
+              navigateToNext: () {
+                context.go(ProfileRoutes.birthday.fullPath);
+              });
         },
       ),
       GoRoute(
