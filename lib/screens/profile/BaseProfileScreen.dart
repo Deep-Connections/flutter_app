@@ -29,7 +29,6 @@ class ProfileBaseScreen extends StatefulWidget {
 
 class _ProfileBaseScreenState extends State<ProfileBaseScreen> {
   late final buttonInput = ButtonInput(fields: widget.fields);
-
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
@@ -39,8 +38,8 @@ class _ProfileBaseScreenState extends State<ProfileBaseScreen> {
           key: buttonInput.formKey,
           child: DcColumn(
             children: [
-              SingleChildScrollView(
-                  child: Column(
+              Expanded(
+                  child: ListView(
                 children: widget.children,
               )),
               FormButton(

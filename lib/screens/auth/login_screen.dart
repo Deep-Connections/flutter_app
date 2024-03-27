@@ -1,22 +1,23 @@
-import 'package:deep_connections/screens/auth/registration_screen.dart';
+import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/button_input.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
-import 'package:deep_connections/utils/extensions/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../config/constants.dart';
 import '../../services/auth/auth_service.dart';
 import '../components/form/dc_text_form_field.dart';
-import 'forgot_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   final AuthService auth;
+  final VoidCallback onLoginSuccess;
 
-  const LoginScreen({super.key, required this.auth});
+  const LoginScreen(
+      {super.key, required this.auth, required this.onLoginSuccess});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -35,8 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: loc.login_title,
       actions: [
         TextButton.icon(
-            onPressed: () =>
-                context.navigate(RegistrationScreen(auth: widget.auth)),
+            onPressed: () => context.go(AuthRoutes.register.fullPath),
             icon: const Icon(Icons.person),
             label: Text(loc.login_registerLink))
       ],
@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               actionIfValid: () async {
                 final response = await widget.auth.loginWithEmail(
                     email: email.value, password: password.value);
+                response.onSuccess((_) => widget.onLoginSuccess());
                 setState(() {
                   apiError = response.getUiErrOrNull(loc);
                 });
@@ -64,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
                 onPressed: () {
-                  context.navigate(const ForgotPasswordScreen());
+                  context.go(AuthRoutes.forgotPassword.fullPath);
                 },
                 child: Text(loc.login_forgotPasswordLink)),
           ],

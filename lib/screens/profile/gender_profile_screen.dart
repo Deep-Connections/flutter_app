@@ -1,7 +1,6 @@
-import 'package:deep_connections/models/profile.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
-import 'package:deep_connections/services/profile/firebase_profile_service.dart';
+import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -12,9 +11,11 @@ import '../components/form/dc_text_form_field.dart';
 import '../components/form/form_button.dart';
 
 class GenderProfileScreen extends StatefulWidget {
-  final FirebaseProfileService profileService;
+  final ProfileService profileService;
+  final VoidCallback navigateToNext;
 
-  const GenderProfileScreen({super.key, required this.profileService});
+  const GenderProfileScreen(
+      {super.key, required this.profileService, required this.navigateToNext});
 
   @override
   State<GenderProfileScreen> createState() => _GenderProfileScreenState();
@@ -41,7 +42,8 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
                 buttonInput: buttonInput,
                 actionIfValid: () async {
                   final response = await widget.profileService
-                      .updateProfile(Profile(gender: gender.value));
+                      .updateProfile((p) => p.copyWith(gender: gender.value));
+                  response.onSuccess((_) => widget.navigateToNext());
                 },
               ),
             ],

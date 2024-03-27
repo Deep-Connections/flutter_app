@@ -6,25 +6,25 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../components/form/dc_text_form_field.dart';
 
-class NameProfileScreen extends StatefulWidget {
+class BirthdayProfileScreen extends StatefulWidget {
   final ProfileService profileService;
   final VoidCallback navigateToNext;
 
-  const NameProfileScreen(
+  const BirthdayProfileScreen(
       {super.key, required this.profileService, required this.navigateToNext});
 
   @override
-  State<NameProfileScreen> createState() => _NameProfileScreenState();
+  State<BirthdayProfileScreen> createState() => _BirthdayProfileScreenState();
 }
 
-class _NameProfileScreenState extends State<NameProfileScreen> {
-  final name = FirstNameInput();
+class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
+  final birthDay = BirthdayInput();
 
   @override
   void initState() {
     super.initState();
     widget.profileService.profile.then((value) {
-      name.value = value?.firstName;
+      birthDay.value = value?.dateOfBirth;
     });
   }
 
@@ -32,15 +32,16 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return ProfileBaseScreen(
-      title: loc.profile_firstNameTitle,
-      fields: [name],
+      title: loc.profile_birthdayTitle,
+      fields: [birthDay],
       onNext: () async {
         final response = await widget.profileService
-            .updateProfile((p) => p.copyWith(firstName: name.value));
+            .updateProfile((p) => p.copyWith(dateOfBirth: birthDay.value));
         response.onSuccess((_) => widget.navigateToNext());
       },
       children: [
-        DcTextFormField(fieldInput: name, textInputAction: TextInputAction.done)
+        DcTextFormField(
+            fieldInput: birthDay, textInputAction: TextInputAction.done)
       ],
     );
   }

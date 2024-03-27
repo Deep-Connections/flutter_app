@@ -9,6 +9,12 @@ abstract class Response<T> {
   bool get isSuccess => this is SuccessRes<T>;
 
   bool get isFailure => this is ErrorRes || this is ExceptionRes;
+
+  void onSuccess(Function(T result) callback) {
+    if (this is SuccessRes<T>) {
+      callback((this as SuccessRes<T>).data);
+    }
+  }
 }
 
 class SuccessRes<T> extends Response<T> {

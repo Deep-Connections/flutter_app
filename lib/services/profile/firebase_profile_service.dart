@@ -1,27 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_connections/services/utils/user_exception.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:deep_connections/services/firebase/firebase_extension.dart';
+import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/services/user/user_service.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../models/profile.dart';
+import '../../models/profile/profile.dart';
+import '../firebase_constants.dart';
 import '../utils/handle_firebase_errors.dart';
 import '../utils/response.dart';
 
-const String _PROFILES_COLLECTION = 'profiles';
+@Injectable(as: ProfileService)
+class FirebaseProfileService implements ProfileService {
+  final UserService _userService;
 
-@injectable
-class FirebaseProfileService {
+  FirebaseProfileService(this._userService);
+
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  DocumentReference<Map<String, dynamic>> getUserProfileReference() {
-    final userId = _auth.currentUser?.uid;
-    if (userId == null) throw UserNotFoundException();
-    return _firestore.collection(_PROFILES_COLLECTION).doc(userId);
+  DocumentReference<Profile> get _profileReference => _firestore
+      .collection(Collection.profiles)
+      .withConverter<Profile>(
+          fromFirestore: (doc, _) => Profile.fromJson(doc.withId()),
+          toFirestore: (profile, _) => profile.toJson())
+      .doc(_userService.userId);
+
+  Profile? _profile;
+
+  @override
+  Future<Profile?> get profile async {
+    _profile ??= (await _profileReference.get()).data();
+    return _profile!;
   }
 
-  Future<Response<void>> updateProfile(Profile profile) async {
-    return handleFirebaseErrors(() => getUserProfileReference()
-        .set(profile.toJson(), SetOptions(merge: true)));
+  @override
+  Future<Response<void>> updateProfile(
+      Profile Function(Profile) callback) async {
+    var newProfile = callback((await profile) ?? const Profile());
+    _profile = newProfile;
+    return handleFirebaseErrors(
+        () => _profileReference.set(newProfile, SetOptions(merge: true)));
   }
 }
