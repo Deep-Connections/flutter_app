@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
+import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,8 +9,8 @@ import '../firebase_constants.dart';
 import '../utils/handle_firebase_errors.dart';
 import '../utils/response.dart';
 
-@injectable
-class FirebaseProfileService {
+@Injectable(as: ProfileService)
+class FirebaseProfileService implements ProfileService {
   final UserService _userService;
 
   FirebaseProfileService(this._userService);
@@ -25,11 +26,13 @@ class FirebaseProfileService {
 
   Profile? _profile;
 
+  @override
   Future<Profile?> get profile async {
     _profile ??= (await _profileReference.get()).data();
     return _profile!;
   }
 
+  @override
   Future<Response<void>> updateProfile(
       Profile Function(Profile) callback) async {
     var newProfile = callback((await profile) ?? const Profile());
