@@ -3,10 +3,8 @@ import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../config/constants.dart';
-import '../../navigation/route_constants.dart';
 import '../components/base_screen.dart';
 import '../components/form/button_input.dart';
 import '../components/form/dc_text_form_field.dart';
@@ -14,8 +12,10 @@ import '../components/form/form_button.dart';
 
 class GenderProfileScreen extends StatefulWidget {
   final ProfileService profileService;
+  final VoidCallback navigateToNext;
 
-  const GenderProfileScreen({super.key, required this.profileService});
+  const GenderProfileScreen(
+      {super.key, required this.profileService, required this.navigateToNext});
 
   @override
   State<GenderProfileScreen> createState() => _GenderProfileScreenState();
@@ -43,8 +43,7 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
                 actionIfValid: () async {
                   final response = await widget.profileService
                       .updateProfile((p) => p.copyWith(gender: gender.value));
-                  response.onSuccess(
-                      (_) => context.go(ProfileRoutes.height.fullPath));
+                  response.onSuccess((_) => widget.navigateToNext());
                 },
               ),
             ],

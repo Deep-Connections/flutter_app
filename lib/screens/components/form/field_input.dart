@@ -1,7 +1,9 @@
+import 'package:age_calculator/age_calculator.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 abstract class FieldInput<T> {
   final TextInputType? keyboardType;
@@ -9,7 +11,6 @@ abstract class FieldInput<T> {
   final LocKey? placeholder;
   final List<TextInputFormatter>? inputFormatter;
   final bool obscureText;
-
   final TextEditingController controller = TextEditingController();
   final ValueNotifier<bool> enabled = ValueNotifier(true);
 
@@ -20,6 +21,8 @@ abstract class FieldInput<T> {
     this.inputFormatter,
     this.obscureText = false,
   });
+
+  void Function(BuildContext context)? onTap;
 
   String? validator(String? value, AppLocalizations loc) => null;
 
@@ -37,7 +40,7 @@ abstract class FieldInput<T> {
   }
 }
 
-class TextFieldInput extends FieldInput<String> {
+abstract class TextFieldInput extends FieldInput<String> {
   TextFieldInput({
     TextInputType? keyboardType,
     LocKey? placeholder,
@@ -54,7 +57,7 @@ class TextFieldInput extends FieldInput<String> {
   String convert(String value) => value;
 }
 
-class IntegerFieldInput extends FieldInput<int> {
+abstract class IntegerFieldInput extends FieldInput<int> {
   IntegerFieldInput({
     LocKey? placeholder,
     int? maxLength,
@@ -69,6 +72,45 @@ class IntegerFieldInput extends FieldInput<int> {
 
   @override
   int convert(String value) => int.parse(value);
+}
+
+abstract class DateInput extends FieldInput<DateTime> {
+  DateInput({LocKey? placeholder}) : super(placeholder: placeholder);
+
+  DateTime? pickedDate;
+
+  @override
+  String? validator(String? value, AppLocalizations loc) {
+    if (pickedDate == null) {
+      return loc.general_error;
+    }
+    return null;
+  }
+
+  @override
+  DateTime get value => pickedDate!;
+
+  @override
+  set value(DateTime? value) {
+    pickedDate = value;
+    if (value != null) controller.text = DateFormat.yMd().format(value);
+  }
+
+  @override
+  void Function(BuildContext context)? get onTap {
+    return (context) async {
+      final date = await showDatePicker(
+        context: context,
+        initialEntryMode: DatePickerEntryMode.calendar,
+        initialDate: pickedDate ?? DateTime(2000),
+        firstDate: DateTime(1900),
+        lastDate: DateTime.now(),
+      );
+      if (date != null) {
+        value = date;
+      }
+    };
+  }
 }
 
 class EmailInput extends TextFieldInput {
@@ -142,6 +184,22 @@ class FirstNameInput extends TextFieldInput {
     final RegExp emailRegex = RegExp(r'^[A-Za-z\s\-]+$');
     if (value == null || !emailRegex.hasMatch(value)) {
       return loc.input_firstNameError;
+    }
+    return null;
+  }
+}
+
+class BirthdayInput extends DateInput {
+  BirthdayInput()
+      : super(placeholder: LocKey((loc) => loc.input_birthdayPlaceholder));
+
+  @override
+  String? validator(String? value, AppLocalizations loc) {
+    if (pickedDate == null) {
+      return loc.input_birthdayError;
+    }
+    if (AgeCalculator.age(pickedDate!).years < 18) {
+      return loc.input_birthdayMinimumError;
     }
     return null;
   }

@@ -1,8 +1,8 @@
 import 'package:deep_connections/navigation/route_constants.dart';
+import 'package:deep_connections/screens/profile/birthday_profile_screen.dart';
 import 'package:deep_connections/screens/profile/gender_profile_screen.dart';
 import 'package:deep_connections/screens/profile/height_profile_screen.dart';
 import 'package:deep_connections/screens/profile/name_profile_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
@@ -25,26 +25,31 @@ final profileRoutes = GoRoute(
         builder: (context, state) {
           return NameProfileScreen(
               profileService: getIt(),
-              navigateToNext: () {
-                context.go(ProfileRoutes.birthday.fullPath);
-              });
+              navigateToNext: () =>
+                  context.go(ProfileRoutes.birthday.fullPath));
         },
       ),
       GoRoute(
         path: ProfileRoutes.birthday.path,
         builder: (context, state) {
-          return Container();
+          return BirthdayProfileScreen(
+            profileService: getIt(),
+            navigateToNext: () => context.go(ProfileRoutes.gender.fullPath),
+          );
         },
       ),
+      GoRoute(
+          path: ProfileRoutes.gender.path,
+          builder: (context, state) {
+            return GenderProfileScreen(
+              profileService: getIt(),
+              navigateToNext: () => context.go(ProfileRoutes.height.fullPath),
+            );
+          }),
       GoRoute(
         path: ProfileRoutes.height.path,
         builder: (context, state) {
           return HeightProfileScreen(profileService: getIt());
         },
       ),
-      GoRoute(
-          path: ProfileRoutes.gender.path,
-          builder: (context, state) {
-            return GenderProfileScreen(profileService: getIt());
-          })
     ]);

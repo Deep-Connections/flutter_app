@@ -16,6 +16,9 @@
   "input_firstNameError": "Only letters and - are allowed",
   "input_sizePlaceholder": "Height in cm",
   "input_sizeError": "Please provide your height in centimeters.",
+  "input_birthdayPlaceholder": "Birthday",
+  "input_birthdayMinimumError": "You must be at least 18 years old to use this app.",
+  "input_birthdayError": "Please provide your birthday.",
   "input_genderPlaceholder": "Other genders",
   "input_genderEnumMale": "Male",
   "input_genderEnumFemale": "Female",
@@ -29,6 +32,8 @@
   "forgotPassword_title": "Reset password",
   "forgotPassword_resetButton": "Reset password",
   "forgotPassword_infoText": "Enter your email to reset your password",
-  "profile_sizeTitle": "How tall are you?",
-  "profile_firstNameTitle": "What's your name?"
+  "profile_firstNameTitle": "What's your name?",
+  "profile_birthdayTitle": "When were you born?",
+  "profile_genderTitle": "What's your gender?",
+  "profile_sizeTitle": "How tall are you?"
 }
