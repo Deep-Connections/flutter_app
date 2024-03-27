@@ -26,7 +26,7 @@ final profileRoutes = GoRoute(
           return NameProfileScreen(
               profileService: getIt(),
               navigateToNext: () =>
-                  context.go(ProfileRoutes.birthday.fullPath));
+                  context.push(ProfileRoutes.birthday.fullPath));
         },
       ),
       GoRoute(
@@ -34,7 +34,7 @@ final profileRoutes = GoRoute(
         builder: (context, state) {
           return BirthdayProfileScreen(
             profileService: getIt(),
-            navigateToNext: () => context.go(ProfileRoutes.gender.fullPath),
+            navigateToNext: () => context.push(ProfileRoutes.gender.fullPath),
           );
         },
       ),
@@ -43,7 +43,7 @@ final profileRoutes = GoRoute(
           builder: (context, state) {
             return GenderProfileScreen(
               profileService: getIt(),
-              navigateToNext: () => context.go(ProfileRoutes.height.fullPath),
+              navigateToNext: () => context.push(ProfileRoutes.height.fullPath),
             );
           }),
       GoRoute(
