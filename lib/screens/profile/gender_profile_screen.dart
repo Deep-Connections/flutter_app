@@ -1,14 +1,12 @@
-import 'package:deep_connections/screens/components/dc_column.dart';
+import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
+import 'package:deep_connections/screens/profile/BaseProfileScreen.dart';
+import 'package:deep_connections/screens/profile/components/GenderButton.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../config/constants.dart';
-import '../components/base_screen.dart';
-import '../components/form/button_input.dart';
 import '../components/form/dc_text_form_field.dart';
-import '../components/form/form_button.dart';
 
 class GenderProfileScreen extends StatefulWidget {
   final ProfileService profileService;
@@ -23,31 +21,32 @@ class GenderProfileScreen extends StatefulWidget {
 
 class _GenderProfileScreenState extends State<GenderProfileScreen> {
   final gender = GenderInput();
-  late final buttonInput = ButtonInput(fields: [gender]);
+
+  @override
+  void initState() {
+    super.initState();
+    widget.profileService.profile.then((value) {
+      gender.value = value?.gender;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
-    return BaseScreen(
-        title: loc.profile_sizeTitle,
-        body: Form(
-          key: buttonInput.formKey,
-          child: DcColumn(
-            children: [
-              const SizedBox(height: BASE_PADDING),
-              DcTextFormField(
-                  fieldInput: gender, textInputAction: TextInputAction.done),
-              FormButton(
-                text: loc.general_submitButton,
-                buttonInput: buttonInput,
-                actionIfValid: () async {
-                  final response = await widget.profileService
-                      .updateProfile((p) => p.copyWith(gender: gender.value));
-                  response.onSuccess((_) => widget.navigateToNext());
-                },
-              ),
-            ],
-          ),
-        ));
+    return ProfileBaseScreen(
+      title: loc.profile_genderTitle,
+      fields: [gender],
+      children: [
+        GenderButton(gender: Gender.female, genderInput: gender),
+        GenderButton(gender: Gender.male, genderInput: gender),
+        DcTextFormField(
+            fieldInput: gender, textInputAction: TextInputAction.done),
+      ],
+      onNext: () async {
+        final response = await widget.profileService
+            .updateProfile((p) => p.copyWith(gender: gender.value));
+        response.onSuccess((_) => widget.navigateToNext());
+      },
+    );
   }
 }
