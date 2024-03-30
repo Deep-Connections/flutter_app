@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: loc.login_title,
       actions: [
         TextButton.icon(
-            onPressed: () => context.go(AuthRoutes.register.fullPath),
+            onPressed: () => context.push(AuthRoutes.register.fullPath),
             icon: const Icon(Icons.person),
             label: Text(loc.login_registerLink))
       ],
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
                 onPressed: () {
-                  context.go(AuthRoutes.forgotPassword.fullPath);
+                  context.push(AuthRoutes.forgotPassword.fullPath);
                 },
                 child: Text(loc.login_forgotPasswordLink)),
           ],
