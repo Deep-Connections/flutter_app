@@ -1,5 +1,5 @@
 import 'package:deep_connections/models/gender.dart';
-import 'package:deep_connections/screens/components/form/field_input.dart';
+import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
 import 'package:deep_connections/screens/profile/components/gender_button.dart';
 import 'package:deep_connections/screens/profile/profile_base_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';

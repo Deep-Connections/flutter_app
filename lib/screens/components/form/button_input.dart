@@ -1,4 +1,4 @@
-import 'package:deep_connections/screens/components/form/field_input.dart';
+import 'package:deep_connections/screens/components/form/field_input/field_input.dart';
 import 'package:flutter/material.dart';
 
 class ButtonInput {
