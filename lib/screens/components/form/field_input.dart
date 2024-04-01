@@ -8,14 +8,13 @@ import 'package:intl/intl.dart';
 
 import '../../../models/gender.dart';
 
-abstract class FieldInput<T> {
+abstract class FieldInput<T> extends ChangeNotifier {
   final TextInputType? keyboardType;
   final int? maxLength;
   final LocKey? placeholder;
   final List<TextInputFormatter>? inputFormatter;
   final bool obscureText;
   final TextEditingController controller = TextEditingController();
-  final ValueNotifier<bool> enabled = ValueNotifier(true);
 
   FieldInput({
     this.keyboardType,
@@ -38,6 +37,15 @@ abstract class FieldInput<T> {
 
   set value(T? value) {
     if (value != null) controller.text = value.toString();
+  }
+
+  var _enabled = true;
+
+  bool get enabled => _enabled;
+
+  set enabled(bool value) {
+    _enabled = value;
+    notifyListeners();
   }
 }
 
@@ -175,22 +183,29 @@ class HeightInput extends IntegerFieldInput {
 }
 
 class GenderInput extends TextFieldInput {
-  final selectedGender = ValueNotifier<Gender?>(null);
+  Gender? _selectedGender;
+
+  Gender? get selectedGender => _selectedGender;
+
+  set selectedGender(Gender? value) {
+    _selectedGender = value;
+    notifyListeners();
+  }
 
   GenderInput()
       : super(placeholder: LocKey((loc) => loc.input_genderPlaceholder));
 
   @override
-  String get value => selectedGender.value?.enumValue ?? super.value;
+  String get value => selectedGender?.enumValue ?? super.value;
 
   @override
   set value(String? value) {
     Gender? gender =
         Gender.values.firstWhereOrNull((gender) => gender.enumValue == value);
     if (gender != null) {
-      selectedGender.value = gender;
+      selectedGender = gender;
     } else {
-      selectedGender.value = null;
+      selectedGender = null;
       super.value = value;
     }
   }

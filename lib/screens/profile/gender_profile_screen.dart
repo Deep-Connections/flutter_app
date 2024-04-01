@@ -1,12 +1,10 @@
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
-import 'package:deep_connections/screens/profile/BaseProfileScreen.dart';
 import 'package:deep_connections/screens/profile/components/gender_button.dart';
+import 'package:deep_connections/screens/profile/profile_base_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../components/form/dc_text_form_field.dart';
 
 class GenderProfileScreen extends StatefulWidget {
   final ProfileService profileService;
@@ -39,10 +37,10 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
       children: [
         ...Gender.values
             .map((g) => GenderButton(gender: g, genderInput: gender)),
-        DcTextFormField(
-            fieldInput: gender, textInputAction: TextInputAction.done),
+        GenderTypeInButton(genderInput: gender),
       ],
       onNext: () async {
+        await Future.delayed(const Duration(seconds: 3));
         final response = await widget.profileService
             .updateProfile((p) => p.copyWith(gender: gender.value));
         response.onSuccess((_) => widget.navigateToNext());
