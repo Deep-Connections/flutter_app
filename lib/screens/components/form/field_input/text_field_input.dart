@@ -62,10 +62,12 @@ class PasswordInput extends TextFieldInput {
 }
 
 class FirstNameInput extends TextFieldInput {
+  final _nameRegex =
+      RegExp(r"^[\p{L}\s\-']+$", unicode: true, caseSensitive: false);
+
   @override
   String? validator(String? value, AppLocalizations loc) {
-    final RegExp emailRegex = RegExp(r'^[A-Za-z\s\-]+$');
-    if (value == null || !emailRegex.hasMatch(value)) {
+    if (value == null || !_nameRegex.hasMatch(value)) {
       return loc.input_firstNameError;
     }
     return null;

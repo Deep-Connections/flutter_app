@@ -22,6 +22,9 @@ class GenderMoreScreen extends StatelessWidget {
         children: [
           ...Gender.additional
               .map((g) => GenderButton(gender: g, genderInput: genderInput)),
+          Container(padding: const EdgeInsets.only(top: 16)),
+          Text(loc.profile_genderMoreTypeIn,
+              style: Theme.of(context).textTheme.bodyLarge),
           DcTextFormField(
               fieldInput: genderInput, textInputAction: TextInputAction.done),
         ],

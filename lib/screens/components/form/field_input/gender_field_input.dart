@@ -39,6 +39,17 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
         }
       };*/
 
+  final _genderRegex =
+      RegExp(r"^[\p{L}\s\-]+$", unicode: true, caseSensitive: false);
+
+  @override
+  String? validator(String? value, AppLocalizations loc) {
+    if (value != null && !_genderRegex.hasMatch(value)) {
+      return loc.input_genderError;
+    }
+    return super.validator(value, loc);
+  }
+
   @override
   String get value => selectedGender?.enumValue ?? super.value;
 
