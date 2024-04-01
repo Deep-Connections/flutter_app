@@ -35,12 +35,10 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
       title: loc.profile_genderTitle,
       fields: [gender],
       children: [
-        ...Gender.values
-            .map((g) => GenderButton(gender: g, genderInput: gender)),
+        ...Gender.base.map((g) => GenderButton(gender: g, genderInput: gender)),
         GenderTypeInButton(genderInput: gender),
       ],
       onNext: () async {
-        await Future.delayed(const Duration(seconds: 3));
         final response = await widget.profileService
             .updateProfile((p) => p.copyWith(gender: gender.value));
         response.onSuccess((_) => widget.navigateToNext());
