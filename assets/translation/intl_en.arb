@@ -27,7 +27,6 @@
   "input_genderEnumTransWoman": "Trans Woman",
   "input_genderEnumTransMan": "Trans Man",
   "input_genderEnumEveryone": "Everyone",
-  "input_genderMore": "More",
   "login_loginButton": "Sign in",
   "login_title": "Sign in to your account",
   "login_forgotPasswordLink": "Forgot password?",
@@ -41,6 +40,7 @@
   "profile_firstNameTitle": "What's your name?",
   "profile_birthdayTitle": "When were you born?",
   "profile_genderTitle": "What's your gender?",
+  "profile_genderMore": "More",
   "profile_genderMoreTitle": "Type in your gender",
   "profile_sizeTitle": "How tall are you?"
 }

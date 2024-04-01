@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GenderButton extends StatelessWidget {
   final Gender gender;
-  final GenderInput genderInput;
+  final SingleGenderInput genderInput;
 
   const GenderButton(
       {super.key, required this.gender, required this.genderInput});
@@ -32,7 +32,7 @@ class GenderButton extends StatelessWidget {
 }
 
 class GenderTypeInButton extends StatelessWidget {
-  final GenderInput genderInput;
+  final SingleGenderInput genderInput;
 
   const GenderTypeInButton({super.key, required this.genderInput});
 
@@ -55,7 +55,7 @@ class GenderTypeInButton extends StatelessWidget {
                 text = additionalGender.localizedName.localize(loc);
               }
               final isSelected = text.isNotEmpty;
-              if (text.isEmpty) text = loc.input_genderMore;
+              if (text.isEmpty) text = loc.profile_genderMore;
               return SelectableButton(
                 text: "$text >",
                 onPressed: () {
@@ -68,6 +68,28 @@ class GenderTypeInButton extends StatelessWidget {
             });
       },
     );
+  }
+}
+
+class MultipleGenderButton extends StatelessWidget {
+  final Gender gender;
+  final MultipleGenderInput genderInput;
+
+  const MultipleGenderButton(
+      {super.key, required this.gender, required this.genderInput});
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    return ListenableBuilder(
+        listenable: genderInput,
+        builder: (context, child) {
+          return SelectableButton(
+              text: gender.localizedName.localize(loc),
+              onPressed: () => genderInput.toggleGender(gender),
+              selected: genderInput.selectedGenders.contains(gender),
+              enabled: genderInput.enabled);
+        });
   }
 }
 

@@ -3,28 +3,30 @@ import 'package:deep_connections/screens/components/form/field_input/gender_fiel
 import 'package:deep_connections/screens/profile/components/gender_button.dart';
 import 'package:deep_connections/screens/profile/profile_base_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/utils/extensions/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class GenderProfileScreen extends StatefulWidget {
+class GenderPreferencesProfileScreen extends StatefulWidget {
   final ProfileService profileService;
   final VoidCallback navigateToNext;
 
-  const GenderProfileScreen(
+  const GenderPreferencesProfileScreen(
       {super.key, required this.profileService, required this.navigateToNext});
 
   @override
-  State<GenderProfileScreen> createState() => _GenderProfileScreenState();
+  State<GenderPreferencesProfileScreen> createState() =>
+      _GenderProfileScreenState();
 }
 
-class _GenderProfileScreenState extends State<GenderProfileScreen> {
-  final gender = SingleGenderInput();
+class _GenderProfileScreenState extends State<GenderPreferencesProfileScreen> {
+  final gender = MultipleGenderInput();
 
   @override
   void initState() {
     super.initState();
     widget.profileService.profile.then((value) {
-      gender.value = value?.gender;
+      gender.value = value?.genderPreferences;
     });
   }
 
@@ -33,14 +35,17 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
     final loc = AppLocalizations.of(context);
     return ProfileBaseScreen(
       title: loc.profile_genderTitle,
-      fields: [gender],
       children: [
-        ...Gender.base.map((g) => GenderButton(gender: g, genderInput: gender)),
-        GenderTypeInButton(genderInput: gender),
+        ...Gender.base
+            .map((g) => MultipleGenderButton(gender: g, genderInput: gender)),
+        SelectableButton(
+            text: "${loc.profile_genderMore} >",
+            onPressed: () =>
+                context.navigate(GenderPreferencesMoreProfileScreen())),
       ],
       onNext: () async {
         final response = await widget.profileService
-            .updateProfile((p) => p.copyWith(gender: gender.value));
+            .updateProfile((p) => p.copyWith(genderPreferences: gender.value));
         response.onSuccess((_) => widget.navigateToNext());
       },
     );
