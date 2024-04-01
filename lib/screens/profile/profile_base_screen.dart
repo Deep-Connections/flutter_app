@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../components/dc_column.dart';
-import '../components/form/field_input.dart';
+import '../components/form/field_input/field_input.dart';
 import '../components/form/form_button.dart';
 
 class ProfileBaseScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'field_input.dart';
+import 'field_input/field_input.dart';
 
 class DcTextFormField extends StatefulWidget {
   final FieldInput fieldInput;

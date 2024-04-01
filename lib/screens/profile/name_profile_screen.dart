@@ -1,4 +1,4 @@
-import 'package:deep_connections/screens/components/form/field_input.dart';
+import 'package:deep_connections/screens/components/form/field_input/text_field_input.dart';
 import 'package:deep_connections/screens/profile/profile_base_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
