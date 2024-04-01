@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/screens/components/form/field_input.dart';
 import 'package:deep_connections/screens/profile/BaseProfileScreen.dart';
-import 'package:deep_connections/screens/profile/components/GenderButton.dart';
+import 'package:deep_connections/screens/profile/components/gender_button.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -37,8 +37,8 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
       title: loc.profile_genderTitle,
       fields: [gender],
       children: [
-        GenderButton(gender: Gender.female, genderInput: gender),
-        GenderButton(gender: Gender.male, genderInput: gender),
+        ...Gender.values
+            .map((g) => GenderButton(gender: g, genderInput: gender)),
         DcTextFormField(
             fieldInput: gender, textInputAction: TextInputAction.done),
       ],

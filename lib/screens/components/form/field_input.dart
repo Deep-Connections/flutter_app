@@ -1,9 +1,12 @@
 import 'package:age_calculator/age_calculator.dart';
+import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+
+import '../../../models/gender.dart';
 
 abstract class FieldInput<T> {
   final TextInputType? keyboardType;
@@ -28,8 +31,6 @@ abstract class FieldInput<T> {
 
   /// Pre-processes the input value before it is used or validated.
   String? preProcess(String? value) => value?.trim();
-
-  void setError(String error) {}
 
   T convert(String value) => throw UnimplementedError();
 
@@ -174,8 +175,25 @@ class HeightInput extends IntegerFieldInput {
 }
 
 class GenderInput extends TextFieldInput {
+  final selectedGender = ValueNotifier<Gender?>(null);
+
   GenderInput()
       : super(placeholder: LocKey((loc) => loc.input_genderPlaceholder));
+
+  @override
+  String get value => selectedGender.value?.enumValue ?? super.value;
+
+  @override
+  set value(String? value) {
+    Gender? gender =
+        Gender.values.firstWhereOrNull((gender) => gender.enumValue == value);
+    if (gender != null) {
+      selectedGender.value = gender;
+    } else {
+      selectedGender.value = null;
+      super.value = value;
+    }
+  }
 }
 
 class FirstNameInput extends TextFieldInput {

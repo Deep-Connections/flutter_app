@@ -11,7 +11,7 @@ class ProfileBaseScreen extends StatefulWidget {
   final String title;
   final List<FieldInput> fields;
   final List<Widget> children;
-  final void Function() onNext;
+  final Future<void> Function() onNext;
   final String? nextButtonText;
 
   const ProfileBaseScreen({
