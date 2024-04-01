@@ -29,26 +29,36 @@ class ProfileBaseScreen extends StatefulWidget {
 
 class _ProfileBaseScreenState extends State<ProfileBaseScreen> {
   late final buttonInput = ButtonInput(fields: widget.fields);
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return BaseScreen(
-        title: widget.title,
         body: Form(
-          key: buttonInput.formKey,
-          child: DcColumn(
-            children: [
-              Expanded(
-                  child: ListView(
-                children: widget.children,
-              )),
-              FormButton(
-                text: widget.nextButtonText ?? loc.general_next,
-                buttonInput: buttonInput,
-                actionIfValid: widget.onNext,
-              ),
-            ],
+      key: buttonInput.formKey,
+      child: Column(
+        children: [
+          Text(widget.title,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  )),
+          Expanded(
+            child: DcColumn(
+              children: [
+                Expanded(
+                    child: ListView(
+                  children: [...widget.children],
+                )),
+                FormButton(
+                  text: widget.nextButtonText ?? loc.general_next,
+                  buttonInput: buttonInput,
+                  actionIfValid: widget.onNext,
+                ),
+              ],
+            ),
           ),
-        ));
+        ],
+      ),
+    ));
   }
 }
