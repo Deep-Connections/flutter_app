@@ -119,7 +119,7 @@ class SelectableButton extends StatelessWidget {
               : BorderSide.none,
         ),
       ),
-      child: Text(text),
+      child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis),
     );
   }
 }
