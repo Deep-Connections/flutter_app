@@ -1,6 +1,7 @@
 import 'package:deep_connections/models/gender.dart';
-import 'package:deep_connections/screens/profile/gender/gender_type_in_screen.dart';
+import 'package:deep_connections/screens/profile/gender/gender_more_screen.dart';
 import 'package:deep_connections/utils/extensions/navigation.dart';
+import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -44,20 +45,23 @@ class GenderTypeInButton extends StatelessWidget {
       builder: (context, child) {
         return ValueListenableBuilder(
             valueListenable: genderInput.controller,
-            builder: (context, genderText, child) {
-              var text = genderText.text;
+            builder: (context, typedGenderText, child) {
+              var text = "";
+              if (genderInput.selectedGender == null) {
+                text = typedGenderText.text;
+              }
+              final additionalGender = Gender.additional
+                  .firstWhereOrNull((g) => g == genderInput.selectedGender);
+              if (additionalGender != null) {
+                text = additionalGender.localizedName.localize(loc);
+              }
+              final isSelected = text.isNotEmpty;
               if (text.isEmpty) text = loc.input_genderMore;
-              final isSelected = genderInput.selectedGender == null;
               return SelectableButton(
-                text: text,
+                text: "$text >",
                 onPressed: () {
-                  if (!isSelected && genderInput.controller.text.isNotEmpty) {
-                    genderInput.selectedGender = null;
-                  } else {
-                    // todo move navigation to go router
-                    context
-                        .navigate(GenderTypeInScreen(genderInput: genderInput));
-                  }
+                  // todo move navigation to go router
+                  context.navigate(GenderMoreScreen(genderInput: genderInput));
                 },
                 selected: isSelected,
                 enabled: genderInput.enabled,
@@ -74,11 +78,12 @@ class SelectableButton extends StatelessWidget {
   final String text;
   final bool enabled;
 
-  const SelectableButton({super.key,
-    required this.text,
-    this.onPressed,
-    this.selected = false,
-    this.enabled = true});
+  const SelectableButton(
+      {super.key,
+      required this.text,
+      this.onPressed,
+      this.selected = false,
+      this.enabled = true});
 
   @override
   Widget build(BuildContext context) {

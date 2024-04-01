@@ -26,6 +26,8 @@ abstract class FieldInput<T> extends ChangeNotifier {
 
   void Function(BuildContext context)? onTap;
 
+  void Function(String)? onChanged;
+
   String? validator(String? value, AppLocalizations loc) => null;
 
   /// Pre-processes the input value before it is used or validated.
@@ -196,12 +198,20 @@ class GenderInput extends TextFieldInput {
       : super(placeholder: LocKey((loc) => loc.input_genderPlaceholder));
 
   @override
+  void Function(String p1) get onChanged => (_) {
+        if (selectedGender != null) {
+          selectedGender = null;
+          notifyListeners();
+        }
+      };
+
+  @override
   String get value => selectedGender?.enumValue ?? super.value;
 
   @override
   set value(String? value) {
     Gender? gender =
-        Gender.values.firstWhereOrNull((gender) => gender.enumValue == value);
+        Gender.all.firstWhereOrNull((gender) => gender.enumValue == value);
     if (gender != null) {
       selectedGender = gender;
     } else {

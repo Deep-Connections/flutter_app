@@ -28,6 +28,7 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
       builder: (context, child) {
         final fieldInput = widget.fieldInput;
         return TextFormField(
+          onChanged: fieldInput.onChanged,
           controller: fieldInput.controller,
           keyboardType: fieldInput.keyboardType,
           maxLength: fieldInput.maxLength,

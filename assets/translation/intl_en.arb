@@ -20,8 +20,13 @@
   "input_birthdayMinimumError": "You must be at least 18 years old to use this app.",
   "input_birthdayError": "Please provide your birthday.",
   "input_genderPlaceholder": "Other genders",
-  "input_genderEnumMale": "Male",
-  "input_genderEnumFemale": "Female",
+  "input_genderEnumMan": "Man",
+  "input_genderEnumWoman": "Woman",
+  "input_genderEnumNonBinary": "Non-binary",
+  "input_genderEnumIntersex": "Intersex",
+  "input_genderEnumTransWoman": "Trans Woman",
+  "input_genderEnumTransMan": "Trans Man",
+  "input_genderEnumEveryone": "Everyone",
   "input_genderMore": "More",
   "login_loginButton": "Sign in",
   "login_title": "Sign in to your account",
@@ -36,6 +41,6 @@
   "profile_firstNameTitle": "What's your name?",
   "profile_birthdayTitle": "When were you born?",
   "profile_genderTitle": "What's your gender?",
-  "profile_genderTypeInTitle": "Type in your gender",
+  "profile_genderMoreTitle": "Type in your gender",
   "profile_sizeTitle": "How tall are you?"
 }

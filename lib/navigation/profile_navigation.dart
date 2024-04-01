@@ -1,6 +1,6 @@
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/profile/birthday_profile_screen.dart';
-import 'package:deep_connections/screens/profile/gender_profile_screen.dart';
+import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
 import 'package:deep_connections/screens/profile/height_profile_screen.dart';
 import 'package:deep_connections/screens/profile/name_profile_screen.dart';
 import 'package:go_router/go_router.dart';
