@@ -23,7 +23,8 @@ mixin _$Profile {
   String? get uid => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
-  List<String>? get genderLookingFor => throw _privateConstructorUsedError;
+
+  List<String>? get genderPreferences => throw _privateConstructorUsedError;
   DateTime? get dateOfBirth => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
 
@@ -41,7 +42,7 @@ abstract class $ProfileCopyWith<$Res> {
       {String? uid,
       String? firstName,
       String? gender,
-      List<String>? genderLookingFor,
+      List<String>? genderPreferences,
       DateTime? dateOfBirth,
       int? height});
 }
@@ -62,7 +63,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? uid = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
-    Object? genderLookingFor = freezed,
+    Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
     Object? height = freezed,
   }) {
@@ -79,9 +80,9 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      genderLookingFor: freezed == genderLookingFor
-          ? _value.genderLookingFor
-          : genderLookingFor // ignore: cast_nullable_to_non_nullable
+      genderPreferences: freezed == genderPreferences
+          ? _value.genderPreferences
+          : genderPreferences // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       dateOfBirth: freezed == dateOfBirth
           ? _value.dateOfBirth
@@ -106,7 +107,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       {String? uid,
       String? firstName,
       String? gender,
-      List<String>? genderLookingFor,
+      List<String>? genderPreferences,
       DateTime? dateOfBirth,
       int? height});
 }
@@ -125,7 +126,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? uid = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
-    Object? genderLookingFor = freezed,
+    Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
     Object? height = freezed,
   }) {
@@ -142,9 +143,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      genderLookingFor: freezed == genderLookingFor
-          ? _value._genderLookingFor
-          : genderLookingFor // ignore: cast_nullable_to_non_nullable
+      genderPreferences: freezed == genderPreferences
+          ? _value._genderPreferences
+          : genderPreferences // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       dateOfBirth: freezed == dateOfBirth
           ? _value.dateOfBirth
@@ -165,10 +166,10 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       {this.uid,
       this.firstName,
       this.gender,
-      final List<String>? genderLookingFor,
+      final List<String>? genderPreferences,
       this.dateOfBirth,
       this.height})
-      : _genderLookingFor = genderLookingFor;
+      : _genderPreferences = genderPreferences;
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -179,13 +180,13 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   final String? firstName;
   @override
   final String? gender;
-  final List<String>? _genderLookingFor;
+  final List<String>? _genderPreferences;
   @override
-  List<String>? get genderLookingFor {
-    final value = _genderLookingFor;
+  List<String>? get genderPreferences {
+    final value = _genderPreferences;
     if (value == null) return null;
-    if (_genderLookingFor is EqualUnmodifiableListView)
-      return _genderLookingFor;
+    if (_genderPreferences is EqualUnmodifiableListView)
+      return _genderPreferences;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -197,7 +198,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderLookingFor: $genderLookingFor, dateOfBirth: $dateOfBirth, height: $height)';
+    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, height: $height)';
   }
 
   @override
@@ -207,8 +208,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       ..add(DiagnosticsProperty('type', 'Profile'))
       ..add(DiagnosticsProperty('uid', uid))
       ..add(DiagnosticsProperty('firstName', firstName))
-      ..add(DiagnosticsProperty('gender', gender))
-      ..add(DiagnosticsProperty('genderLookingFor', genderLookingFor))
+      ..add(DiagnosticsProperty('gender', gender))..add(
+        DiagnosticsProperty('genderPreferences', genderPreferences))
       ..add(DiagnosticsProperty('dateOfBirth', dateOfBirth))
       ..add(DiagnosticsProperty('height', height));
   }
@@ -223,7 +224,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
                 other.firstName == firstName) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             const DeepCollectionEquality()
-                .equals(other._genderLookingFor, _genderLookingFor) &&
+                .equals(other._genderPreferences, _genderPreferences) &&
             (identical(other.dateOfBirth, dateOfBirth) ||
                 other.dateOfBirth == dateOfBirth) &&
             (identical(other.height, height) || other.height == height));
@@ -236,7 +237,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       uid,
       firstName,
       gender,
-      const DeepCollectionEquality().hash(_genderLookingFor),
+      const DeepCollectionEquality().hash(_genderPreferences),
       dateOfBirth,
       height);
 
@@ -259,7 +260,7 @@ abstract class _Profile implements Profile {
       {final String? uid,
       final String? firstName,
       final String? gender,
-      final List<String>? genderLookingFor,
+      final List<String>? genderPreferences,
       final DateTime? dateOfBirth,
       final int? height}) = _$ProfileImpl;
 
@@ -272,7 +273,7 @@ abstract class _Profile implements Profile {
   @override
   String? get gender;
   @override
-  List<String>? get genderLookingFor;
+  List<String>? get genderPreferences;
   @override
   DateTime? get dateOfBirth;
   @override

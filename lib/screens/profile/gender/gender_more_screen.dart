@@ -8,7 +8,7 @@ import '../../../models/gender.dart';
 import '../components/gender_button.dart';
 
 class GenderMoreScreen extends StatelessWidget {
-  final GenderInput genderInput;
+  final SingleGenderInput genderInput;
 
   const GenderMoreScreen({super.key, required this.genderInput});
 

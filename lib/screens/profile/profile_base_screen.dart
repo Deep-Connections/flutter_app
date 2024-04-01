@@ -17,7 +17,7 @@ class ProfileBaseScreen extends StatefulWidget {
   const ProfileBaseScreen({
     super.key,
     required this.title,
-    required this.fields,
+    this.fields = const [],
     required this.onNext,
     this.nextButtonText,
     required this.children,

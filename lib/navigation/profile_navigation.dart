@@ -1,6 +1,7 @@
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/profile/birthday_profile_screen.dart';
 import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
+import 'package:deep_connections/screens/profile/gender_preferences/gender_preferences_profile_screen.dart';
 import 'package:deep_connections/screens/profile/height_profile_screen.dart';
 import 'package:deep_connections/screens/profile/name_profile_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -42,6 +43,15 @@ final profileRoutes = GoRoute(
           path: ProfileRoutes.gender.path,
           builder: (context, state) {
             return GenderProfileScreen(
+              profileService: getIt(),
+              navigateToNext: () =>
+                  context.push(ProfileRoutes.genderPreferences.fullPath),
+            );
+          }),
+      GoRoute(
+          path: ProfileRoutes.genderPreferences.path,
+          builder: (context, state) {
+            return GenderPreferencesProfileScreen(
               profileService: getIt(),
               navigateToNext: () => context.push(ProfileRoutes.height.fullPath),
             );

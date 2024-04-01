@@ -11,7 +11,7 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
       uid: json['uid'] as String?,
       firstName: json['firstName'] as String?,
       gender: json['gender'] as String?,
-      genderLookingFor: (json['genderLookingFor'] as List<dynamic>?)
+      genderPreferences: (json['genderPreferences'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
       dateOfBirth: json['dateOfBirth'] == null
@@ -25,7 +25,7 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
       'uid': instance.uid,
       'firstName': instance.firstName,
       'gender': instance.gender,
-      'genderLookingFor': instance.genderLookingFor,
+      'genderPreferences': instance.genderPreferences,
       'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
       'height': instance.height,
     };

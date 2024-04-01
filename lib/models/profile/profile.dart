@@ -10,7 +10,7 @@ class Profile with _$Profile {
     String? uid,
     String? firstName,
     String? gender,
-    List<String>? genderLookingFor,
+    List<String>? genderPreferences,
     DateTime? dateOfBirth,
     int? height,
   }) = _Profile;
