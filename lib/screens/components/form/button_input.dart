@@ -11,7 +11,7 @@ class ButtonInput {
   void setLoading(bool isLoading) {
     _isLoading = isLoading;
     for (var field in _fields) {
-      field.enabled.value = !isLoading;
+      field.enabled = !isLoading;
     }
   }
 
