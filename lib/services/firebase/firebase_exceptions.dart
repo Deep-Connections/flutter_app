@@ -1,12 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirebaseFireStoreException extends FirebaseException
-    implements Exception {
-  final String code;
-  final String message;
-
-  FirebaseFireStoreException({required this.code, required this.message})
-      : super(plugin: 'cloud_firestore', message: message, code: code);
+class FirebaseFireStoreException extends FirebaseException {
+  FirebaseFireStoreException({required super.code, required super.message})
+      : super(plugin: 'cloud_firestore');
 }
 
 class UserNotFoundException extends FirebaseAuthException {
