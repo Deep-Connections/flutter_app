@@ -1,14 +1,11 @@
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
-import 'package:deep_connections/screens/profile/gender/gender_more_screen.dart';
-import 'package:deep_connections/utils/extensions/navigation.dart';
-import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GenderButton extends StatelessWidget {
   final Gender gender;
-  final SingleGenderInput genderInput;
+  final GenderInput genderInput;
 
   const GenderButton(
       {super.key, required this.gender, required this.genderInput});
@@ -21,9 +18,9 @@ class GenderButton extends StatelessWidget {
       listenable: genderInput,
       builder: (context, child) {
         return SelectableButton(
-          text: gender.localizedName.localize(loc),
-          onPressed: () => genderInput.selectedGender = gender,
-          selected: genderInput.selectedGender == gender,
+          text: gender.localize(loc),
+          onPressed: () => genderInput.clickOnGender(gender),
+          selected: genderInput.isSelected(gender),
           enabled: genderInput.enabled,
         );
       },
@@ -31,8 +28,34 @@ class GenderButton extends StatelessWidget {
   }
 }
 
-class GenderTypeInButton extends StatelessWidget {
-  final SingleGenderInput genderInput;
+class MoreGenderButton extends StatelessWidget {
+  final GenderInput genderInput;
+  final VoidCallback onPressed;
+
+  const MoreGenderButton(
+      {super.key, required this.genderInput, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    return ListenableBuilder(
+      listenable: genderInput,
+      builder: (context, child) {
+        final text = genderInput.moreText(loc);
+        final isSelected = text != null;
+        return SelectableButton(
+          text: "${text ?? loc.profile_genderMore} >",
+          onPressed: onPressed,
+          selected: isSelected,
+          enabled: genderInput.enabled,
+        );
+      },
+    );
+  }
+}
+
+/*class GenderTypeInButton extends StatelessWidget {
+  final GenderInput genderInput;
 
   const GenderTypeInButton({super.key, required this.genderInput});
 
@@ -69,29 +92,7 @@ class GenderTypeInButton extends StatelessWidget {
       },
     );
   }
-}
-
-class MultipleGenderButton extends StatelessWidget {
-  final Gender gender;
-  final MultipleGenderInput genderInput;
-
-  const MultipleGenderButton(
-      {super.key, required this.gender, required this.genderInput});
-
-  @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context);
-    return ListenableBuilder(
-        listenable: genderInput,
-        builder: (context, child) {
-          return SelectableButton(
-              text: gender.localizedName.localize(loc),
-              onPressed: () => genderInput.toggleGender(gender),
-              selected: genderInput.selectedGenders.contains(gender),
-              enabled: genderInput.enabled);
-        });
-  }
-}
+}*/
 
 class SelectableButton extends StatelessWidget {
   final void Function()? onPressed;
@@ -110,14 +111,12 @@ class SelectableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: enabled ? onPressed : null,
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-            side: selected
-                ? const BorderSide(color: Colors.black)
-                : BorderSide.none,
-          ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          side: selected
+              ? const BorderSide(color: Colors.black)
+              : BorderSide.none,
         ),
       ),
       child: Text(text),

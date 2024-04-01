@@ -41,6 +41,8 @@
   "profile_birthdayTitle": "When were you born?",
   "profile_genderTitle": "What's your gender?",
   "profile_genderMore": "More",
-  "profile_genderMoreTitle": "Type in your gender",
+  "profile_genderMoreTitle": "More genders",
+  "profile_genderPreferencesTitle": "Who are you looking for?",
+  "profile_genderPreferencesMoreTitle": "More genders",
   "profile_sizeTitle": "How tall are you?"
 }

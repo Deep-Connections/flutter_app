@@ -1,3 +1,4 @@
+import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 class Gender {
@@ -5,6 +6,8 @@ class Gender {
   final LocKey localizedName;
 
   Gender(this.enumValue, this.localizedName);
+
+  String localize(loc) => localizedName.localize(loc);
 
   // base
   static final man = Gender('MAN', LocKey((loc) => loc.input_genderEnumMan));
@@ -36,5 +39,10 @@ class Gender {
     transMan
   ];
 
-  static final List<Gender> all = base + additional;
+  static final List<Gender> all = base + additional + [everyone];
+
+  static fromEnum(String? enumValue) {
+    if (enumValue == null) return null;
+    return all.firstWhereOrNull((gender) => gender.enumValue == enumValue);
+  }
 }
