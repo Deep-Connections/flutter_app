@@ -3,11 +3,15 @@ import 'package:deep_connections/utils/loc_key.dart';
 
 class Gender {
   final String enumValue;
-  final LocKey localizedName;
+  final LocKey? localizedName;
+  String? _customName;
 
   Gender(this.enumValue, this.localizedName);
 
-  String localize(loc) => localizedName.localize(loc);
+  static fromCustomName(String customName) =>
+      Gender(customName, null).._customName = customName;
+
+  String localize(loc) => localizedName?.localize(loc) ?? _customName ?? "";
 
   // base
   static final man = Gender('MAN', LocKey((loc) => loc.input_genderEnumMan));
