@@ -31,5 +31,6 @@ class ProfileRoutes {
   static const Route name = Route('name', main);
   static const Route birthday = Route('birthday', main);
   static const Route gender = Route('gender', main);
+  static const Route genderPreferences = Route('gender_preferences', main);
   static const Route height = Route('height', main);
 }

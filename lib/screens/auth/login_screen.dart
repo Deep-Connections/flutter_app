@@ -2,7 +2,7 @@ import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/button_input.dart';
-import 'package:deep_connections/screens/components/form/field_input.dart';
+import 'package:deep_connections/screens/components/form/field_input/text_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
       title: loc.login_title,
       actions: [
         TextButton.icon(
-            onPressed: () => context.go(AuthRoutes.register.fullPath),
+            onPressed: () => context.push(AuthRoutes.register.fullPath),
             icon: const Icon(Icons.person),
             label: Text(loc.login_registerLink))
       ],
@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             TextButton(
                 onPressed: () {
-                  context.go(AuthRoutes.forgotPassword.fullPath);
+                  context.push(AuthRoutes.forgotPassword.fullPath);
                 },
                 child: Text(loc.login_forgotPasswordLink)),
           ],

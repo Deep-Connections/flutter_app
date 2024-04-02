@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'field_input.dart';
+import 'field_input/field_input.dart';
 
 class DcTextFormField extends StatefulWidget {
   final FieldInput fieldInput;
@@ -23,25 +23,28 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
-    return ValueListenableBuilder<bool>(
-      valueListenable: widget.fieldInput.enabled,
-      builder: (context, enabled, child) {
+    return ListenableBuilder(
+      listenable: widget.fieldInput,
+      builder: (context, child) {
+        final fieldInput = widget.fieldInput;
         return TextFormField(
-          controller: widget.fieldInput.controller,
-          keyboardType: widget.fieldInput.keyboardType,
-          maxLength: widget.fieldInput.maxLength,
-          inputFormatters: widget.fieldInput.inputFormatter,
+          onChanged: fieldInput.onChanged,
+          controller: fieldInput.controller,
+          keyboardType: fieldInput.keyboardType,
+          maxLength: fieldInput.maxLength,
+          inputFormatters: fieldInput.inputFormatter,
           decoration: InputDecoration(
-            hintText: widget.fieldInput.placeholder?.localize(loc),
+            hintText: fieldInput.placeholder?.localize(loc),
             errorText: widget.error,
           ),
-          validator: (value) => widget.fieldInput
-              .validator(widget.fieldInput.preProcess(value), loc),
+          validator: (value) =>
+              fieldInput.validator(fieldInput.preProcess(value), loc),
           textInputAction: widget.textInputAction,
-          enabled: enabled,
-          obscureText: widget.fieldInput.obscureText,
-          onTap: widget.fieldInput.onTap != null
-              ? () => widget.fieldInput.onTap!(context)
+          enabled: fieldInput.enabled,
+          obscureText: fieldInput.obscureText,
+          readOnly: fieldInput.readOnly,
+          onTap: fieldInput.onTap != null
+              ? () => fieldInput.onTap!(context)
               : null,
         );
       },

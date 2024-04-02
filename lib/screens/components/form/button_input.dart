@@ -1,4 +1,4 @@
-import 'package:deep_connections/screens/components/form/field_input.dart';
+import 'package:deep_connections/screens/components/form/field_input/field_input.dart';
 import 'package:flutter/material.dart';
 
 class ButtonInput {
@@ -11,7 +11,7 @@ class ButtonInput {
   void setLoading(bool isLoading) {
     _isLoading = isLoading;
     for (var field in _fields) {
-      field.enabled.value = !isLoading;
+      field.enabled = !isLoading;
     }
   }
 
