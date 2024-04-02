@@ -12,7 +12,7 @@ final authRoutes = GoRoute(
   redirect: (context, state) {
     final userState = getIt<UserService>().userState;
     if (userState.isAuthenticated) {
-      return ProfileRoutes.name.fullPath;
+      return ProfileRoutes.main.fullPath;
     }
     if (state.fullPath == AuthRoutes.main.path) {
       return AuthRoutes.login.fullPath;
