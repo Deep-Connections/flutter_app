@@ -27,7 +27,9 @@ void main() {
             ((widget.child is Text &&
                     (widget.child as Text).data == buttonText) ||
                 (widget.child is Row &&
-                    ((widget.child as Row).children[0] as Text).data ==
+                    (((widget.child as Row).children[0] as Flexible).child
+                                as Text)
+                            .data ==
                         buttonText)),
         description: "ElevatedButton with text $buttonText not found",
       ),
