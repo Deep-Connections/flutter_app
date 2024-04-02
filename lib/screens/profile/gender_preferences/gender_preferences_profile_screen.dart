@@ -44,6 +44,7 @@ class _GenderProfileScreenState extends State<GenderPreferencesProfileScreen> {
           onPressed: () => context.navigate(
               GenderPreferencesMoreProfileScreen(genderInput: genderInput)),
         ),
+        GenderButton(gender: Gender.everyone, genderInput: genderInput)
       ],
       onNext: () async {
         final response = await widget.profileService.updateProfile(
