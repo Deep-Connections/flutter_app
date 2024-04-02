@@ -42,7 +42,7 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
           textInputAction: widget.textInputAction,
           enabled: fieldInput.enabled,
           obscureText: fieldInput.obscureText,
-          readOnly: fieldInput.onTap != null,
+          readOnly: fieldInput.readOnly,
           onTap: fieldInput.onTap != null
               ? () => fieldInput.onTap!(context)
               : null,

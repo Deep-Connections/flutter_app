@@ -38,74 +38,40 @@ class MoreGenderButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
+
     return ListenableBuilder(
       listenable: genderInput,
       builder: (context, child) {
         final text = genderInput.moreText(loc);
         final isSelected = text != null;
         return SelectableButton(
-          text: "${text ?? loc.profile_genderMore} >",
-          onPressed: onPressed,
+            text: text ?? loc.profile_genderMore,
+            onPressed: onPressed,
           selected: isSelected,
           enabled: genderInput.enabled,
-        );
+            icon: Icon(Icons.more_horiz,
+                color: Theme.of(context).colorScheme.outline)
+            //icon: Text(" >", style: TextStyle(inherit: true, color: Theme.of(context).colorScheme.outline))
+            );
       },
     );
   }
 }
-
-/*class GenderTypeInButton extends StatelessWidget {
-  final GenderInput genderInput;
-
-  const GenderTypeInButton({super.key, required this.genderInput});
-
-  @override
-  Widget build(BuildContext context) {
-    final loc = AppLocalizations.of(context);
-    return ListenableBuilder(
-      listenable: genderInput,
-      builder: (context, child) {
-        return ValueListenableBuilder(
-            valueListenable: genderInput.controller,
-            builder: (context, typedGenderText, child) {
-              var text = "";
-              if (genderInput.selectedGender == null) {
-                text = typedGenderText.text;
-              }
-              final additionalGender = Gender.additional
-                  .firstWhereOrNull((g) => g == genderInput.selectedGender);
-              if (additionalGender != null) {
-                text = additionalGender.localizedName.localize(loc);
-              }
-              final isSelected = text.isNotEmpty;
-              if (text.isEmpty) text = loc.profile_genderMore;
-              return SelectableButton(
-                text: "$text >",
-                onPressed: () {
-                  // todo move navigation to go router
-                  context.navigate(GenderMoreScreen(genderInput: genderInput));
-                },
-                selected: isSelected,
-                enabled: genderInput.enabled,
-              );
-            });
-      },
-    );
-  }
-}*/
 
 class SelectableButton extends StatelessWidget {
   final void Function()? onPressed;
   final bool selected;
   final String text;
   final bool enabled;
+  final Widget? icon;
 
   const SelectableButton(
       {super.key,
       required this.text,
       this.onPressed,
       this.selected = false,
-      this.enabled = true});
+      this.enabled = true,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +85,10 @@ class SelectableButton extends StatelessWidget {
               : BorderSide.none,
         ),
       ),
-      child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis),
+      child: Row(mainAxisSize: MainAxisSize.min, children: [
+        Text(text, maxLines: 1, overflow: TextOverflow.ellipsis),
+        if (icon != null) icon!
+      ]),
     );
   }
 }

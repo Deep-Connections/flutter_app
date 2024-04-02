@@ -26,28 +26,24 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
   }
 
   @override
+  void Function(String p1)? get onChanged => (_) => notifyListeners();
+
+  @override
   clickOnGender(Gender gender) => selectedGender = gender;
 
   SingleGenderInput()
       : super(placeholder: LocKey((loc) => loc.input_genderPlaceholder));
-
-  /*@override
-  void Function(String p1) get onChanged => (_) {
-        if (selectedGender != null) {
-          _selectedGender = null;
-          notifyListeners();
-        }
-      };*/
 
   final _genderRegex =
       RegExp(r"^[\p{L}\s\-]+$", unicode: true, caseSensitive: false);
 
   @override
   String? validator(String? value, AppLocalizations loc) {
-    if (value != null && !_genderRegex.hasMatch(value)) {
+    if (selectedGender == null &&
+        (value != null && !_genderRegex.hasMatch(value))) {
       return loc.input_genderError;
     }
-    return super.validator(value, loc);
+    return null;
   }
 
   @override
@@ -58,7 +54,7 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
     Gender? gender = Gender.fromEnum(value);
     if (gender != null) {
       selectedGender = gender;
-    } else {
+    } else if (super.value.isNotEmpty) {
       super.value = value;
       selectedGender = null;
     }
@@ -73,11 +69,15 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
     if (Gender.additional.contains(selectedGender)) {
       text = selectedGender?.localize(loc);
     }
-    if (text == null && super.value.isNotEmpty) {
+    if (selectedGender == null && super.value.isNotEmpty) {
       text = super.value;
     }
     return text;
   }
+
+  @override
+  void Function(BuildContext context)? get onTap =>
+      (_) => selectedGender = null;
 }
 
 class MultipleGenderInput extends ChangeNotifier implements GenderInput {
