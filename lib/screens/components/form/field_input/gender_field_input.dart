@@ -92,8 +92,16 @@ class MultipleGenderInput extends ChangeNotifier implements GenderInput {
 
   @override
   void clickOnGender(Gender gender) {
-    final wasRemoved = _selectedGenders.remove(gender);
-    if (!wasRemoved) {
+    final genderNotPresent = !_selectedGenders.remove(gender);
+    if (genderNotPresent) {
+      // If everyone is clicked, we remove other genders
+      if (gender == Gender.everyone) {
+        _selectedGenders.clear();
+      }
+      // When we add a gender, we remove everyone (in case it's present)
+      _selectedGenders.remove(Gender.everyone);
+
+      // If gender is not present, we add it.
       _selectedGenders.add(gender);
     }
     notifyListeners();
