@@ -17,7 +17,8 @@ final profileRoutes = GoRoute(
       final UserState userState = getIt<UserService>().userState;
       if (userState.isProfileComplete) return HomeRoutes.home.fullPath;
       if (state.fullPath == ProfileRoutes.main.path) {
-        return ProfileRoutes.relationshipType.fullPath;
+        return ProfileRoutes
+            .relationshipType.fullPath; // todo change back to profile name
       }
       return null;
     },
