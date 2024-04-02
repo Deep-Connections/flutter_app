@@ -49,7 +49,7 @@ class MoreGenderButton extends StatelessWidget {
             onPressed: onPressed,
           selected: isSelected,
           enabled: genderInput.enabled,
-            icon: Icon(Icons.more_horiz,
+            icon: Icon(Icons.arrow_right,
                 color: Theme.of(context).colorScheme.outline)
             //icon: Text(" >", style: TextStyle(inherit: true, color: Theme.of(context).colorScheme.outline))
             );
@@ -86,7 +86,8 @@ class SelectableButton extends StatelessWidget {
         ),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
-        Text(text, maxLines: 1, overflow: TextOverflow.ellipsis),
+        Flexible(
+            child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis)),
         if (icon != null) icon!
       ]),
     );
