@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 import 'field_input.dart';
 
 abstract class DateInput extends FieldInput<DateTime> {
-  DateInput({LocKey? placeholder}) : super(placeholder: placeholder);
+  DateInput({LocKey? placeholder})
+      : super(placeholder: placeholder, readOnly: true);
 
   DateTime? pickedDate;
 

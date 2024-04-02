@@ -9,6 +9,7 @@ abstract class FieldInput<T> extends ChangeNotifier {
   final LocKey? placeholder;
   final List<TextInputFormatter>? inputFormatter;
   final bool obscureText;
+  final bool readOnly;
   final TextEditingController controller = TextEditingController();
 
   FieldInput({
@@ -17,6 +18,7 @@ abstract class FieldInput<T> extends ChangeNotifier {
     this.placeholder,
     this.inputFormatter,
     this.obscureText = false,
+    this.readOnly = false,
   });
 
   void Function(BuildContext context)? onTap;

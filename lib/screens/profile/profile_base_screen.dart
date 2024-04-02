@@ -33,32 +33,57 @@ class _ProfileBaseScreenState extends State<ProfileBaseScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
+    return ProfileNoNextBaseScreen(
+      title: widget.title,
+      formKey: buttonInput.formKey,
+      bottom: FormButton(
+        text: widget.nextButtonText ?? loc.general_next,
+        buttonInput: buttonInput,
+        actionIfValid: widget.onNext,
+      ),
+      children: widget.children,
+    );
+  }
+}
+
+class ProfileNoNextBaseScreen extends StatelessWidget {
+  final String title;
+  final List<Widget> children;
+  final Widget? bottom;
+  final GlobalKey<FormState>? formKey;
+
+  const ProfileNoNextBaseScreen(
+      {super.key,
+      required this.title,
+      this.bottom,
+      required this.children,
+      this.formKey});
+
+  @override
+  Widget build(BuildContext context) {
     return BaseScreen(
-        body: Form(
-      key: buttonInput.formKey,
-      child: Column(
+      body: Column(
         children: [
-          Text(widget.title,
+          Text(title,
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   )),
           Expanded(
-            child: DcColumn(
-              children: [
-                Expanded(
-                    child: ListView(
-                  children: [...widget.children],
-                )),
-                FormButton(
-                  text: widget.nextButtonText ?? loc.general_next,
-                  buttonInput: buttonInput,
-                  actionIfValid: widget.onNext,
-                ),
-              ],
+            child: Form(
+              key: formKey,
+              child: DcColumn(
+                children: [
+                  Expanded(
+                      child: ListView(
+                    children: [...children],
+                  )),
+                  if (bottom != null) bottom!,
+                ],
+              ),
             ),
           ),
         ],
       ),
-    ));
+    );
   }
 }
