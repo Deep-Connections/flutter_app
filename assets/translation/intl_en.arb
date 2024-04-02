@@ -46,5 +46,10 @@
   "profile_genderMoreTypeIn": "If you don't see your gender, feel free to type it in:",
   "profile_genderPreferencesTitle": "Who are you looking for?",
   "profile_genderPreferencesMoreTitle": "More genders",
-  "profile_sizeTitle": "How tall are you?"
+  "profile_sizeTitle": "How tall are you?",
+  "question_relationshipType_question": "How long do you want your next relationship to last?",
+  "question_relationshipType_answer1": "One night",
+  "question_relationshipType_answer2": "Short term",
+  "question_relationshipType_answer3": "Long term",
+  "question_relationshipType_answer4": "For life"
 }
