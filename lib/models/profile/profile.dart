@@ -14,7 +14,8 @@ class Profile with _$Profile {
     List<String>? genderPreferences,
     DateTime? dateOfBirth,
     int? height,
-    List<QuestionResponse>? questionResponses,
+    QuestionResponse? question1,
+    QuestionResponse? question2,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>

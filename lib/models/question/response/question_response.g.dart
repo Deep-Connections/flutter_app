@@ -9,15 +9,13 @@ part of 'question_response.dart';
 _$QuestionResponseImpl _$$QuestionResponseImplFromJson(
         Map<String, dynamic> json) =>
     _$QuestionResponseImpl(
-      questionId: json['questionId'] as String?,
-      questionType: json['questionType'] as String?,
-      answerValue: json['answerValue'] as int?,
+      response: (json['response'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$QuestionResponseImplToJson(
         _$QuestionResponseImpl instance) =>
     <String, dynamic>{
-      'questionId': instance.questionId,
-      'questionType': instance.questionType,
-      'answerValue': instance.answerValue,
+      'response': instance.response,
     };

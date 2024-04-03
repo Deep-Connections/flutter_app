@@ -20,14 +20,9 @@ QuestionResponse _$QuestionResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$QuestionResponse {
-  String? get questionId => throw _privateConstructorUsedError;
-
-  String? get questionType => throw _privateConstructorUsedError;
-
-  int? get answerValue => throw _privateConstructorUsedError;
+  List<String>? get response => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
   $QuestionResponseCopyWith<QuestionResponse> get copyWith =>
       throw _privateConstructorUsedError;
@@ -38,9 +33,8 @@ abstract class $QuestionResponseCopyWith<$Res> {
   factory $QuestionResponseCopyWith(
           QuestionResponse value, $Res Function(QuestionResponse) then) =
       _$QuestionResponseCopyWithImpl<$Res, QuestionResponse>;
-
   @useResult
-  $Res call({String? questionId, String? questionType, int? answerValue});
+  $Res call({List<String>? response});
 }
 
 /// @nodoc
@@ -50,30 +44,19 @@ class _$QuestionResponseCopyWithImpl<$Res, $Val extends QuestionResponse>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? questionId = freezed,
-    Object? questionType = freezed,
-    Object? answerValue = freezed,
+    Object? response = freezed,
   }) {
     return _then(_value.copyWith(
-      questionId: freezed == questionId
-          ? _value.questionId
-          : questionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      questionType: freezed == questionType
-          ? _value.questionType
-          : questionType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      answerValue: freezed == answerValue
-          ? _value.answerValue
-          : answerValue // ignore: cast_nullable_to_non_nullable
-              as int?,
+      response: freezed == response
+          ? _value.response
+          : response // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -84,10 +67,9 @@ abstract class _$$QuestionResponseImplCopyWith<$Res>
   factory _$$QuestionResponseImplCopyWith(_$QuestionResponseImpl value,
           $Res Function(_$QuestionResponseImpl) then) =
       __$$QuestionResponseImplCopyWithImpl<$Res>;
-
   @override
   @useResult
-  $Res call({String? questionId, String? questionType, int? answerValue});
+  $Res call({List<String>? response});
 }
 
 /// @nodoc
@@ -101,23 +83,13 @@ class __$$QuestionResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? questionId = freezed,
-    Object? questionType = freezed,
-    Object? answerValue = freezed,
+    Object? response = freezed,
   }) {
     return _then(_$QuestionResponseImpl(
-      questionId: freezed == questionId
-          ? _value.questionId
-          : questionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      questionType: freezed == questionType
-          ? _value.questionType
-          : questionType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      answerValue: freezed == answerValue
-          ? _value.answerValue
-          : answerValue // ignore: cast_nullable_to_non_nullable
-              as int?,
+      response: freezed == response
+          ? _value._response
+          : response // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -127,32 +99,33 @@ class __$$QuestionResponseImplCopyWithImpl<$Res>
 class _$QuestionResponseImpl
     with DiagnosticableTreeMixin
     implements _QuestionResponse {
-  const _$QuestionResponseImpl(
-      {this.questionId, this.questionType, this.answerValue});
+  const _$QuestionResponseImpl({final List<String>? response})
+      : _response = response;
 
   factory _$QuestionResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuestionResponseImplFromJson(json);
 
+  final List<String>? _response;
   @override
-  final String? questionId;
-  @override
-  final String? questionType;
-  @override
-  final int? answerValue;
+  List<String>? get response {
+    final value = _response;
+    if (value == null) return null;
+    if (_response is EqualUnmodifiableListView) return _response;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuestionResponse(questionId: $questionId, questionType: $questionType, answerValue: $answerValue)';
+    return 'QuestionResponse(response: $response)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuestionResponse'))
-      ..add(DiagnosticsProperty('questionId', questionId))
-      ..add(DiagnosticsProperty('questionType', questionType))
-      ..add(DiagnosticsProperty('answerValue', answerValue));
+      ..add(DiagnosticsProperty('type', 'QuestionResponse'))..add(
+        DiagnosticsProperty('response', response));
   }
 
   @override
@@ -160,18 +133,13 @@ class _$QuestionResponseImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$QuestionResponseImpl &&
-            (identical(other.questionId, questionId) ||
-                other.questionId == questionId) &&
-            (identical(other.questionType, questionType) ||
-                other.questionType == questionType) &&
-            (identical(other.answerValue, answerValue) ||
-                other.answerValue == answerValue));
+            const DeepCollectionEquality().equals(other._response, _response));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, questionId, questionType, answerValue);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_response));
 
   @JsonKey(ignore: true)
   @override
@@ -189,23 +157,14 @@ class _$QuestionResponseImpl
 }
 
 abstract class _QuestionResponse implements QuestionResponse {
-  const factory _QuestionResponse(
-      {final String? questionId,
-      final String? questionType,
-      final int? answerValue}) = _$QuestionResponseImpl;
+  const factory _QuestionResponse({final List<String>? response}) =
+      _$QuestionResponseImpl;
 
   factory _QuestionResponse.fromJson(Map<String, dynamic> json) =
       _$QuestionResponseImpl.fromJson;
 
   @override
-  String? get questionId;
-
-  @override
-  String? get questionType;
-
-  @override
-  int? get answerValue;
-
+  List<String>? get response;
   @override
   @JsonKey(ignore: true)
   _$$QuestionResponseImplCopyWith<_$QuestionResponseImpl> get copyWith =>
