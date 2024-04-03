@@ -1,0 +1,9 @@
+# https://github.com/google/json_serializable.dart/tree/master/json_serializable#build-configuration
+
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true
+          include_if_null: false

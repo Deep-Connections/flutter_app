@@ -26,9 +26,7 @@ mixin _$Profile {
   List<String>? get genderPreferences => throw _privateConstructorUsedError;
   DateTime? get dateOfBirth => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
-
   QuestionResponse? get question1 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question2 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -52,7 +50,6 @@ abstract class $ProfileCopyWith<$Res> {
       QuestionResponse? question2});
 
   $QuestionResponseCopyWith<$Res>? get question1;
-
   $QuestionResponseCopyWith<$Res>? get question2;
 }
 
@@ -158,7 +155,6 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
 
   @override
   $QuestionResponseCopyWith<$Res>? get question1;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question2;
 }
@@ -272,8 +268,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Profile'))
-      ..add(DiagnosticsProperty('uid', uid))..add(
+      ..add(DiagnosticsProperty('type', 'Profile'))..add(
+        DiagnosticsProperty('uid', uid))..add(
         DiagnosticsProperty('firstName', firstName))..add(
         DiagnosticsProperty('gender', gender))..add(
         DiagnosticsProperty('genderPreferences', genderPreferences))..add(
@@ -357,7 +353,6 @@ abstract class _Profile implements Profile {
   int? get height;
   @override
   QuestionResponse? get question1;
-
   @override
   QuestionResponse? get question2;
   @override

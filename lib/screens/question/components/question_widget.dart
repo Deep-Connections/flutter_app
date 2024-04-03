@@ -1,6 +1,9 @@
+import 'package:deep_connections/config/injectable.dart';
 import 'package:deep_connections/models/profile/profile.dart';
 import 'package:deep_connections/models/question/question.dart';
+import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:deep_connections/screens/profile/components/gender_button.dart';
+import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -16,7 +19,8 @@ class QuestionWidget extends StatefulWidget {
 }
 
 class _QuestionWidgetState extends State<QuestionWidget> {
-  late List<String> selectedAnswer = [];
+  List<String> selectedAnswer = [];
+  final profileService = getIt<ProfileService>();
 
   @override
   void initState() {
@@ -43,6 +47,10 @@ class _QuestionWidgetState extends State<QuestionWidget> {
             },
             selected: selectedAnswer.contains(a.value),
             text: a.answerText.localize(loc))),
+        ElevatedButton(
+            onPressed: () => profileService.updateProfile((p) => widget.question
+                .updateProfile(p, QuestionResponse(response: selectedAnswer))),
+            child: Text(loc.general_submitButton))
       ],
     );
   }
