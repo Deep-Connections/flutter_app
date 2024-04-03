@@ -7,9 +7,7 @@ part 'question_response.g.dart';
 @freezed
 class QuestionResponse with _$QuestionResponse {
   const factory QuestionResponse({
-    String? questionId,
-    String? questionType,
-    int? answerValue,
+    List<String>? response,
   }) = _QuestionResponse;
 
   factory QuestionResponse.fromJson(Map<String, dynamic> json) =>

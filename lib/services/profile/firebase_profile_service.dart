@@ -27,17 +27,17 @@ class FirebaseProfileService implements ProfileService {
   Profile? _profile;
 
   @override
-  Future<Profile?> get profile async {
-    _profile ??= (await _profileReference.get()).data();
+  Future<Profile> get profile async {
+    _profile ??= (await _profileReference.get()).data() ?? const Profile();
     return _profile!;
   }
 
   @override
   Future<Response<void>> updateProfile(
       Profile Function(Profile) callback) async {
-    var newProfile = callback((await profile) ?? const Profile());
+    var newProfile = callback((await profile));
     _profile = newProfile;
-    return handleFirebaseErrors(
-        () => _profileReference.set(newProfile, SetOptions(merge: true)));
+    return handleFirebaseErrors(() => _profileReference.set(
+        callback(const Profile()), SetOptions(merge: true)));
   }
 }
