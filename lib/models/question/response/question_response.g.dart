@@ -15,7 +15,15 @@ _$QuestionResponseImpl _$$QuestionResponseImplFromJson(
     );
 
 Map<String, dynamic> _$$QuestionResponseImplToJson(
-        _$QuestionResponseImpl instance) =>
-    <String, dynamic>{
-      'response': instance.response,
-    };
+    _$QuestionResponseImpl instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('response', instance.response);
+  return val;
+}

@@ -28,14 +28,22 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
               json['question2'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
-    <String, dynamic>{
-      'uid': instance.uid,
-      'firstName': instance.firstName,
-      'gender': instance.gender,
-      'genderPreferences': instance.genderPreferences,
-      'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
-      'height': instance.height,
-      'question1': instance.question1,
-      'question2': instance.question2,
-    };
+Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('uid', instance.uid);
+  writeNotNull('firstName', instance.firstName);
+  writeNotNull('gender', instance.gender);
+  writeNotNull('genderPreferences', instance.genderPreferences);
+  writeNotNull('dateOfBirth', instance.dateOfBirth?.toIso8601String());
+  writeNotNull('height', instance.height);
+  writeNotNull('question1', instance.question1?.toJson());
+  writeNotNull('question2', instance.question2?.toJson());
+  return val;
+}

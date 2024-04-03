@@ -13,8 +13,16 @@ _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
           .toList(),
     );
 
-Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'participantIds': instance.participantIds,
-    };
+Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('participantIds', instance.participantIds);
+  return val;
+}
