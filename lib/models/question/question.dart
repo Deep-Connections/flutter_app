@@ -22,7 +22,7 @@ class Question {
 }
 
 class Answer {
-  final int value;
+  final String value;
   final LocKey answerText;
 
   Answer(this.value, this.answerText);
@@ -32,10 +32,10 @@ final relationShipTypeQuestion = Question(
   id: '1',
   questionText: LocKey((loc) => loc.question_relationshipType_question),
   answers: [
-    Answer(1, LocKey((loc) => loc.question_relationshipType_answer1)),
-    Answer(2, LocKey((loc) => loc.question_relationshipType_answer2)),
-    Answer(3, LocKey((loc) => loc.question_relationshipType_answer3)),
-    Answer(4, LocKey((loc) => loc.question_relationshipType_answer4)),
+    Answer('1', LocKey((loc) => loc.question_relationshipType_answer1)),
+    Answer('2', LocKey((loc) => loc.question_relationshipType_answer2)),
+    Answer('3', LocKey((loc) => loc.question_relationshipType_answer3)),
+    Answer('4', LocKey((loc) => loc.question_relationshipType_answer4)),
   ],
   fromProfile: (p) => p.question1,
   updateProfile: (p, r) => p.copyWith(question1: r),

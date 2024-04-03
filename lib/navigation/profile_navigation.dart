@@ -8,6 +8,7 @@ import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
+import '../models/question/question.dart';
 import '../services/user/user_service.dart';
 import '../services/user/user_state.dart';
 
@@ -26,7 +27,11 @@ final profileRoutes = GoRoute(
       GoRoute(
         path: ProfileRoutes.relationshipType.path,
         builder: (context, state) {
-          return const QuestionScreen();
+          return QuestionScreen(
+            profileService: getIt(),
+            question: relationShipTypeQuestion,
+            navigate: () => context.push(ProfileRoutes.name.fullPath),
+          );
         },
       ),
       GoRoute(
