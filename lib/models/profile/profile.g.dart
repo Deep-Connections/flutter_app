@@ -18,6 +18,9 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['dateOfBirth'] as String),
       height: json['height'] as int?,
+      questionResponses: (json['questionResponses'] as List<dynamic>?)
+          ?.map((e) => QuestionResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
@@ -28,4 +31,5 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
       'genderPreferences': instance.genderPreferences,
       'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
       'height': instance.height,
+      'questionResponses': instance.questionResponses,
     };

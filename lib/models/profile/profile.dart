@@ -1,3 +1,4 @@
+import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -13,6 +14,7 @@ class Profile with _$Profile {
     List<String>? genderPreferences,
     DateTime? dateOfBirth,
     int? height,
+    List<QuestionResponse>? questionResponses,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
