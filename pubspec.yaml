@@ -39,7 +39,7 @@ dependencies:
   firebase_auth: ^4.17.4
   cloud_firestore: ^4.15.8
   provider: ^6.1.1
-  json_annotation: ^4.8.0
+  json_annotation: ^4.8.1
 
   flutter_localizations:
     sdk: flutter
