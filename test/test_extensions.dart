@@ -25,9 +25,7 @@ extension LocalizedWidgetTester on WidgetTester {
           widget is TextField && widget.decoration?.hintText == hintText,
     );
   }
-}
 
-extension ButtonEnabled on WidgetTester {
   void checkButtonEnabled(String buttonText, {bool enabled = true}) {
     final ElevatedButton button = widget<ElevatedButton>(
       find.byWidgetPredicate(

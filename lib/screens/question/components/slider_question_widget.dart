@@ -25,16 +25,19 @@ class _SliderQuestionWidgetState extends State<SliderQuestionWidget> {
     return Row(children: [
       Text(widget.question.minText.localize(loc)),
       Slider.adaptive(
-          value: sliderValue,
-          min: widget.question.minValue.toDouble(),
-          max: widget.question.maxValue.toDouble(),
-          divisions: widget.question.divisions,
-          onChanged: (value) {
-            setState(() {
-              sliderValue = value;
-            });
-            widget.questionResponse.values = [value.toInt().toString()];
-          }),
+        value: sliderValue,
+        min: widget.question.minValue.toDouble(),
+        max: widget.question.maxValue.toDouble(),
+        divisions: widget.question.divisions,
+        onChanged: (value) {
+          setState(() {
+            sliderValue = value;
+          });
+        },
+        onChangeEnd: (value) {
+          widget.questionResponse.values = [value.toInt().toString()];
+        },
+      ),
       Text(widget.question.maxText.localize(loc)),
     ]);
   }
