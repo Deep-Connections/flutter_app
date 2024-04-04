@@ -28,6 +28,7 @@ final relationShipTypeQuestion = MultipleChoiceQuestion(
     Answer('3', LocKey((loc) => loc.question_relationshipType_answer3)),
     Answer('4', LocKey((loc) => loc.question_relationshipType_answer4)),
   ],
+  minChoices: 2,
   maxChoices: 2,
   fromProfile: (p) => p.question1,
   updateProfile: (p, r) => p.copyWith(question1: r),

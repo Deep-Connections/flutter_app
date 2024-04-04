@@ -47,8 +47,8 @@ class MoreGenderButton extends StatelessWidget {
         return SelectableButton(
             text: text ?? loc.profile_genderMore,
             onPressed: onPressed,
-          selected: isSelected,
-          enabled: genderInput.enabled,
+            selected: isSelected,
+            enabled: genderInput.enabled,
             icon: Icon(Icons.arrow_right,
                 color: Theme.of(context).colorScheme.outline)
             //icon: Text(" >", style: TextStyle(inherit: true, color: Theme.of(context).colorScheme.outline))
@@ -75,6 +75,7 @@ class SelectableButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return ElevatedButton(
       onPressed: enabled ? onPressed : null,
       style: ElevatedButton.styleFrom(
@@ -87,7 +88,12 @@ class SelectableButton extends StatelessWidget {
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Flexible(
-            child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis)),
+            child: Text(
+          text,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          semanticsLabel: selected ? loc.semantic_selected(text) : text,
+        )),
         if (icon != null) icon!
       ]),
     );

@@ -1,4 +1,5 @@
 {
+  "semantic_selected": "Selected: {text}",
   "general_error": "An error occurred",
   "general_submitButton": "Submit",
   "general_next": "Next",

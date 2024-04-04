@@ -29,7 +29,7 @@ final profileRoutes = GoRoute(
         builder: (context, state) {
           return QuestionScreen(
             profileService: getIt(),
-            question: politicSpectrumQuestion,
+            question: relationShipTypeQuestion,
             navigate: () => context.push(ProfileRoutes.name.fullPath),
           );
         },

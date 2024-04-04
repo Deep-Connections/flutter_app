@@ -26,3 +26,23 @@ extension LocalizedWidgetTester on WidgetTester {
     );
   }
 }
+
+extension ButtonEnabled on WidgetTester {
+  void checkButtonEnabled(String buttonText, {bool enabled = true}) {
+    final ElevatedButton button = widget<ElevatedButton>(
+      find.byWidgetPredicate(
+        (Widget widget) =>
+            widget is ElevatedButton &&
+            ((widget.child is Text &&
+                    (widget.child as Text).data == buttonText) ||
+                (widget.child is Row &&
+                    (((widget.child as Row).children[0] as Flexible).child
+                                as Text)
+                            .data ==
+                        buttonText)),
+        description: "ElevatedButton with text $buttonText not found",
+      ),
+    );
+    expect(button.onPressed != null, enabled);
+  }
+}
