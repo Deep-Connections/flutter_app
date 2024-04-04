@@ -1,7 +1,5 @@
 import 'package:deep_connections/models/question/choice_question.dart';
 import 'package:deep_connections/models/question/question.dart';
-import 'package:deep_connections/screens/question/components/answer_notifier.dart';
-import 'package:deep_connections/screens/question/components/choice_question_widget.dart';
 import 'package:deep_connections/models/question/slider_question.dart';
 import 'package:deep_connections/screens/question/components/answer_notifier.dart';
 import 'package:deep_connections/screens/question/components/choice_question_widget.dart';
@@ -23,9 +21,9 @@ class QuestionWidget extends StatelessWidget {
       children: [
         Text(question.questionText.localize(loc),
             style: Theme.of(context).textTheme.headlineSmall),
-        if (question is ChoiceQuestion)
+        if (question is MultipleChoiceQuestion)
           ChoiceQuestionWidget(
-              question: question as ChoiceQuestion, answer: answer)
+              question: question as MultipleChoiceQuestion, answer: answer)
         else if (question is SliderQuestion)
           SliderQuestionWidget(
               question: question as SliderQuestion, answer: answer)

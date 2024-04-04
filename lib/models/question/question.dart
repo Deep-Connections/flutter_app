@@ -19,7 +19,7 @@ abstract class Question {
   });
 }
 
-final relationShipTypeQuestion = ChoiceQuestion(
+final relationShipTypeQuestion = MultipleChoiceQuestion(
   id: '1',
   questionText: LocKey((loc) => loc.question_relationshipType_question),
   answers: [

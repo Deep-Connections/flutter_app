@@ -4,12 +4,12 @@ import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
-class ChoiceQuestion extends Question {
+class MultipleChoiceQuestion extends Question {
   final int minChoices;
   final int maxChoices;
   final List<Answer> answers;
 
-  ChoiceQuestion({
+  MultipleChoiceQuestion({
     required String id,
     required LocKey questionText,
     this.minChoices = 1,
@@ -22,5 +22,23 @@ class ChoiceQuestion extends Question {
           questionText: questionText,
           fromProfile: fromProfile,
           updateProfile: updateProfile,
+        );
+}
+
+class SingleChoiceQuestion extends MultipleChoiceQuestion {
+  SingleChoiceQuestion({
+    required String id,
+    required LocKey questionText,
+    required List<Answer> answers,
+    required QuestionResponse? Function(Profile) fromProfile,
+    required Profile Function(Profile, QuestionResponse) updateProfile,
+  }) : super(
+          id: id,
+          questionText: questionText,
+          answers: answers,
+          fromProfile: fromProfile,
+          updateProfile: updateProfile,
+          minChoices: 1,
+          maxChoices: 1,
         );
 }
