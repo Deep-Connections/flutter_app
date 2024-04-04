@@ -1,5 +1,7 @@
 import 'package:deep_connections/models/question/choice_question.dart';
 import 'package:deep_connections/models/question/question.dart';
+import 'package:deep_connections/screens/question/components/answer_notifier.dart';
+import 'package:deep_connections/screens/question/components/choice_question_widget.dart';
 import 'package:deep_connections/models/question/slider_question.dart';
 import 'package:deep_connections/screens/question/components/answer_notifier.dart';
 import 'package:deep_connections/screens/question/components/choice_question_widget.dart';
