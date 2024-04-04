@@ -1,6 +1,7 @@
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
+import 'package:deep_connections/screens/components/form/field_input/text_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../config/constants.dart';
 import '../../services/auth/auth_service.dart';
 import '../components/form/button_input.dart';
-import '../components/form/field_input.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final AuthService auth;

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class FormButton extends StatefulWidget {
   final String _text;
   final ButtonInput _buttonInput;
-  final Function _action;
+  final Future<void> Function() _action;
 
   const FormButton(
       {super.key,
       required String text,
       required ButtonInput buttonInput,
-      required Function actionIfValid})
+      required Future<void> Function() actionIfValid})
       : _text = text,
         _buttonInput = buttonInput,
         _action = actionIfValid;

@@ -21,15 +21,11 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Message {
   String? get id => throw _privateConstructorUsedError;
-
   String? get senderId => throw _privateConstructorUsedError;
-
   String? get text => throw _privateConstructorUsedError;
-
   DateTime? get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
   @JsonKey(ignore: true)
   $MessageCopyWith<Message> get copyWith => throw _privateConstructorUsedError;
 }
@@ -38,7 +34,6 @@ mixin _$Message {
 abstract class $MessageCopyWith<$Res> {
   factory $MessageCopyWith(Message value, $Res Function(Message) then) =
       _$MessageCopyWithImpl<$Res, Message>;
-
   @useResult
   $Res call({String? id, String? senderId, String? text, DateTime? timestamp});
 }
@@ -50,7 +45,6 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -88,7 +82,6 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
   factory _$$MessageImplCopyWith(
           _$MessageImpl value, $Res Function(_$MessageImpl) then) =
       __$$MessageImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call({String? id, String? senderId, String? text, DateTime? timestamp});
@@ -206,16 +199,12 @@ abstract class _Message implements Message {
 
   @override
   String? get id;
-
   @override
   String? get senderId;
-
   @override
   String? get text;
-
   @override
   DateTime? get timestamp;
-
   @override
   @JsonKey(ignore: true)
   _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>

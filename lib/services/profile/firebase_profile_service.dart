@@ -9,7 +9,7 @@ import '../firebase_constants.dart';
 import '../utils/handle_firebase_errors.dart';
 import '../utils/response.dart';
 
-@Injectable(as: ProfileService)
+@Singleton(as: ProfileService)
 class FirebaseProfileService implements ProfileService {
   final UserService _userService;
 
