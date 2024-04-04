@@ -1,11 +1,11 @@
 import 'package:deep_connections/models/question/question.dart';
-import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/future_builder.dart';
-import 'package:deep_connections/screens/question/components/answer_notifier.dart';
+import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:deep_connections/screens/question/components/question_widget.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -25,7 +25,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  final answerNotifier = AnswerNotifier();
+  final answerNotifier = QuestionResponseNotifier();
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +37,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
           builder: (context, profile) {
             final initialAnswer =
                 widget.question.fromProfile(profile)?.response ?? [];
-            answerNotifier.selectedAnswer = initialAnswer;
+            answerNotifier.values = initialAnswer;
             return DcColumn(children: [
-              QuestionWidget(question: widget.question, answer: answerNotifier),
-              ElevatedButton(
-                  onPressed: () => widget.profileService.updateProfile((p) =>
-                      widget.question.updateProfile(
-                          p,
-                          QuestionResponse(
-                              response: answerNotifier.selectedAnswer))),
-                  child: Text(loc.general_submitButton))
+              QuestionWidget(
+                  question: widget.question, questionResponse: answerNotifier),
+              ListenableBuilder(
+                  listenable: answerNotifier,
+                  builder: (context, child) {
+                    return ElevatedButton(
+                        onPressed:
+                            answerNotifier.response?.let((response) => () {
+                                  widget.profileService.updateProfile((p) =>
+                                      widget.question
+                                          .updateProfile(p, response));
+                                  widget.navigate();
+                                }),
+                        child: Text(loc.general_next));
+                  })
             ]);
           },
         ));

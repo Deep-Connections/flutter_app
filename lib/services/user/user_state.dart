@@ -1,4 +1,4 @@
-import 'package:deep_connections/utils/extensions/nullable.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../models/user.dart';

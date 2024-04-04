@@ -1,14 +1,14 @@
 import 'package:deep_connections/models/question/slider_question.dart';
-import 'package:deep_connections/screens/question/components/answer_notifier.dart';
+import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SliderQuestionWidget extends StatefulWidget {
   final SliderQuestion question;
-  final AnswerNotifier answer;
+  final QuestionResponseNotifier questionResponse;
 
   const SliderQuestionWidget(
-      {super.key, required this.question, required this.answer});
+      {super.key, required this.question, required this.questionResponse});
 
   @override
   State<SliderQuestionWidget> createState() => _SliderQuestionWidgetState();
@@ -16,7 +16,7 @@ class SliderQuestionWidget extends StatefulWidget {
 
 class _SliderQuestionWidgetState extends State<SliderQuestionWidget> {
   late double sliderValue =
-      double.tryParse(widget.answer.selectedAnswer.firstOrNull.toString()) ??
+      double.tryParse(widget.questionResponse.values?.firstOrNull ?? "") ??
           widget.question.defaultValue.toDouble();
 
   @override
@@ -33,7 +33,7 @@ class _SliderQuestionWidgetState extends State<SliderQuestionWidget> {
             setState(() {
               sliderValue = value;
             });
-            widget.answer.selectedAnswer = [value.toInt().toString()];
+            widget.questionResponse.values = [value.toInt().toString()];
           }),
       Text(widget.question.maxText.localize(loc)),
     ]);
