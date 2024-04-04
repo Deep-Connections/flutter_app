@@ -28,36 +28,38 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
     return Column(
       children: [
         ...widget.question.answers.map((a) => SelectableButton(
-            onPressed: () {
-              setState(() {
-                // If the answer is already selected, remove it
-                if (selectedAnswers.contains(a)) {
-                  selectedAnswers.remove(a);
-                } else {
-                  // For single choice questions we always switch the answer
-                  if (widget.question.maxChoices == 1) {
-                    selectedAnswers.clear();
-                    selectedAnswers.add(a);
-                  } else {
-                    // For multiple choice questions, only add the answer if the max number of choices has not been reached
-                    if (widget.question.maxChoices > selectedAnswers.length) {
-                      selectedAnswers.add(a);
-                    } else {
-                      // todo blink or something to show that the max number of choices has been reached
-                    }
-                  }
-                }
-                final isValidAnswer =
-                    widget.question.minChoices <= selectedAnswers.length &&
-                        selectedAnswers.length <= widget.question.maxChoices;
-                widget.questionResponse.values = isValidAnswer
-                    ? selectedAnswers.map((answer) => answer.value).toList()
-                    : null;
-              });
-            },
+            onPressed: () => _onAnswerPressed(a),
             selected: selectedAnswers.contains(a),
             text: a.answerText.localize(loc)))
       ],
     );
+  }
+
+  _onAnswerPressed(Answer a) {
+    setState(() {
+      // If the answer is already selected, remove it
+      if (selectedAnswers.contains(a)) {
+        selectedAnswers.remove(a);
+      } else {
+        // For single choice questions we always switch the answer
+        if (widget.question.maxChoices == 1) {
+          selectedAnswers.clear();
+          selectedAnswers.add(a);
+        } else {
+          // For multiple choice questions, only add the answer if the max number of choices has not been reached
+          if (widget.question.maxChoices > selectedAnswers.length) {
+            selectedAnswers.add(a);
+          } else {
+            // todo blink or something to show that the max number of choices has been reached
+          }
+        }
+      }
+      final isValidAnswer =
+          widget.question.minChoices <= selectedAnswers.length &&
+              selectedAnswers.length <= widget.question.maxChoices;
+      widget.questionResponse.values = isValidAnswer
+          ? selectedAnswers.map((answer) => answer.value).toList()
+          : null;
+    });
   }
 }
