@@ -53,7 +53,7 @@
   "question_relationshipType_answer2": "Short term",
   "question_relationshipType_answer3": "Long term",
   "question_relationshipType_answer4": "For life",
-  "question_politics_question": "Where do you see yourself on the political spectrum?",
-  "question_politics_answerMin": "left",
-  "question_politics_answerMax": "right"
+  "question_politicalSpectrum_question": "Where do you see yourself on the political spectrum?",
+  "question_politicalSpectrum_answerMin": "left",
+  "question_politicalSpectrum_answerMax": "right"
 }

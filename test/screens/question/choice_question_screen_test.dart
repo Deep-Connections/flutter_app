@@ -12,7 +12,7 @@ void main() {
   late bool navigateSuccess;
   late MockProfileService profileService;
 
-  final question1 = SingleChoiceQuestion(
+  final question1 = MultipleChoiceQuestion(
     id: '1',
     questionText: LocKey((loc) => loc.question_relationshipType_question),
     answers: [
@@ -23,6 +23,7 @@ void main() {
     ],
     fromProfile: (p) => p.question1,
     updateProfile: (p, r) => p.copyWith(question1: r),
+    navigationPath: '',
   );
 
   setUp(() {
@@ -78,6 +79,7 @@ void main() {
     maxChoices: 3,
     fromProfile: (p) => p.question2,
     updateProfile: (p, r) => p.copyWith(question2: r),
+    navigationPath: '',
   );
 
   testWidgets('Test question screen with multiple choice question',

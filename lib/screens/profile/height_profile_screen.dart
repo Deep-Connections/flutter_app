@@ -12,8 +12,10 @@ import '../components/form/form_button.dart';
 
 class HeightProfileScreen extends StatefulWidget {
   final ProfileService profileService;
+  final void Function() navigateToNext;
 
-  const HeightProfileScreen({super.key, required this.profileService});
+  const HeightProfileScreen(
+      {super.key, required this.profileService, required this.navigateToNext});
 
   @override
   State<HeightProfileScreen> createState() => _HeightProfileScreenState();
@@ -23,6 +25,14 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
   final height = HeightInput();
   late final buttonInput = ButtonInput(fields: [height]);
   String? apiError;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.profileService.profile.then((value) {
+      height.value = value.height;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +54,7 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
                 actionIfValid: () async {
                   final response = await widget.profileService
                       .updateProfile((p) => p.copyWith(height: height.value));
+                  response.onSuccess((_) => widget.navigateToNext());
                 },
               ),
             ],

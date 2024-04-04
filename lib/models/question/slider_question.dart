@@ -20,6 +20,7 @@ class SliderQuestion extends Question {
     int? defaultValue,
     required this.minText,
     required this.maxText,
+    required String navigationPath,
     required QuestionResponse? Function(Profile) fromProfile,
     required Profile Function(Profile, QuestionResponse) updateProfile,
   })  : defaultValue = defaultValue ?? (minValue + maxValue) ~/ 2,
@@ -28,5 +29,6 @@ class SliderQuestion extends Question {
           questionText: questionText,
           fromProfile: fromProfile,
           updateProfile: updateProfile,
+          navigationPath: navigationPath,
         );
 }

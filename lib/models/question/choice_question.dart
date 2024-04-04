@@ -15,6 +15,7 @@ class MultipleChoiceQuestion extends Question {
     this.minChoices = 1,
     this.maxChoices = 1,
     required this.answers,
+    required String navigationPath,
     required QuestionResponse? Function(Profile) fromProfile,
     required Profile Function(Profile, QuestionResponse) updateProfile,
   }) : super(
@@ -22,23 +23,6 @@ class MultipleChoiceQuestion extends Question {
           questionText: questionText,
           fromProfile: fromProfile,
           updateProfile: updateProfile,
-        );
-}
-
-class SingleChoiceQuestion extends MultipleChoiceQuestion {
-  SingleChoiceQuestion({
-    required String id,
-    required LocKey questionText,
-    required List<Answer> answers,
-    required QuestionResponse? Function(Profile) fromProfile,
-    required Profile Function(Profile, QuestionResponse) updateProfile,
-  }) : super(
-          id: id,
-          questionText: questionText,
-          answers: answers,
-          fromProfile: fromProfile,
-          updateProfile: updateProfile,
-          minChoices: 1,
-          maxChoices: 1,
+          navigationPath: navigationPath,
         );
 }

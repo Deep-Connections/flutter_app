@@ -24,7 +24,7 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
   void initState() {
     super.initState();
     widget.profileService.profile.then((value) {
-      birthDay.value = value?.dateOfBirth;
+      birthDay.value = value.dateOfBirth;
     });
   }
 
