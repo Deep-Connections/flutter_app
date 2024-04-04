@@ -2,7 +2,7 @@ import 'package:deep_connections/navigation/auth_navigation.dart';
 import 'package:deep_connections/navigation/profile_navigation.dart';
 import 'package:deep_connections/navigation/refresh_listenable.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:flutter/material.dart';
+import 'package:deep_connections/services/user/user_state.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
@@ -14,19 +14,24 @@ final appRouter = GoRouter(
       GoRouterRefreshListenable(getIt<UserService>().userStateStream),
   initialLocation: AuthRoutes.main.path,
   debugLogDiagnostics: true,
+  redirect: (context, state) {
+    final UserState userState = getIt<UserService>().userState;
+    final path = state.fullPath;
+    if (path == null) return AuthRoutes.main.fullPath;
+    if (!userState.isAuthenticated &&
+        !path.startsWith(AuthRoutes.main.fullPath)) {
+      return AuthRoutes.main.fullPath;
+    }
+    if (userState.isAuthenticated &&
+        !userState.isProfileComplete &&
+        !path.startsWith(ProfileRoutes.main.fullPath)) {
+      return ProfileRoutes.main.fullPath;
+    }
+    return null;
+  },
   routes: [
     GoRoute(
       path: HomeRoutes.home.path,
-      redirect: (BuildContext context, GoRouterState state) {
-        final userState = getIt<UserService>().userState;
-        if (!userState.isAuthenticated) {
-          return AuthRoutes.main.fullPath;
-        }
-        if (!userState.isProfileComplete) {
-          return ProfileRoutes.main.fullPath;
-        }
-        return null;
-      },
       builder: (context, state) {
         return Home(
           navigateCallback: () => context.go(HomeRoutes.home.fullPath),
