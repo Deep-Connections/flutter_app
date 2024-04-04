@@ -10,13 +10,13 @@ import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
 import '../services/user/user_service.dart';
-import '../services/user/user_state.dart';
+import '../services/user/user_status.dart';
 
 final profileRoutes = GoRoute(
     path: ProfileRoutes.main.path,
     redirect: (context, state) {
-      final UserState userState = getIt<UserService>().userState;
-      if (userState.isProfileComplete) return HomeRoutes.home.fullPath;
+      final UserStatus userStatus = getIt<UserService>().userStatus;
+      if (userStatus.isProfileComplete) return HomeRoutes.home.fullPath;
       if (state.fullPath == ProfileRoutes.main.path) {
         return ProfileRoutes.name.fullPath;
       }

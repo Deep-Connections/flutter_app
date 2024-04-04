@@ -10,8 +10,8 @@ import '../services/user/user_service.dart';
 final authRoutes = GoRoute(
   path: AuthRoutes.main.path,
   redirect: (context, state) {
-    final userState = getIt<UserService>().userState;
-    if (userState.isAuthenticated) {
+    final userStatus = getIt<UserService>().userStatus;
+    if (userStatus.isAuthenticated) {
       return ProfileRoutes.main.fullPath;
     }
     if (state.fullPath == AuthRoutes.main.path) {
