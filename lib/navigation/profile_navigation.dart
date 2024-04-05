@@ -58,7 +58,7 @@ final profileRoutes = GoRoute(
               return QuestionScreen(
                 question: navigationStep,
                 profileService: getIt(),
-                navigate: () => navigateToNext,
+                navigate: navigateToNext,
               );
             }
             return BaseScreen(
