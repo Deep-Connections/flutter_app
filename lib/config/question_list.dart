@@ -4,7 +4,7 @@ import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/models/question/slider_question.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
-final List<Question> questions = [
+final List<Question> profileQuestionList = [
   MultipleChoiceQuestion(
     id: '1',
     questionText: LocKey((loc) => loc.question_relationshipType_question),
