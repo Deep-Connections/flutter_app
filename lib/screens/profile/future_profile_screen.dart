@@ -9,18 +9,16 @@ import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class FutureProfileScreen extends StatelessWidget {
+class BaseProfileScreen extends StatelessWidget {
   final String title;
-  final ProfileService profileService;
+  final Widget child;
   final Widget? bottom;
   final GlobalKey<FormState>? formKey;
-  final Widget Function(BuildContext context, Profile profile) builder;
 
-  const FutureProfileScreen(
+  const BaseProfileScreen(
       {super.key,
-      required this.profileService,
       required this.title,
-      required this.builder,
+      required this.child,
       this.bottom,
       this.formKey});
 
@@ -36,8 +34,7 @@ class FutureProfileScreen extends StatelessWidget {
         Form(
           key: formKey,
           child: Expanded(
-            child: GenericFutureBuilder(
-                data: profileService.profile, builder: builder),
+            child: child,
           ),
         ),
         if (bottom != null) bottom!,
@@ -74,15 +71,17 @@ class _FutureFieldProfileScreenState extends State<FutureFieldProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
-    return FutureProfileScreen(
+    return BaseProfileScreen(
       formKey: buttonInput.formKey,
-      profileService: widget.profileService,
       title: widget.title,
-      builder: widget.builder,
       bottom: FormButton(
         text: widget.nextButtonText ?? loc.general_next,
         buttonInput: buttonInput,
         actionIfValid: widget.onNext,
+      ),
+      child: GenericFutureBuilder(
+        data: widget.profileService.profile,
+        builder: widget.builder,
       ),
     );
   }

@@ -11,7 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GenderProfileScreen extends StatefulWidget {
   final ProfileService profileService;
-  final VoidCallback navigateToNext;
+  final Future<void> Function() navigateToNext;
 
   const GenderProfileScreen(
       {super.key, required this.profileService, required this.navigateToNext});
@@ -47,7 +47,7 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
       onNext: () async {
         widget.profileService
             .updateProfile((p) => p.copyWith(gender: gender.value));
-        widget.navigateToNext();
+        await widget.navigateToNext();
       },
     );
   }
