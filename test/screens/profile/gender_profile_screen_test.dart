@@ -167,22 +167,5 @@ void main() {
     expect(navigateSuccess, true);
     navigateSuccess = false;
     expect(profileService.testProfile.gender, customGender);
-
-    /*
-    await tester.enterText(
-        tester.findTextFieldByHintText(loc.input_genderPlaceholder),
-        'Trans-Frau');
-    await tester.tap(find.text(loc.input_genderEnumTransWoman));
-    await tester.tap(find.byTooltip('Back'));
-    await tester.pumpAndSettle();
-    // Check that instead of more we show non-binary
-    expect(find.text(loc.input_genderEnumTransWoman), findsOneWidget);
-
-    // Check that instead of non-binary
-    await tester.tap(find.text(loc.general_next));
-    await tester.pumpAndSettle();
-    expect(navigateSuccess, true);
-    navigateSuccess = false;
-    expect(profileService.testProfile.gender, Gender.transWoman.enumValue);*/
   });
 }
