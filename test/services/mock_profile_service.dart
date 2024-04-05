@@ -10,7 +10,7 @@ class MockProfileService implements ProfileService {
   Profile testProfile = const Profile();
 
   @override
-  Future<Profile?> get profile async => testProfile;
+  Future<Profile> get profile async => testProfile;
 
   @override
   Future<Response<void>> updateProfile(

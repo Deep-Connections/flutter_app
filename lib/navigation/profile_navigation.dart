@@ -1,9 +1,11 @@
+import 'package:deep_connections/models/question/question_list.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/profile/birthday_profile_screen.dart';
 import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
 import 'package:deep_connections/screens/profile/gender_preferences/gender_preferences_profile_screen.dart';
 import 'package:deep_connections/screens/profile/height_profile_screen.dart';
 import 'package:deep_connections/screens/profile/name_profile_screen.dart';
+import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable.dart';
@@ -59,7 +61,29 @@ final profileRoutes = GoRoute(
       GoRoute(
         path: ProfileRoutes.height.path,
         builder: (context, state) {
-          return HeightProfileScreen(profileService: getIt());
+          return HeightProfileScreen(
+              profileService: getIt(),
+              navigateToNext: () {
+                context.push(questions.first
+                    .navigationFromBasePath(ProfileRoutes.main.path));
+              });
         },
       ),
+      ...List.generate(questions.length, (index) {
+        final question = questions[index];
+        final navigateNextPath = index < questions.length - 1
+            ? questions[index + 1]
+                .navigationFromBasePath(ProfileRoutes.main.path)
+            : HomeRoutes.home.fullPath;
+        return GoRoute(
+          path: question.navigationPath,
+          builder: (context, state) {
+            return QuestionScreen(
+              question: question,
+              profileService: getIt(),
+              navigate: () => context.push(navigateNextPath),
+            );
+          },
+        );
+      }),
     ]);

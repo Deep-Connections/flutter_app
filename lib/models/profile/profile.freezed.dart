@@ -23,10 +23,11 @@ mixin _$Profile {
   String? get uid => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
-
   List<String>? get genderPreferences => throw _privateConstructorUsedError;
   DateTime? get dateOfBirth => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
+  QuestionResponse? get question1 => throw _privateConstructorUsedError;
+  QuestionResponse? get question2 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,7 +45,12 @@ abstract class $ProfileCopyWith<$Res> {
       String? gender,
       List<String>? genderPreferences,
       DateTime? dateOfBirth,
-      int? height});
+      int? height,
+      QuestionResponse? question1,
+      QuestionResponse? question2});
+
+  $QuestionResponseCopyWith<$Res>? get question1;
+  $QuestionResponseCopyWith<$Res>? get question2;
 }
 
 /// @nodoc
@@ -66,6 +72,8 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
     Object? height = freezed,
+    Object? question1 = freezed,
+    Object? question2 = freezed,
   }) {
     return _then(_value.copyWith(
       uid: freezed == uid
@@ -92,7 +100,39 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int?,
+      question1: freezed == question1
+          ? _value.question1
+          : question1 // ignore: cast_nullable_to_non_nullable
+              as QuestionResponse?,
+      question2: freezed == question2
+          ? _value.question2
+          : question2 // ignore: cast_nullable_to_non_nullable
+              as QuestionResponse?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuestionResponseCopyWith<$Res>? get question1 {
+    if (_value.question1 == null) {
+      return null;
+    }
+
+    return $QuestionResponseCopyWith<$Res>(_value.question1!, (value) {
+      return _then(_value.copyWith(question1: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuestionResponseCopyWith<$Res>? get question2 {
+    if (_value.question2 == null) {
+      return null;
+    }
+
+    return $QuestionResponseCopyWith<$Res>(_value.question2!, (value) {
+      return _then(_value.copyWith(question2: value) as $Val);
+    });
   }
 }
 
@@ -109,7 +149,14 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       String? gender,
       List<String>? genderPreferences,
       DateTime? dateOfBirth,
-      int? height});
+      int? height,
+      QuestionResponse? question1,
+      QuestionResponse? question2});
+
+  @override
+  $QuestionResponseCopyWith<$Res>? get question1;
+  @override
+  $QuestionResponseCopyWith<$Res>? get question2;
 }
 
 /// @nodoc
@@ -129,6 +176,8 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
     Object? height = freezed,
+    Object? question1 = freezed,
+    Object? question2 = freezed,
   }) {
     return _then(_$ProfileImpl(
       uid: freezed == uid
@@ -155,6 +204,14 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as int?,
+      question1: freezed == question1
+          ? _value.question1
+          : question1 // ignore: cast_nullable_to_non_nullable
+              as QuestionResponse?,
+      question2: freezed == question2
+          ? _value.question2
+          : question2 // ignore: cast_nullable_to_non_nullable
+              as QuestionResponse?,
     ));
   }
 }
@@ -168,7 +225,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       this.gender,
       final List<String>? genderPreferences,
       this.dateOfBirth,
-      this.height})
+      this.height,
+      this.question1,
+      this.question2})
       : _genderPreferences = genderPreferences;
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
@@ -195,23 +254,29 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   final DateTime? dateOfBirth;
   @override
   final int? height;
+  @override
+  final QuestionResponse? question1;
+  @override
+  final QuestionResponse? question2;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, height: $height)';
+    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, height: $height, question1: $question1, question2: $question2)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'Profile'))
-      ..add(DiagnosticsProperty('uid', uid))
-      ..add(DiagnosticsProperty('firstName', firstName))
-      ..add(DiagnosticsProperty('gender', gender))..add(
-        DiagnosticsProperty('genderPreferences', genderPreferences))
-      ..add(DiagnosticsProperty('dateOfBirth', dateOfBirth))
-      ..add(DiagnosticsProperty('height', height));
+      ..add(DiagnosticsProperty('type', 'Profile'))..add(
+        DiagnosticsProperty('uid', uid))..add(
+        DiagnosticsProperty('firstName', firstName))..add(
+        DiagnosticsProperty('gender', gender))..add(
+        DiagnosticsProperty('genderPreferences', genderPreferences))..add(
+        DiagnosticsProperty('dateOfBirth', dateOfBirth))..add(
+        DiagnosticsProperty('height', height))..add(
+        DiagnosticsProperty('question1', question1))..add(
+        DiagnosticsProperty('question2', question2));
   }
 
   @override
@@ -227,7 +292,11 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
                 .equals(other._genderPreferences, _genderPreferences) &&
             (identical(other.dateOfBirth, dateOfBirth) ||
                 other.dateOfBirth == dateOfBirth) &&
-            (identical(other.height, height) || other.height == height));
+            (identical(other.height, height) || other.height == height) &&
+            (identical(other.question1, question1) ||
+                other.question1 == question1) &&
+            (identical(other.question2, question2) ||
+                other.question2 == question2));
   }
 
   @JsonKey(ignore: true)
@@ -239,7 +308,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       gender,
       const DeepCollectionEquality().hash(_genderPreferences),
       dateOfBirth,
-      height);
+      height,
+      question1,
+      question2);
 
   @JsonKey(ignore: true)
   @override
@@ -262,7 +333,9 @@ abstract class _Profile implements Profile {
       final String? gender,
       final List<String>? genderPreferences,
       final DateTime? dateOfBirth,
-      final int? height}) = _$ProfileImpl;
+      final int? height,
+      final QuestionResponse? question1,
+      final QuestionResponse? question2}) = _$ProfileImpl;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
@@ -278,6 +351,10 @@ abstract class _Profile implements Profile {
   DateTime? get dateOfBirth;
   @override
   int? get height;
+  @override
+  QuestionResponse? get question1;
+  @override
+  QuestionResponse? get question2;
   @override
   @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>

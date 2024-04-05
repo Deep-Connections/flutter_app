@@ -1,19 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chat.dart';
+part of 'question_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
-      id: json['id'] as String?,
-      participantIds: (json['participantIds'] as List<dynamic>?)
+_$QuestionResponseImpl _$$QuestionResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$QuestionResponseImpl(
+      response: (json['response'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
     );
 
-Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
+Map<String, dynamic> _$$QuestionResponseImplToJson(
+    _$QuestionResponseImpl instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -22,7 +24,6 @@ Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
     }
   }
 
-  writeNotNull('id', instance.id);
-  writeNotNull('participantIds', instance.participantIds);
+  writeNotNull('response', instance.response);
   return val;
 }

@@ -18,14 +18,32 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['dateOfBirth'] as String),
       height: json['height'] as int?,
+      question1: json['question1'] == null
+          ? null
+          : QuestionResponse.fromJson(
+              json['question1'] as Map<String, dynamic>),
+      question2: json['question2'] == null
+          ? null
+          : QuestionResponse.fromJson(
+              json['question2'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) =>
-    <String, dynamic>{
-      'uid': instance.uid,
-      'firstName': instance.firstName,
-      'gender': instance.gender,
-      'genderPreferences': instance.genderPreferences,
-      'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
-      'height': instance.height,
-    };
+Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('uid', instance.uid);
+  writeNotNull('firstName', instance.firstName);
+  writeNotNull('gender', instance.gender);
+  writeNotNull('genderPreferences', instance.genderPreferences);
+  writeNotNull('dateOfBirth', instance.dateOfBirth?.toIso8601String());
+  writeNotNull('height', instance.height);
+  writeNotNull('question1', instance.question1?.toJson());
+  writeNotNull('question2', instance.question2?.toJson());
+  return val;
+}
