@@ -18,13 +18,13 @@ class BirthdayProfileScreen extends StatefulWidget {
 }
 
 class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
-  final birthDay = BirthdayInput();
+  final birthdate = BirthdayInput();
 
   @override
   void initState() {
     super.initState();
     widget.profileService.profile.then((value) {
-      birthDay.value = value.birthdate;
+      birthdate.value = value.birthdate;
     });
   }
 
@@ -33,15 +33,15 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
     final loc = AppLocalizations.of(context);
     return ProfileBaseScreen(
       title: loc.profile_birthdayTitle,
-      fields: [birthDay],
+      fields: [birthdate],
       onNext: () async {
         final response = await widget.profileService
-            .updateProfile((p) => p.copyWith(dateOfBirth: birthDay.value));
+            .updateProfile((p) => p.copyWith(birthdate: birthdate.value));
         response.onSuccess((_) => widget.navigateToNext());
       },
       children: [
         DcTextFormField(
-            fieldInput: birthDay, textInputAction: TextInputAction.done)
+            fieldInput: birthdate, textInputAction: TextInputAction.done)
       ],
     );
   }
