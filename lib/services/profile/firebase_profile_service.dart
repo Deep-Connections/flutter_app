@@ -23,7 +23,6 @@ class FirebaseProfileService implements ProfileService {
   late final _streamController = BehaviorSubject<Profile>()
     ..addStream(_profileReference
         .snapshots()
-        .asBroadcastStream()
         .map((event) => event.data() ?? const Profile()));
 
   DocumentReference<Profile> get _profileReference => _firestore
