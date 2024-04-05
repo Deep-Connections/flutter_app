@@ -24,7 +24,8 @@ mixin _$Profile {
   String? get firstName => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   List<String>? get genderPreferences => throw _privateConstructorUsedError;
-  DateTime? get dateOfBirth => throw _privateConstructorUsedError;
+
+  DateTime? get birthdate => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
   QuestionResponse? get question1 => throw _privateConstructorUsedError;
   QuestionResponse? get question2 => throw _privateConstructorUsedError;
@@ -44,7 +45,7 @@ abstract class $ProfileCopyWith<$Res> {
       String? firstName,
       String? gender,
       List<String>? genderPreferences,
-      DateTime? dateOfBirth,
+      DateTime? birthdate,
       int? height,
       QuestionResponse? question1,
       QuestionResponse? question2});
@@ -70,7 +71,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? firstName = freezed,
     Object? gender = freezed,
     Object? genderPreferences = freezed,
-    Object? dateOfBirth = freezed,
+    Object? birthdate = freezed,
     Object? height = freezed,
     Object? question1 = freezed,
     Object? question2 = freezed,
@@ -92,9 +93,9 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.genderPreferences
           : genderPreferences // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      dateOfBirth: freezed == dateOfBirth
-          ? _value.dateOfBirth
-          : dateOfBirth // ignore: cast_nullable_to_non_nullable
+      birthdate: freezed == birthdate
+          ? _value.birthdate
+          : birthdate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       height: freezed == height
           ? _value.height
@@ -148,7 +149,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       String? firstName,
       String? gender,
       List<String>? genderPreferences,
-      DateTime? dateOfBirth,
+      DateTime? birthdate,
       int? height,
       QuestionResponse? question1,
       QuestionResponse? question2});
@@ -174,7 +175,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? firstName = freezed,
     Object? gender = freezed,
     Object? genderPreferences = freezed,
-    Object? dateOfBirth = freezed,
+    Object? birthdate = freezed,
     Object? height = freezed,
     Object? question1 = freezed,
     Object? question2 = freezed,
@@ -196,9 +197,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value._genderPreferences
           : genderPreferences // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      dateOfBirth: freezed == dateOfBirth
-          ? _value.dateOfBirth
-          : dateOfBirth // ignore: cast_nullable_to_non_nullable
+      birthdate: freezed == birthdate
+          ? _value.birthdate
+          : birthdate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       height: freezed == height
           ? _value.height
@@ -224,7 +225,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       this.firstName,
       this.gender,
       final List<String>? genderPreferences,
-      this.dateOfBirth,
+      this.birthdate,
       this.height,
       this.question1,
       this.question2})
@@ -251,7 +252,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   }
 
   @override
-  final DateTime? dateOfBirth;
+  final DateTime? birthdate;
   @override
   final int? height;
   @override
@@ -261,19 +262,18 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, height: $height, question1: $question1, question2: $question2)';
+    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, birthdate: $birthdate, height: $height, question1: $question1, question2: $question2)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Profile'))..add(
+    properties..add(DiagnosticsProperty('type', 'Profile'))..add(
         DiagnosticsProperty('uid', uid))..add(
         DiagnosticsProperty('firstName', firstName))..add(
         DiagnosticsProperty('gender', gender))..add(
         DiagnosticsProperty('genderPreferences', genderPreferences))..add(
-        DiagnosticsProperty('dateOfBirth', dateOfBirth))..add(
+        DiagnosticsProperty('birthdate', birthdate))..add(
         DiagnosticsProperty('height', height))..add(
         DiagnosticsProperty('question1', question1))..add(
         DiagnosticsProperty('question2', question2));
@@ -290,8 +290,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
             (identical(other.gender, gender) || other.gender == gender) &&
             const DeepCollectionEquality()
                 .equals(other._genderPreferences, _genderPreferences) &&
-            (identical(other.dateOfBirth, dateOfBirth) ||
-                other.dateOfBirth == dateOfBirth) &&
+            (identical(other.birthdate, birthdate) ||
+                other.birthdate == birthdate) &&
             (identical(other.height, height) || other.height == height) &&
             (identical(other.question1, question1) ||
                 other.question1 == question1) &&
@@ -307,7 +307,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       firstName,
       gender,
       const DeepCollectionEquality().hash(_genderPreferences),
-      dateOfBirth,
+      birthdate,
       height,
       question1,
       question2);
@@ -332,7 +332,7 @@ abstract class _Profile implements Profile {
       final String? firstName,
       final String? gender,
       final List<String>? genderPreferences,
-      final DateTime? dateOfBirth,
+      final DateTime? birthdate,
       final int? height,
       final QuestionResponse? question1,
       final QuestionResponse? question2}) = _$ProfileImpl;
@@ -348,7 +348,7 @@ abstract class _Profile implements Profile {
   @override
   List<String>? get genderPreferences;
   @override
-  DateTime? get dateOfBirth;
+  DateTime? get birthdate;
   @override
   int? get height;
   @override
