@@ -28,10 +28,4 @@ class AuthRoutes {
 
 class ProfileRoutes {
   static const Route main = Route('profile', null);
-  static const Route name = Route('name', main);
-  static const Route birthday = Route('birthday', main);
-  static const Route gender = Route('gender', main);
-  static const Route genderPreferences = Route('gender_preferences', main);
-  static const Route height = Route('height', main);
-  static const Route relationshipType = Route('relationship_type', main);
 }

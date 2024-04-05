@@ -46,8 +46,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.testProfile.question1?.response,
-          [selected.toString()]);
+      expect(
+          profileService.profile?.question1?.response, [selected.toString()]);
     }
 
     await tester.drag(find.byType(Slider), const Offset(100, 0));
@@ -89,8 +89,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.testProfile.question2?.response,
-          [selected.toString()]);
+      expect(
+          profileService.profile?.question2?.response, [selected.toString()]);
     }
 
     await tester.drag(find.byType(Slider), const Offset(-100, 0));

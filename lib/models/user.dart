@@ -17,3 +17,7 @@ class DcUser {
     );
   }
 }
+
+extension FirebaseUserExtensions on User {
+  DcUser toDcUser() => DcUser.fromFirebaseUser(this);
+}

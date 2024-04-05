@@ -1,3 +1,4 @@
+import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -5,13 +6,13 @@ import '../../models/user.dart';
 
 class UserStatus {
   final DcUser? user;
-  final bool profileComplete;
+  final ProfileNavigationStep? unCompletedStep;
 
-  UserStatus({this.user, this.profileComplete = false});
+  UserStatus({this.user, this.unCompletedStep});
 
   bool get isAuthenticated => user != null;
 
-  bool get isProfileComplete => profileComplete;
+  bool get isProfileComplete => unCompletedStep == null;
 }
 
 UserStatus userStatusFromFirebaseUser(User? user) {

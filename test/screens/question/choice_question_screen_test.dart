@@ -58,12 +58,12 @@ void main() {
     checkSelected(loc.question_relationshipType_answer1, true);
     checkSelected(loc.question_relationshipType_answer3, false);
     // the profile should still contain 3
-    expect(profileService.testProfile.question1?.response, ['3']);
+    expect(profileService.profile?.question1?.response, ['3']);
     await tester.tap(find.text(loc.general_next));
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.testProfile.question1?.response, ['1']);
+    expect(profileService.profile?.question1?.response, ['1']);
   });
 
   final question2 = MultipleChoiceQuestion(
@@ -114,7 +114,7 @@ void main() {
     checkSelected(loc.question_relationshipType_answer1, true);
     checkSelected(loc.question_relationshipType_answer2, true);
     // the profile should still contain 2
-    expect(profileService.testProfile.question2?.response, ['2']);
+    expect(profileService.profile?.question2?.response, ['2']);
 
     // unselect 2 and check that next button is disabled
     await tester.tap(find.text(loc.question_relationshipType_answer2));
@@ -138,6 +138,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.testProfile.question2?.response, ['1', '2', '3']);
+    expect(profileService.profile?.question2?.response, ['1', '2', '3']);
   });
 }

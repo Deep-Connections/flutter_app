@@ -7,22 +7,23 @@ import 'package:deep_connections/screens/profile/gender/gender_profile_screen.da
 import 'package:deep_connections/screens/profile/gender_preferences/gender_preferences_profile_screen.dart';
 import 'package:deep_connections/screens/profile/name_profile_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
+import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable/injectable.dart';
 import '../models/navigation/profile_navigation_step.dart';
-import '../services/user/user_service.dart';
 import '../services/user/user_status.dart';
 
 final profileRoutes = GoRoute(
     path: ProfileRoutes.main.path,
     redirect: (context, state) {
-      final UserStatus userStatus = getIt<UserService>().userStatus;
+      final UserStatus userStatus = getIt<UserStatusService>().userStatus;
       if (userStatus.isProfileComplete) return HomeRoutes.home.fullPath;
       if (state.fullPath == ProfileRoutes.main.path) {
-        return profileStepList.first
-            .navigationFromBasePath(ProfileRoutes.main.path);
+        return userStatus.unCompletedStep
+                ?.navigationFromBasePath(ProfileRoutes.main.path) ??
+            HomeRoutes.home.fullPath;
       }
       return null;
     },

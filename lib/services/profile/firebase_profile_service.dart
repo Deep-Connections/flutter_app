@@ -20,25 +20,35 @@ class FirebaseProfileService implements ProfileService {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  late final _streamController = BehaviorSubject<Profile>()
-    ..addStream(_profileReference
-        .snapshots()
-        .map((event) => event.data() ?? const Profile()));
-
-  DocumentReference<Profile> get _profileReference => _firestore
-      .collection(Collection.profiles)
-      .withConverter<Profile>(
+  CollectionReference<Profile> get _profileReference =>
+      _firestore.collection(Collection.profiles).withConverter<Profile>(
           fromFirestore: (doc, _) => Profile.fromJson(doc.withId()),
-          toFirestore: (profile, _) => profile.toJson())
-      .doc(_userService.userId);
+          toFirestore: (profile, _) => profile.toJson());
+
+  late final _streamSubject = BehaviorSubject<Profile?>()
+    ..addStream(_userService.userStream
+        .distinct((user1, user2) => user1?.uid == user2?.uid)
+        .switchMap((user) {
+      if (user == null) return Stream.value(null);
+
+      print("Profile Stream reinitialized");
+      return _profileReference
+          .doc(user.uid)
+          .snapshots()
+          .map((snapshot) => snapshot.data() ?? const Profile());
+    }));
 
   @override
-  Stream<Profile> get profile => _streamController.stream;
+  Stream<Profile?> get profileStream => _streamSubject.stream;
 
   @override
   Future<Response<void>> updateProfile(
       Profile Function(Profile) callback) async {
-    return handleFirebaseErrors(() => _profileReference.set(
-        callback(const Profile()), SetOptions(merge: true)));
+    return handleFirebaseErrors(() => _profileReference
+        .doc(_userService.userId)
+        .set(callback(const Profile()), SetOptions(merge: true)));
   }
+
+  @override
+  Profile? get profile => _streamSubject.hasValue ? _streamSubject.value : null;
 }

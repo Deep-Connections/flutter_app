@@ -15,7 +15,7 @@ void main() {
   setUp(() {
     profileService = MockProfileService();
     navigateSuccess = false;
-    expect(profileService.testProfile.gender, null);
+    expect(profileService.profile?.gender, null);
   });
 
   checkButtonEnabled(String buttonText, WidgetTester tester,
@@ -68,14 +68,14 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.testProfile.gender, Gender.woman.enumValue);
+    expect(profileService.profile?.gender, Gender.woman.enumValue);
 
     await tester.tap(find.text(loc.input_genderEnumMan));
     await tester.tap(find.text(loc.general_next));
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.testProfile.gender, Gender.man.enumValue);
+    expect(profileService.profile?.gender, Gender.man.enumValue);
   });
 
   testWidgets('Test profile screen selecting additional genders',
@@ -100,7 +100,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.testProfile.gender, Gender.nonBinary.enumValue);
+    expect(profileService.profile?.gender, Gender.nonBinary.enumValue);
 
     // Now we need to press non-binary to go to more
     await tester.tap(find.text(loc.input_genderEnumNonBinary));
@@ -117,7 +117,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.testProfile.gender, Gender.transWoman.enumValue);
+    expect(profileService.profile?.gender, Gender.transWoman.enumValue);
   });
 
   testWidgets('Test profile screen type in genders',
@@ -166,6 +166,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.testProfile.gender, customGender);
+    expect(profileService.profile?.gender, customGender);
   });
 }

@@ -80,7 +80,7 @@ class _FutureFieldProfileScreenState extends State<FutureFieldProfileScreen> {
         actionIfValid: widget.onNext,
       ),
       child: GenericStreamBuilder(
-        data: widget.profileService.profile,
+        data: widget.profileService.profileStream,
         builder: widget.builder,
       ),
     );

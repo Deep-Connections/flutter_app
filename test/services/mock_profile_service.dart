@@ -11,10 +11,12 @@ class MockProfileService implements ProfileService {
   final BehaviorSubject _profileSubject =
       BehaviorSubject<Profile>.seeded(const Profile());
 
-  get testProfile => _profileSubject.value;
+  @override
+  get profile => _profileSubject.value;
 
   @override
-  Stream<Profile> get profile => _profileSubject.stream as Stream<Profile>;
+  Stream<Profile?> get profileStream =>
+      _profileSubject.stream as Stream<Profile>;
 
   @override
   Future<Response<void>> updateProfile(
