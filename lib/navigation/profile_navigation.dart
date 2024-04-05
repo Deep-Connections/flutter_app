@@ -8,7 +8,7 @@ import 'package:deep_connections/screens/profile/name_profile_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../config/injectable.dart';
+import '../config/injectable/injectable.dart';
 import '../services/user/user_service.dart';
 import '../services/user/user_status.dart';
 

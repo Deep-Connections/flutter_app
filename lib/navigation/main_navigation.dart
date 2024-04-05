@@ -5,7 +5,7 @@ import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/services/user/user_status.dart';
 import 'package:go_router/go_router.dart';
 
-import '../config/injectable.dart';
+import '../config/injectable/injectable.dart';
 import '../screens/home/home.dart';
 import '../services/user/user_service.dart';
 
