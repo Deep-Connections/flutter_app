@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
-import 'package:deep_connections/screens/components/future_builder.dart';
+import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:deep_connections/screens/question/components/question_widget.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
@@ -32,7 +32,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     final loc = AppLocalizations.of(context);
     return BaseScreen(
         title: 'Question',
-        body: GenericFutureBuilder(
+        body: GenericStreamBuilder(
           data: widget.profileService.profile,
           builder: (context, profile) {
             final initialAnswer =

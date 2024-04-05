@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
 import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../models/profile/profile/profile.dart';
 import '../firebase_constants.dart';
@@ -17,6 +20,12 @@ class FirebaseProfileService implements ProfileService {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  late final _streamController = BehaviorSubject<Profile>()
+    ..addStream(_profileReference
+        .snapshots()
+        .asBroadcastStream()
+        .map((event) => event.data() ?? const Profile()));
+
   DocumentReference<Profile> get _profileReference => _firestore
       .collection(Collection.profiles)
       .withConverter<Profile>(
@@ -24,19 +33,12 @@ class FirebaseProfileService implements ProfileService {
           toFirestore: (profile, _) => profile.toJson())
       .doc(_userService.userId);
 
-  Profile? _profile;
-
   @override
-  Future<Profile> get profile async {
-    _profile ??= (await _profileReference.get()).data() ?? const Profile();
-    return _profile!;
-  }
+  Stream<Profile> get profile => _streamController.stream;
 
   @override
   Future<Response<void>> updateProfile(
       Profile Function(Profile) callback) async {
-    var newProfile = callback((await profile));
-    _profile = newProfile;
     return handleFirebaseErrors(() => _profileReference.set(
         callback(const Profile()), SetOptions(merge: true)));
   }

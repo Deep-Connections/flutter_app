@@ -4,7 +4,7 @@ import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/button_input.dart';
 import 'package:deep_connections/screens/components/form/field_input/field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
-import 'package:deep_connections/screens/components/future_builder.dart';
+import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -79,7 +79,7 @@ class _FutureFieldProfileScreenState extends State<FutureFieldProfileScreen> {
         buttonInput: buttonInput,
         actionIfValid: widget.onNext,
       ),
-      child: GenericFutureBuilder(
+      child: GenericStreamBuilder(
         data: widget.profileService.profile,
         builder: widget.builder,
       ),
