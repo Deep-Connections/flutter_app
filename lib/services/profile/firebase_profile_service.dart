@@ -4,7 +4,7 @@ import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../models/profile/profile.dart';
+import '../../models/profile/profile/profile.dart';
 import '../firebase_constants.dart';
 import '../utils/handle_firebase_errors.dart';
 import '../utils/response.dart';

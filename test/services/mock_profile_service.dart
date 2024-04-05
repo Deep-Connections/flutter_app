@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:deep_connections/models/profile/profile.dart';
+import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/utils/response.dart';
 

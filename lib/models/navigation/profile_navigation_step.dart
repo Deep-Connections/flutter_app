@@ -1,5 +1,5 @@
 import 'package:deep_connections/models/navigation/navigation_step.dart';
-import 'package:deep_connections/models/profile/profile.dart';
+import 'package:deep_connections/models/profile/profile/profile.dart';
 
 class ProfileNavigationStep<T> extends NavigationStep {
   final T? Function(Profile) fromProfile;
