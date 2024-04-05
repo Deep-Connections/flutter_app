@@ -1,6 +1,4 @@
-import 'package:deep_connections/models/profile/profile.dart';
 import 'package:deep_connections/models/question/question.dart';
-import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 class SliderQuestion extends Question {
@@ -13,22 +11,15 @@ class SliderQuestion extends Question {
   get divisions => maxValue - minValue;
 
   SliderQuestion({
-    required String id,
-    required LocKey questionText,
+    required super.id,
+    required super.questionText,
     required this.minValue,
     required this.maxValue,
     int? defaultValue,
     required this.minText,
     required this.maxText,
-    required String navigationPath,
-    required QuestionResponse? Function(Profile) fromProfile,
-    required Profile Function(Profile, QuestionResponse) updateProfile,
-  })  : defaultValue = defaultValue ?? (minValue + maxValue) ~/ 2,
-        super(
-          id: id,
-          questionText: questionText,
-          fromProfile: fromProfile,
-          updateProfile: updateProfile,
-          navigationPath: navigationPath,
-        );
+    required super.navigationPath,
+    required super.fromProfile,
+    required super.updateProfile,
+  }) : defaultValue = defaultValue ?? (minValue + maxValue) ~/ 2;
 }

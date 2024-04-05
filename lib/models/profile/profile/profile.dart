@@ -12,7 +12,7 @@ class Profile with _$Profile {
     String? firstName,
     String? gender,
     List<String>? genderPreferences,
-    DateTime? dateOfBirth,
+    DateTime? birthdate,
     int? height,
     QuestionResponse? question1,
     QuestionResponse? question2,

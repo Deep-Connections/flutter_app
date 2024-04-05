@@ -123,8 +123,9 @@ class _$QuestionResponseImpl
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'QuestionResponse'))..add(
-        DiagnosticsProperty('response', response));
+    properties
+      ..add(DiagnosticsProperty('type', 'QuestionResponse'))
+      ..add(DiagnosticsProperty('response', response));
   }
 
   @override

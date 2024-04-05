@@ -2,7 +2,7 @@ import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
-import '../../config/injectable.dart';
+import '../../config/injectable/injectable.dart';
 
 class Home extends StatelessWidget {
   final VoidCallback navigateCallback;

@@ -1,6 +1,6 @@
 import 'package:deep_connections/models/user.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
-import 'package:deep_connections/services/user/user_state.dart';
+import 'package:deep_connections/services/user/user_status.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
@@ -11,11 +11,11 @@ class MockAuthService implements AuthService {
   var isSignedIn = false;
 
   @override
-  Future<Response<UserState>> loginWithEmail(
+  Future<Response<UserStatus>> loginWithEmail(
       {required String email, required String password}) {
     if (email == CORRECT_EMAIL && password == CORRECT_PASSWORD) {
       isSignedIn = true;
-      return Future.value(SuccessRes(UserState(
+      return Future.value(SuccessRes(UserStatus(
           user: DcUser(
         email: email,
         uid: '1',
@@ -27,7 +27,7 @@ class MockAuthService implements AuthService {
   }
 
   @override
-  Future<Response<UserState>> registerWithEmail(
+  Future<Response<UserStatus>> registerWithEmail(
       {required String email, required String password}) {
     // TODO: implement registerWithEmail
     throw UnimplementedError();

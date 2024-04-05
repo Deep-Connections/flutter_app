@@ -40,11 +40,14 @@ void main() {
   testWidgets('Test profile screen selecting male and female',
       (WidgetTester tester) async {
     // Setup
+    final completer = Completer();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
-        navigateToNext: () => navigateSuccess = true));
+        navigateToNext: () async {
+          await completer.future;
+          navigateSuccess = true;
+        }));
 
-    profileService.completer = Completer();
     checkButtonEnabled(loc.general_next, tester, enabled: true);
     checkButtonEnabled(loc.input_genderEnumWoman, tester, enabled: true);
     checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: true);
@@ -61,7 +64,7 @@ void main() {
     checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: false);
     checkButtonEnabled(loc.profile_genderMore, tester, enabled: false);
 
-    profileService.completer!.complete();
+    completer.complete();
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
@@ -80,7 +83,7 @@ void main() {
     // Setup
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
-        navigateToNext: () => navigateSuccess = true));
+        navigateToNext: () async => navigateSuccess = true));
 
     // open more and select non-binary
     await tester.tap(find.text(loc.profile_genderMore));
@@ -126,7 +129,7 @@ void main() {
     // Setup
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
-        navigateToNext: () => navigateSuccess = true));
+        navigateToNext: () async => navigateSuccess = true));
 
     // Now we need to press non-binary to go to more
     await tester.tap(find.text(loc.input_genderEnumNonBinary));
@@ -164,22 +167,5 @@ void main() {
     expect(navigateSuccess, true);
     navigateSuccess = false;
     expect(profileService.testProfile.gender, customGender);
-
-    /*
-    await tester.enterText(
-        tester.findTextFieldByHintText(loc.input_genderPlaceholder),
-        'Trans-Frau');
-    await tester.tap(find.text(loc.input_genderEnumTransWoman));
-    await tester.tap(find.byTooltip('Back'));
-    await tester.pumpAndSettle();
-    // Check that instead of more we show non-binary
-    expect(find.text(loc.input_genderEnumTransWoman), findsOneWidget);
-
-    // Check that instead of non-binary
-    await tester.tap(find.text(loc.general_next));
-    await tester.pumpAndSettle();
-    expect(navigateSuccess, true);
-    navigateSuccess = false;
-    expect(profileService.testProfile.gender, Gender.transWoman.enumValue);*/
   });
 }

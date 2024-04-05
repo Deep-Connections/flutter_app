@@ -7,7 +7,7 @@ import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../config/injectable.dart';
+import '../../config/injectable/injectable.dart';
 import '../components/form/button_input.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {

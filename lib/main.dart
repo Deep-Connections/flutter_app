@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'config/constants.dart';
-import 'config/injectable.dart';
+import 'config/injectable/injectable.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
