@@ -1,6 +1,5 @@
+import 'package:deep_connections/config/constants.dart';
 import 'package:flutter/material.dart';
-
-import '../../config/constants.dart';
 
 class DcColumn extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
@@ -37,20 +36,20 @@ class DcColumn extends StatelessWidget {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        children: spaceChildren(),
+        children: spaceChildren(children, spacedBy),
       ),
     );
   }
+}
 
-  /// Add SizedBox between each child to create spacing
-  List<Widget> spaceChildren() {
-    List<Widget> spacedChildren = [];
-    for (int i = 0; i < children.length; i++) {
-      spacedChildren.add(children[i]);
-      if (i < children.length - 1) {
-        spacedChildren.add(SizedBox(height: spacedBy));
-      }
+/// Add SizedBox between each child to create spacing
+List<Widget> spaceChildren(List<Widget> children, double space) {
+  List<Widget> spacedChildren = [];
+  for (int i = 0; i < children.length; i++) {
+    spacedChildren.add(children[i]);
+    if (i < children.length - 1) {
+      spacedChildren.add(SizedBox(height: space, width: space));
     }
-    return spacedChildren;
   }
+  return spacedChildren;
 }

@@ -1,4 +1,5 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/date_field_input.dart';
 import 'package:deep_connections/screens/profile/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
@@ -35,7 +36,7 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
         },
         builder: (BuildContext context, Profile profile) {
           birthdate.value = profile.birthdate;
-          return ListView(
+          return DcListView(
             children: [
               DcTextFormField(
                   fieldInput: birthdate, textInputAction: TextInputAction.done)

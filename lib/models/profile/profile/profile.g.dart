@@ -26,6 +26,10 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
           ? null
           : QuestionResponse.fromJson(
               json['question2'] as Map<String, dynamic>),
+      question3: json['question3'] == null
+          ? null
+          : QuestionResponse.fromJson(
+              json['question3'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
@@ -45,5 +49,6 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
   writeNotNull('height', instance.height);
   writeNotNull('question1', instance.question1?.toJson());
   writeNotNull('question2', instance.question2?.toJson());
+  writeNotNull('question3', instance.question3?.toJson());
   return val;
 }

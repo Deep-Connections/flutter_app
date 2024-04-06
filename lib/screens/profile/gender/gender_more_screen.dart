@@ -1,4 +1,5 @@
 import 'package:deep_connections/config/constants.dart';
+import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
@@ -28,7 +29,7 @@ class _GenderMoreScreenState extends State<GenderMoreScreen> {
     return BaseProfileScreen(
       title: loc.profile_genderMoreTitle,
       formKey: widget.buttonInput.formKey,
-      child: ListView(children: [
+      child: DcListView(children: [
         ...Gender.additional.map(
             (g) => GenderButton(gender: g, genderInput: widget.genderInput)),
         Container(padding: const EdgeInsets.only(top: BASE_PADDING)),

@@ -29,6 +29,8 @@ mixin _$Profile {
   QuestionResponse? get question1 => throw _privateConstructorUsedError;
   QuestionResponse? get question2 => throw _privateConstructorUsedError;
 
+  QuestionResponse? get question3 => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ProfileCopyWith<Profile> get copyWith => throw _privateConstructorUsedError;
@@ -47,10 +49,13 @@ abstract class $ProfileCopyWith<$Res> {
       DateTime? birthdate,
       int? height,
       QuestionResponse? question1,
-      QuestionResponse? question2});
+      QuestionResponse? question2,
+      QuestionResponse? question3});
 
   $QuestionResponseCopyWith<$Res>? get question1;
   $QuestionResponseCopyWith<$Res>? get question2;
+
+  $QuestionResponseCopyWith<$Res>? get question3;
 }
 
 /// @nodoc
@@ -74,6 +79,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? height = freezed,
     Object? question1 = freezed,
     Object? question2 = freezed,
+    Object? question3 = freezed,
   }) {
     return _then(_value.copyWith(
       uid: freezed == uid
@@ -108,6 +114,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.question2
           : question2 // ignore: cast_nullable_to_non_nullable
               as QuestionResponse?,
+      question3: freezed == question3
+          ? _value.question3
+          : question3 // ignore: cast_nullable_to_non_nullable
+              as QuestionResponse?,
     ) as $Val);
   }
 
@@ -134,6 +144,18 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       return _then(_value.copyWith(question2: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $QuestionResponseCopyWith<$Res>? get question3 {
+    if (_value.question3 == null) {
+      return null;
+    }
+
+    return $QuestionResponseCopyWith<$Res>(_value.question3!, (value) {
+      return _then(_value.copyWith(question3: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -151,12 +173,16 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       DateTime? birthdate,
       int? height,
       QuestionResponse? question1,
-      QuestionResponse? question2});
+      QuestionResponse? question2,
+      QuestionResponse? question3});
 
   @override
   $QuestionResponseCopyWith<$Res>? get question1;
   @override
   $QuestionResponseCopyWith<$Res>? get question2;
+
+  @override
+  $QuestionResponseCopyWith<$Res>? get question3;
 }
 
 /// @nodoc
@@ -178,6 +204,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? height = freezed,
     Object? question1 = freezed,
     Object? question2 = freezed,
+    Object? question3 = freezed,
   }) {
     return _then(_$ProfileImpl(
       uid: freezed == uid
@@ -212,6 +239,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.question2
           : question2 // ignore: cast_nullable_to_non_nullable
               as QuestionResponse?,
+      question3: freezed == question3
+          ? _value.question3
+          : question3 // ignore: cast_nullable_to_non_nullable
+              as QuestionResponse?,
     ));
   }
 }
@@ -227,7 +258,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       this.birthdate,
       this.height,
       this.question1,
-      this.question2})
+      this.question2,
+      this.question3})
       : _genderPreferences = genderPreferences;
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
@@ -258,10 +290,12 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   final QuestionResponse? question1;
   @override
   final QuestionResponse? question2;
+  @override
+  final QuestionResponse? question3;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, birthdate: $birthdate, height: $height, question1: $question1, question2: $question2)';
+    return 'Profile(uid: $uid, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, birthdate: $birthdate, height: $height, question1: $question1, question2: $question2, question3: $question3)';
   }
 
   @override
@@ -275,8 +309,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       ..add(DiagnosticsProperty('genderPreferences', genderPreferences))
       ..add(DiagnosticsProperty('birthdate', birthdate))
       ..add(DiagnosticsProperty('height', height))
-      ..add(DiagnosticsProperty('question1', question1))
-      ..add(DiagnosticsProperty('question2', question2));
+      ..add(DiagnosticsProperty('question1', question1))..add(
+        DiagnosticsProperty('question2', question2))..add(
+        DiagnosticsProperty('question3', question3));
   }
 
   @override
@@ -296,7 +331,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
             (identical(other.question1, question1) ||
                 other.question1 == question1) &&
             (identical(other.question2, question2) ||
-                other.question2 == question2));
+                other.question2 == question2) &&
+            (identical(other.question3, question3) ||
+                other.question3 == question3));
   }
 
   @JsonKey(ignore: true)
@@ -310,7 +347,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       birthdate,
       height,
       question1,
-      question2);
+      question2,
+      question3);
 
   @JsonKey(ignore: true)
   @override
@@ -335,7 +373,8 @@ abstract class _Profile implements Profile {
       final DateTime? birthdate,
       final int? height,
       final QuestionResponse? question1,
-      final QuestionResponse? question2}) = _$ProfileImpl;
+      final QuestionResponse? question2,
+      final QuestionResponse? question3}) = _$ProfileImpl;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
@@ -355,6 +394,9 @@ abstract class _Profile implements Profile {
   QuestionResponse? get question1;
   @override
   QuestionResponse? get question2;
+
+  @override
+  QuestionResponse? get question3;
   @override
   @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>

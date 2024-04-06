@@ -1,9 +1,12 @@
 import 'package:deep_connections/models/question/answer.dart';
 import 'package:deep_connections/models/question/choice_question.dart';
+import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/profile/components/gender_button.dart';
 import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChoiceQuestionWidget extends StatefulWidget {
@@ -26,11 +29,21 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        ...widget.question.answers.map((a) => SelectableButton(
-            onPressed: () => _onAnswerPressed(a),
-            selected: selectedAnswers.contains(a),
-            text: a.answerText.localize(loc)))
+        Text(loc.questionType_multipleChoice_numberSelected(
+            widget.question.maxChoices, selectedAnswers.length)),
+        const SizedBox(height: 10),
+        Expanded(
+          child: DcListView(
+            children: [
+              ...widget.question.answers.map((a) => SelectableButton(
+                  onPressed: () => _onAnswerPressed(a),
+                  selected: selectedAnswers.contains(a),
+                  text: a.answerText.localize(loc)))
+            ],
+          ),
+        ),
       ],
     );
   }
