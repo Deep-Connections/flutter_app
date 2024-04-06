@@ -52,11 +52,11 @@ void main() {
           profileService.profile?.question1?.response, [selected.toString()]);
     }
 
-    await tester.drag(find.byType(Slider), const Offset(100, 0));
+    await tester.drag(find.byType(Slider), const Offset(200, 0));
     await tester.pumpAndSettle();
     await checkSelected(5);
 
-    await tester.drag(find.byType(Slider), const Offset(-50, 0));
+    await tester.drag(find.byType(Slider), const Offset(-100, 0));
     await tester.pumpAndSettle();
     await checkSelected(2);
   });
@@ -96,7 +96,7 @@ void main() {
           profileService.profile?.question2?.response, [selected.toString()]);
     }
 
-    await tester.drag(find.byType(Slider), const Offset(-100, 0));
+    await tester.drag(find.byType(Slider), const Offset(-200, 0));
     await tester.pumpAndSettle();
     await checkSelected(-1);
 
