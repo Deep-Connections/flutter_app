@@ -16,9 +16,9 @@ class Profile with _$Profile {
     int? height,
     QuestionResponse? question1,
     QuestionResponse? question2,
+    QuestionResponse? question3,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
-
 }

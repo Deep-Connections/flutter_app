@@ -1,4 +1,5 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/integer_field_input.dart';
 import 'package:deep_connections/screens/profile/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
@@ -33,7 +34,7 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
         title: loc.profile_sizeTitle,
         builder: (BuildContext context, Profile profile) {
           height.value = profile.height;
-          return ListView(children: [
+          return DcListView(children: [
             DcTextFormField(
               fieldInput: height,
               textInputAction: TextInputAction.done,

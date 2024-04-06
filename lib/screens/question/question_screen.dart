@@ -31,32 +31,31 @@ class _QuestionScreenState extends State<QuestionScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return BaseScreen(
-        title: 'Question',
         body: GenericStreamBuilder(
-          data: widget.profileService.profileStream,
-          builder: (context, profile) {
-            final initialAnswer =
-                widget.question.fromProfile(profile)?.response;
-            questionResponse.values = initialAnswer;
-            return DcColumn(children: [
-              QuestionWidget(
-                  question: widget.question,
-                  questionResponse: questionResponse),
-              ListenableBuilder(
-                  listenable: questionResponse,
-                  builder: (context, child) {
-                    return ElevatedButton(
-                        onPressed:
-                            questionResponse.response?.let((response) => () {
-                                  widget.profileService.updateProfile((p) =>
-                                      widget.question
-                                          .updateProfile(p, response));
-                                  widget.navigate();
-                                }),
-                        child: Text(loc.general_next));
-                  })
-            ]);
-          },
-        ));
+      data: widget.profileService.profileStream,
+      builder: (context, profile) {
+        final initialAnswer = widget.question.fromProfile(profile)?.response;
+        questionResponse.values = initialAnswer;
+        return DcColumn(children: [
+          Text(widget.question.questionText.localize(loc),
+              style: Theme.of(context).textTheme.headlineSmall),
+          Expanded(
+            child: QuestionWidget(
+                question: widget.question, questionResponse: questionResponse),
+          ),
+          ListenableBuilder(
+              listenable: questionResponse,
+              builder: (context, child) {
+                return ElevatedButton(
+                    onPressed: questionResponse.response?.let((response) => () {
+                          widget.navigate();
+                          widget.profileService.updateProfile((p) =>
+                              widget.question.updateProfile(p, response));
+                        }),
+                    child: Text(loc.general_next));
+              })
+        ]);
+      },
+    ));
   }
 }

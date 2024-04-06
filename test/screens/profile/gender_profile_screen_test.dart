@@ -144,6 +144,7 @@ void main() {
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_genderPlaceholder),
         customInvalidGender);
+    await tester.drag(find.byType(Scrollable).last, const Offset(0, -50));
     await tester.pumpAndSettle();
     await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
@@ -156,6 +157,8 @@ void main() {
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_genderPlaceholder),
         " $customGender "); // check that it is trimmed
+    await tester.drag(find.byType(Scrollable).last, const Offset(0, -50));
+    await tester.pumpAndSettle();
     await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
 

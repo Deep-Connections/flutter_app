@@ -1,5 +1,6 @@
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
 import 'package:deep_connections/screens/profile/components/gender_button.dart';
 import 'package:deep_connections/screens/profile/future_profile_screen.dart';
@@ -32,7 +33,7 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
       fields: [gender],
       builder: (BuildContext context, Profile profile) {
         gender.value = profile.gender;
-        return ListView(children: [
+        return DcListView(children: [
           ...Gender.base
               .map((g) => GenderButton(gender: g, genderInput: gender)),
           MoreGenderButton(
