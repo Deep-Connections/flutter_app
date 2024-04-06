@@ -26,7 +26,10 @@ class BaseScreen extends StatelessWidget {
             actions: actions,
             automaticallyImplyLeading: showBackButton,
           ),
-          body: body,
+          body: Center(
+              child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: body)),
         ));
   }
 }
