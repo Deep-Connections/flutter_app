@@ -19,6 +19,22 @@ extension LocalizedWidgetTester on WidgetTester {
     return AppLocalizations.of(context);
   }
 
+  Future<BuildContext> pumpLocalizedWidgetWithContext(Widget child) async {
+    final Key key = UniqueKey();
+
+    await pumpWidget(MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        locale: const Locale('en'),
+        home: Container(
+          key: key,
+          child: child,
+        )));
+    await pumpAndSettle();
+
+    final BuildContext context = element(find.byKey(key));
+    return context;
+  }
+
   Finder findTextFieldByHintText(String hintText) {
     return find.byWidgetPredicate(
       (Widget widget) =>
