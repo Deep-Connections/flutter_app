@@ -23,22 +23,29 @@ class _SliderQuestionWidgetState extends State<SliderQuestionWidget> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return Row(children: [
-      Text(widget.question.minText.localize(loc)),
-      Slider.adaptive(
-        value: sliderValue,
-        min: widget.question.minValue.toDouble(),
-        max: widget.question.maxValue.toDouble(),
-        divisions: widget.question.divisions,
-        onChanged: (value) {
-          setState(() {
-            sliderValue = value;
-          });
-        },
-        onChangeEnd: (value) {
-          widget.questionResponse.values = [value.toInt().toString()];
-        },
+      Expanded(
+          flex: 1,
+          child: Center(child: Text(widget.question.minText.localize(loc)))),
+      Expanded(
+        flex: 4,
+        child: Slider.adaptive(
+          value: sliderValue,
+          min: widget.question.minValue.toDouble(),
+          max: widget.question.maxValue.toDouble(),
+          divisions: widget.question.divisions,
+          onChanged: (value) {
+            setState(() {
+              sliderValue = value;
+            });
+          },
+          onChangeEnd: (value) {
+            widget.questionResponse.values = [value.toInt().toString()];
+          },
+        ),
       ),
-      Text(widget.question.maxText.localize(loc)),
+      Expanded(
+          flex: 1,
+          child: Center(child: Text(widget.question.maxText.localize(loc)))),
     ]);
   }
 }
