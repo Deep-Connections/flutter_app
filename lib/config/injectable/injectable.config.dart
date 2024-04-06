@@ -38,10 +38,8 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i6.ChatService(gh<_i5.UserService>()));
     gh.singleton<_i7.ProfileService>(
         _i8.FirebaseProfileService(gh<_i5.UserService>()));
-    gh.singleton<_i9.UserStatusService>(_i9.UserStatusService(
-      gh<_i5.UserService>(),
-      gh<_i7.ProfileService>(),
-    ));
+    gh.singleton<_i9.UserStatusService>(
+        _i9.UserStatusService(gh<_i7.ProfileService>()));
     return this;
   }
 }

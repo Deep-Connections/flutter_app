@@ -7,7 +7,7 @@ import 'package:deep_connections/screens/profile/gender/gender_profile_screen.da
 import 'package:deep_connections/screens/profile/gender_preferences/gender_preferences_profile_screen.dart';
 import 'package:deep_connections/screens/profile/name_profile_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
-import 'package:deep_connections/services/user/user_status_service_impl.dart';
+import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

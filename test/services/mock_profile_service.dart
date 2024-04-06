@@ -8,11 +8,14 @@ import 'package:rxdart/rxdart.dart';
 class MockProfileService implements ProfileService {
   Completer? completer;
 
-  final BehaviorSubject _profileSubject =
-      BehaviorSubject<Profile>.seeded(const Profile());
+  final _profileSubject = BehaviorSubject<Profile?>.seeded(null);
 
   @override
   get profile => _profileSubject.value;
+
+  set profile(Profile? value) {
+    _profileSubject.value = value;
+  }
 
   @override
   Stream<Profile?> get profileStream =>
@@ -22,7 +25,7 @@ class MockProfileService implements ProfileService {
   Future<Response<void>> updateProfile(
       Profile Function(Profile p) callback) async {
     await completer?.future;
-    _profileSubject.value = callback(_profileSubject.value);
+    _profileSubject.value = callback(_profileSubject.value ?? const Profile());
     return SuccessRes(null);
   }
 }
