@@ -2,10 +2,6 @@ import 'package:deep_connections/config/profile_step_list.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
-import 'package:deep_connections/screens/profile/birthday_profile_screen.dart';
-import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
-import 'package:deep_connections/screens/profile/gender_preferences/gender_preferences_profile_screen.dart';
-import 'package:deep_connections/screens/profile/name_profile_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/material.dart';
@@ -39,21 +35,8 @@ final profileRoutes = GoRoute(
           path: navigationStep.navigationPath,
           builder: (context, state) {
             navigateToNext() => context.push(navigateNextPath);
-            if (navigationStep is NameProfileNavigationStep) {
-              return NameProfileScreen(
-                  profileService: getIt(), navigateToNext: navigateToNext);
-            }
-            if (navigationStep is BirthdateProfileNavigationStep) {
-              return BirthdayProfileScreen(
-                  profileService: getIt(), navigateToNext: navigateToNext);
-            }
-            if (navigationStep is GenderProfileNavigationStep) {
-              return GenderProfileScreen(
-                  profileService: getIt(), navigateToNext: navigateToNext);
-            }
-            if (navigationStep is GenderPreferencesProfileNavigationStep) {
-              return GenderPreferencesProfileScreen(
-                  profileService: getIt(), navigateToNext: navigateToNext);
+            if (navigationStep is ProfileNavigationStepWithWidget) {
+              return navigationStep.createWidget(getIt(), navigateToNext);
             }
             if (navigationStep is Question) {
               return QuestionScreen(

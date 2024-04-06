@@ -9,7 +9,7 @@ import '../components/form/dc_text_form_field.dart';
 
 class NameProfileScreen extends StatefulWidget {
   final ProfileService profileService;
-  final VoidCallback navigateToNext;
+  final void Function() navigateToNext;
 
   const NameProfileScreen({
     super.key,
