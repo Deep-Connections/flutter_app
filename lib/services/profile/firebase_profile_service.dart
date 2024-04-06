@@ -25,7 +25,7 @@ class FirebaseProfileService implements ProfileService {
           fromFirestore: (doc, _) => Profile.fromJson(doc.withId()),
           toFirestore: (profile, _) => profile.toJson());
 
-  late final _streamSubject = BehaviorSubject<Profile?>()
+  late final _profileSubject = BehaviorSubject<Profile?>()
     ..addStream(_userService.userStream
         .distinct((user1, user2) => user1?.uid == user2?.uid)
         .switchMap((user) {
@@ -39,7 +39,7 @@ class FirebaseProfileService implements ProfileService {
     }));
 
   @override
-  Stream<Profile?> get profileStream => _streamSubject.stream;
+  Stream<Profile?> get profileStream => _profileSubject.stream;
 
   @override
   Future<Response<void>> updateProfile(
@@ -50,5 +50,6 @@ class FirebaseProfileService implements ProfileService {
   }
 
   @override
-  Profile? get profile => _streamSubject.hasValue ? _streamSubject.value : null;
+  Profile? get profile =>
+      _profileSubject.hasValue ? _profileSubject.value : null;
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:deep_connections/models/gender.dart';
+import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -41,6 +42,7 @@ void main() {
       (WidgetTester tester) async {
     // Setup
     final completer = Completer();
+    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
         navigateToNext: () async {
@@ -81,6 +83,7 @@ void main() {
   testWidgets('Test profile screen selecting additional genders',
       (WidgetTester tester) async {
     // Setup
+    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
         navigateToNext: () async => navigateSuccess = true));

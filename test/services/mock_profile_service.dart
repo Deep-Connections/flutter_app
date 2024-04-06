@@ -19,7 +19,7 @@ class MockProfileService implements ProfileService {
 
   @override
   Stream<Profile?> get profileStream =>
-      _profileSubject.stream as Stream<Profile>;
+      _profileSubject.stream as Stream<Profile?>;
 
   @override
   Future<Response<void>> updateProfile(

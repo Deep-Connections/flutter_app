@@ -1,3 +1,4 @@
+import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/models/question/slider_question.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/utils/loc_key.dart';
@@ -31,6 +32,7 @@ void main() {
   testWidgets('Test question screen with slider question',
       (WidgetTester tester) async {
     // Setup
+    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question1,
         profileService: profileService,
@@ -74,6 +76,7 @@ void main() {
   testWidgets('Test question screen with slider with negative value',
       (WidgetTester tester) async {
     // Setup
+    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question2,
         profileService: profileService,
