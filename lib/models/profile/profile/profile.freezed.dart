@@ -24,7 +24,6 @@ mixin _$Profile {
   String? get firstName => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   List<String>? get genderPreferences => throw _privateConstructorUsedError;
-
   DateTime? get birthdate => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
   QuestionResponse? get question1 => throw _privateConstructorUsedError;
@@ -268,15 +267,16 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'Profile'))..add(
-        DiagnosticsProperty('uid', uid))..add(
-        DiagnosticsProperty('firstName', firstName))..add(
-        DiagnosticsProperty('gender', gender))..add(
-        DiagnosticsProperty('genderPreferences', genderPreferences))..add(
-        DiagnosticsProperty('birthdate', birthdate))..add(
-        DiagnosticsProperty('height', height))..add(
-        DiagnosticsProperty('question1', question1))..add(
-        DiagnosticsProperty('question2', question2));
+    properties
+      ..add(DiagnosticsProperty('type', 'Profile'))
+      ..add(DiagnosticsProperty('uid', uid))
+      ..add(DiagnosticsProperty('firstName', firstName))
+      ..add(DiagnosticsProperty('gender', gender))
+      ..add(DiagnosticsProperty('genderPreferences', genderPreferences))
+      ..add(DiagnosticsProperty('birthdate', birthdate))
+      ..add(DiagnosticsProperty('height', height))
+      ..add(DiagnosticsProperty('question1', question1))
+      ..add(DiagnosticsProperty('question2', question2));
   }
 
   @override

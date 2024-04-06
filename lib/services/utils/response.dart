@@ -15,6 +15,12 @@ abstract class Response<T> {
       callback((this as SuccessRes<T>).data);
     }
   }
+
+  Future onAwaitSuccess(Future Function(T result) callback) async {
+    if (this is SuccessRes<T>) {
+      await callback((this as SuccessRes<T>).data);
+    }
+  }
 }
 
 class SuccessRes<T> extends Response<T> {

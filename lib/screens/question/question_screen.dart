@@ -33,7 +33,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     return BaseScreen(
         title: 'Question',
         body: GenericStreamBuilder(
-          data: widget.profileService.profile,
+          data: widget.profileService.profileStream,
           builder: (context, profile) {
             final initialAnswer =
                 widget.question.fromProfile(profile)?.response;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GenericStreamBuilder<T> extends StatelessWidget {
-  final Stream<T> data;
+  final Stream<T?> data;
   final Widget Function(BuildContext context, T data) builder;
 
   const GenericStreamBuilder({
@@ -15,7 +15,8 @@ class GenericStreamBuilder<T> extends StatelessWidget {
     return StreamBuilder(
       stream: data,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (snapshot.connectionState == ConnectionState.waiting ||
+            (snapshot.hasData && snapshot.data == null)) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));

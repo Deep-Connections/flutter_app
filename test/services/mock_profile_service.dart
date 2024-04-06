@@ -8,19 +8,24 @@ import 'package:rxdart/rxdart.dart';
 class MockProfileService implements ProfileService {
   Completer? completer;
 
-  final BehaviorSubject _profileSubject =
-      BehaviorSubject<Profile>.seeded(const Profile());
-
-  get testProfile => _profileSubject.value;
+  final _profileSubject = BehaviorSubject<Profile?>.seeded(null);
 
   @override
-  Stream<Profile> get profile => _profileSubject.stream as Stream<Profile>;
+  get profile => _profileSubject.value;
+
+  set profile(Profile? value) {
+    _profileSubject.value = value;
+  }
+
+  @override
+  Stream<Profile?> get profileStream =>
+      _profileSubject.stream as Stream<Profile?>;
 
   @override
   Future<Response<void>> updateProfile(
       Profile Function(Profile p) callback) async {
     await completer?.future;
-    _profileSubject.value = callback(_profileSubject.value);
+    _profileSubject.value = callback(_profileSubject.value ?? const Profile());
     return SuccessRes(null);
   }
 }
