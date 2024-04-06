@@ -1,4 +1,4 @@
-import 'package:deep_connections/models/user.dart';
+import 'package:deep_connections/models/user/user.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';

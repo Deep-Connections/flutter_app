@@ -1,6 +1,6 @@
+import 'package:deep_connections/models/user/user_status.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:deep_connections/services/user/user_status.dart';
-import 'package:deep_connections/services/user/user_status_service.dart';
+import 'package:deep_connections/services/user/user_status_service_impl.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable/injectable.dart';
@@ -13,7 +13,7 @@ final authRoutes = GoRoute(
   redirect: (context, state) {
     final UserStatus userStatus = getIt<UserStatusService>().userStatus;
     if (userStatus.isAuthenticated) {
-      return userStatus.unCompletedStep
+      return userStatus.uncompletedStep
               ?.navigationFromBasePath(ProfileRoutes.main.path) ??
           HomeRoutes.home.fullPath;
     }
@@ -27,7 +27,12 @@ final authRoutes = GoRoute(
         path: AuthRoutes.login.path,
         builder: (context, state) {
           return LoginScreen(
-              auth: getIt(), onLoginSuccess: () {});
+              auth: getIt(),
+              onLoginSuccess: () async {
+                await getIt<UserStatusService>()
+                    .userStatusStream
+                    .firstWhere((userStatus) => userStatus.isAuthenticated);
+              });
         }),
     GoRoute(
         path: AuthRoutes.register.path,

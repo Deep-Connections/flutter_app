@@ -14,7 +14,7 @@ import '../components/form/dc_text_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
   final AuthService auth;
-  final VoidCallback onLoginSuccess;
+  final Future Function() onLoginSuccess;
 
   const LoginScreen(
       {super.key, required this.auth, required this.onLoginSuccess});
@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               actionIfValid: () async {
                 final response = await widget.auth.loginWithEmail(
                     email: email.value, password: password.value);
-                response.onSuccess((_) => widget.onLoginSuccess());
+                await response.onAwaitSuccess((_) => widget.onLoginSuccess());
                 setState(() {
                   apiError = response.getUiErrOrNull(loc);
                 });

@@ -10,8 +10,8 @@ void main() {
     final auth = MockAuthService();
     var loginSuccess = false;
 
-    final loc = await tester.pumpLocalizedWidget(
-        LoginScreen(auth: auth, onLoginSuccess: () => loginSuccess = true));
+    final loc = await tester.pumpLocalizedWidget(LoginScreen(
+        auth: auth, onLoginSuccess: () async => loginSuccess = true));
     expect(find.text(loc.login_title), findsOneWidget);
     expect(find.text(loc.auth_emailInvalidError), findsNothing);
     expect(find.text(loc.login_wrongCredentialsError), findsNothing);

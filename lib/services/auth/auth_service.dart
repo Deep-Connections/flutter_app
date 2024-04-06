@@ -1,14 +1,14 @@
-import 'package:deep_connections/services/user/user_status.dart';
+import 'package:deep_connections/models/user/user.dart';
 
 import '../utils/response.dart';
 
 abstract class AuthService {
-  Future<Response<UserStatus>> loginWithEmail({
+  Future<Response<DcUser>> loginWithEmail({
     required String email,
     required String password,
   });
 
-  Future<Response<UserStatus>> registerWithEmail({
+  Future<Response<DcUser>> registerWithEmail({
     required String email,
     required String password,
   });
