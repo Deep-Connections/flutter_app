@@ -1,6 +1,7 @@
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileNavScreen extends StatelessWidget {
   final ProfileNavigationStep navigationStep;
@@ -15,6 +16,10 @@ class ProfileNavScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(title: "Title", onBack: navigatePrevious, body: body);
+    final loc = AppLocalizations.of(context);
+    return BaseScreen(
+        title: navigationStep.section.title.localize(loc),
+        onBack: navigatePrevious,
+        body: body);
   }
 }

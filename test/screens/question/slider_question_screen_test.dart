@@ -1,3 +1,4 @@
+import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/models/question/slider_question.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
@@ -22,6 +23,7 @@ void main() {
     fromProfile: (p) => p.question1,
     updateProfile: (p, r) => p.copyWith(question1: r),
     navigationPath: '',
+    section: ProfileSection.profile,
   );
 
   setUp(() {
@@ -71,6 +73,7 @@ void main() {
     fromProfile: (p) => p.question2,
     updateProfile: (p, r) => p.copyWith(question2: r),
     navigationPath: '',
+    section: ProfileSection.profile,
   );
 
   testWidgets('Test question screen with slider with negative value',

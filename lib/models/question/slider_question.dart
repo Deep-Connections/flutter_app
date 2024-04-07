@@ -21,5 +21,6 @@ class SliderQuestion extends Question {
     required super.navigationPath,
     required super.fromProfile,
     required super.updateProfile,
+    required super.section,
   }) : defaultValue = defaultValue ?? (minValue + maxValue) ~/ 2;
 }
