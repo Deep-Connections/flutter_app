@@ -5,7 +5,7 @@ import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/profile/components/profile_nav_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable/injectable.dart';
@@ -39,7 +39,7 @@ final profileRoutes = GoRoute(
               if (context.canPop() || previousPath == null) {
                 context.pop();
               } else {
-                context.replace(previousPath);
+                context.pushReplacement(previousPath);
               }
             }
 
@@ -59,24 +59,24 @@ final profileRoutes = GoRoute(
 
               return GoRoute(
                 path: navigationStep.navigationPath,
-                builder: (context, state) {
+                pageBuilder: (context, state) {
                   navigateToNext() => context.push(navigateNextPath);
+                  Widget? widget;
                   if (navigationStep is ProfileNavigationStepWithWidget) {
-                    return navigationStep.createWidget(getIt(), navigateToNext);
+                    widget =
+                        navigationStep.createWidget(getIt(), navigateToNext);
                   }
                   if (navigationStep is Question) {
-                    return QuestionScreen(
+                    widget = QuestionScreen(
                       question: navigationStep,
                       profileService: getIt(),
                       navigate: navigateToNext,
                     );
                   }
-                  return BaseScreen(
+                  widget ??= BaseScreen(
                       body: Center(
-                          child: ElevatedButton(
-                    onPressed: navigateToNext,
-                    child: const Text('Next'),
-                  )));
+                          child: Text("No widget found for $navigationStep")));
+                  return CupertinoPage(child: widget);
                 },
               );
             }),

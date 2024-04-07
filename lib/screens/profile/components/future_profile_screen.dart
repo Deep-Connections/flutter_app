@@ -23,20 +23,22 @@ class BaseProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DcColumn(
-      children: [
-        Text(title,
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                )),
-        Form(
-          key: formKey,
-          child: Expanded(
-            child: child,
+    return Scaffold(
+      body: DcColumn(
+        children: [
+          Text(title,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  )),
+          Form(
+            key: formKey,
+            child: Expanded(
+              child: child,
+            ),
           ),
-        ),
-        if (bottom != null) bottom!,
-      ],
+          if (bottom != null) bottom!,
+        ],
+      ),
     );
   }
 }

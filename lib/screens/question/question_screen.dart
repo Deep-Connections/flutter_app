@@ -1,5 +1,4 @@
 import 'package:deep_connections/models/question/question.dart';
-import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
@@ -30,32 +29,35 @@ class _QuestionScreenState extends State<QuestionScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
-    return BaseScreen(
-        body: GenericStreamBuilder(
-      data: widget.profileService.profileStream,
-      builder: (context, profile) {
-        final initialAnswer = widget.question.fromProfile(profile)?.response;
-        questionResponse.values = initialAnswer;
-        return DcColumn(children: [
-          Text(widget.question.questionText.localize(loc),
-              style: Theme.of(context).textTheme.headlineSmall),
-          Expanded(
-            child: QuestionWidget(
-                question: widget.question, questionResponse: questionResponse),
-          ),
-          ListenableBuilder(
-              listenable: questionResponse,
-              builder: (context, child) {
-                return ElevatedButton(
-                    onPressed: questionResponse.response?.let((response) => () {
-                          widget.navigate();
-                          widget.profileService.updateProfile((p) =>
-                              widget.question.updateProfile(p, response));
-                        }),
-                    child: Text(loc.general_next));
-              })
-        ]);
-      },
-    ));
+    return Scaffold(
+      body: GenericStreamBuilder(
+        data: widget.profileService.profileStream,
+        builder: (context, profile) {
+          final initialAnswer = widget.question.fromProfile(profile)?.response;
+          questionResponse.values = initialAnswer;
+          return DcColumn(children: [
+            Text(widget.question.questionText.localize(loc),
+                style: Theme.of(context).textTheme.headlineSmall),
+            Expanded(
+              child: QuestionWidget(
+                  question: widget.question,
+                  questionResponse: questionResponse),
+            ),
+            ListenableBuilder(
+                listenable: questionResponse,
+                builder: (context, child) {
+                  return ElevatedButton(
+                      onPressed:
+                          questionResponse.response?.let((response) => () {
+                                widget.navigate();
+                                widget.profileService.updateProfile((p) =>
+                                    widget.question.updateProfile(p, response));
+                              }),
+                      child: Text(loc.general_next));
+                })
+          ]);
+        },
+      ),
+    );
   }
 }
