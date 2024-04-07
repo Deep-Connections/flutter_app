@@ -1,3 +1,4 @@
+import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/question/answer.dart';
 import 'package:deep_connections/models/question/choice_question.dart';
 import 'package:deep_connections/models/question/response/question_response.dart';
@@ -24,6 +25,7 @@ void main() {
     fromProfile: (p) => p.question1,
     updateProfile: (p, r) => p.copyWith(question1: r),
     navigationPath: '',
+    section: ProfileSection.profile,
   );
 
   setUp(() {
@@ -80,6 +82,7 @@ void main() {
     fromProfile: (p) => p.question2,
     updateProfile: (p, r) => p.copyWith(question2: r),
     navigationPath: '',
+    section: ProfileSection.profile,
   );
 
   testWidgets('Test question screen with multiple choice question',

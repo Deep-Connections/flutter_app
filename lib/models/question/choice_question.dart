@@ -15,5 +15,6 @@ class MultipleChoiceQuestion extends Question {
     required super.navigationPath,
     required super.fromProfile,
     required super.updateProfile,
+    required super.section,
   });
 }

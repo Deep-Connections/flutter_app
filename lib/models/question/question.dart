@@ -14,5 +14,6 @@ abstract class Question extends ProfileNavigationStep<QuestionResponse> {
     required super.fromProfile,
     required this.updateProfile,
     required super.navigationPath,
+    required super.section,
   });
 }
