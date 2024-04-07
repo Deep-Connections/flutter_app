@@ -1,5 +1,4 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/button_input.dart';
 import 'package:deep_connections/screens/components/form/field_input/field_input.dart';
@@ -24,8 +23,7 @@ class BaseProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(
-        body: DcColumn(
+    return DcColumn(
       children: [
         Text(title,
             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -39,7 +37,7 @@ class BaseProfileScreen extends StatelessWidget {
         ),
         if (bottom != null) bottom!,
       ],
-    ));
+    );
   }
 }
 
