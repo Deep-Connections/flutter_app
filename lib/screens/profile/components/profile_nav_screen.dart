@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ProfileNavScreen extends StatelessWidget {
   final ProfileNavigationStep navigationStep;
-  final Function()? navigatePrevious;
+  final void Function(bool)? navigatePrevious;
   final Widget body;
 
   const ProfileNavScreen(
@@ -15,6 +15,6 @@ class ProfileNavScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScreen(onBack: navigatePrevious, body: body);
+    return BaseScreen(title: "Title", onBack: navigatePrevious, body: body);
   }
 }

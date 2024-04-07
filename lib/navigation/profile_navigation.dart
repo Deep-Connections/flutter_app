@@ -1,7 +1,6 @@
 import 'package:deep_connections/config/profile_step_list.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/profile/components/profile_nav_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
@@ -25,60 +24,42 @@ final profileRoutes = GoRoute(
       return null;
     },
     routes: [
-      ShellRoute(
-          builder: (context, GoRouterState state, child) {
-            final index = profileStepList.indexWhere((element) =>
-                element.navigationFromBasePath(ProfileRoutes.main.path) ==
-                state.fullPath);
-            final navigationStep = profileStepList[index];
-            final previousPath = index > 0
-                ? profileStepList[index - 1]
-                    .navigationFromBasePath(ProfileRoutes.main.path)
-                : null;
-            navigatePrevious() {
-              if (context.canPop() || previousPath == null) {
-                context.pop();
-              } else {
-                context.pushReplacement(previousPath);
-              }
+      ...List.generate(profileStepList.length, (index) {
+        final navigationStep = profileStepList[index];
+        final navigateNextPath = index < profileStepList.length - 1
+            ? profileStepList[index + 1]
+                .navigationFromBasePath(ProfileRoutes.main.path)
+            : HomeRoutes.home.fullPath;
+        final previousPath = index > 0
+            ? profileStepList[index - 1]
+                .navigationFromBasePath(ProfileRoutes.main.path)
+            : null;
+        return GoRoute(
+          path: navigationStep.navigationPath,
+          pageBuilder: (context, state) {
+            navigateToNext() async => context.push(navigateNextPath);
+            Widget? profileNavWidget;
+            if (navigationStep is ProfileNavigationStepWithWidget) {
+              profileNavWidget =
+                  navigationStep.createWidget(getIt(), navigateToNext);
             }
-
-            return ProfileNavScreen(
-                navigatePrevious:
-                    previousPath == null ? null : navigatePrevious,
-                navigationStep: navigationStep,
-                body: child);
-          },
-          routes: [
-            ...List.generate(profileStepList.length, (index) {
-              final navigationStep = profileStepList[index];
-              final navigateNextPath = index < profileStepList.length - 1
-                  ? profileStepList[index + 1]
-                      .navigationFromBasePath(ProfileRoutes.main.path)
-                  : HomeRoutes.home.fullPath;
-
-              return GoRoute(
-                path: navigationStep.navigationPath,
-                pageBuilder: (context, state) {
-                  navigateToNext() => context.push(navigateNextPath);
-                  Widget? widget;
-                  if (navigationStep is ProfileNavigationStepWithWidget) {
-                    widget =
-                        navigationStep.createWidget(getIt(), navigateToNext);
-                  }
-                  if (navigationStep is Question) {
-                    widget = QuestionScreen(
-                      question: navigationStep,
-                      profileService: getIt(),
-                      navigate: navigateToNext,
-                    );
-                  }
-                  widget ??= BaseScreen(
-                      body: Center(
-                          child: Text("No widget found for $navigationStep")));
-                  return CupertinoPage(child: widget);
-                },
+            if (navigationStep is Question) {
+              profileNavWidget = QuestionScreen(
+                question: navigationStep,
+                profileService: getIt(),
+                navigate: navigateToNext,
               );
-            }),
-          ]),
+            }
+            return CupertinoPage(
+                child: ProfileNavScreen(
+                    navigatePrevious: index == 0
+                        ? null
+                        : (bool _) => context.canPop() || previousPath == null
+                            ? context.pop()
+                            : context.pushReplacement(previousPath),
+                    navigationStep: navigationStep,
+                    body: profileNavWidget!));
+          },
+        );
+      }),
     ]);

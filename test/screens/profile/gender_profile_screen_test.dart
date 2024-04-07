@@ -92,7 +92,7 @@ void main() {
     await tester.tap(find.text(loc.profile_genderMore));
     await tester.pumpAndSettle();
     await tester.tap(find.text(loc.input_genderEnumNonBinary));
-    await tester.tap(find.byTooltip('Back'));
+    await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
 
     // Check that instead of more we show non-binary
@@ -110,7 +110,7 @@ void main() {
     await tester.pumpAndSettle();
     // Select trans woman
     await tester.tap(find.text(loc.input_genderEnumTransWoman));
-    await tester.tap(find.byTooltip('Back'));
+    await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
     // Check that instead of more we show non-binary
     expect(find.text(loc.input_genderEnumTransWoman), findsOneWidget);
