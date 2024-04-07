@@ -1,4 +1,3 @@
-import 'package:deep_connections/main.dart';
 import 'package:flutter/material.dart';
 
 ThemeData theme() {
