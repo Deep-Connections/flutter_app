@@ -69,5 +69,9 @@
   "question_languages_answer2": "German",
   "question_languages_answer3": "French",
   "question_languages_answer4": "Italian",
-  "question_languages_answer5": "Other"
+  "question_languages_answer5": "Other",
+  "question_currentLife_question": "Which of these describes your current life the best?",
+  "question_currentLife_answer1": "Settle down",
+  "question_currentLife_answer2": "Focus on career",
+  "question_currentLife_answer3": "Finding my place in the world"
 }
