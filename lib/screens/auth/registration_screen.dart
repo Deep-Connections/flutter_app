@@ -30,7 +30,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final loc = AppLocalizations.of(context);
     return BaseScreen(
       title: loc.register_title,
-      showBackButton: false,
+      leading: Container(),
       actions: [
         TextButton.icon(
             onPressed: () => Navigator.pop(context),

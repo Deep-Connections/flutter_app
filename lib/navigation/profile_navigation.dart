@@ -1,10 +1,10 @@
 import 'package:deep_connections/config/profile_step_list.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:deep_connections/screens/components/base_screen.dart';
+import 'package:deep_connections/screens/profile/components/profile_nav_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../config/injectable/injectable.dart';
@@ -30,27 +30,35 @@ final profileRoutes = GoRoute(
             ? profileStepList[index + 1]
                 .navigationFromBasePath(ProfileRoutes.main.path)
             : HomeRoutes.home.fullPath;
-
+        final previousPath = index > 0
+            ? profileStepList[index - 1]
+                .navigationFromBasePath(ProfileRoutes.main.path)
+            : null;
         return GoRoute(
           path: navigationStep.navigationPath,
-          builder: (context, state) {
-            navigateToNext() => context.push(navigateNextPath);
+          pageBuilder: (context, state) {
+            navigateToNext() async => context.push(navigateNextPath);
+            Widget? profileNavWidget;
             if (navigationStep is ProfileNavigationStepWithWidget) {
-              return navigationStep.createWidget(getIt(), navigateToNext);
+              profileNavWidget =
+                  navigationStep.createWidget(getIt(), navigateToNext);
             }
             if (navigationStep is Question) {
-              return QuestionScreen(
+              profileNavWidget = QuestionScreen(
                 question: navigationStep,
                 profileService: getIt(),
                 navigate: navigateToNext,
               );
             }
-            return BaseScreen(
-                body: Center(
-                    child: ElevatedButton(
-              onPressed: navigateToNext,
-              child: const Text('Next'),
-            )));
+            return CupertinoPage(
+                child: ProfileNavScreen(
+                    navigatePrevious: index == 0
+                        ? null
+                        : (bool _) => context.canPop() || previousPath == null
+                            ? context.pop()
+                            : context.pushReplacement(previousPath),
+                    navigationStep: navigationStep,
+                    body: profileNavWidget!));
           },
         );
       }),
