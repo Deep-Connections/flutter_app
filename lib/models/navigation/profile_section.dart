@@ -10,7 +10,7 @@ class ProfileSection {
   static final ProfileSection personality =
       ProfileSection._(LocKey((loc) => loc.section_personality));
   static final ProfileSection habits =
-      ProfileSection._(LocKey((loc) => loc.section_personality));
+      ProfileSection._(LocKey((loc) => loc.section_habits));
   static final ProfileSection spirituality =
       ProfileSection._(LocKey((loc) => loc.section_spirituality));
   static final ProfileSection politics =
