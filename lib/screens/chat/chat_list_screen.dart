@@ -1,8 +1,8 @@
 import 'package:deep_connections/models/chat/chat.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/extensions/navigation.dart';
-import 'package:deep_connections/utils/extensions/nullable.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/chat/chat_service.dart';
@@ -39,7 +39,7 @@ class ChatListScreen extends StatelessWidget {
                       title: Text(chat.id.toString()),
                       subtitle: const Text("chat.lastMessage"),
                       onTap: () {
-                        chat.id.let((chatId) => context
+                        chat.id?.let((chatId) => context
                             .navigate(MessageListScreen(chatId: chatId)));
                       },
                     );

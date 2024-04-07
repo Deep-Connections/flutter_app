@@ -1,19 +1,20 @@
-import 'package:deep_connections/screens/components/dc_column.dart';
+import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/integer_field_input.dart';
+import 'package:deep_connections/screens/profile/components/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../config/constants.dart';
-import '../components/base_screen.dart';
 import '../components/form/button_input.dart';
 import '../components/form/dc_text_form_field.dart';
-import '../components/form/form_button.dart';
 
 class HeightProfileScreen extends StatefulWidget {
   final ProfileService profileService;
+  final void Function() navigateToNext;
 
-  const HeightProfileScreen({super.key, required this.profileService});
+  const HeightProfileScreen(
+      {super.key, required this.profileService, required this.navigateToNext});
 
   @override
   State<HeightProfileScreen> createState() => _HeightProfileScreenState();
@@ -22,32 +23,28 @@ class HeightProfileScreen extends StatefulWidget {
 class _HeightProfileScreenState extends State<HeightProfileScreen> {
   final height = HeightInput();
   late final buttonInput = ButtonInput(fields: [height]);
-  String? apiError;
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
-    return BaseScreen(
+
+    return FutureFieldProfileScreen(
+        profileService: widget.profileService,
+        fields: [height],
         title: loc.profile_sizeTitle,
-        body: Form(
-          key: buttonInput.formKey,
-          child: DcColumn(
-            children: [
-              const SizedBox(height: BASE_PADDING),
-              DcTextFormField(
-                  fieldInput: height,
-                  textInputAction: TextInputAction.done,
-                  error: apiError),
-              FormButton(
-                text: loc.general_submitButton,
-                buttonInput: buttonInput,
-                actionIfValid: () async {
-                  final response = await widget.profileService
-                      .updateProfile((p) => p.copyWith(height: height.value));
-                },
-              ),
-            ],
-          ),
-        ));
+        builder: (BuildContext context, Profile profile) {
+          height.value = profile.height;
+          return DcListView(children: [
+            DcTextFormField(
+              fieldInput: height,
+              textInputAction: TextInputAction.done,
+            )
+          ]);
+        },
+        onNext: () async {
+          widget.profileService
+              .updateProfile((p) => p.copyWith(height: height.value));
+          widget.navigateToNext();
+        });
   }
 }

@@ -17,6 +17,7 @@ import 'package:deep_connections/services/profile/firebase_profile_service.dart'
     as _i8;
 import 'package:deep_connections/services/profile/profile_service.dart' as _i7;
 import 'package:deep_connections/services/user/user_service.dart' as _i5;
+import 'package:deep_connections/services/user/user_status_service.dart' as _i9;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
@@ -37,6 +38,8 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i6.ChatService(gh<_i5.UserService>()));
     gh.singleton<_i7.ProfileService>(
         _i8.FirebaseProfileService(gh<_i5.UserService>()));
+    gh.singleton<_i9.UserStatusService>(
+        _i9.UserStatusService(gh<_i7.ProfileService>()));
     return this;
   }
 }

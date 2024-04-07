@@ -1,7 +1,9 @@
+import 'package:deep_connections/config/constants.dart';
+import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
-import 'package:deep_connections/screens/profile/profile_base_screen.dart';
+import 'package:deep_connections/screens/profile/components/future_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -24,13 +26,13 @@ class _GenderMoreScreenState extends State<GenderMoreScreen> {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
-    return ProfileNoNextBaseScreen(
+    return BaseProfileScreen(
       title: loc.profile_genderMoreTitle,
       formKey: widget.buttonInput.formKey,
-      children: [
+      child: DcListView(children: [
         ...Gender.additional.map(
             (g) => GenderButton(gender: g, genderInput: widget.genderInput)),
-        Container(padding: const EdgeInsets.only(top: 16)),
+        Container(padding: const EdgeInsets.only(top: BASE_PADDING)),
         Text(loc.profile_genderMoreTypeIn,
             style: Theme.of(context).textTheme.bodyLarge),
         DcTextFormField(
@@ -40,7 +42,7 @@ class _GenderMoreScreenState extends State<GenderMoreScreen> {
             text: loc.general_submitButton,
             buttonInput: widget.buttonInput,
             actionIfValid: () async => Navigator.of(context).pop())
-      ],
+      ]),
     );
   }
 }

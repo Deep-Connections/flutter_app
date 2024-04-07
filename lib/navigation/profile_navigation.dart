@@ -1,65 +1,65 @@
+import 'package:deep_connections/config/profile_step_list.dart';
+import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:deep_connections/screens/profile/birthday_profile_screen.dart';
-import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
-import 'package:deep_connections/screens/profile/gender_preferences/gender_preferences_profile_screen.dart';
-import 'package:deep_connections/screens/profile/height_profile_screen.dart';
-import 'package:deep_connections/screens/profile/name_profile_screen.dart';
+import 'package:deep_connections/screens/profile/components/profile_nav_screen.dart';
+import 'package:deep_connections/screens/question/question_screen.dart';
+import 'package:deep_connections/services/user/user_status_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import '../config/injectable.dart';
-import '../services/user/user_service.dart';
-import '../services/user/user_state.dart';
+import '../config/injectable/injectable.dart';
+import '../models/navigation/profile_navigation_step.dart';
+import '../models/user/user_status.dart';
 
 final profileRoutes = GoRoute(
     path: ProfileRoutes.main.path,
     redirect: (context, state) {
-      final UserState userState = getIt<UserService>().userState;
-      if (userState.isProfileComplete) return HomeRoutes.home.fullPath;
+      final UserStatus userStatus = getIt<UserStatusService>().userStatus;
+      if (userStatus.isProfileComplete) return HomeRoutes.home.fullPath;
       if (state.fullPath == ProfileRoutes.main.path) {
-        return ProfileRoutes.name.fullPath;
+        return userStatus.uncompletedStep
+                ?.navigationFromBasePath(ProfileRoutes.main.path) ??
+            HomeRoutes.home.fullPath;
       }
       return null;
     },
     routes: [
-      GoRoute(
-        path: ProfileRoutes.name.path,
-        builder: (context, state) {
-          return NameProfileScreen(
-              profileService: getIt(),
-              navigateToNext: () =>
-                  context.push(ProfileRoutes.birthday.fullPath));
-        },
-      ),
-      GoRoute(
-        path: ProfileRoutes.birthday.path,
-        builder: (context, state) {
-          return BirthdayProfileScreen(
-            profileService: getIt(),
-            navigateToNext: () => context.push(ProfileRoutes.gender.fullPath),
-          );
-        },
-      ),
-      GoRoute(
-          path: ProfileRoutes.gender.path,
-          builder: (context, state) {
-            return GenderProfileScreen(
-              profileService: getIt(),
-              navigateToNext: () =>
-                  context.push(ProfileRoutes.genderPreferences.fullPath),
-            );
-          }),
-      GoRoute(
-          path: ProfileRoutes.genderPreferences.path,
-          builder: (context, state) {
-            return GenderPreferencesProfileScreen(
-              profileService: getIt(),
-              navigateToNext: () => context.push(ProfileRoutes.height.fullPath),
-            );
-          }),
-      GoRoute(
-        path: ProfileRoutes.height.path,
-        builder: (context, state) {
-          return HeightProfileScreen(profileService: getIt());
-        },
-      ),
+      ...List.generate(profileStepList.length, (index) {
+        final navigationStep = profileStepList[index];
+        final navigateNextPath = index < profileStepList.length - 1
+            ? profileStepList[index + 1]
+                .navigationFromBasePath(ProfileRoutes.main.path)
+            : HomeRoutes.home.fullPath;
+        final previousPath = index > 0
+            ? profileStepList[index - 1]
+                .navigationFromBasePath(ProfileRoutes.main.path)
+            : null;
+        return GoRoute(
+          path: navigationStep.navigationPath,
+          pageBuilder: (context, state) {
+            navigateToNext() async => context.push(navigateNextPath);
+            Widget? profileNavWidget;
+            if (navigationStep is ProfileNavigationStepWithWidget) {
+              profileNavWidget =
+                  navigationStep.createWidget(getIt(), navigateToNext);
+            }
+            if (navigationStep is Question) {
+              profileNavWidget = QuestionScreen(
+                question: navigationStep,
+                profileService: getIt(),
+                navigate: navigateToNext,
+              );
+            }
+            return CupertinoPage(
+                child: ProfileNavScreen(
+                    navigatePrevious: index == 0
+                        ? null
+                        : (bool _) => context.canPop() || previousPath == null
+                            ? context.pop()
+                            : context.pushReplacement(previousPath),
+                    navigationStep: navigationStep,
+                    body: profileNavWidget!));
+          },
+        );
+      }),
     ]);

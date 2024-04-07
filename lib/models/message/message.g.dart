@@ -16,10 +16,18 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['timestamp'] as String),
     );
 
-Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'senderId': instance.senderId,
-      'text': instance.text,
-      'timestamp': instance.timestamp?.toIso8601String(),
-    };
+Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('senderId', instance.senderId);
+  writeNotNull('text', instance.text);
+  writeNotNull('timestamp', instance.timestamp?.toIso8601String());
+  return val;
+}

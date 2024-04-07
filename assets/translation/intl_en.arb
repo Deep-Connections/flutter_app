@@ -1,4 +1,5 @@
 {
+  "semantic_selected": "Selected: {text}",
   "general_error": "An error occurred",
   "general_submitButton": "Submit",
   "general_next": "Next",
@@ -46,5 +47,20 @@
   "profile_genderMoreTypeIn": "If you don't see your gender, feel free to type it in:",
   "profile_genderPreferencesTitle": "Who are you looking for?",
   "profile_genderPreferencesMoreTitle": "More genders",
-  "profile_sizeTitle": "How tall are you?"
+  "profile_sizeTitle": "How tall are you?",
+  "questionType_multipleChoice_numberSelected": "{min} of {max} selected",
+  "question_relationshipType_question": "How long do you want your next relationship to last?",
+  "question_relationshipType_answer1": "One night",
+  "question_relationshipType_answer2": "Short term",
+  "question_relationshipType_answer3": "Long term",
+  "question_relationshipType_answer4": "For life",
+  "question_politicalSpectrum_question": "Where do you see yourself on the political spectrum?",
+  "question_politicalSpectrum_answerMin": "left",
+  "question_politicalSpectrum_answerMax": "right",
+  "question_languages_question": "What languages do you speak?",
+  "question_languages_answer1": "English",
+  "question_languages_answer2": "German",
+  "question_languages_answer3": "French",
+  "question_languages_answer4": "Italian",
+  "question_languages_answer5": "Other"
 }

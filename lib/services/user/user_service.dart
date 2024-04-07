@@ -1,4 +1,5 @@
-import 'package:deep_connections/services/user/user_state.dart';
+import 'package:deep_connections/models/user/user.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,7 +9,7 @@ import '../firebase/firebase_exceptions.dart';
 class UserService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  UserState get userState => userStateFromFirebaseUser(_auth.currentUser);
+  DcUser? get user => _auth.currentUser?.toDcUser();
 
   String get userId {
     final userId = _auth.currentUser?.uid;
@@ -18,7 +19,7 @@ class UserService {
     return userId;
   }
 
-  Stream<UserState?> get userStateStream {
-    return _auth.authStateChanges().map(userStateFromFirebaseUser);
-  }
+  Stream<DcUser?> get userStream => _auth
+      .authStateChanges()
+      .map((user) => user?.let((user) => DcUser.fromFirebaseUser(user)));
 }
