@@ -15,11 +15,12 @@ final profileRoutes = GoRoute(
     path: CompleteProfileRoutes.main.path,
     redirect: (context, state) async {
       final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
-      if (userStatus.isProfileComplete) return HomeRoutes.home.fullPath;
+      if (userStatus.isProfileComplete)
+        return BottomNavigation.profile.fullPath;
       if (state.fullPath == CompleteProfileRoutes.main.path) {
         return userStatus.uncompletedStep
                 ?.navigationFromBasePath(CompleteProfileRoutes.main.path) ??
-            HomeRoutes.home.fullPath;
+            BottomNavigation.profile.fullPath;
       }
       return null;
     },

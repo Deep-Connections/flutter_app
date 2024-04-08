@@ -39,6 +39,8 @@
   "forgotPassword_title": "Reset password",
   "forgotPassword_resetButton": "Reset password",
   "forgotPassword_infoText": "Enter your email to reset your password",
+  "profile_title": "Profile",
+  "chat_title": "Chats",
   "completeProfile_firstNameTitle": "What's your name?",
   "completeProfile_birthdayTitle": "When were you born?",
   "completeProfile_genderTitle": "What's your gender?",
