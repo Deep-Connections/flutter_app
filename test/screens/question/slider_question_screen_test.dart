@@ -54,7 +54,7 @@ void main() {
           profileService.profile?.question1?.response, [selected.toString()]);
     }
 
-    await tester.drag(find.byType(Slider), const Offset(200, 0));
+    await tester.drag(find.byType(Slider), const Offset(300, 0));
     await tester.pumpAndSettle();
     await checkSelected(5);
 
@@ -99,7 +99,7 @@ void main() {
           profileService.profile?.question2?.response, [selected.toString()]);
     }
 
-    await tester.drag(find.byType(Slider), const Offset(-200, 0));
+    await tester.drag(find.byType(Slider), const Offset(-300, 0));
     await tester.pumpAndSettle();
     await checkSelected(-1);
 
