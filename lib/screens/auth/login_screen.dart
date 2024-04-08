@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/form/button_input.dart';
 import 'package:deep_connections/screens/components/form/field_input/text_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,6 +32,25 @@ class _LoginScreenState extends State<LoginScreen> {
   final password = PasswordInput();
   late final buttonInput = ButtonInput(fields: [email, password]);
   String? apiError;
+
+  loadDebugCredentials() async {
+    if (kDebugMode) {
+      try {
+        final credentials =
+            json.decode(await rootBundle.loadString('credentials.json'));
+        email.value = credentials['email'];
+        password.value = credentials['password'];
+      } on AssertionError catch (_) {
+        // ignore file not found
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadDebugCredentials();
+  }
 
   @override
   Widget build(BuildContext context) {

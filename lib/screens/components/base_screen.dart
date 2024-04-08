@@ -28,13 +28,10 @@ class BaseScreen extends StatelessWidget {
                 title: Text(title ?? ""),
                 actions: actions,
                 leading: leading ??
-                    onBack?.let((onBack) => PopScope(
-                        canPop: false,
-                        onPopInvoked: onBack,
-                        child: IconButton(
+                    onBack?.let((onBack) => IconButton(
                           icon: const Icon(Icons.arrow_back),
                           onPressed: () => onBack(true),
-                        )))),
+                        ))),
             body: Center(
                 child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 800),

@@ -10,6 +10,7 @@ import 'package:test/test.dart';
 
 import '../services/mock_profile_service.dart';
 
+// ignore: must_be_immutable
 class MockGoRouterState extends Mock implements GoRouterState {}
 
 class MockBuildContext extends Mock implements BuildContext {}
