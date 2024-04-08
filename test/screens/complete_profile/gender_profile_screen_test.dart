@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
+import 'package:deep_connections/screens/complete_profile/gender/gender_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

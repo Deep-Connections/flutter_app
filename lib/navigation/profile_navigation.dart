@@ -1,7 +1,7 @@
 import 'package:deep_connections/config/profile_step_list.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:deep_connections/screens/profile/components/profile_nav_screen.dart';
+import 'package:deep_connections/screens/complete_profile/components/profile_nav_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/cupertino.dart';

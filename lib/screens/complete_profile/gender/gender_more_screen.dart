@@ -3,7 +3,7 @@ import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
-import 'package:deep_connections/screens/profile/components/future_profile_screen.dart';
+import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
