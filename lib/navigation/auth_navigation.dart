@@ -10,8 +10,8 @@ import '../screens/auth/registration_screen.dart';
 
 final authRoutes = GoRoute(
   path: AuthRoutes.main.path,
-  redirect: (context, state) {
-    final UserStatus userStatus = getIt<UserStatusService>().userStatus;
+  redirect: (context, state) async {
+    final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
     if (userStatus.isAuthenticated) {
       return userStatus.uncompletedStep
               ?.navigationFromBasePath(ProfileRoutes.main.path) ??

@@ -8,9 +8,7 @@ class UserStatusService {
 
   UserStatusService(this._profileService);
 
-  UserStatus get userStatus => UserStatus(
-        _profileService.profile,
-      );
+  Future<UserStatus> get userStatus => userStatusStream.first;
 
   Stream<UserStatus> get userStatusStream {
     return _profileService.profileStream.map((profile) => UserStatus(profile));

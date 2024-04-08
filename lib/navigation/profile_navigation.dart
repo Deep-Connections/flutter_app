@@ -13,8 +13,8 @@ import '../models/user/user_status.dart';
 
 final profileRoutes = GoRoute(
     path: ProfileRoutes.main.path,
-    redirect: (context, state) {
-      final UserStatus userStatus = getIt<UserStatusService>().userStatus;
+    redirect: (context, state) async {
+      final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
       if (userStatus.isProfileComplete) return HomeRoutes.home.fullPath;
       if (state.fullPath == ProfileRoutes.main.path) {
         return userStatus.uncompletedStep

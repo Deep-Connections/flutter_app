@@ -14,8 +14,8 @@ final appRouter = GoRouter(
       GoRouterRefreshListenable(getIt<UserStatusService>().userStatusStream),
   initialLocation: AuthRoutes.main.path,
   debugLogDiagnostics: true,
-  redirect: (context, state) {
-    final UserStatus userStatus = getIt<UserStatusService>().userStatus;
+  redirect: (context, state) async {
+    final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
     final path = state.fullPath;
     if (path == null) return AuthRoutes.main.fullPath;
     if (!userStatus.isAuthenticated) {
