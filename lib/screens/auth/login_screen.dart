@@ -33,19 +33,23 @@ class _LoginScreenState extends State<LoginScreen> {
   late final buttonInput = ButtonInput(fields: [email, password]);
   String? apiError;
 
-  loadCredentials() async {
+  loadDebugCredentials() async {
     if (kDebugMode) {
-      final jsonString = await rootBundle.loadString('credentials.json');
-      final credentials = json.decode(jsonString);
-      email.value = credentials['email'];
-      password.value = credentials['password'];
+      try {
+        final credentials =
+            json.decode(await rootBundle.loadString('credentials.json'));
+        email.value = credentials['email'];
+        password.value = credentials['password'];
+      } on AssertionError catch (_) {
+        // ignore file not found
+      }
     }
   }
 
   @override
   void initState() {
     super.initState();
-    loadCredentials();
+    loadDebugCredentials();
   }
 
   @override
