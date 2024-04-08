@@ -53,7 +53,7 @@ void main() {
     checkButtonEnabled(loc.general_next, tester, enabled: true);
     checkButtonEnabled(loc.input_genderEnumWoman, tester, enabled: true);
     checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: true);
-    checkButtonEnabled(loc.profile_genderMore, tester, enabled: true);
+    checkButtonEnabled(loc.completeProfile_genderMore, tester, enabled: true);
 
     await tester.tap(find.text(loc.input_genderEnumWoman));
     await tester.tap(find.text(loc.general_next));
@@ -64,7 +64,7 @@ void main() {
     checkButtonEnabled(loc.general_next, tester, enabled: false);
     checkButtonEnabled(loc.input_genderEnumWoman, tester, enabled: false);
     checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: false);
-    checkButtonEnabled(loc.profile_genderMore, tester, enabled: false);
+    checkButtonEnabled(loc.completeProfile_genderMore, tester, enabled: false);
 
     completer.complete();
     await tester.pumpAndSettle();
@@ -89,14 +89,14 @@ void main() {
         navigateToNext: () async => navigateSuccess = true));
 
     // open more and select non-binary
-    await tester.tap(find.text(loc.profile_genderMore));
+    await tester.tap(find.text(loc.completeProfile_genderMore));
     await tester.pumpAndSettle();
     await tester.tap(find.text(loc.input_genderEnumNonBinary));
     await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
 
     // Check that instead of more we show non-binary
-    expect(find.text(loc.profile_genderMore), findsNothing);
+    expect(find.text(loc.completeProfile_genderMore), findsNothing);
     expect(find.text(loc.input_genderEnumNonBinary), findsOneWidget);
 
     await tester.tap(find.text(loc.general_next));
@@ -165,7 +165,7 @@ void main() {
     // check that we are back in the complete_profile screen
     expect(find.text(loc.input_genderError), findsNothing);
     expect(find.text(customGender), findsOneWidget);
-    expect(find.text(loc.profile_genderTitle), findsOneWidget);
+    expect(find.text(loc.completeProfile_genderTitle), findsOneWidget);
 
     // Hit next and check that custom gender is sent to the backend
     await tester.tap(find.text(loc.general_next));

@@ -28,7 +28,7 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return FutureFieldProfileScreen(
-      title: loc.profile_genderTitle,
+      title: loc.completeProfile_genderTitle,
       profileService: widget.profileService,
       fields: [gender],
       builder: (BuildContext context, Profile profile) {

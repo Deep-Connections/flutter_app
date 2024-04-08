@@ -26,7 +26,7 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return FutureFieldProfileScreen(
-        title: loc.profile_birthdayTitle,
+        title: loc.completeProfile_birthdayTitle,
         profileService: widget.profileService,
         fields: [birthdate],
         onNext: () async {

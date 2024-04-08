@@ -31,7 +31,7 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
     return FutureFieldProfileScreen(
         profileService: widget.profileService,
         fields: [height],
-        title: loc.profile_sizeTitle,
+        title: loc.completeProfile_sizeTitle,
         builder: (BuildContext context, Profile profile) {
           height.value = profile.height;
           return DcListView(children: [

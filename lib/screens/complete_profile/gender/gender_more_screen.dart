@@ -27,13 +27,13 @@ class _GenderMoreScreenState extends State<GenderMoreScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return BaseProfileScreen(
-      title: loc.profile_genderMoreTitle,
+      title: loc.completeProfile_genderMoreTitle,
       formKey: widget.buttonInput.formKey,
       child: DcListView(children: [
         ...Gender.additional.map(
             (g) => GenderButton(gender: g, genderInput: widget.genderInput)),
         Container(padding: const EdgeInsets.only(top: BASE_PADDING)),
-        Text(loc.profile_genderMoreTypeIn,
+        Text(loc.completeProfile_genderMoreTypeIn,
             style: Theme.of(context).textTheme.bodyLarge),
         DcTextFormField(
             fieldInput: widget.genderInput,

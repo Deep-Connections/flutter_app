@@ -16,7 +16,7 @@ class GenderPreferencesMoreProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return BaseProfileScreen(
-        title: loc.profile_genderPreferencesMoreTitle,
+        title: loc.completeProfile_genderPreferencesMoreTitle,
         bottom: ElevatedButton(
           child: Text(loc.general_submitButton),
           onPressed: () async => Navigator.of(context).pop(),

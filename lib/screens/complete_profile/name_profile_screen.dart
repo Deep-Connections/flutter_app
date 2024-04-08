@@ -31,7 +31,7 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
 
     return FutureFieldProfileScreen(
       profileService: widget.profileService,
-      title: loc.profile_firstNameTitle,
+      title: loc.completeProfile_firstNameTitle,
       builder: (BuildContext context, Profile profile) {
         name.value = profile.firstName;
         return DcListView(

@@ -29,7 +29,7 @@ class _GenderProfileScreenState extends State<GenderPreferencesProfileScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return FutureFieldProfileScreen(
-      title: loc.profile_genderPreferencesTitle,
+      title: loc.completeProfile_genderPreferencesTitle,
       profileService: widget.profileService,
       builder: (BuildContext context, Profile profile) {
         genderInput.value = profile.genderPreferences;

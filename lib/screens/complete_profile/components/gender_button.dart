@@ -46,7 +46,7 @@ class MoreGenderButton extends StatelessWidget {
         final text = genderInput.moreText(loc);
         final isSelected = text != null;
         return SelectableButton(
-            text: text ?? loc.profile_genderMore,
+            text: text ?? loc.completeProfile_genderMore,
             onPressed: onPressed,
             selected: isSelected,
             enabled: genderInput.enabled,
