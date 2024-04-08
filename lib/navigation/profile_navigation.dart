@@ -29,7 +29,7 @@ final profileRoutes = GoRoute(
         final navigateNextPath = index < profileStepList.length - 1
             ? profileStepList[index + 1]
                 .navigationFromBasePath(ProfileRoutes.main.path)
-            : HomeRoutes.home.fullPath;
+            : null;
         final previousPath = index > 0
             ? profileStepList[index - 1]
                 .navigationFromBasePath(ProfileRoutes.main.path)
@@ -37,7 +37,9 @@ final profileRoutes = GoRoute(
         return GoRoute(
           path: navigationStep.navigationPath,
           pageBuilder: (context, state) {
-            navigateToNext() async => context.push(navigateNextPath);
+            navigateToNext() async => navigateNextPath != null
+                ? context.push(navigateNextPath)
+                : null;
             Widget? profileNavWidget;
             if (navigationStep is ProfileNavigationStepWithWidget) {
               profileNavWidget =

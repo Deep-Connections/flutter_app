@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
 
   firebase_core: 2.28.0
   firebase_auth: 4.19.0
@@ -44,8 +46,9 @@ dependencies:
   get_it: 7.6.7
   rxdart: 0.27.7
   freezed_annotation: 2.4.1
-  go_router: 12.1.3 # 13.x doesn't work with popscope
+  go_router: 13.2.2
   age_calculator: 1.0.0
+
 
 dev_dependencies:
   flutter_test:
