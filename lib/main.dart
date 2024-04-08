@@ -14,7 +14,11 @@ import 'config/injectable/injectable.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   configureDependencies();
+
+  // url routing
+  usePathUrlStrategy();
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
   runApp(const App());
