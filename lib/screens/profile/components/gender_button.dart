@@ -1,3 +1,4 @@
+import 'package:deep_connections/config/theme.dart';
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
 import 'package:flutter/material.dart';
@@ -79,12 +80,13 @@ class SelectableButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: enabled ? onPressed : null,
       style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-          side: selected
-              ? const BorderSide(color: Colors.black)
-              : BorderSide.none,
-        ),
+        backgroundColor: selected ? null : unselectedColor,
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(30.0),
+        //   side: selected
+        //       ? const BorderSide(color: Color(0xFF81a87b))
+        //       : BorderSide.none,
+        // ),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Flexible(
