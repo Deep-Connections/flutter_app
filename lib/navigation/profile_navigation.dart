@@ -12,13 +12,13 @@ import '../models/navigation/profile_navigation_step.dart';
 import '../models/user/user_status.dart';
 
 final profileRoutes = GoRoute(
-    path: ProfileRoutes.main.path,
+    path: CompleteProfileRoutes.main.path,
     redirect: (context, state) async {
       final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
       if (userStatus.isProfileComplete) return HomeRoutes.home.fullPath;
-      if (state.fullPath == ProfileRoutes.main.path) {
+      if (state.fullPath == CompleteProfileRoutes.main.path) {
         return userStatus.uncompletedStep
-                ?.navigationFromBasePath(ProfileRoutes.main.path) ??
+                ?.navigationFromBasePath(CompleteProfileRoutes.main.path) ??
             HomeRoutes.home.fullPath;
       }
       return null;
@@ -28,11 +28,11 @@ final profileRoutes = GoRoute(
         final navigationStep = profileStepList[index];
         final navigateNextPath = index < profileStepList.length - 1
             ? profileStepList[index + 1]
-                .navigationFromBasePath(ProfileRoutes.main.path)
+                .navigationFromBasePath(CompleteProfileRoutes.main.path)
             : null;
         final previousPath = index > 0
             ? profileStepList[index - 1]
-                .navigationFromBasePath(ProfileRoutes.main.path)
+                .navigationFromBasePath(CompleteProfileRoutes.main.path)
             : null;
         return GoRoute(
           path: navigationStep.navigationPath,

@@ -26,6 +26,6 @@ class AuthRoutes {
   static const Route forgotPassword = Route('forgot_password', main);
 }
 
-class ProfileRoutes {
-  static const Route main = Route('profile', null);
+class CompleteProfileRoutes {
+  static const Route main = Route('complete_profile', null);
 }

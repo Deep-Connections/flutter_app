@@ -38,7 +38,7 @@ void main() {
     expect(button.onPressed != null, enabled);
   }
 
-  testWidgets('Test profile screen selecting male and female',
+  testWidgets('Test complete_profile screen selecting male and female',
       (WidgetTester tester) async {
     // Setup
     final completer = Completer();
@@ -80,7 +80,7 @@ void main() {
     expect(profileService.profile?.gender, Gender.man.enumValue);
   });
 
-  testWidgets('Test profile screen selecting additional genders',
+  testWidgets('Test complete_profile screen selecting additional genders',
       (WidgetTester tester) async {
     // Setup
     profileService.profile = const Profile();
@@ -123,7 +123,7 @@ void main() {
     expect(profileService.profile?.gender, Gender.transWoman.enumValue);
   });
 
-  testWidgets('Test profile screen type in genders',
+  testWidgets('Test complete_profile screen type in genders',
       (WidgetTester tester) async {
     // initially non-binary is already selected
     await profileService
@@ -162,7 +162,7 @@ void main() {
     await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
 
-    // check that we are back in the profile screen
+    // check that we are back in the complete_profile screen
     expect(find.text(loc.input_genderError), findsNothing);
     expect(find.text(customGender), findsOneWidget);
     expect(find.text(loc.profile_genderTitle), findsOneWidget);
