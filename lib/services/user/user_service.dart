@@ -22,4 +22,7 @@ class UserService {
   Stream<DcUser?> get userStream => _auth
       .authStateChanges()
       .map((user) => user?.let((user) => DcUser.fromFirebaseUser(user)));
+
+  Stream<String?> get userIdStream =>
+      userStream.map((user) => user?.uid).distinct();
 }
