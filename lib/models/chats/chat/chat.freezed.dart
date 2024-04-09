@@ -22,6 +22,7 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 mixin _$Chat {
   String? get id => throw _privateConstructorUsedError;
   List<String>? get participantIds => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
   Message? get lastMessage => throw _privateConstructorUsedError;
   List<ChatInfo>? get chatInfos => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $ChatCopyWith<$Res> {
   $Res call(
       {String? id,
       List<String>? participantIds,
-      DateTime? timestamp,
+      @TimestampConverter() DateTime? timestamp,
       Message? lastMessage,
       List<ChatInfo>? chatInfos});
 
@@ -112,7 +113,7 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
   $Res call(
       {String? id,
       List<String>? participantIds,
-      DateTime? timestamp,
+      @TimestampConverter() DateTime? timestamp,
       Message? lastMessage,
       List<ChatInfo>? chatInfos});
 
@@ -167,7 +168,7 @@ class _$ChatImpl extends _Chat with DiagnosticableTreeMixin {
   const _$ChatImpl(
       {this.id,
       final List<String>? participantIds,
-      this.timestamp,
+      @TimestampConverter() this.timestamp,
       this.lastMessage,
       final List<ChatInfo>? chatInfos})
       : _participantIds = participantIds,
@@ -190,6 +191,7 @@ class _$ChatImpl extends _Chat with DiagnosticableTreeMixin {
   }
 
   @override
+  @TimestampConverter()
   final DateTime? timestamp;
   @override
   final Message? lastMessage;
@@ -264,7 +266,7 @@ abstract class _Chat extends Chat {
   const factory _Chat(
       {final String? id,
       final List<String>? participantIds,
-      final DateTime? timestamp,
+      @TimestampConverter() final DateTime? timestamp,
       final Message? lastMessage,
       final List<ChatInfo>? chatInfos}) = _$ChatImpl;
   const _Chat._() : super._();
@@ -276,6 +278,7 @@ abstract class _Chat extends Chat {
   @override
   List<String>? get participantIds;
   @override
+  @TimestampConverter()
   DateTime? get timestamp;
   @override
   Message? get lastMessage;

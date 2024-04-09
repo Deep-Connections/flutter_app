@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/models/chats/info/chat_info.dart';
+import 'package:deep_connections/models/converters/timestamp_converter.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -13,7 +15,7 @@ class Chat with _$Chat {
   const factory Chat({
     String? id,
     List<String>? participantIds,
-    DateTime? timestamp,
+    @TimestampConverter() DateTime? timestamp,
     Message? lastMessage,
     List<ChatInfo>? chatInfos,
   }) = _Chat;

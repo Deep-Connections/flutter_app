@@ -11,9 +11,8 @@ _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       participantIds: (json['participantIds'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      timestamp: json['timestamp'] == null
-          ? null
-          : DateTime.parse(json['timestamp'] as String),
+      timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['timestamp'], const TimestampConverter().fromJson),
       lastMessage: json['lastMessage'] == null
           ? null
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
@@ -33,9 +32,24 @@ Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
 
   writeNotNull('id', instance.id);
   writeNotNull('participantIds', instance.participantIds);
-  writeNotNull('timestamp', instance.timestamp?.toIso8601String());
+  writeNotNull(
+      'timestamp',
+      _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.timestamp, const TimestampConverter().toJson));
   writeNotNull('lastMessage', instance.lastMessage?.toJson());
   writeNotNull(
       'chatInfos', instance.chatInfos?.map((e) => e.toJson()).toList());
   return val;
 }
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

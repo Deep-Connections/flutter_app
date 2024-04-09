@@ -35,6 +35,7 @@ class ChatService {
       print("Chat Stream reinitialized");
       return _chatRef
           .where(SerializedField.participantIds, arrayContains: userId)
+          .orderBy(SerializedField.timestamp, descending: true)
           .snapshots()
           .map((snap) => snap.docs
               .map((doc) => doc.data())
