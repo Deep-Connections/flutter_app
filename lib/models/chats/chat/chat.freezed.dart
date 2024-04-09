@@ -24,6 +24,7 @@ mixin _$Chat {
   List<String>? get participantIds => throw _privateConstructorUsedError;
   DateTime? get timestamp => throw _privateConstructorUsedError;
   Message? get lastMessage => throw _privateConstructorUsedError;
+  List<ChatInfo>? get chatInfos => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,7 +40,8 @@ abstract class $ChatCopyWith<$Res> {
       {String? id,
       List<String>? participantIds,
       DateTime? timestamp,
-      Message? lastMessage});
+      Message? lastMessage,
+      List<ChatInfo>? chatInfos});
 
   $MessageCopyWith<$Res>? get lastMessage;
 }
@@ -61,6 +63,7 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
     Object? participantIds = freezed,
     Object? timestamp = freezed,
     Object? lastMessage = freezed,
+    Object? chatInfos = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -79,6 +82,10 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as Message?,
+      chatInfos: freezed == chatInfos
+          ? _value.chatInfos
+          : chatInfos // ignore: cast_nullable_to_non_nullable
+              as List<ChatInfo>?,
     ) as $Val);
   }
 
@@ -106,7 +113,8 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
       {String? id,
       List<String>? participantIds,
       DateTime? timestamp,
-      Message? lastMessage});
+      Message? lastMessage,
+      List<ChatInfo>? chatInfos});
 
   @override
   $MessageCopyWith<$Res>? get lastMessage;
@@ -126,6 +134,7 @@ class __$$ChatImplCopyWithImpl<$Res>
     Object? participantIds = freezed,
     Object? timestamp = freezed,
     Object? lastMessage = freezed,
+    Object? chatInfos = freezed,
   }) {
     return _then(_$ChatImpl(
       id: freezed == id
@@ -144,6 +153,10 @@ class __$$ChatImplCopyWithImpl<$Res>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as Message?,
+      chatInfos: freezed == chatInfos
+          ? _value._chatInfos
+          : chatInfos // ignore: cast_nullable_to_non_nullable
+              as List<ChatInfo>?,
     ));
   }
 }
@@ -155,8 +168,10 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
       {this.id,
       final List<String>? participantIds,
       this.timestamp,
-      this.lastMessage})
-      : _participantIds = participantIds;
+      this.lastMessage,
+      final List<ChatInfo>? chatInfos})
+      : _participantIds = participantIds,
+        _chatInfos = chatInfos;
 
   factory _$ChatImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatImplFromJson(json);
@@ -177,10 +192,19 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
   final DateTime? timestamp;
   @override
   final Message? lastMessage;
+  final List<ChatInfo>? _chatInfos;
+  @override
+  List<ChatInfo>? get chatInfos {
+    final value = _chatInfos;
+    if (value == null) return null;
+    if (_chatInfos is EqualUnmodifiableListView) return _chatInfos;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Chat(id: $id, participantIds: $participantIds, timestamp: $timestamp, lastMessage: $lastMessage)';
+    return 'Chat(id: $id, participantIds: $participantIds, timestamp: $timestamp, lastMessage: $lastMessage, chatInfos: $chatInfos)';
   }
 
   @override
@@ -191,7 +215,8 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('participantIds', participantIds))
       ..add(DiagnosticsProperty('timestamp', timestamp))
-      ..add(DiagnosticsProperty('lastMessage', lastMessage));
+      ..add(DiagnosticsProperty('lastMessage', lastMessage))
+      ..add(DiagnosticsProperty('chatInfos', chatInfos));
   }
 
   @override
@@ -205,7 +230,9 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
             (identical(other.lastMessage, lastMessage) ||
-                other.lastMessage == lastMessage));
+                other.lastMessage == lastMessage) &&
+            const DeepCollectionEquality()
+                .equals(other._chatInfos, _chatInfos));
   }
 
   @JsonKey(ignore: true)
@@ -215,7 +242,8 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
       id,
       const DeepCollectionEquality().hash(_participantIds),
       timestamp,
-      lastMessage);
+      lastMessage,
+      const DeepCollectionEquality().hash(_chatInfos));
 
   @JsonKey(ignore: true)
   @override
@@ -236,7 +264,8 @@ abstract class _Chat implements Chat {
       {final String? id,
       final List<String>? participantIds,
       final DateTime? timestamp,
-      final Message? lastMessage}) = _$ChatImpl;
+      final Message? lastMessage,
+      final List<ChatInfo>? chatInfos}) = _$ChatImpl;
 
   factory _Chat.fromJson(Map<String, dynamic> json) = _$ChatImpl.fromJson;
 
@@ -248,6 +277,8 @@ abstract class _Chat implements Chat {
   DateTime? get timestamp;
   @override
   Message? get lastMessage;
+  @override
+  List<ChatInfo>? get chatInfos;
   @override
   @JsonKey(ignore: true)
   _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>

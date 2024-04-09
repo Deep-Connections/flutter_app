@@ -17,6 +17,9 @@ _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       lastMessage: json['lastMessage'] == null
           ? null
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
+      chatInfos: (json['chatInfos'] as List<dynamic>?)
+          ?.map((e) => ChatInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
@@ -32,5 +35,7 @@ Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
   writeNotNull('participantIds', instance.participantIds);
   writeNotNull('timestamp', instance.timestamp?.toIso8601String());
   writeNotNull('lastMessage', instance.lastMessage?.toJson());
+  writeNotNull(
+      'chatInfos', instance.chatInfos?.map((e) => e.toJson()).toList());
   return val;
 }
