@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/question/answer.dart';
 import 'package:deep_connections/models/question/choice_question.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
-import 'package:deep_connections/screens/profile/components/gender_button.dart';
+import 'package:deep_connections/screens/complete_profile/components/gender_button.dart';
 import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/cupertino.dart';

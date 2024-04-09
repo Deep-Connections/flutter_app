@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/screens/profile/gender/gender_profile_screen.dart';
+import 'package:deep_connections/screens/complete_profile/gender/gender_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -38,7 +38,7 @@ void main() {
     expect(button.onPressed != null, enabled);
   }
 
-  testWidgets('Test profile screen selecting male and female',
+  testWidgets('Test complete_profile screen selecting male and female',
       (WidgetTester tester) async {
     // Setup
     final completer = Completer();
@@ -53,7 +53,7 @@ void main() {
     checkButtonEnabled(loc.general_next, tester, enabled: true);
     checkButtonEnabled(loc.input_genderEnumWoman, tester, enabled: true);
     checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: true);
-    checkButtonEnabled(loc.profile_genderMore, tester, enabled: true);
+    checkButtonEnabled(loc.completeProfile_genderMore, tester, enabled: true);
 
     await tester.tap(find.text(loc.input_genderEnumWoman));
     await tester.tap(find.text(loc.general_next));
@@ -64,7 +64,7 @@ void main() {
     checkButtonEnabled(loc.general_next, tester, enabled: false);
     checkButtonEnabled(loc.input_genderEnumWoman, tester, enabled: false);
     checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: false);
-    checkButtonEnabled(loc.profile_genderMore, tester, enabled: false);
+    checkButtonEnabled(loc.completeProfile_genderMore, tester, enabled: false);
 
     completer.complete();
     await tester.pumpAndSettle();
@@ -80,7 +80,7 @@ void main() {
     expect(profileService.profile?.gender, Gender.man.enumValue);
   });
 
-  testWidgets('Test profile screen selecting additional genders',
+  testWidgets('Test complete_profile screen selecting additional genders',
       (WidgetTester tester) async {
     // Setup
     profileService.profile = const Profile();
@@ -89,14 +89,14 @@ void main() {
         navigateToNext: () async => navigateSuccess = true));
 
     // open more and select non-binary
-    await tester.tap(find.text(loc.profile_genderMore));
+    await tester.tap(find.text(loc.completeProfile_genderMore));
     await tester.pumpAndSettle();
     await tester.tap(find.text(loc.input_genderEnumNonBinary));
     await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
 
     // Check that instead of more we show non-binary
-    expect(find.text(loc.profile_genderMore), findsNothing);
+    expect(find.text(loc.completeProfile_genderMore), findsNothing);
     expect(find.text(loc.input_genderEnumNonBinary), findsOneWidget);
 
     await tester.tap(find.text(loc.general_next));
@@ -123,7 +123,7 @@ void main() {
     expect(profileService.profile?.gender, Gender.transWoman.enumValue);
   });
 
-  testWidgets('Test profile screen type in genders',
+  testWidgets('Test complete_profile screen type in genders',
       (WidgetTester tester) async {
     // initially non-binary is already selected
     await profileService
@@ -162,10 +162,10 @@ void main() {
     await tester.tap(find.text(loc.general_submitButton));
     await tester.pumpAndSettle();
 
-    // check that we are back in the profile screen
+    // check that we are back in the complete_profile screen
     expect(find.text(loc.input_genderError), findsNothing);
     expect(find.text(customGender), findsOneWidget);
-    expect(find.text(loc.profile_genderTitle), findsOneWidget);
+    expect(find.text(loc.completeProfile_genderTitle), findsOneWidget);
 
     // Hit next and check that custom gender is sent to the backend
     await tester.tap(find.text(loc.general_next));

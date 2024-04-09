@@ -24,7 +24,7 @@ void main() {
     getIt.registerSingleton(UserStatusService(profileService));
   });
 
-  test('When logged in the user is redirected to profile', () async {
+  test('When logged in the user is redirected to complete_profile', () async {
     // Setup mock to return a UserStatus indicating the user is not authenticated
     profileService.profile = const Profile();
 
@@ -33,10 +33,10 @@ void main() {
 
     // Assert that the redirect function returns the login path
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
-        "/profile/name");
+        "/complete_profile/name");
 
     profileService.profile = const Profile(firstName: "John");
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
-        "/profile/birthdate");
+        "/complete_profile/birthdate");
   });
 }

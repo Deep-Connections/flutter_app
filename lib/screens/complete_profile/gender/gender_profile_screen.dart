@@ -2,9 +2,9 @@ import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
-import 'package:deep_connections/screens/profile/components/future_profile_screen.dart';
-import 'package:deep_connections/screens/profile/components/gender_button.dart';
-import 'package:deep_connections/screens/profile/gender/gender_more_screen.dart';
+import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
+import 'package:deep_connections/screens/complete_profile/components/gender_button.dart';
+import 'package:deep_connections/screens/complete_profile/gender/gender_more_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/navigation.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return FutureFieldProfileScreen(
-      title: loc.profile_genderTitle,
+      title: loc.completeProfile_genderTitle,
       profileService: widget.profileService,
       fields: [gender],
       builder: (BuildContext context, Profile profile) {

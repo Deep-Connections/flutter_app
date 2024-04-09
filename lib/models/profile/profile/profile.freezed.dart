@@ -29,23 +29,14 @@ mixin _$Profile {
   QuestionResponse? get question1 => throw _privateConstructorUsedError;
   QuestionResponse? get question2 => throw _privateConstructorUsedError;
   QuestionResponse? get question3 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question4 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question5 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question6 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question7 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question8 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question9 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question10 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question11 => throw _privateConstructorUsedError;
-
   QuestionResponse? get question12 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -81,23 +72,14 @@ abstract class $ProfileCopyWith<$Res> {
   $QuestionResponseCopyWith<$Res>? get question1;
   $QuestionResponseCopyWith<$Res>? get question2;
   $QuestionResponseCopyWith<$Res>? get question3;
-
   $QuestionResponseCopyWith<$Res>? get question4;
-
   $QuestionResponseCopyWith<$Res>? get question5;
-
   $QuestionResponseCopyWith<$Res>? get question6;
-
   $QuestionResponseCopyWith<$Res>? get question7;
-
   $QuestionResponseCopyWith<$Res>? get question8;
-
   $QuestionResponseCopyWith<$Res>? get question9;
-
   $QuestionResponseCopyWith<$Res>? get question10;
-
   $QuestionResponseCopyWith<$Res>? get question11;
-
   $QuestionResponseCopyWith<$Res>? get question12;
 }
 
@@ -387,31 +369,22 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   $QuestionResponseCopyWith<$Res>? get question2;
   @override
   $QuestionResponseCopyWith<$Res>? get question3;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question4;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question5;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question6;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question7;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question8;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question9;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question10;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question11;
-
   @override
   $QuestionResponseCopyWith<$Res>? get question12;
 }
@@ -611,19 +584,19 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       ..add(DiagnosticsProperty('gender', gender))
       ..add(DiagnosticsProperty('genderPreferences', genderPreferences))
       ..add(DiagnosticsProperty('birthdate', birthdate))
-      ..add(DiagnosticsProperty('height', height))..add(
-        DiagnosticsProperty('question1', question1))..add(
-        DiagnosticsProperty('question2', question2))..add(
-        DiagnosticsProperty('question3', question3))..add(
-        DiagnosticsProperty('question4', question4))..add(
-        DiagnosticsProperty('question5', question5))..add(
-        DiagnosticsProperty('question6', question6))..add(
-        DiagnosticsProperty('question7', question7))..add(
-        DiagnosticsProperty('question8', question8))..add(
-        DiagnosticsProperty('question9', question9))..add(
-        DiagnosticsProperty('question10', question10))..add(
-        DiagnosticsProperty('question11', question11))..add(
-        DiagnosticsProperty('question12', question12));
+      ..add(DiagnosticsProperty('height', height))
+      ..add(DiagnosticsProperty('question1', question1))
+      ..add(DiagnosticsProperty('question2', question2))
+      ..add(DiagnosticsProperty('question3', question3))
+      ..add(DiagnosticsProperty('question4', question4))
+      ..add(DiagnosticsProperty('question5', question5))
+      ..add(DiagnosticsProperty('question6', question6))
+      ..add(DiagnosticsProperty('question7', question7))
+      ..add(DiagnosticsProperty('question8', question8))
+      ..add(DiagnosticsProperty('question9', question9))
+      ..add(DiagnosticsProperty('question10', question10))
+      ..add(DiagnosticsProperty('question11', question11))
+      ..add(DiagnosticsProperty('question12', question12));
   }
 
   @override
@@ -744,31 +717,22 @@ abstract class _Profile implements Profile {
   QuestionResponse? get question2;
   @override
   QuestionResponse? get question3;
-
   @override
   QuestionResponse? get question4;
-
   @override
   QuestionResponse? get question5;
-
   @override
   QuestionResponse? get question6;
-
   @override
   QuestionResponse? get question7;
-
   @override
   QuestionResponse? get question8;
-
   @override
   QuestionResponse? get question9;
-
   @override
   QuestionResponse? get question10;
-
   @override
   QuestionResponse? get question11;
-
   @override
   QuestionResponse? get question12;
   @override

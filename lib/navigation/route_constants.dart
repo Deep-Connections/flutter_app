@@ -15,8 +15,9 @@ class Route {
   String get fullPath => parent != null ? '${parent!.fullPath}/$_path' : path;
 }
 
-class HomeRoutes {
-  static const Route home = Route('home', null);
+class BottomNavigation {
+  static const Route profile = Route('profile', null);
+  static const Route chat = Route('chat', null);
 }
 
 class AuthRoutes {
@@ -26,6 +27,6 @@ class AuthRoutes {
   static const Route forgotPassword = Route('forgot_password', main);
 }
 
-class ProfileRoutes {
-  static const Route main = Route('profile', null);
+class CompleteProfileRoutes {
+  static const Route main = Route('complete_profile', null);
 }

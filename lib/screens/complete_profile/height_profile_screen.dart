@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/integer_field_input.dart';
-import 'package:deep_connections/screens/profile/components/future_profile_screen.dart';
+import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,7 +31,7 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
     return FutureFieldProfileScreen(
         profileService: widget.profileService,
         fields: [height],
-        title: loc.profile_sizeTitle,
+        title: loc.completeProfile_sizeTitle,
         builder: (BuildContext context, Profile profile) {
           height.value = profile.height;
           return DcListView(children: [

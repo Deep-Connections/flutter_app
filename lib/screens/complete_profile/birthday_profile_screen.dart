@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/date_field_input.dart';
-import 'package:deep_connections/screens/profile/components/future_profile_screen.dart';
+import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,7 +26,7 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return FutureFieldProfileScreen(
-        title: loc.profile_birthdayTitle,
+        title: loc.completeProfile_birthdayTitle,
         profileService: widget.profileService,
         fields: [birthdate],
         onNext: () async {
