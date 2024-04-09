@@ -10,6 +10,7 @@ class Message with _$Message {
     String? id,
     String? senderId,
     String? text,
+    String? chatId,
     DateTime? timestamp,
   }) = _Message;
 
