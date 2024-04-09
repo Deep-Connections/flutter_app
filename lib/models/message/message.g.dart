@@ -12,9 +12,8 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       senderId: json['senderId'] as String?,
       text: json['text'] as String?,
       chatId: json['chatId'] as String?,
-      timestamp: json['timestamp'] == null
-          ? null
-          : DateTime.parse(json['timestamp'] as String),
+      timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['timestamp'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
@@ -30,6 +29,21 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
   writeNotNull('senderId', instance.senderId);
   writeNotNull('text', instance.text);
   writeNotNull('chatId', instance.chatId);
-  writeNotNull('timestamp', instance.timestamp?.toIso8601String());
+  writeNotNull(
+      'timestamp',
+      _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.timestamp, const TimestampConverter().toJson));
   return val;
 }
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

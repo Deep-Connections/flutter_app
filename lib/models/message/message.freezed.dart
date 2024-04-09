@@ -24,6 +24,7 @@ mixin _$Message {
   String? get senderId => throw _privateConstructorUsedError;
   String? get text => throw _privateConstructorUsedError;
   String? get chatId => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,7 @@ abstract class $MessageCopyWith<$Res> {
       String? senderId,
       String? text,
       String? chatId,
-      DateTime? timestamp});
+      @TimestampConverter() DateTime? timestamp});
 }
 
 /// @nodoc
@@ -100,7 +101,7 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       String? senderId,
       String? text,
       String? chatId,
-      DateTime? timestamp});
+      @TimestampConverter() DateTime? timestamp});
 }
 
 /// @nodoc
@@ -149,7 +150,11 @@ class __$$MessageImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   const _$MessageImpl(
-      {this.id, this.senderId, this.text, this.chatId, this.timestamp});
+      {this.id,
+      this.senderId,
+      this.text,
+      this.chatId,
+      @TimestampConverter() this.timestamp});
 
   factory _$MessageImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageImplFromJson(json);
@@ -163,6 +168,7 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   @override
   final String? chatId;
   @override
+  @TimestampConverter()
   final DateTime? timestamp;
 
   @override
@@ -221,7 +227,7 @@ abstract class _Message implements Message {
       final String? senderId,
       final String? text,
       final String? chatId,
-      final DateTime? timestamp}) = _$MessageImpl;
+      @TimestampConverter() final DateTime? timestamp}) = _$MessageImpl;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
 
@@ -234,6 +240,7 @@ abstract class _Message implements Message {
   @override
   String? get chatId;
   @override
+  @TimestampConverter()
   DateTime? get timestamp;
   @override
   @JsonKey(ignore: true)
