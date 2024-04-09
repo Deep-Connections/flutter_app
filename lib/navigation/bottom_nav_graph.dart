@@ -6,8 +6,8 @@ import 'package:deep_connections/screens/profile/profile_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
-final _profileNavKey = GlobalKey<NavigatorState>(debugLabel: 'shellA');
-final _chatNavKey = GlobalKey<NavigatorState>(debugLabel: 'shellB');
+final _profileNavKey = GlobalKey<NavigatorState>(debugLabel: 'profileShell');
+final _chatNavKey = GlobalKey<NavigatorState>(debugLabel: 'chatShell');
 
 final bottomNavigation = StatefulShellRoute.indexedStack(
   builder: (context, state, navigationShell) {

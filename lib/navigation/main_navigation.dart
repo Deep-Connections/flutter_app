@@ -30,6 +30,9 @@ final appRouter = GoRouter(
             .navigationFromBasePath(CompleteProfileRoutes.main.path);
       }
     }
+    if (["/", ""].contains(path)) {
+      return homeRoute.fullPath;
+    }
     return null;
   },
   routes: [

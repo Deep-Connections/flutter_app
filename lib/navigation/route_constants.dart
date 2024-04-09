@@ -15,7 +15,10 @@ class Route {
   String get fullPath => parent != null ? '${parent!.fullPath}/$_path' : path;
 }
 
+const homeRoute = BottomNavigation.main;
+
 class BottomNavigation {
+  static const Route main = profile;
   static const Route profile = Route('profile', null);
   static const Route chat = Route('chat', null);
 }
