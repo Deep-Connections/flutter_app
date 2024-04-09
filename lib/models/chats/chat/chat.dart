@@ -18,10 +18,10 @@ class Chat with _$Chat {
     List<ChatInfo>? chatInfos,
   }) = _Chat;
 
-  String? get name {
+  ChatInfo? get info {
     try {
-      return chatInfos?.first.name;
-    } on StateError catch (e) {
+      return chatInfos?.first;
+    } on StateError {
       return null;
     }
   }

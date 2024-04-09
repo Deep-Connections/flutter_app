@@ -10,6 +10,7 @@ _$ChatInfoImpl _$$ChatInfoImplFromJson(Map<String, dynamic> json) =>
     _$ChatInfoImpl(
       userId: json['userId'] as String?,
       name: json['name'] as String?,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$$ChatInfoImplToJson(_$ChatInfoImpl instance) {
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$ChatInfoImplToJson(_$ChatInfoImpl instance) {
 
   writeNotNull('userId', instance.userId);
   writeNotNull('name', instance.name);
+  writeNotNull('imageUrl', instance.imageUrl);
   return val;
 }

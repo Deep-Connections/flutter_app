@@ -9,6 +9,7 @@ class ChatInfo with _$ChatInfo {
   const factory ChatInfo({
     String? userId,
     String? name,
+    String? imageUrl,
   }) = _ChatInfo;
 
   factory ChatInfo.fromJson(Map<String, dynamic> json) =>
