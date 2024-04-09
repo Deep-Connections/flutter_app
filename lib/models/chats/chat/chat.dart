@@ -8,6 +8,8 @@ part 'chat.g.dart';
 
 @freezed
 class Chat with _$Chat {
+  const Chat._();
+
   const factory Chat({
     String? id,
     List<String>? participantIds,
@@ -15,6 +17,14 @@ class Chat with _$Chat {
     Message? lastMessage,
     List<ChatInfo>? chatInfos,
   }) = _Chat;
+
+  String? get name {
+    try {
+      return chatInfos?.first.name;
+    } on StateError catch (e) {
+      return null;
+    }
+  }
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 }

@@ -163,7 +163,7 @@ class __$$ChatImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
+class _$ChatImpl extends _Chat with DiagnosticableTreeMixin {
   const _$ChatImpl(
       {this.id,
       final List<String>? participantIds,
@@ -171,7 +171,8 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
       this.lastMessage,
       final List<ChatInfo>? chatInfos})
       : _participantIds = participantIds,
-        _chatInfos = chatInfos;
+        _chatInfos = chatInfos,
+        super._();
 
   factory _$ChatImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatImplFromJson(json);
@@ -259,13 +260,14 @@ class _$ChatImpl with DiagnosticableTreeMixin implements _Chat {
   }
 }
 
-abstract class _Chat implements Chat {
+abstract class _Chat extends Chat {
   const factory _Chat(
       {final String? id,
       final List<String>? participantIds,
       final DateTime? timestamp,
       final Message? lastMessage,
       final List<ChatInfo>? chatInfos}) = _$ChatImpl;
+  const _Chat._() : super._();
 
   factory _Chat.fromJson(Map<String, dynamic> json) = _$ChatImpl.fromJson;
 
