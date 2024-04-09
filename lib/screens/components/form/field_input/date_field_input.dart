@@ -26,7 +26,8 @@ abstract class DateInput extends FieldInput<DateTime> {
   @override
   set value(DateTime? value) {
     pickedDate = value;
-    if (value != null) controller.text = DateFormat.yMd().format(value);
+    if (value != null)
+      controller.text = DateFormat.yMd(Intl.getCurrentLocale()).format(value);
   }
 
   @override
