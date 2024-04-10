@@ -1,7 +1,8 @@
 import 'package:deep_connections/models/chats/chat/chat.dart';
+import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 
 class ChatListTile extends StatelessWidget {
   final Chat chat;
@@ -17,6 +18,9 @@ class ChatListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ListTile(
+      onTap: () {
+        context.push("${MainRoutes.messages.fullPath}/${chat.id}");
+      },
       leading: CircleAvatar(
           backgroundImage: NetworkImage(chat.info?.imageUrl ?? "")),
       title: Text(chat.info?.name ?? ""),
@@ -28,9 +32,7 @@ class ChatListTile extends StatelessWidget {
       trailing: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(chat.timestamp?.let((date) =>
-                  DateFormat.Hm(Intl.getCurrentLocale()).format(date)) ??
-              ""),
+          Text(chat.timestamp?.toHmString() ?? ""),
           if (isUnread)
             Container(
               width: 20,

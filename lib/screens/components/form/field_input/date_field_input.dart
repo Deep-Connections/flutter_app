@@ -1,8 +1,8 @@
 import 'package:age_calculator/age_calculator.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 
 import 'field_input.dart';
 
@@ -26,8 +26,9 @@ abstract class DateInput extends FieldInput<DateTime> {
   @override
   set value(DateTime? value) {
     pickedDate = value;
-    if (value != null)
-      controller.text = DateFormat.yMd(Intl.getCurrentLocale()).format(value);
+    if (value != null) {
+      controller.text = value.toYmdString();
+    }
   }
 
   @override

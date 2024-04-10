@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 extension LetExtension<T> on T {
   /// Extension on nullable types to conditionally perform operations.
   ///
@@ -16,6 +18,16 @@ extension LetExtension<T> on T {
   /// - Returns: The result of [operation] if this object is not null; otherwise, null.
   R let<R>(R Function(T it) operation) {
     return operation(this);
+  }
+}
+
+extension DateTimeExtensions on DateTime {
+  String toHmString() {
+    return DateFormat.Hm(Intl.getCurrentLocale()).format(this);
+  }
+
+  String toYmdString() {
+    return DateFormat.yMd(Intl.getCurrentLocale()).format(this);
   }
 }
 
