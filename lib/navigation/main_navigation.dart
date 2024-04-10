@@ -4,6 +4,7 @@ import 'package:deep_connections/navigation/bottom_nav_graph.dart';
 import 'package:deep_connections/navigation/profile_navigation.dart';
 import 'package:deep_connections/navigation/refresh_listenable.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
+import 'package:deep_connections/screens/chat/message_list_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,13 +31,36 @@ final appRouter = GoRouter(
             .navigationFromBasePath(CompleteProfileRoutes.main.path);
       }
     }
-    if (["/", ""].contains(path)) {
-      return homeRoute.fullPath;
-    }
     return null;
   },
   routes: [
-    bottomNavigation,
+    GoRoute(
+        path: MainRoutes.main.path,
+        redirect: (context, state) {
+          final path = state.fullPath;
+          if (path == MainRoutes.main.path) {
+            return BottomNavigation.main.fullPath;
+          }
+        },
+        routes: [
+          GoRoute(
+              path: MainRoutes.messages.path,
+              redirect: (context, state) {
+                final chatId =
+                    state.pathParameters[MainRoutes.messages.pathParameter];
+                if (chatId == null || chatId == "") {
+                  throw UnimplementedError();
+                  return BottomNavigation.chat.fullPath;
+                }
+              },
+              builder: (context, state) {
+                final chatId =
+                    state.pathParameters[MainRoutes.messages.pathParameter];
+                return MessageListScreen(
+                    chatId: chatId!, messageService: getIt());
+              }),
+          bottomNavigation
+        ]),
     authRoutes,
     profileRoutes,
   ],

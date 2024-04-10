@@ -1,26 +1,34 @@
 class Route {
   final String _path;
   final Route? parent;
+  final String? pathParameter;
 
-  const Route(this._path, this.parent);
+  const Route(this._path, this.parent, {this.pathParameter});
 
   get path {
-    if (parent == null) {
-      return '/$_path';
-    } else {
-      return _path;
-    }
+    if (_path == "/") return "/";
+    final path = parent == null ? '/$_path' : _path;
+    return pathParameter != null ? '$path/:$pathParameter' : path;
   }
 
-  String get fullPath => parent != null ? '${parent!.fullPath}/$_path' : path;
+  String get fullPath {
+    var basePath = parent != null ? '${parent!.fullPath}/$_path' : _path;
+    if (parent?.path == "/") basePath = "/$_path";
+    return basePath;
+  }
 }
 
-const homeRoute = BottomNavigation.main;
+const homeRoute = MainRoutes.main;
+
+class MainRoutes {
+  static const main = Route("/", null);
+  static const messages = Route('messages', main, pathParameter: 'chatId');
+}
 
 class BottomNavigation {
-  static const Route main = profile;
-  static const Route profile = Route('profile', null);
-  static const Route chat = Route('chat', null);
+  static const main = profile;
+  static const Route profile = Route('profile', MainRoutes.main);
+  static const Route chat = Route('chat', MainRoutes.main);
 }
 
 class AuthRoutes {
