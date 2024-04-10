@@ -41,6 +41,7 @@ final appRouter = GoRouter(
           if (path == MainRoutes.main.path) {
             return BottomNavigation.main.fullPath;
           }
+          return null;
         },
         routes: [
           GoRoute(
@@ -51,6 +52,7 @@ final appRouter = GoRouter(
                 if (chatId == null || chatId == "") {
                   return BottomNavigation.chat.fullPath;
                 }
+                return null;
               },
               builder: (context, state) {
                 final chatId =
