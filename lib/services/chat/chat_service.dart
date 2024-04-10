@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_connections/models/chats/chat_with_messages.dart';
 import 'package:deep_connections/models/chats/info/chat_info.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -48,6 +50,20 @@ class ChatService {
 
   Stream<List<Chat>> get chatStream =>
       _chatSubject.stream as Stream<List<Chat>>;
+
+  Stream<Chat?> chatByIdStream(String chatId) => chatStream
+      .map((chats) => chats.firstWhereOrNull((chat) => chat.id == chatId));
+
+  CollectionReference<Message> _messagesRef(String chatId) => _chatRef
+      .doc(chatId)
+      .collection(Collection.messages)
+      .withConverter<Message>(
+          fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
+          toFirestore: (chat, _) => chat.toJson());
+
+  Stream<List<Message>> messageStream(String chatId) => _messagesRef(chatId)
+      .snapshots()
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
 
   Future<Response<String>> createChat(String otherUserId) async {
     final chat = Chat(
