@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
   final String? title;
+  final Widget? widgetTitle;
   final Widget body;
   final List<Widget>? actions;
   final Widget? leading;
@@ -11,6 +12,7 @@ class BaseScreen extends StatelessWidget {
   const BaseScreen({
     super.key,
     this.title,
+    this.widgetTitle,
     required this.body,
     this.actions,
     this.onBack,
@@ -25,7 +27,7 @@ class BaseScreen extends StatelessWidget {
         },
         child: Scaffold(
             appBar: AppBar(
-                title: Text(title ?? ""),
+                title: widgetTitle ?? Text(title ?? ""),
                 actions: actions,
                 leading: leading ??
                     onBack?.let((onBack) => IconButton(

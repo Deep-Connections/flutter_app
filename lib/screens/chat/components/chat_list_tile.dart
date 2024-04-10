@@ -1,5 +1,6 @@
 import 'package:deep_connections/models/chats/chat/chat.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
+import 'package:deep_connections/screens/components/avatar_image.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,8 +22,7 @@ class ChatListTile extends StatelessWidget {
       onTap: () {
         context.push("${MainRoutes.messages.fullPath}/${chat.id}");
       },
-      leading: CircleAvatar(
-          backgroundImage: NetworkImage(chat.info?.imageUrl ?? "")),
+      leading: AvatarImage(imageUrl: chat.info?.imageUrl),
       title: Text(chat.info?.name ?? ""),
       subtitle: Text(
         chat.lastMessage?.text ?? "",
