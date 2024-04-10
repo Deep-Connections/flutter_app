@@ -1,5 +1,5 @@
 import 'package:deep_connections/config/constants.dart';
-import 'package:deep_connections/screens/chat/components/MessageTile.dart';
+import 'package:deep_connections/screens/chat/components/message_tile.dart';
 import 'package:deep_connections/screens/components/avatar_image.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
