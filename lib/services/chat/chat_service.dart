@@ -64,6 +64,15 @@ class ChatService {
       .snapshots()
       .map((snap) => snap.docs.map((doc) => doc.data()).toList());
 
+  sendMessage(String message, chatId) {
+    final messageObj = Message(
+      text: message,
+      senderId: _userService.userId,
+      timestamp: DateTime.now(),
+    );
+    _messagesRef(chatId).add(messageObj);
+  }
+
   Future<Response<String>> createChat(String otherUserId) async {
     final chat = Chat(
       timestamp: DateTime.now(),

@@ -6,6 +6,7 @@ const Set<MaterialState> interactiveStates = <MaterialState>{
   MaterialState.focused,
 };
 
+final messageTextFieldColor = Colors.grey[200];
 const unselectedColor = Colors.grey;
 
 ThemeData theme() {
@@ -39,8 +40,7 @@ ThemeData theme() {
       }),
       foregroundColor: MaterialStateProperty.all(scheme.onPrimary),
     )),
-    textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
+    textButtonTheme: TextButtonThemeData(style: ButtonStyle(
       backgroundColor:
           MaterialStateProperty.resolveWith((Set<MaterialState> states) {
         if (states.any(interactiveStates.contains)) {

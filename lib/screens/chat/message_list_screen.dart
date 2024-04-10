@@ -1,4 +1,5 @@
 import 'package:deep_connections/config/constants.dart';
+import 'package:deep_connections/screens/chat/components/message_text_field.dart';
 import 'package:deep_connections/screens/chat/components/message_tile.dart';
 import 'package:deep_connections/screens/components/avatar_image.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
@@ -44,6 +45,7 @@ class MessageListScreen extends StatelessWidget {
                 },
               ),
             ),
+            MessageTextField(chatId: chatId, chatService: chatService)
           ],
         ));
   }
