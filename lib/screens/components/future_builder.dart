@@ -1,3 +1,5 @@
+import 'package:deep_connections/screens/components/progress_indicator.dart';
+import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:flutter/material.dart';
 
 class GenericFutureBuilder<T> extends StatelessWidget {
@@ -16,9 +18,9 @@ class GenericFutureBuilder<T> extends StatelessWidget {
       future: data,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: DcProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return SnapshotError(error: snapshot.error);
         } else if (snapshot.hasData) {
           return builder(context, snapshot.data as T);
         } else {

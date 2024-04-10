@@ -1,3 +1,4 @@
+import 'package:deep_connections/screens/components/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class GenericStreamBuilder<T> extends StatelessWidget {
@@ -16,10 +17,10 @@ class GenericStreamBuilder<T> extends StatelessWidget {
       stream: data,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
-            (snapshot.hasData && snapshot.data == null)) {
-          return const Center(child: ProgressIndicator());
+            !snapshot.hasData) {
+          return const Center(child: DcProgressIndicator());
         } else if (snapshot.hasError) {
-          return _StreamError(error: snapshot.error);
+          return SnapshotError(error: snapshot.error);
         } else if (snapshot.hasData) {
           return builder(context, snapshot.data as T);
         } else {
@@ -45,37 +46,24 @@ class EmptyStreamBuilder<T> extends StatelessWidget {
     return StreamBuilder(
       stream: data,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            (snapshot.hasData && snapshot.data == null)) {
-          return const SizedBox();
-        } else if (snapshot.hasError) {
-          return _StreamError(error: snapshot.error);
+        if (snapshot.hasError) {
+          return SnapshotError(error: snapshot.error);
         } else if (snapshot.hasData) {
           return builder(context, snapshot.data as T);
-        } else {
-          return const SizedBox();
         }
+        return const SizedBox();
       },
     );
   }
 }
 
-class _StreamError extends StatelessWidget {
+class SnapshotError extends StatelessWidget {
   final Object? error;
 
-  const _StreamError({super.key, required this.error});
+  const SnapshotError({super.key, required this.error});
 
   @override
   Widget build(BuildContext context) {
     return Center(child: Text('Error: $error'));
-  }
-}
-
-class ProgressIndicator extends StatelessWidget {
-  const ProgressIndicator({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const CircularProgressIndicator();
   }
 }
