@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_connections/models/chats/chat_with_messages.dart';
 import 'package:deep_connections/models/chats/info/chat_info.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
