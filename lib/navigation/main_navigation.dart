@@ -49,7 +49,6 @@ final appRouter = GoRouter(
                 final chatId =
                     state.pathParameters[MainRoutes.messages.pathParameter];
                 if (chatId == null || chatId == "") {
-                  throw UnimplementedError();
                   return BottomNavigation.chat.fullPath;
                 }
               },
