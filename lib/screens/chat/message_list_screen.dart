@@ -14,8 +14,10 @@ class MessageListScreen extends StatelessWidget {
   final String chatId;
   final ChatService chatService;
 
-  const MessageListScreen(
+  MessageListScreen(
       {super.key, required this.chatId, required this.chatService});
+
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,17 +37,26 @@ class MessageListScreen extends StatelessWidget {
               child: GenericStreamBuilder(
                 data: chatService.messageStream(chatId),
                 builder: (context, messages) {
-                  return ListView.builder(
-                    itemCount: messages.length,
-                    itemBuilder: (context, index) {
-                      Message message = messages[index];
-                      return MessageTile(message: message);
-                    },
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      shrinkWrap: true,
+                      reverse: true,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        Message message = messages[index];
+                        return MessageTile(message: message);
+                      },
+                    ),
                   );
                 },
               ),
             ),
-            MessageTextField(chatId: chatId, chatService: chatService)
+            MessageTextField(
+                chatId: chatId,
+                chatService: chatService,
+                scrollController: _scrollController)
           ],
         ));
   }

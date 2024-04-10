@@ -6,9 +6,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class MessageTextField extends StatefulWidget {
   final String chatId;
   final ChatService chatService;
+  final ScrollController scrollController;
 
-  const MessageTextField(
-      {super.key, required this.chatService, required this.chatId});
+  const MessageTextField({super.key,
+    required this.chatService,
+    required this.chatId,
+    required this.scrollController});
 
   @override
   State<MessageTextField> createState() => _MessageTextFieldState();
@@ -22,6 +25,11 @@ class _MessageTextFieldState extends State<MessageTextField> {
     if (text.isNotEmpty) {
       // Process the message here (e.g., sending to a backend or adding to a chat list)
       widget.chatService.sendMessage(text, widget.chatId);
+      widget.scrollController.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
       _controller.clear(); // Clears the text field after the message is sent
     }
   }

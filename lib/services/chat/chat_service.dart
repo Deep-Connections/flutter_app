@@ -61,6 +61,7 @@ class ChatService {
           toFirestore: (chat, _) => chat.toJson());
 
   Stream<List<Message>> messageStream(String chatId) => _messagesRef(chatId)
+      .orderBy(SerializedField.timestamp, descending: true)
       .snapshots()
       .map((snap) => snap.docs.map((doc) => doc.data()).toList());
 
