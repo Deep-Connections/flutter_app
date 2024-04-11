@@ -72,9 +72,9 @@ class ChatService {
       senderId: _userService.userId,
       timestamp: timestamp,
     );
-    _chatRef.doc(chatId).set(
-        Chat(lastMessage: messageObj, timestamp: timestamp),
-        SetOptions(merge: true));
+    _chatRef
+        .doc(chatId)
+        .update(Chat(lastMessage: messageObj, timestamp: timestamp).toJson());
     _messagesRef(chatId).add(messageObj);
   }
 
