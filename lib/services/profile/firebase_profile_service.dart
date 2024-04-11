@@ -50,4 +50,17 @@ class FirebaseProfileService implements ProfileService {
   @override
   Profile? get profile =>
       _profileSubject.hasValue ? _profileSubject.value : null;
+
+  final _profiles = <String, Profile>{};
+
+  @override
+  Future<Profile?> profileByUserId(String userId) async {
+    var profile = _profiles[userId];
+    profile ??= await _profileReference.doc(userId).get().then((value) {
+      final profile = value.data();
+      if (profile != null) _profiles[userId] = profile;
+      return profile;
+    });
+    return profile;
+  }
 }

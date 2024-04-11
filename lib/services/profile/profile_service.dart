@@ -7,4 +7,6 @@ abstract class ProfileService {
   Profile? get profile;
 
   Future<Response<void>> updateProfile(Profile Function(Profile) callback);
+
+  Future<Profile?> profileByUserId(String userId);
 }
