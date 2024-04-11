@@ -40,12 +40,6 @@ class ChatListScreen extends StatelessWidget {
                 );
               },
             ),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              chatService.createChat("FHzjtq4N3yZf1wo9xr1nYoM2EHA2");
-            },
-            child: const Text('New chat'),
           )
         ],
       ),

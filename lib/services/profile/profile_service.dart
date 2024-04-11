@@ -11,4 +11,6 @@ abstract class ProfileService {
   Future<Response<void>> updateProfile(Profile Function(Profile) callback);
 
   FutureOr<Profile?> profileByUserId(String? userId);
+
+  Future<Profile?> getNewMatch(List<String> excludedUserIds);
 }

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -62,5 +63,20 @@ class FirebaseProfileService implements ProfileService {
       _profiles[userId] = profile;
       return profile;
     });
+  }
+
+  Future<Profile?> getNewMatch(List<String> excludedUserIds) async {
+    final excludedIds = [_userService.userId] + excludedUserIds;
+    final profiles = await _profileReference
+        .where(FieldPath.documentId,
+            whereNotIn: excludedIds.length <= 10
+                ? excludedIds
+                : excludedIds.sublist(0, 10))
+        .limit(5)
+        .get()
+        .then((value) => value.docs.map((doc) => doc.data()).toList());
+    profiles.shuffle();
+    return profiles
+        .firstWhereOrNull((profile) => !excludedIds.contains(profile.uid));
   }
 }

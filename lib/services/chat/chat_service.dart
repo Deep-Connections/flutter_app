@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deep_connections/models/chats/info/chat_info.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
+import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -14,14 +14,12 @@ import '../../models/chats/chat/chat.dart';
 import '../firebase_constants.dart';
 import '../user/user_service.dart';
 
-const testImageUrl =
-    "https://preview.redd.it/i-got-bored-so-i-decided-to-draw-a-random-image-on-the-v0-4ig97vv85vjb1.png?width=640&crop=smart&auto=webp&s=22ed6cc79cba3013b84967f32726d087e539b699";
-
 @lazySingleton
 class ChatService {
   final UserService _userService;
+  final ProfileService _profileService;
 
-  ChatService(this._userService);
+  ChatService(this._userService, this._profileService);
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -48,7 +46,22 @@ class ChatService {
                       ?.where((info) => info.userId != userId)
                       .toList()))
               .toList());
-    }));
+    })
+      // create a new chat if there are no chats or all chats are older than 24h
+      ..firstWhere((chats) {
+        if (chats.isEmpty) return true;
+        final areAllChatsOlderThan24h = !chats.any((chat) {
+          final youngerThan24h = chat.timestamp
+                  ?.isAfter(DateTime.now().subtract(const Duration(days: 1))) ??
+              false;
+          return youngerThan24h;
+        });
+        return areAllChatsOlderThan24h;
+      }).let((asyncChatList) async {
+        final chats = await asyncChatList;
+        final excludedUsers = chats.mapNotNull((chat) => chat.otherUserId);
+        createChat(excludedUsers);
+      }));
 
   Stream<List<Chat>> get chatStream =>
       _chatSubject.stream as Stream<List<Chat>>;
@@ -97,22 +110,18 @@ class ChatService {
     });
   }
 
-  Future<Response<String>> createChat(String otherUserId) async {
-    final chat = Chat(
-      timestamp: DateTime.now(),
-      participantIds: [_userService.userId, otherUserId],
-      lastMessage: Message(senderId: otherUserId, text: "Sina's test message"),
-      chatInfos: [
-        ChatInfo(
-            userId: _userService.userId, name: "Jari", imageUrl: testImageUrl),
-        const ChatInfo(
-          userId: "FHzjtq4N3yZf1wo9xr1nYoM2EHA2",
-          name: "Sina",
-          imageUrl: testImageUrl,
-        ),
-      ],
-    );
-    return await handleFirebaseErrors(
-        () async => (await _chatRef.add(chat)).id);
+  Future<Response<String?>> createChat(List<String> excludedUsers) async {
+    final newMatch = await _profileService.getNewMatch(excludedUsers);
+    final matchUserId = newMatch?.uid;
+
+    if (matchUserId != null) {
+      final chat = Chat(
+        timestamp: DateTime.now(),
+        participantIds: [_userService.userId, matchUserId],
+      );
+      return await handleFirebaseErrors(
+          () async => (await _chatRef.add(chat)).id);
+    }
+    return SuccessRes(null);
   }
 }

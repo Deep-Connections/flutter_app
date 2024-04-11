@@ -33,4 +33,9 @@ class MockProfileService implements ProfileService {
   FutureOr<Profile?> profileByUserId(String? userId) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<Profile?> getNewMatch(List<String> excludedUserIds) {
+    throw UnimplementedError();
+  }
 }
