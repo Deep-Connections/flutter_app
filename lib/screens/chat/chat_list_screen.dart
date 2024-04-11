@@ -34,7 +34,7 @@ class ChatListScreen extends StatelessWidget {
                     Chat chat = chats[index];
                     return ChatListTile(
                         chat: chat,
-                        profile:
+                        futureOrprofile:
                             profileService.profileByUserId(chat.otherUserId));
                   },
                 );

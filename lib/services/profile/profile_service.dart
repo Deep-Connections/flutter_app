@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../../models/profile/profile/profile.dart';
 import '../utils/response.dart';
 
@@ -8,5 +10,5 @@ abstract class ProfileService {
 
   Future<Response<void>> updateProfile(Profile Function(Profile) callback);
 
-  Future<Profile?> profileByUserId(String? userId);
+  FutureOr<Profile?> profileByUserId(String? userId);
 }

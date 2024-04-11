@@ -29,14 +29,13 @@ class MessageListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureOrBuilder(
-        future: chatService.chatById(chatId),
+        futureOr: chatService.chatById(chatId),
         builder: (context, chat) {
           return BaseScreen(
               widgetTitle:
-                  chat?.otherUserId?.let((otherUserId) => FutureBuilder(
-                      future: profileService.profileByUserId(otherUserId),
-                      builder: (context, snapshot) {
-                        final profile = snapshot.data;
+                  chat?.otherUserId?.let((otherUserId) => FutureOrBuilder(
+                      futureOr: profileService.profileByUserId(otherUserId),
+                      builder: (context, profile) {
                         return Row(children: [
                           AvatarImage(imageUrl: profile?.pictures?.firstOrNull),
                           const SizedBox(width: BASE_PADDING),

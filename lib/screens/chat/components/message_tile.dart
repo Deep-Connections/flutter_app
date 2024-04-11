@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -5,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class MessageTile extends StatelessWidget {
   final Message message;
-  final Future<Profile?> senderProfile;
+  final FutureOr<Profile?> senderProfile;
 
   const MessageTile(
       {super.key, required this.message, required this.senderProfile});

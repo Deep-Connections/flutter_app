@@ -30,7 +30,7 @@ class MockProfileService implements ProfileService {
   }
 
   @override
-  Future<Profile?> profileByUserId(String? userId) {
+  FutureOr<Profile?> profileByUserId(String? userId) {
     throw UnimplementedError();
   }
 }
