@@ -3,9 +3,9 @@ import 'package:deep_connections/screens/chat/components/message_text_field.dart
 import 'package:deep_connections/screens/chat/components/message_tile.dart';
 import 'package:deep_connections/screens/components/avatar_image.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
-import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/services/chat/chat_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/message/message.dart';
@@ -31,7 +31,7 @@ class MessageListScreen extends StatelessWidget {
                 Text(chat.info?.name ?? "")
               ]);
             }),
-        body: DcColumn(
+        body: Column(
           children: [
             Expanded(
               child: GenericStreamBuilder(
@@ -40,6 +40,7 @@ class MessageListScreen extends StatelessWidget {
                   return Align(
                     alignment: Alignment.topCenter,
                     child: ListView.builder(
+                      padding: const EdgeInsets.all(BASE_PADDING),
                       controller: _scrollController,
                       shrinkWrap: true,
                       reverse: true,
@@ -53,10 +54,14 @@ class MessageListScreen extends StatelessWidget {
                 },
               ),
             ),
-            MessageTextField(
-                chatId: chatId,
-                chatService: chatService,
-                scrollController: _scrollController)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: BASE_PADDING / 2, horizontal: BASE_PADDING),
+              child: MessageTextField(
+                  chatId: chatId,
+                  chatService: chatService,
+                  scrollController: _scrollController),
+            )
           ],
         ));
   }
