@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/models/chats/info/chat_info.dart';
 import 'package:deep_connections/models/message/message.dart';
@@ -51,8 +53,22 @@ class ChatService {
   Stream<List<Chat>> get chatStream =>
       _chatSubject.stream as Stream<List<Chat>>;
 
-  Stream<Chat?> chatByIdStream(String chatId) => chatStream
-      .map((chats) => chats.firstWhereOrNull((chat) => chat.id == chatId));
+  FutureOr<Chat> chatById(String chatId) {
+    final chat =
+        _chatSubject.value.firstWhereOrNull((chat) => chat.id == chatId);
+    if (chat != null) {
+      return chat;
+    } else {
+      return _chatSubject.stream
+          .map((chats) => chats.firstWhereOrNull((chat) => chat.id == chatId))
+          .whereNotNull()
+          .first;
+    }
+  }
+
+  Stream<Chat> chatByIdStream(String chatId) => chatStream
+      .map((chats) => chats.firstWhereOrNull((chat) => chat.id == chatId))
+      .whereNotNull();
 
   CollectionReference<Message> _messagesRef(String chatId) => _chatRef
       .doc(chatId)

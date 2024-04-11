@@ -23,6 +23,10 @@ class Chat with _$Chat {
     String? currentUserId,
   }) = _Chat;
 
+  String? get otherUserId {
+    return participantIds?.firstWhere((id) => id != currentUserId);
+  }
+
   ChatInfo? get info {
     try {
       return chatInfos?.first;

@@ -3,7 +3,6 @@ import 'package:deep_connections/screens/chat/components/chat_list_tile.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
-import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -33,11 +32,10 @@ class ChatListScreen extends StatelessWidget {
                   itemCount: chats.length,
                   itemBuilder: (context, index) {
                     Chat chat = chats[index];
-                    final userId = chat.participantIds
-                        ?.firstWhereOrNull((id) => id != chat.currentUserId);
                     return ChatListTile(
                         chat: chat,
-                        profile: profileService.profileByUserId(userId));
+                        profile:
+                            profileService.profileByUserId(chat.otherUserId));
                   },
                 );
               },
