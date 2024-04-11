@@ -24,5 +24,5 @@ class UserService {
       .map((user) => user?.let((user) => DcUser.fromFirebaseUser(user)));
 
   Stream<String?> get userIdStream =>
-      userStream.map((user) => user?.uid).distinct();
+      userStream.map((user) => user?.id).distinct();
 }

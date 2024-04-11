@@ -65,6 +65,7 @@ class FirebaseProfileService implements ProfileService {
     });
   }
 
+  @override
   Future<Profile?> getNewMatch(List<String> excludedUserIds) async {
     final excludedIds = [_userService.userId] + excludedUserIds;
     final profiles = await _profileReference
@@ -77,6 +78,6 @@ class FirebaseProfileService implements ProfileService {
         .then((value) => value.docs.map((doc) => doc.data()).toList());
     profiles.shuffle();
     return profiles
-        .firstWhereOrNull((profile) => !excludedIds.contains(profile.uid));
+        .firstWhereOrNull((profile) => !excludedIds.contains(profile.id));
   }
 }

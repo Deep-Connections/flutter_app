@@ -112,7 +112,7 @@ class ChatService {
 
   Future<Response<String?>> createChat(List<String> excludedUsers) async {
     final newMatch = await _profileService.getNewMatch(excludedUsers);
-    final matchUserId = newMatch?.uid;
+    final matchUserId = newMatch?.id;
 
     if (matchUserId != null) {
       final chat = Chat(

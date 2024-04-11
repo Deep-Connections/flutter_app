@@ -16,7 +16,7 @@ class MockAuthService implements AuthService {
       isSignedIn = true;
       return Future.value(SuccessRes(DcUser(
         email: email,
-        uid: '1',
+        id: '1',
       )));
     } else {
       return Future.value(ExceptionRes(Exception('Invalid credentials'),
