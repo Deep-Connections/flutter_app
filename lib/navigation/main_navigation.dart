@@ -13,7 +13,7 @@ import '../config/injectable/injectable.dart';
 final appRouter = GoRouter(
   refreshListenable:
       GoRouterRefreshListenable(getIt<UserStatusService>().userStatusStream),
-  initialLocation: AuthRoutes.main.path,
+  initialLocation: homeRoute,
   debugLogDiagnostics: true,
   redirect: (context, state) async {
     final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
@@ -28,17 +28,17 @@ final appRouter = GoRouter(
       if (uncompletedStep != null &&
           !path.startsWith(CompleteProfileRoutes.main.fullPath)) {
         return uncompletedStep
-            .navigationFromBasePath(CompleteProfileRoutes.main.path);
+            .navigationFromBasePath(CompleteProfileRoutes.main.fullPath);
       }
     }
     return null;
   },
   routes: [
     GoRoute(
-        path: MainRoutes.main.path,
+        path: homeRoute,
         redirect: (context, state) {
           final path = state.fullPath;
-          if (path == MainRoutes.main.path) {
+          if (path == homeRoute) {
             return BottomNavigation.main.fullPath;
           }
           return null;
@@ -62,9 +62,9 @@ final appRouter = GoRouter(
                     chatService: getIt(),
                     profileService: getIt());
               }),
-          bottomNavigation
+          bottomNavigation,
+          authRoutes,
+          profileRoutes
         ]),
-    authRoutes,
-    profileRoutes,
   ],
 );
