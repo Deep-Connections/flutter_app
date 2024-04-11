@@ -23,7 +23,7 @@ class BottomNavRoute extends NavRoute {
   final IconData? icon;
 
   BottomNavRoute(String path, NavRoute? parent, this.title, this.icon)
-      : super(path, null);
+      : super(path, parent);
 }
 
 const homeRoute = "/";
