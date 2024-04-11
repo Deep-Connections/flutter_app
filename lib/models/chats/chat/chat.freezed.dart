@@ -237,8 +237,8 @@ class _$ChatImpl extends _Chat with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'Chat'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('participantIds', participantIds))
-      ..add(DiagnosticsProperty('timestamp', timestamp))
-      ..add(DiagnosticsProperty('lastMessage', lastMessage))..add(
+      ..add(DiagnosticsProperty('timestamp', timestamp))..add(
+        DiagnosticsProperty('lastMessage', lastMessage))..add(
         DiagnosticsProperty('chatInfos', chatInfos))..add(
         DiagnosticsProperty('currentUserId', currentUserId));
   }
@@ -313,7 +313,6 @@ abstract class _Chat extends Chat {
 
   /// not sent to the server
   String? get currentUserId;
-
   @override
   @JsonKey(ignore: true)
   _$$ChatImplCopyWith<_$ChatImpl> get copyWith =>

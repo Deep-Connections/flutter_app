@@ -8,5 +8,5 @@ abstract class ProfileService {
 
   Future<Response<void>> updateProfile(Profile Function(Profile) callback);
 
-  Future<Profile?> profileByUserId(String userId);
+  Future<Profile?> profileByUserId(String? userId);
 }

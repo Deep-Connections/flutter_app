@@ -25,7 +25,8 @@ class ChatService {
 
   CollectionReference<Chat> get _chatRef {
     return _firestore.collection(Collection.chats).withConverter<Chat>(
-        fromFirestore: (doc, _) => Chat.fromJson(doc.withId()),
+        fromFirestore: (doc, _) => Chat.fromJson(doc.withId())
+            .copyWith(currentUserId: _userService.userId),
         toFirestore: (chat, _) => chat.toJson());
   }
 

@@ -5,6 +5,7 @@ import 'package:deep_connections/screens/components/avatar_image.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/services/chat/chat_service.dart';
+import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,12 @@ import '../../models/message/message.dart';
 class MessageListScreen extends StatelessWidget {
   final String chatId;
   final ChatService chatService;
+  final ProfileService profileService;
 
-  MessageListScreen(
-      {super.key, required this.chatId, required this.chatService});
+  MessageListScreen({super.key,
+    required this.chatId,
+    required this.chatService,
+    required this.profileService});
 
   final _scrollController = ScrollController();
 
@@ -47,7 +51,11 @@ class MessageListScreen extends StatelessWidget {
                       itemCount: messages.length,
                       itemBuilder: (context, index) {
                         Message message = messages[index];
-                        return MessageTile(message: message);
+                        return MessageTile(
+                          message: message,
+                          senderProfile:
+                              profileService.profileByUserId(message.senderId),
+                        );
                       },
                     ),
                   );

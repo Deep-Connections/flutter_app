@@ -57,7 +57,10 @@ final appRouter = GoRouter(
               builder: (context, state) {
                 final chatId =
                     state.pathParameters[MainRoutes.messages.pathParameter];
-                return MessageListScreen(chatId: chatId!, chatService: getIt());
+                return MessageListScreen(
+                    chatId: chatId!,
+                    chatService: getIt(),
+                    profileService: getIt());
               }),
           bottomNavigation
         ]),
