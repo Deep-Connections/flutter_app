@@ -28,4 +28,14 @@ class MockProfileService implements ProfileService {
     _profileSubject.value = callback(_profileSubject.value ?? const Profile());
     return SuccessRes(null);
   }
+
+  @override
+  FutureOr<Profile?> profileByUserId(String? userId) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Profile?> getNewMatch(List<String> excludedUserIds) {
+    throw UnimplementedError();
+  }
 }

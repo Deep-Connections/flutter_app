@@ -41,7 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         key: buttonInput.formKey,
         child: DcColumn(
           children: [
-            const SizedBox(height: BASE_PADDING),
+            const SizedBox(height: standardPadding),
             DcTextFormField(fieldInput: email),
             DcTextFormField(
                 fieldInput: password,

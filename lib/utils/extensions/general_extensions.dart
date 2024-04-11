@@ -31,7 +31,7 @@ extension DateTimeExtensions on DateTime {
   }
 }
 
-extension ListExtensions<T> on List<T> {
+extension ListExtensions<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T e) test) {
     for (T element in this) {
       if (test(element)) {

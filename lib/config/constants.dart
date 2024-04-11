@@ -1,3 +1,6 @@
-const String APP_NAME = "Smetter";
+import 'package:flutter/material.dart';
 
-const BASE_PADDING = 20.0;
+const String appName = "Smetter";
+
+const standardPadding = 20.0;
+const roundedBorderRadius = Radius.circular(18);

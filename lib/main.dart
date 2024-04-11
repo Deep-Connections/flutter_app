@@ -32,7 +32,7 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: appRouter,
       scaffoldMessengerKey: globalSnackBarMessengerKey,
-      title: APP_NAME,
+      title: appName,
       theme: theme(),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

@@ -18,11 +18,14 @@ ThemeData theme() {
       secondary: Color(0xFFfed05c),
       onSecondary: Color(0xFF281d00),
       tertiary: Color(0xFF947695),
+      surfaceVariant: Color(0xFFc4c9c4),
+      // left bubble
       error: Colors.red,
       onError: Colors.white,
       background: Color(0xFFf5f9f5),
       onBackground: Colors.black,
-      surface: Colors.white,
+      surface: Color(0xFFe0e5e0),
+      // right bubble
       onSurface: Colors.black);
   return ThemeData(
     colorScheme: scheme,

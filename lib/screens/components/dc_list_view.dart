@@ -7,7 +7,7 @@ class DcListView extends StatelessWidget {
   final double space;
 
   const DcListView(
-      {super.key, required this.children, this.space = BASE_PADDING});
+      {super.key, required this.children, this.space = standardPadding});
 
   @override
   Widget build(BuildContext context) {
