@@ -22,7 +22,7 @@ class SliderQuestionWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.all(BASE_PADDING),
+                padding: const EdgeInsets.all(standardPadding),
                 child: Text(question.minText.localize(loc),
                     textAlign: TextAlign.left),
               ),
@@ -31,7 +31,7 @@ class SliderQuestionWidget extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.all(BASE_PADDING),
+                padding: const EdgeInsets.all(standardPadding),
                 child: Text(question.maxText.localize(loc),
                     textAlign: TextAlign.right),
               ),

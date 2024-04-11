@@ -40,7 +40,7 @@ class MessageListScreen extends StatelessWidget {
                       builder: (context, profile) {
                         return Row(children: [
                           AvatarImage(imageUrl: profile?.pictures?.firstOrNull),
-                          const SizedBox(width: BASE_PADDING),
+                          const SizedBox(width: standardPadding),
                           Text(profile?.firstName ?? "")
                         ]);
                       })),
@@ -54,7 +54,8 @@ class MessageListScreen extends StatelessWidget {
                                 return Align(
                                   alignment: Alignment.topCenter,
                                   child: ListView.builder(
-                                    padding: const EdgeInsets.all(BASE_PADDING),
+                                    padding:
+                                        const EdgeInsets.all(standardPadding),
                                     controller: _scrollController,
                                     shrinkWrap: true,
                                     reverse: true,
@@ -74,7 +75,8 @@ class MessageListScreen extends StatelessWidget {
                           : const DcProgressIndicator()),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: BASE_PADDING / 2, horizontal: BASE_PADDING),
+                        vertical: standardPadding / 2,
+                        horizontal: standardPadding),
                     child: MessageTextField(
                         chatId: chatId,
                         chatService: chatService,

@@ -20,8 +20,8 @@ class DcColumn extends StatelessWidget {
     this.textDirection,
     this.verticalDirection = VerticalDirection.down,
     this.textBaseline,
-    this.padding = const EdgeInsets.all(BASE_PADDING),
-    this.spacedBy = BASE_PADDING,
+    this.padding = const EdgeInsets.all(standardPadding),
+    this.spacedBy = standardPadding,
     required this.children,
   }) : super(key: key);
 
