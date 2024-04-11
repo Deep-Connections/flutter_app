@@ -68,7 +68,7 @@ class ChatService {
 
   FutureOr<Chat> chatById(String chatId) {
     final chat =
-        _chatSubject.value.firstWhereOrNull((chat) => chat.id == chatId);
+        _chatSubject.valueOrNull?.firstWhereOrNull((chat) => chat.id == chatId);
     if (chat != null) {
       return chat;
     } else {

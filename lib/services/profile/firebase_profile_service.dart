@@ -49,8 +49,7 @@ class FirebaseProfileService implements ProfileService {
   }
 
   @override
-  Profile? get profile =>
-      _profileSubject.hasValue ? _profileSubject.value : null;
+  Profile? get profile => _profileSubject.valueOrNull;
 
   final _profiles = <String, Profile?>{};
 

@@ -1,3 +1,4 @@
+import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ class BaseScreen extends StatelessWidget {
                         ))),
             body: Center(
                 child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 800),
+              constraints: const BoxConstraints(maxWidth: maxScreenWidth),
               child: body,
             ))));
     return screen;
