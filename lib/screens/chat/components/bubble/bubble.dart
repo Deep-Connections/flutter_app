@@ -1,20 +1,21 @@
 import 'package:deep_connections/config/constants.dart';
-import 'package:deep_connections/screens/chat/components/bubble/triangle.dart';
+import 'package:deep_connections/screens/chat/components/bubble/notch.dart';
 import 'package:flutter/material.dart';
-
-const bubbleHorizontalPadding = 40.0;
-const bubbleVerticalPadding = 5.0;
 
 //based on: https://arkapp.medium.com/chat-bubble-widget-for-flutter-95d3bb82ddd8
 
 class Bubble extends StatelessWidget {
   final Widget child;
   final bool isRight;
+  final double bubbleStartPadding;
+  final double bubbleVerticalPadding;
 
   const Bubble({
     super.key,
     required this.child,
     this.isRight = true,
+    this.bubbleStartPadding = 40.0,
+    this.bubbleVerticalPadding = 5.0,
   });
 
   @override
@@ -38,7 +39,7 @@ class Bubble extends StatelessWidget {
           child: child,
         ),
       ),
-      CustomPaint(painter: Triangle(color)),
+      CustomPaint(painter: Notch(color)),
     ];
 
     final messageTextGroup = Flexible(
@@ -51,8 +52,8 @@ class Bubble extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(
-          right: isRight ? 0 : bubbleHorizontalPadding,
-          left: !isRight ? 0 : bubbleHorizontalPadding,
+          right: isRight ? 0 : bubbleStartPadding,
+          left: !isRight ? 0 : bubbleStartPadding,
           top: bubbleVerticalPadding,
           bottom: bubbleVerticalPadding),
       child: messageTextGroup,

@@ -61,7 +61,7 @@ class MessageListScreen extends StatelessWidget {
                                     itemCount: messages.length,
                                     itemBuilder: (context, index) {
                                       Message message = messages[index];
-                                      return MessageTile(
+                                      return MessageBubble(
                                         message: message,
                                         isRight:
                                             currentUserId == message.senderId,

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Triangle extends CustomPainter {
+class Notch extends CustomPainter {
   final Color color;
+  final double notchSize = 5;
 
-  const Triangle(this.color);
+  const Notch(this.color);
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()..color = color;
 
     var path = Path();
-    path.lineTo(-5, 0);
-    path.lineTo(0, 10);
-    path.lineTo(5, 0);
+    path.lineTo(-notchSize, 0);
+    path.lineTo(0, 2 * notchSize);
+    path.lineTo(notchSize, 0);
     canvas.drawPath(path, paint);
   }
 
