@@ -12,9 +12,28 @@ final _chatNavKey = GlobalKey<NavigatorState>(debugLabel: 'chatShell');
 
 final bottomNavigation = StatefulShellRoute.indexedStack(
   builder: (context, state, navigationShell) {
-    return BottomNavBar(navigationShell: navigationShell);
+    return BottomNavBar(
+        navigationShell: navigationShell, routes: BottomNavigation.values);
   },
   branches: [
+    StatefulShellBranch(
+      navigatorKey: _chatNavKey,
+      routes: [
+        GoRoute(
+          path: BottomNavigation.chat.path,
+          pageBuilder: (context, state) => NoTransitionPage(
+              child: ChatListScreen(
+                  chatService: getIt(), profileService: getIt())),
+          routes: [
+            // child route
+            GoRoute(
+              path: 'details',
+              builder: (context, state) => BaseScreen(body: Container()),
+            ),
+          ],
+        ),
+      ],
+    ),
     StatefulShellBranch(
       navigatorKey: _profileNavKey,
       routes: [
@@ -26,24 +45,6 @@ final bottomNavigation = StatefulShellRoute.indexedStack(
             ),
           ),
           routes: [
-            GoRoute(
-              path: 'details',
-              builder: (context, state) => BaseScreen(body: Container()),
-            ),
-          ],
-        ),
-      ],
-    ),
-    StatefulShellBranch(
-      navigatorKey: _chatNavKey,
-      routes: [
-        GoRoute(
-          path: BottomNavigation.chat.path,
-          pageBuilder: (context, state) => NoTransitionPage(
-              child: ChatListScreen(
-                  chatService: getIt(), profileService: getIt())),
-          routes: [
-            // child route
             GoRoute(
               path: 'details',
               builder: (context, state) => BaseScreen(body: Container()),

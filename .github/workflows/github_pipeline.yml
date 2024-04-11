@@ -20,7 +20,9 @@ jobs:
           pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
 
       - name: Install dependencies
-        run: flutter pub get
+        run:
+          flutter clean
+          flutter pub get
 
       - name: Run tests
         run: flutter test
