@@ -6,5 +6,6 @@ class Collection {
 
 class SerializedField {
   static const String timestamp = 'timestamp';
+  static const String participantIds = 'participantIds';
   static const String id = 'id';
 }

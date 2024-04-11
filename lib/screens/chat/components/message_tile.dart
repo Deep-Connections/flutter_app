@@ -1,4 +1,5 @@
 import 'package:deep_connections/models/message/message.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 
 class MessageTile extends StatelessWidget {
@@ -22,7 +23,7 @@ class MessageTile extends StatelessWidget {
               textWidthBasis: TextWidthBasis.longestLine,
             ),
             Text(
-              _formatTimestamp(message.timestamp),
+              message.timestamp?.toHmString() ?? "",
               style: themeData.textTheme.labelSmall?.copyWith(
                   color: themeData.colorScheme.onSurface.withOpacity(0.6)),
             ),
@@ -30,11 +31,5 @@ class MessageTile extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _formatTimestamp(DateTime? timestamp) {
-    if (timestamp == null) return 'Unknown time';
-    // Format the timestamp as desired
-    return '${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
   }
 }

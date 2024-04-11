@@ -1,22 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'message.dart';
+part of 'chat.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
-    _$MessageImpl(
+_$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       id: json['id'] as String?,
-      senderId: json['senderId'] as String?,
-      text: json['text'] as String?,
-      chatId: json['chatId'] as String?,
+      participantIds: (json['participantIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['timestamp'], const TimestampConverter().fromJson),
+      lastMessage: json['lastMessage'] == null
+          ? null
+          : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
+      chatInfos: (json['chatInfos'] as List<dynamic>?)
+          ?.map((e) => ChatInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
-Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
+Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
@@ -26,13 +31,14 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
   }
 
   writeNotNull('id', instance.id);
-  writeNotNull('senderId', instance.senderId);
-  writeNotNull('text', instance.text);
-  writeNotNull('chatId', instance.chatId);
+  writeNotNull('participantIds', instance.participantIds);
   writeNotNull(
       'timestamp',
       _$JsonConverterToJson<Timestamp, DateTime>(
           instance.timestamp, const TimestampConverter().toJson));
+  writeNotNull('lastMessage', instance.lastMessage?.toJson());
+  writeNotNull(
+      'chatInfos', instance.chatInfos?.map((e) => e.toJson()).toList());
   return val;
 }
 

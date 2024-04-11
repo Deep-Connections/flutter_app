@@ -6,7 +6,9 @@ const Set<MaterialState> interactiveStates = <MaterialState>{
   MaterialState.focused,
 };
 
-const unselectedColor = Colors.grey;
+class DcColors {
+  static final Color grey = Colors.grey[200]!;
+}
 
 ThemeData theme() {
   const scheme = ColorScheme(
@@ -39,8 +41,7 @@ ThemeData theme() {
       }),
       foregroundColor: MaterialStateProperty.all(scheme.onPrimary),
     )),
-    textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
+    textButtonTheme: TextButtonThemeData(style: ButtonStyle(
       backgroundColor:
           MaterialStateProperty.resolveWith((Set<MaterialState> states) {
         if (states.any(interactiveStates.contains)) {

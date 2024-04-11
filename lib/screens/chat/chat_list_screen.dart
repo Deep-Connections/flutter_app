@@ -1,12 +1,12 @@
-import 'package:deep_connections/models/chat/chat.dart';
+import 'package:deep_connections/models/chats/chat/chat.dart';
+import 'package:deep_connections/screens/chat/components/chat_list_tile.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
-import 'package:deep_connections/screens/components/dc_column.dart';
-import 'package:deep_connections/utils/extensions/general_extensions.dart';
-import 'package:deep_connections/utils/extensions/navigation.dart';
+import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../services/chat/chat_service.dart';
-import 'message_list_screen.dart';
+
 // https://medium.com/@ximya/tips-and-tricks-for-implementing-a-successful-chat-ui-in-flutter-190cd81bdc64
 
 class ChatListScreen extends StatelessWidget {
@@ -16,33 +16,20 @@ class ChatListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
     return BaseScreen(
-      title: "Chat screen",
-      body: DcColumn(
+      title: loc.chat_title,
+      body: Column(
         children: [
           Expanded(
-            child: StreamBuilder(
-              stream: chatService.getChatStream(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                if (!snapshot.hasData || snapshot.data?.isEmpty == true) {
-                  return const Center(
-                      child: Text('Please wait for your first match'));
-                }
+            child: GenericStreamBuilder(
+              data: chatService.chatStream,
+              builder: (context, chats) {
                 return ListView.builder(
-                  itemCount: snapshot.data?.length,
+                  itemCount: chats.length,
                   itemBuilder: (context, index) {
-                    Chat chat = snapshot.data![index];
-                    return ListTile(
-                      title: Text(chat.id.toString()),
-                      subtitle: const Text("chat.lastMessage"),
-                      onTap: () {
-                        chat.id?.let((chatId) => context
-                            .navigate(MessageListScreen(chatId: chatId)));
-                      },
-                    );
+                    Chat chat = chats[index];
+                    return ChatListTile(chat: chat);
                   },
                 );
               },
