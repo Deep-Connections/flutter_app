@@ -18,6 +18,9 @@ class Chat with _$Chat {
     @TimestampConverter() DateTime? timestamp,
     Message? lastMessage,
     List<ChatInfo>? chatInfos,
+
+    /// not sent to the server
+    String? currentUserId,
   }) = _Chat;
 
   ChatInfo? get info {
