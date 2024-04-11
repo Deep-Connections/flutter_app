@@ -1,14 +1,17 @@
+import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 class BottomNavBar extends StatelessWidget {
+  final StatefulNavigationShell navigationShell;
+  final List<BottomNavRoute> routes;
+
   const BottomNavBar({
     Key? key,
     required this.navigationShell,
+    required this.routes,
   }) : super(key: key);
-
-  final StatefulNavigationShell navigationShell;
 
   void _goBranch(int index) {
     navigationShell.goBranch(
@@ -27,10 +30,12 @@ class BottomNavBar extends StatelessWidget {
         selectedIndex: navigationShell.currentIndex,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: [
-          NavigationDestination(
-              label: loc.profile_title, icon: const Icon(Icons.person)),
-          NavigationDestination(
-              label: loc.chat_title, icon: const Icon(Icons.chat)),
+          ...routes.map(
+            (route) => NavigationDestination(
+              label: route.title.localize(loc),
+              icon: Icon(route.icon),
+            ),
+          ),
         ],
         onDestinationSelected: _goBranch,
       ),

@@ -1,9 +1,12 @@
-class Route {
+import 'package:deep_connections/utils/loc_key.dart';
+import 'package:flutter/material.dart';
+
+class NavRoute {
   final String _path;
-  final Route? parent;
+  final NavRoute? parent;
   final String? pathParameter;
 
-  const Route(this._path, this.parent, {this.pathParameter});
+  const NavRoute(this._path, this.parent, {this.pathParameter});
 
   get path {
     return pathParameter != null ? '$_path/:$pathParameter' : _path;
@@ -15,25 +18,36 @@ class Route {
   }
 }
 
+class BottomNavRoute extends NavRoute {
+  final LocKey title;
+  final IconData? icon;
+
+  BottomNavRoute(String path, NavRoute? parent, this.title, this.icon)
+      : super(path, null);
+}
+
 const homeRoute = "/";
 
 class MainRoutes {
-  static const messages = Route('messages', null, pathParameter: 'chatId');
+  static const messages = NavRoute('messages', null, pathParameter: 'chatId');
 }
 
 class BottomNavigation {
-  static const main = profile;
-  static const Route profile = Route('profile', null);
-  static const Route chat = Route('chat', null);
+  static final profile = BottomNavRoute(
+      'profile', null, LocKey((loc) => loc.profile_title), Icons.person);
+  static final chat =
+      BottomNavRoute('chat', null, LocKey((loc) => loc.chat_title), Icons.chat);
+  static final values = [chat, profile];
+  static final main = values.first;
 }
 
 class AuthRoutes {
-  static const Route main = Route('auth', null);
-  static const Route login = Route('login', main);
-  static const Route register = Route('register', main);
-  static const Route forgotPassword = Route('forgot_password', main);
+  static const NavRoute main = NavRoute('auth', null);
+  static const NavRoute login = NavRoute('login', main);
+  static const NavRoute register = NavRoute('register', main);
+  static const NavRoute forgotPassword = NavRoute('forgot_password', main);
 }
 
 class CompleteProfileRoutes {
-  static const Route main = Route('complete_profile', null);
+  static const NavRoute main = NavRoute('complete_profile', null);
 }
