@@ -82,7 +82,7 @@ class ChatService {
       chatInfos: [
         ChatInfo(
             userId: _userService.userId, name: "Jari", imageUrl: testImageUrl),
-        ChatInfo(
+        const ChatInfo(
           userId: "FHzjtq4N3yZf1wo9xr1nYoM2EHA2",
           name: "Sina",
           imageUrl: testImageUrl,

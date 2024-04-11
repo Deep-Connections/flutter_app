@@ -8,10 +8,11 @@ class MessageTextField extends StatefulWidget {
   final ChatService chatService;
   final ScrollController scrollController;
 
-  const MessageTextField({super.key,
-    required this.chatService,
-    required this.chatId,
-    required this.scrollController});
+  const MessageTextField(
+      {super.key,
+      required this.chatService,
+      required this.chatId,
+      required this.scrollController});
 
   @override
   State<MessageTextField> createState() => _MessageTextFieldState();
@@ -47,7 +48,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
             decoration: InputDecoration(
               hintText: loc.chat_messageTextField,
               filled: true,
-              fillColor: messageTextFieldColor,
+              fillColor: DcColors.grey,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(20),

@@ -6,8 +6,9 @@ const Set<MaterialState> interactiveStates = <MaterialState>{
   MaterialState.focused,
 };
 
-final messageTextFieldColor = Colors.grey[200];
-const unselectedColor = Colors.grey;
+class DcColors {
+  static final Color grey = Colors.grey[200]!;
+}
 
 ThemeData theme() {
   const scheme = ColorScheme(

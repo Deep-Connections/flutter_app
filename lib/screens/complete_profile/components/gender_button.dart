@@ -80,7 +80,7 @@ class SelectableButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: enabled ? onPressed : null,
       style: ElevatedButton.styleFrom(
-        backgroundColor: selected ? null : unselectedColor,
+        backgroundColor: selected ? null : DcColors.grey,
         // shape: RoundedRectangleBorder(
         //   borderRadius: BorderRadius.circular(30.0),
         //   side: selected
