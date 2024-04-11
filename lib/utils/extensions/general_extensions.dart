@@ -29,6 +29,20 @@ extension DateTimeExtensions on DateTime {
   String toYmdString() {
     return DateFormat.yMd(Intl.getCurrentLocale()).format(this);
   }
+
+  String formatTimeIfTodayElseDate() {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime thisDate = DateTime(year, month, day);
+
+    if (thisDate == today) {
+      // If the date is today, return the time
+      return toHmString();
+    } else {
+      // Otherwise, return the date
+      return toYmdString();
+    }
+  }
 }
 
 extension ListExtensions<T> on Iterable<T> {
