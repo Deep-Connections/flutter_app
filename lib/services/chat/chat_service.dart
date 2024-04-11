@@ -65,17 +65,19 @@ class ChatService {
       .snapshots()
       .map((snap) => snap.docs.map((doc) => doc.data()).toList());
 
-  sendMessage(String message, chatId) {
+  Future<Response<String>> sendMessage(String message, chatId) {
     final timestamp = DateTime.now();
     final messageObj = Message(
       text: message,
       senderId: _userService.userId,
       timestamp: timestamp,
     );
-    _chatRef
-        .doc(chatId)
-        .update(Chat(lastMessage: messageObj, timestamp: timestamp).toJson());
-    _messagesRef(chatId).add(messageObj);
+    return handleFirebaseErrors(() async {
+      _chatRef
+          .doc(chatId)
+          .update(Chat(lastMessage: messageObj, timestamp: timestamp).toJson());
+      return (await _messagesRef(chatId).add(messageObj)).id;
+    });
   }
 
   Future<Response<String>> createChat(String otherUserId) async {
