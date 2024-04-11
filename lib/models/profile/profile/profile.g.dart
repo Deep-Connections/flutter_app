@@ -8,7 +8,7 @@ part of 'profile.dart';
 
 _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
     _$ProfileImpl(
-      uid: json['uid'] as String?,
+      id: json['id'] as String?,
       firstName: json['firstName'] as String?,
       gender: json['gender'] as String?,
       genderPreferences: (json['genderPreferences'] as List<dynamic>?)
@@ -80,7 +80,7 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
     }
   }
 
-  writeNotNull('uid', instance.uid);
+  writeNotNull('id', instance.id);
   writeNotNull('firstName', instance.firstName);
   writeNotNull('gender', instance.gender);
   writeNotNull('genderPreferences', instance.genderPreferences);

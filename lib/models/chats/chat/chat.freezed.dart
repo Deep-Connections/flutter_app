@@ -237,10 +237,10 @@ class _$ChatImpl extends _Chat with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'Chat'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('participantIds', participantIds))
-      ..add(DiagnosticsProperty('timestamp', timestamp))..add(
-        DiagnosticsProperty('lastMessage', lastMessage))..add(
-        DiagnosticsProperty('chatInfos', chatInfos))..add(
-        DiagnosticsProperty('currentUserId', currentUserId));
+      ..add(DiagnosticsProperty('timestamp', timestamp))
+      ..add(DiagnosticsProperty('lastMessage', lastMessage))
+      ..add(DiagnosticsProperty('chatInfos', chatInfos))
+      ..add(DiagnosticsProperty('currentUserId', currentUserId));
   }
 
   @override

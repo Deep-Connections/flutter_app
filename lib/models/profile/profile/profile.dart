@@ -8,7 +8,7 @@ part 'profile.g.dart';
 @freezed
 class Profile with _$Profile {
   const factory Profile({
-    String? uid,
+    String? id,
     String? firstName,
     String? gender,
     List<String>? genderPreferences,
