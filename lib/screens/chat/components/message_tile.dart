@@ -22,10 +22,13 @@ class MessageTile extends StatelessWidget {
               style: themeData.textTheme.bodyMedium,
               textWidthBasis: TextWidthBasis.longestLine,
             ),
-            Text(
-              message.timestamp?.toHmString() ?? "",
-              style: themeData.textTheme.labelSmall?.copyWith(
-                  color: themeData.colorScheme.onSurface.withOpacity(0.6)),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                message.timestamp?.toHmString() ?? "",
+                style: themeData.textTheme.labelSmall?.copyWith(
+                    color: themeData.colorScheme.onSurface.withOpacity(0.6)),
+              ),
             ),
           ],
         ),

@@ -66,11 +66,15 @@ class ChatService {
       .map((snap) => snap.docs.map((doc) => doc.data()).toList());
 
   sendMessage(String message, chatId) {
+    final timestamp = DateTime.now();
     final messageObj = Message(
       text: message,
       senderId: _userService.userId,
-      timestamp: DateTime.now(),
+      timestamp: timestamp,
     );
+    _chatRef.doc(chatId).set(
+        Chat(lastMessage: messageObj, timestamp: timestamp),
+        SetOptions(merge: true));
     _messagesRef(chatId).add(messageObj);
   }
 
