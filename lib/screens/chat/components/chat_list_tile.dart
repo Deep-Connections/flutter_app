@@ -42,6 +42,7 @@ class ChatListTile extends StatelessWidget {
             ),
             trailing: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(chat.timestamp?.formatTimeIfTodayElseDate() ?? ""),
                 if (isUnread)
