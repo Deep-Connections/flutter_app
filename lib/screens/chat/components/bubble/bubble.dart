@@ -24,9 +24,13 @@ class Bubble extends StatelessWidget {
     final color =
         isRight ? theme.colorScheme.surface : theme.colorScheme.surfaceVariant;
 
-    final triangleAndCard = [
+    final List<Widget> triangleAndCard = [
+      SizedBox(width: bubbleStartPadding),
       Flexible(
         child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: maxScreenWidth * 0.6,
+          ),
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.only(
@@ -42,20 +46,16 @@ class Bubble extends StatelessWidget {
       CustomPaint(painter: Notch(color)),
     ];
 
-    final messageTextGroup = Flexible(
-        child: Row(
+    final messageTextGroup = Row(
       mainAxisAlignment:
           isRight ? MainAxisAlignment.end : MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: (isRight ? triangleAndCard : triangleAndCard.reversed.toList()),
-    ));
+    );
 
     return Padding(
       padding: EdgeInsets.only(
-          right: isRight ? 0 : bubbleStartPadding,
-          left: !isRight ? 0 : bubbleStartPadding,
-          top: bubbleVerticalPadding,
-          bottom: bubbleVerticalPadding),
+          top: bubbleVerticalPadding, bottom: bubbleVerticalPadding),
       child: messageTextGroup,
     );
   }
