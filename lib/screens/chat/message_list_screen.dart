@@ -1,5 +1,5 @@
 import 'package:deep_connections/config/constants.dart';
-import 'package:deep_connections/screens/chat/components/message_bubble.dart';
+import 'package:deep_connections/screens/chat/components/bubble/message_bubble.dart';
 import 'package:deep_connections/screens/chat/components/message_text_field.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
