@@ -1,12 +1,15 @@
 import 'package:deep_connections/config/theme.dart';
+import 'package:deep_connections/screens/components/progress_indicator.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 
 class AvatarImage extends StatelessWidget {
   final String? imageUrl;
   final double? size;
+  final bool isLoading;
 
-  const AvatarImage({super.key, required this.imageUrl, this.size});
+  const AvatarImage(
+      {super.key, required this.imageUrl, this.size, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +17,10 @@ class AvatarImage extends StatelessWidget {
       backgroundColor: DcColors.grey,
       radius: size,
       backgroundImage: imageUrl?.let((it) => NetworkImage(it)),
-      child: imageUrl == null
-          ? Icon(
+      child: isLoading
+          ? const DcProgressIndicator()
+          : imageUrl == null
+              ? Icon(
               size: size,
               Icons.person,
               color: Theme.of(context).colorScheme.surface)

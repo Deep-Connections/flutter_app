@@ -17,20 +17,30 @@ class AvatarImagePicker extends StatefulWidget {
 
 class _AvatarImagePickerState extends State<AvatarImagePicker> {
   late String? url = widget.profileService.profile?.pictures?.lastOrNull;
+  bool isLoading = false;
+
+  _uploadImage(File file) async {
+    setState(() => isLoading = true);
+    String? resultUrl;
+    try {
+      resultUrl = await widget.profileService.uploadImage(file);
+      setState(() {
+        if (resultUrl != null) url = resultUrl;
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        final resultUrl = await ImagePicker()
-            .pickImage(source: ImageSource.gallery)
-            .then((image) async => await image?.path
-                .let((path) => widget.profileService.uploadImage(File(path))));
-        if (resultUrl != null) {
-          setState(() => url = resultUrl);
-        }
-      },
-      child: AvatarImage(size: 50, imageUrl: url),
+      onTap: !isLoading
+          ? () => ImagePicker()
+              .pickImage(source: ImageSource.gallery, imageQuality: 70)
+              .then((image) =>
+                  image?.path.let((path) => _uploadImage(File(path))))
+          : null,
+      child: AvatarImage(size: 50, imageUrl: url, isLoading: isLoading),
     );
   }
 }
