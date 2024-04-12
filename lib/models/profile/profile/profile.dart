@@ -17,6 +17,7 @@ class Profile with _$Profile {
     List<String>? genderPreferences,
     DateTime? birthdate,
     int? height,
+    Picture? profilePicture,
     List<Picture>? pictures,
     QuestionResponse? question1,
     QuestionResponse? question2,
