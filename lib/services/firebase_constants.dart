@@ -8,6 +8,7 @@ class SerializedField {
   static const timestamp = 'timestamp';
   static const participantIds = 'participantIds';
   static const pictures = 'pictures';
+  static const profilePicture = 'profilePicture';
   static const id = 'id';
 }
 

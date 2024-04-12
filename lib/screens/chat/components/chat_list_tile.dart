@@ -33,7 +33,7 @@ class ChatListTile extends StatelessWidget {
             onTap: () {
               context.push("${MainRoutes.messages.fullPath}/${chat.id}");
             },
-            leading: AvatarImage(imageUrl: profile?.pictures?.firstOrNull),
+            leading: AvatarImage(imageUrl: profile?.profilePicture?.url),
             title: Text(profile?.firstName ?? ""),
             subtitle: Text(
               chat.lastMessage?.text ?? "",

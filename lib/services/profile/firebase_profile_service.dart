@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
@@ -45,7 +46,7 @@ class FirebaseProfileService implements ProfileService {
 
   @override
   Future<Response<void>> updateProfile(
-      Profile Function(Profile) callback) async {
+      Profile Function(Profile p) callback) async {
     return handleFirebaseErrors(() => _profileReference
         .doc(_userService.userId)
         .set(callback(const Profile()), SetOptions(merge: true)));
@@ -89,15 +90,18 @@ class FirebaseProfileService implements ProfileService {
       .child(_userService.userId);
 
   @override
-  Future<String> uploadImage(File image) async {
+  Future<Picture> uploadImage(File image) async {
     final userId = _userService.userId;
-    var imageName = DateTime.now().millisecondsSinceEpoch.toString();
-    final ref = _imageRef.child("$imageName.jpg");
+    final timestamp = DateTime.now();
+    var imageName = "${timestamp.millisecondsSinceEpoch}.jpg";
+    final ref = _imageRef.child(imageName);
     await ref.putFile(image);
     final url = await ref.getDownloadURL();
+    final picture = Picture(url: url, timestamp: timestamp);
     _profileReference.doc(userId).update({
-      SerializedField.pictures: FieldValue.arrayUnion([url])
+      SerializedField.profilePicture: picture.toJson(),
+      SerializedField.pictures: FieldValue.arrayUnion([picture.toJson()])
     });
-    return url;
+    return Picture(url: url, timestamp: timestamp);
   }
 }

@@ -39,7 +39,7 @@ class MessageListScreen extends StatelessWidget {
                       futureOr: profileService.profileByUserId(otherUserId),
                       builder: (context, profile) {
                         return Row(children: [
-                          AvatarImage(imageUrl: profile?.pictures?.firstOrNull),
+                          AvatarImage(imageUrl: profile?.profilePicture?.url),
                           const SizedBox(width: standardPadding),
                           Text(profile?.firstName ?? "")
                         ]);

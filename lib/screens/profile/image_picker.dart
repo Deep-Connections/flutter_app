@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:deep_connections/config/constants.dart';
+import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -16,32 +18,31 @@ class AvatarImagePicker extends StatefulWidget {
 }
 
 class _AvatarImagePickerState extends State<AvatarImagePicker> {
-  late String? url = widget.profileService.profile?.pictures?.lastOrNull;
   bool isLoading = false;
+  String? url;
 
-  _uploadImage(File file) async {
-    setState(() => isLoading = true);
-    String? resultUrl;
-    try {
-      resultUrl = await widget.profileService.uploadImage(file);
-    } finally {
-      setState(() {
-        if (resultUrl != null) url = resultUrl;
-        isLoading = false;
-      });
-    }
-  }
+  Future<Picture?> _pickImage() => ImagePicker()
+      .pickImage(source: ImageSource.gallery, imageQuality: imageCompression)
+      .then((image) => image?.path.let((path) async {
+            setState(() {
+              isLoading = true;
+            });
+            final picture = await widget.profileService.uploadImage(File(path));
+            setState(() {
+              url = picture.url;
+              isLoading = false;
+            });
+          }));
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: !isLoading
-          ? () => ImagePicker()
-              .pickImage(source: ImageSource.gallery, imageQuality: 70)
-              .then((image) =>
-                  image?.path.let((path) => _uploadImage(File(path))))
-          : null,
-      child: AvatarImage(size: 50, imageUrl: url, isLoading: isLoading),
+      onTap: _pickImage,
+      child: AvatarImage(
+        size: 50,
+        imageUrl: url ?? widget.profileService.profile?.profilePicture?.url,
+        isLoading: isLoading,
+      ),
     );
   }
 }
