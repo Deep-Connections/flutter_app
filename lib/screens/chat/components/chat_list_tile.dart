@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:deep_connections/models/chats/chat/chat.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
-import 'package:deep_connections/screens/components/avatar_image.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
+import 'package:deep_connections/screens/components/image/avatar_image.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +33,7 @@ class ChatListTile extends StatelessWidget {
             onTap: () {
               context.push("${MainRoutes.messages.fullPath}/${chat.id}");
             },
-            leading: AvatarImage(imageUrl: profile?.pictures?.firstOrNull),
+            leading: AvatarImage(imageUrl: profile?.profilePicture?.url),
             title: Text(profile?.firstName ?? ""),
             subtitle: Text(
               chat.lastMessage?.text ?? "",

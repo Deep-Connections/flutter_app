@@ -1,11 +1,17 @@
 class Collection {
-  static const String profiles = 'profiles';
-  static const String chats = 'chats';
-  static const String messages = 'messages';
+  static const profiles = 'profiles';
+  static const chats = 'chats';
+  static const messages = 'messages';
 }
 
 class SerializedField {
-  static const String timestamp = 'timestamp';
-  static const String participantIds = 'participantIds';
-  static const String id = 'id';
+  static const timestamp = 'timestamp';
+  static const participantIds = 'participantIds';
+  static const pictures = 'pictures';
+  static const profilePicture = 'profilePicture';
+  static const id = 'id';
+}
+
+class StorageCollection {
+  static const profileImages = 'profile_images';
 }

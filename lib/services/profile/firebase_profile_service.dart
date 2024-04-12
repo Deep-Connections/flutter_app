@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -20,6 +23,7 @@ class FirebaseProfileService implements ProfileService {
   FirebaseProfileService(this._userService);
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   CollectionReference<Profile> get _profileReference =>
       _firestore.collection(Collection.profiles).withConverter<Profile>(
@@ -42,7 +46,7 @@ class FirebaseProfileService implements ProfileService {
 
   @override
   Future<Response<void>> updateProfile(
-      Profile Function(Profile) callback) async {
+      Profile Function(Profile p) callback) async {
     return handleFirebaseErrors(() => _profileReference
         .doc(_userService.userId)
         .set(callback(const Profile()), SetOptions(merge: true)));
@@ -78,5 +82,29 @@ class FirebaseProfileService implements ProfileService {
     profiles.shuffle();
     return profiles
         .firstWhereOrNull((profile) => !excludedIds.contains(profile.id));
+  }
+
+  get _imageRef => _storage
+      .ref()
+      .child(StorageCollection.profileImages)
+      .child(_userService.userId);
+
+  @override
+  Future<Response<Picture>> uploadPicture(File pictureFile) async {
+    final userId = _userService.userId;
+    final timestamp = DateTime.now();
+    var pictureName = "${timestamp.millisecondsSinceEpoch}.jpg";
+    return await handleFirebaseErrors(() async {
+      final ref = _imageRef.child(pictureName);
+      await ref.putFile(pictureFile);
+      final url = await ref.getDownloadURL();
+      final picture =
+          Picture(url: url, timestamp: timestamp, name: pictureName);
+      _profileReference.doc(userId).update({
+        SerializedField.profilePicture: picture.toJson(),
+        SerializedField.pictures: FieldValue.arrayUnion([picture.toJson()])
+      });
+      return Picture(url: url, timestamp: timestamp);
+    });
   }
 }
