@@ -1,3 +1,4 @@
+import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -14,7 +15,7 @@ class Profile with _$Profile {
     List<String>? genderPreferences,
     DateTime? birthdate,
     int? height,
-    List<String>? pictures,
+    List<Picture>? pictures,
     QuestionResponse? question1,
     QuestionResponse? question2,
     QuestionResponse? question3,

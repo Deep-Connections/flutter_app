@@ -26,7 +26,7 @@ mixin _$Profile {
   List<String>? get genderPreferences => throw _privateConstructorUsedError;
   DateTime? get birthdate => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
-  List<String>? get pictures => throw _privateConstructorUsedError;
+  List<Picture>? get pictures => throw _privateConstructorUsedError;
   QuestionResponse? get question1 => throw _privateConstructorUsedError;
   QuestionResponse? get question2 => throw _privateConstructorUsedError;
   QuestionResponse? get question3 => throw _privateConstructorUsedError;
@@ -57,7 +57,7 @@ abstract class $ProfileCopyWith<$Res> {
       List<String>? genderPreferences,
       DateTime? birthdate,
       int? height,
-      List<String>? pictures,
+      List<Picture>? pictures,
       QuestionResponse? question1,
       QuestionResponse? question2,
       QuestionResponse? question3,
@@ -146,7 +146,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       pictures: freezed == pictures
           ? _value.pictures
           : pictures // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<Picture>?,
       question1: freezed == question1
           ? _value.question1
           : question1 // ignore: cast_nullable_to_non_nullable
@@ -357,7 +357,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       List<String>? genderPreferences,
       DateTime? birthdate,
       int? height,
-      List<String>? pictures,
+      List<Picture>? pictures,
       QuestionResponse? question1,
       QuestionResponse? question2,
       QuestionResponse? question3,
@@ -456,7 +456,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
       pictures: freezed == pictures
           ? _value._pictures
           : pictures // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<Picture>?,
       question1: freezed == question1
           ? _value.question1
           : question1 // ignore: cast_nullable_to_non_nullable
@@ -519,7 +519,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       final List<String>? genderPreferences,
       this.birthdate,
       this.height,
-      final List<String>? pictures,
+      final List<Picture>? pictures,
       this.question1,
       this.question2,
       this.question3,
@@ -559,9 +559,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   final DateTime? birthdate;
   @override
   final int? height;
-  final List<String>? _pictures;
+  final List<Picture>? _pictures;
   @override
-  List<String>? get pictures {
+  List<Picture>? get pictures {
     final value = _pictures;
     if (value == null) return null;
     if (_pictures is EqualUnmodifiableListView) return _pictures;
@@ -713,7 +713,7 @@ abstract class _Profile implements Profile {
       final List<String>? genderPreferences,
       final DateTime? birthdate,
       final int? height,
-      final List<String>? pictures,
+      final List<Picture>? pictures,
       final QuestionResponse? question1,
       final QuestionResponse? question2,
       final QuestionResponse? question3,
@@ -742,7 +742,7 @@ abstract class _Profile implements Profile {
   @override
   int? get height;
   @override
-  List<String>? get pictures;
+  List<Picture>? get pictures;
   @override
   QuestionResponse? get question1;
   @override
