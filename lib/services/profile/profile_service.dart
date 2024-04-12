@@ -17,5 +17,5 @@ abstract class ProfileService {
 
   Future<Profile?> getNewMatch(List<String> excludedUserIds);
 
-  Future<Picture> uploadImage(File image);
+  Future<Response<Picture>> uploadPicture(File image);
 }

@@ -90,18 +90,21 @@ class FirebaseProfileService implements ProfileService {
       .child(_userService.userId);
 
   @override
-  Future<Picture> uploadImage(File image) async {
+  Future<Response<Picture>> uploadPicture(File pictureFile) async {
     final userId = _userService.userId;
     final timestamp = DateTime.now();
-    var imageName = "${timestamp.millisecondsSinceEpoch}.jpg";
-    final ref = _imageRef.child(imageName);
-    await ref.putFile(image);
-    final url = await ref.getDownloadURL();
-    final picture = Picture(url: url, timestamp: timestamp);
-    _profileReference.doc(userId).update({
-      SerializedField.profilePicture: picture.toJson(),
-      SerializedField.pictures: FieldValue.arrayUnion([picture.toJson()])
+    var pictureName = "${timestamp.millisecondsSinceEpoch}.jpg";
+    return await handleFirebaseErrors(() async {
+      final ref = _imageRef.child(pictureName);
+      await ref.putFile(pictureFile);
+      final url = await ref.getDownloadURL();
+      final picture =
+          Picture(url: url, timestamp: timestamp, name: pictureName);
+      _profileReference.doc(userId).update({
+        SerializedField.profilePicture: picture.toJson(),
+        SerializedField.pictures: FieldValue.arrayUnion([picture.toJson()])
+      });
+      return Picture(url: url, timestamp: timestamp);
     });
-    return Picture(url: url, timestamp: timestamp);
   }
 }

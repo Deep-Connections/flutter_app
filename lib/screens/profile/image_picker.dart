@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:deep_connections/config/constants.dart';
-import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -21,15 +20,16 @@ class _AvatarImagePickerState extends State<AvatarImagePicker> {
   bool isLoading = false;
   String? url;
 
-  Future<Picture?> _pickImage() => ImagePicker()
+  void _pickImage() => ImagePicker()
       .pickImage(source: ImageSource.gallery, imageQuality: imageCompression)
-      .then((image) => image?.path.let((path) async {
+      .then((image) async => await image?.path.let((path) async {
             setState(() {
               isLoading = true;
             });
-            final picture = await widget.profileService.uploadImage(File(path));
+            final response =
+                await widget.profileService.uploadPicture(File(path));
             setState(() {
-              url = picture.url;
+              response.onSuccess((picture) => url = picture.url);
               isLoading = false;
             });
           }));
