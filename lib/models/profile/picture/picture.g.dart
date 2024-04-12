@@ -9,6 +9,7 @@ part of 'picture.dart';
 _$PictureImpl _$$PictureImplFromJson(Map<String, dynamic> json) =>
     _$PictureImpl(
       url: json['url'] as String?,
+      name: json['name'] as String?,
       timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['timestamp'], const TimestampConverter().fromJson),
     );
@@ -23,6 +24,7 @@ Map<String, dynamic> _$$PictureImplToJson(_$PictureImpl instance) {
   }
 
   writeNotNull('url', instance.url);
+  writeNotNull('name', instance.name);
   writeNotNull(
       'timestamp',
       _$JsonConverterToJson<Timestamp, DateTime>(

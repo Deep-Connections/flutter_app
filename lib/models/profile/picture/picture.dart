@@ -11,6 +11,7 @@ part 'picture.g.dart';
 class Picture with _$Picture {
   const factory Picture({
     String? url,
+    String? name,
     @TimestampConverter()
     DateTime? timestamp,
   }) = _Picture;

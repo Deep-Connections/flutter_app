@@ -21,6 +21,7 @@ Picture _$PictureFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Picture {
   String? get url => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
 
@@ -34,7 +35,8 @@ abstract class $PictureCopyWith<$Res> {
   factory $PictureCopyWith(Picture value, $Res Function(Picture) then) =
       _$PictureCopyWithImpl<$Res, Picture>;
   @useResult
-  $Res call({String? url, @TimestampConverter() DateTime? timestamp});
+  $Res call(
+      {String? url, String? name, @TimestampConverter() DateTime? timestamp});
 }
 
 /// @nodoc
@@ -51,12 +53,17 @@ class _$PictureCopyWithImpl<$Res, $Val extends Picture>
   @override
   $Res call({
     Object? url = freezed,
+    Object? name = freezed,
     Object? timestamp = freezed,
   }) {
     return _then(_value.copyWith(
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String?,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -73,7 +80,8 @@ abstract class _$$PictureImplCopyWith<$Res> implements $PictureCopyWith<$Res> {
       __$$PictureImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? url, @TimestampConverter() DateTime? timestamp});
+  $Res call(
+      {String? url, String? name, @TimestampConverter() DateTime? timestamp});
 }
 
 /// @nodoc
@@ -88,12 +96,17 @@ class __$$PictureImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? url = freezed,
+    Object? name = freezed,
     Object? timestamp = freezed,
   }) {
     return _then(_$PictureImpl(
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String?,
       timestamp: freezed == timestamp
           ? _value.timestamp
@@ -106,7 +119,8 @@ class __$$PictureImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$PictureImpl with DiagnosticableTreeMixin implements _Picture {
-  const _$PictureImpl({this.url, @TimestampConverter() this.timestamp});
+  const _$PictureImpl(
+      {this.url, this.name, @TimestampConverter() this.timestamp});
 
   factory _$PictureImpl.fromJson(Map<String, dynamic> json) =>
       _$$PictureImplFromJson(json);
@@ -114,12 +128,14 @@ class _$PictureImpl with DiagnosticableTreeMixin implements _Picture {
   @override
   final String? url;
   @override
+  final String? name;
+  @override
   @TimestampConverter()
   final DateTime? timestamp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Picture(url: $url, timestamp: $timestamp)';
+    return 'Picture(url: $url, name: $name, timestamp: $timestamp)';
   }
 
   @override
@@ -128,6 +144,7 @@ class _$PictureImpl with DiagnosticableTreeMixin implements _Picture {
     properties
       ..add(DiagnosticsProperty('type', 'Picture'))
       ..add(DiagnosticsProperty('url', url))
+      ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('timestamp', timestamp));
   }
 
@@ -137,13 +154,14 @@ class _$PictureImpl with DiagnosticableTreeMixin implements _Picture {
         (other.runtimeType == runtimeType &&
             other is _$PictureImpl &&
             (identical(other.url, url) || other.url == url) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, url, timestamp);
+  int get hashCode => Object.hash(runtimeType, url, name, timestamp);
 
   @JsonKey(ignore: true)
   @override
@@ -162,12 +180,15 @@ class _$PictureImpl with DiagnosticableTreeMixin implements _Picture {
 abstract class _Picture implements Picture {
   const factory _Picture(
       {final String? url,
+      final String? name,
       @TimestampConverter() final DateTime? timestamp}) = _$PictureImpl;
 
   factory _Picture.fromJson(Map<String, dynamic> json) = _$PictureImpl.fromJson;
 
   @override
   String? get url;
+  @override
+  String? get name;
   @override
   @TimestampConverter()
   DateTime? get timestamp;
