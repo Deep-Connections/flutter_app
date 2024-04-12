@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:deep_connections/models/profile/picture/picture.dart';
+
 import '../../models/profile/profile/profile.dart';
 import '../utils/response.dart';
 
@@ -15,5 +17,5 @@ abstract class ProfileService {
 
   Future<Profile?> getNewMatch(List<String> excludedUserIds);
 
-  Future<String> uploadImage(File image);
+  Future<Picture> uploadImage(File image);
 }

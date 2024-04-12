@@ -8,6 +8,8 @@ part 'profile.g.dart';
 
 @freezed
 class Profile with _$Profile {
+  const Profile._();
+
   const factory Profile({
     String? id,
     String? firstName,
@@ -29,6 +31,8 @@ class Profile with _$Profile {
     QuestionResponse? question11,
     QuestionResponse? question12,
   }) = _Profile;
+
+  String? get mainPictureUrl => pictures?.lastOrNull?.url;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);

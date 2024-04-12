@@ -511,7 +511,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
+class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
   const _$ProfileImpl(
       {this.id,
       this.firstName,
@@ -533,7 +533,8 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       this.question11,
       this.question12})
       : _genderPreferences = genderPreferences,
-        _pictures = pictures;
+        _pictures = pictures,
+        super._();
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -705,7 +706,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   }
 }
 
-abstract class _Profile implements Profile {
+abstract class _Profile extends Profile {
   const factory _Profile(
       {final String? id,
       final String? firstName,
@@ -726,6 +727,7 @@ abstract class _Profile implements Profile {
       final QuestionResponse? question10,
       final QuestionResponse? question11,
       final QuestionResponse? question12}) = _$ProfileImpl;
+  const _Profile._() : super._();
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
