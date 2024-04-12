@@ -24,6 +24,7 @@ class _AvatarImagePickerState extends State<AvatarImagePicker> {
     String? resultUrl;
     try {
       resultUrl = await widget.profileService.uploadImage(file);
+    } finally {
       setState(() {
         if (resultUrl != null) url = resultUrl;
         isLoading = false;
