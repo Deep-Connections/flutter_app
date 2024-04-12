@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
@@ -36,6 +37,11 @@ class MockProfileService implements ProfileService {
 
   @override
   Future<Profile?> getNewMatch(List<String> excludedUserIds) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> uploadImage(File image) {
     throw UnimplementedError();
   }
 }

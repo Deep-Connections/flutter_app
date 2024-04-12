@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -78,5 +80,22 @@ class FirebaseProfileService implements ProfileService {
     profiles.shuffle();
     return profiles
         .firstWhereOrNull((profile) => !excludedIds.contains(profile.id));
+  }
+
+  @override
+  Future<String> uploadImage(File image) async {
+    final userId = _userService.userId;
+    var imageName = DateTime.now().millisecondsSinceEpoch.toString();
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child(StorageCollection.profileImages)
+        .child(userId)
+        .child("$imageName.jpg");
+    await ref.putFile(image);
+    final url = await ref.getDownloadURL();
+    _profileReference.doc(userId).update({
+      SerializedField.pictures: FieldValue.arrayUnion([url])
+    });
+    return url;
   }
 }

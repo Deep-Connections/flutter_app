@@ -42,6 +42,7 @@ final bottomNavigation = StatefulShellRoute.indexedStack(
           pageBuilder: (context, state) => NoTransitionPage(
             child: ProfileScreen(
               authService: getIt(),
+              profileService: getIt(),
             ),
           ),
           routes: [

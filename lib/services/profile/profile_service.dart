@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import '../../models/profile/profile/profile.dart';
 import '../utils/response.dart';
@@ -13,4 +14,6 @@ abstract class ProfileService {
   FutureOr<Profile?> profileByUserId(String? userId);
 
   Future<Profile?> getNewMatch(List<String> excludedUserIds);
+
+  Future<String> uploadImage(File image);
 }
