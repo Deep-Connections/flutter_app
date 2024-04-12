@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 extension LetExtension<T> on T {
@@ -22,25 +23,42 @@ extension LetExtension<T> on T {
 }
 
 extension DateTimeExtensions on DateTime {
-  String toHmString() {
-    return DateFormat.Hm(Intl.getCurrentLocale()).format(this);
+  String toTimeString() {
+    return DateFormat.jm(Intl.getCurrentLocale()).format(this);
   }
 
-  String toYmdString() {
+  String toDateString() {
     return DateFormat.yMd(Intl.getCurrentLocale()).format(this);
   }
 
-  String formatTimeIfTodayElseDate() {
-    DateTime now = DateTime.now();
-    DateTime today = DateTime(now.year, now.month, now.day);
-    DateTime thisDate = DateTime(year, month, day);
+  String toWeekdayString() {
+    return DateFormat.EEEE(Intl.getCurrentLocale()).format(this);
+  }
 
-    if (thisDate == today) {
-      // If the date is today, return the time
-      return toHmString();
+  bool isSameDay(DateTime? other) {
+    if (other == null) return true;
+    return year == other.year && month == other.month && day == other.day;
+  }
+
+  String toDependingOnDateString(AppLocalizations loc,
+      {bool todayAsTime = false, DateTime? now}) {
+    DateTime today = now ?? DateTime.now();
+    DateTime yesterday = today.subtract(const Duration(days: 1));
+    DateTime aWeekBefore = today.subtract(const Duration(days: 7));
+
+    if (isSameDay(today)) {
+      // If the date is today, return the time or "Today"
+      if (todayAsTime) return toTimeString();
+      return loc.date_today;
+    } else if (isSameDay(yesterday)) {
+      // If the date is yesterday, return "Yesterday"
+      return loc.date_yesterday;
+    } else if (isAfter(aWeekBefore)) {
+      // If the date is within the last week, return the weekday
+      return toWeekdayString();
     } else {
-      // Otherwise, return the date
-      return toYmdString();
+      // If the date is older than a week, return the date
+      return toDateString();
     }
   }
 }

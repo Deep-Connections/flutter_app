@@ -1,5 +1,7 @@
 import 'package:deep_connections/config/constants.dart';
-import 'package:deep_connections/screens/chat/components/message_bubble.dart';
+import 'package:deep_connections/models/message/message.dart';
+import 'package:deep_connections/screens/chat/components/bubble/message_bubble.dart';
+import 'package:deep_connections/screens/chat/components/date_banner.dart';
 import 'package:deep_connections/screens/chat/components/message_text_field.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
@@ -11,8 +13,6 @@ import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../models/message/message.dart';
 
 class MessageListScreen extends StatelessWidget {
   final String chatId;
@@ -62,10 +62,24 @@ class MessageListScreen extends StatelessWidget {
                                     itemCount: messages.length,
                                     itemBuilder: (context, index) {
                                       Message message = messages[index];
-                                      return MessageBubble(
-                                        message: message,
-                                        isRight:
-                                            currentUserId == message.senderId,
+                                      final nextDate =
+                                          index < messages.length - 1
+                                              ? messages[index + 1].timestamp
+                                              : null;
+                                      final thisDate = message.timestamp;
+                                      final isSameDay =
+                                          nextDate?.isSameDay(thisDate);
+                                      return Column(
+                                        children: [
+                                          if (isSameDay == false ||
+                                              index == messages.length - 1)
+                                            DateBanner(date: message.timestamp),
+                                          MessageBubble(
+                                            message: message,
+                                            isRight: currentUserId ==
+                                                message.senderId,
+                                          ),
+                                        ],
                                       );
                                     },
                                   ),
