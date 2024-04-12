@@ -27,7 +27,7 @@ abstract class DateInput extends FieldInput<DateTime> {
   set value(DateTime? value) {
     pickedDate = value;
     if (value != null) {
-      controller.text = value.toYmdString();
+      controller.text = value.toDateString();
     }
   }
 

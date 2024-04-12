@@ -7,6 +7,7 @@ import 'package:deep_connections/screens/components/builders/future_or_builder.d
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 const unreadSize = 20.0;
@@ -26,6 +27,7 @@ class ChatListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final loc = AppLocalizations.of(context);
     return FutureOrBuilder(
         futureOr: futureOrprofile,
         builder: (context, profile) {
@@ -44,7 +46,9 @@ class ChatListTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(chat.timestamp?.formatTimeIfTodayElseDate() ?? ""),
+                Text(chat.timestamp
+                        ?.toDependingOnDateString(loc, todayAsTime: true) ??
+                    ""),
                 if (isUnread)
                   Container(
                     width: unreadSize,

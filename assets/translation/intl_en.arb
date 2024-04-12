@@ -3,6 +3,8 @@
   "general_error": "An error occurred",
   "general_submitButton": "Submit",
   "general_next": "Next",
+  "date_today": "Today",
+  "date_yesterday": "Yesterday",
   "auth_emailInvalidError": "Please enter a valid email",
   "auth_passwordLengthError": "Password must be at least 8 characters long",
   "login_userDisabledError": "Your account is currently unavailable. Please contact support for assistance.",
