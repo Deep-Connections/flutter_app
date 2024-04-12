@@ -22,6 +22,7 @@ class FirebaseProfileService implements ProfileService {
   FirebaseProfileService(this._userService);
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   CollectionReference<Profile> get _profileReference =>
       _firestore.collection(Collection.profiles).withConverter<Profile>(
@@ -82,15 +83,16 @@ class FirebaseProfileService implements ProfileService {
         .firstWhereOrNull((profile) => !excludedIds.contains(profile.id));
   }
 
+  get _imageRef => _storage
+      .ref()
+      .child(StorageCollection.profileImages)
+      .child(_userService.userId);
+
   @override
   Future<String> uploadImage(File image) async {
     final userId = _userService.userId;
     var imageName = DateTime.now().millisecondsSinceEpoch.toString();
-    final ref = FirebaseStorage.instance
-        .ref()
-        .child(StorageCollection.profileImages)
-        .child(userId)
-        .child("$imageName.jpg");
+    final ref = _imageRef.child("$imageName.jpg");
     await ref.putFile(image);
     final url = await ref.getDownloadURL();
     _profileReference.doc(userId).update({
