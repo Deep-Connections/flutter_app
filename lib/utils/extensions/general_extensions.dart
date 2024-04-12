@@ -24,7 +24,7 @@ extension LetExtension<T> on T {
 
 extension DateTimeExtensions on DateTime {
   String toTimeString() {
-    return DateFormat.Hm(Intl.getCurrentLocale()).format(this);
+    return DateFormat.jm(Intl.getCurrentLocale()).format(this);
   }
 
   String toDateString() {
@@ -41,10 +41,10 @@ extension DateTimeExtensions on DateTime {
   }
 
   String toDependingOnDateString(AppLocalizations loc,
-      {bool todayAsTime = false}) {
-    DateTime today = DateTime.now();
+      {bool todayAsTime = false, DateTime? now}) {
+    DateTime today = now ?? DateTime.now();
     DateTime yesterday = today.subtract(const Duration(days: 1));
-    DateTime aWeekFromNow = today.add(const Duration(days: 7));
+    DateTime aWeekBefore = today.subtract(const Duration(days: 7));
 
     if (isSameDay(today)) {
       // If the date is today, return the time or "Today"
@@ -53,7 +53,7 @@ extension DateTimeExtensions on DateTime {
     } else if (isSameDay(yesterday)) {
       // If the date is yesterday, return "Yesterday"
       return loc.date_yesterday;
-    } else if (isBefore(aWeekFromNow)) {
+    } else if (isAfter(aWeekBefore)) {
       // If the date is within the last week, return the weekday
       return toWeekdayString();
     } else {
