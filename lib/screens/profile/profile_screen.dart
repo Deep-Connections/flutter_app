@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:deep_connections/screens/components/avatar_image.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
+import 'package:deep_connections/screens/components/image/avatar_image.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
