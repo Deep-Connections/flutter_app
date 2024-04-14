@@ -27,7 +27,10 @@ class Chat with _$Chat {
   }
 
   ChatInfo? get info {
-      return chatInfos?[currentUserId!];
+    return chatInfos?[currentUserId!];
   }
+
+  bool get isUnread => info?.unreadMessages != 0;
+
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 }

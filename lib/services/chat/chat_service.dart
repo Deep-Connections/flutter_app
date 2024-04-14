@@ -107,6 +107,7 @@ class ChatService {
       ).toJson();
 
       chat.participantIds?.forEach((userId) {
+        // when the user sends a message we mark the chat as completely unread with 0 messages
         updateChatJson[Update.unreadMessages(userId)] =
             userId != chat.currentUserId ? FieldValue.increment(1) : 0;
       });
@@ -118,10 +119,12 @@ class ChatService {
 
   Future<Response<void>> markChatRead(String chatId) async {
     final chat = await chatById(chatId);
-    if (chat.info?.unreadMessages == 0) return SuccessRes(null);
+    final unreadMessages = chat.info?.unreadMessages;
+    if (unreadMessages == 0 || unreadMessages == null) return SuccessRes(null);
     return await handleFirebaseErrors(
         () async => await _chatRef.doc(chatId).update({
-              Update.unreadMessages(_userService.userId): 0,
+              // we set the unread messages to null, so the chat still shows up as unread but with 0 messages
+              Update.unreadMessages(_userService.userId): null,
             }));
   }
 

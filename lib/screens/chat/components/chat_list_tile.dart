@@ -12,17 +12,15 @@ const unreadSize = 20.0;
 
 class ChatListTile extends StatelessWidget {
   final Chat chat;
-  final int _unreadMessages;
   final FutureOr<Profile?> futureOrProfile;
   final void Function()? onTap;
 
   const ChatListTile({
     super.key,
     required this.chat,
-    int? unreadMessages,
     required this.futureOrProfile,
     this.onTap,
-  }) : _unreadMessages = unreadMessages ?? 0;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,7 @@ class ChatListTile extends StatelessWidget {
                 Text(chat.timestamp
                         ?.toDependingOnDateString(loc, todayAsTime: true) ??
                     ""),
-                if (_unreadMessages > 0)
+                if (chat.isUnread)
                   Container(
                     width: unreadSize,
                     height: unreadSize,
@@ -57,7 +55,7 @@ class ChatListTile extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        _unreadMessages.toString(),
+                        chat.info?.unreadMessages?.toString() ?? "",
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: theme.colorScheme.onSecondary,
                         ),

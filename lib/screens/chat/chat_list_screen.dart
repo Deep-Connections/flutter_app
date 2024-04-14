@@ -38,7 +38,6 @@ class ChatListScreen extends StatelessWidget {
                     final chatId = chat.id!;
                     return ChatListTile(
                         chat: chat,
-                        unreadMessages: chat.info?.unreadMessages,
                         onTap: () async {
                           await context
                               .push("${MainRoutes.messages.fullPath}/$chatId");
