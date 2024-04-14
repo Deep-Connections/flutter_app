@@ -23,7 +23,7 @@ final bottomNavigation = StatefulShellRoute.indexedStack(
           path: BottomNavigation.chat.path,
           pageBuilder: (context, state) => NoTransitionPage(
               child: ChatListScreen(
-                  chatService: getIt(), profileService: getIt())),
+                  chatService: getIt(), profileService: getIt(), chatReadStorage: getIt())),
           routes: [
             // child route
             GoRoute(

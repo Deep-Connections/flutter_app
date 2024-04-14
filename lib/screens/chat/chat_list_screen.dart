@@ -1,21 +1,26 @@
 import 'package:deep_connections/models/chats/chat/chat.dart';
+import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/chat/components/chat_list_tile.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
+import 'package:deep_connections/services/chat/chat_read_storage.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../services/chat/chat_service.dart';
-
-// https://medium.com/@ximya/tips-and-tricks-for-implementing-a-successful-chat-ui-in-flutter-190cd81bdc64
 
 class ChatListScreen extends StatelessWidget {
   final ChatService chatService;
   final ProfileService profileService;
+  final ChatReadStorage chatReadStorage;
 
   const ChatListScreen(
-      {super.key, required this.chatService, required this.profileService});
+      {super.key,
+      required this.chatService,
+      required this.profileService,
+      required this.chatReadStorage});
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +37,22 @@ class ChatListScreen extends StatelessWidget {
                   itemCount: chats.length,
                   itemBuilder: (context, index) {
                     Chat chat = chats[index];
-                    return ChatListTile(
-                        chat: chat,
-                        futureOrprofile:
-                            profileService.profileByUserId(chat.otherUserId));
+                    return FutureBuilder(
+                        future: chatReadStorage.isChatUnread(
+                            chat.id!, chat.timestamp),
+                        builder: (context, snapshot) {
+                          final isUnread = snapshot.data;
+                          return ChatListTile(
+                              chat: chat,
+                              isUnread: isUnread ?? false,
+                              onTap: () {
+                                context.push(
+                                    "${MainRoutes.messages.fullPath}/${chat.id}");
+                                chatReadStorage.setChatRead(chat.id!);
+                              },
+                              futureOrProfile: profileService
+                                  .profileByUserId(chat.otherUserId));
+                        });
                   },
                 );
               },

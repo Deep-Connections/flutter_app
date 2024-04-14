@@ -2,26 +2,26 @@ import 'dart:async';
 
 import 'package:deep_connections/models/chats/chat/chat.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 
 const unreadSize = 20.0;
 
 class ChatListTile extends StatelessWidget {
   final Chat chat;
   final bool isUnread;
-  final FutureOr<Profile?> futureOrprofile;
+  final FutureOr<Profile?> futureOrProfile;
+  final void Function()? onTap;
 
   const ChatListTile({
     Key? key,
     required this.chat,
     this.isUnread = true,
-    required this.futureOrprofile,
+    required this.futureOrProfile,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -29,12 +29,10 @@ class ChatListTile extends StatelessWidget {
     final theme = Theme.of(context);
     final loc = AppLocalizations.of(context);
     return FutureOrBuilder(
-        futureOr: futureOrprofile,
+        futureOr: futureOrProfile,
         builder: (context, profile) {
           return ListTile(
-            onTap: () {
-              context.push("${MainRoutes.messages.fullPath}/${chat.id}");
-            },
+            onTap: onTap,
             leading: AvatarImage(imageUrl: profile?.profilePicture?.url),
             title: Text(profile?.firstName ?? ""),
             subtitle: Text(

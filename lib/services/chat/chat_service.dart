@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/models/message/message.dart';
+import 'package:deep_connections/services/chat/chat_read_storage.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
@@ -22,6 +23,7 @@ class ChatService {
   ChatService(this._userService, this._profileService);
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final ChatReadStorage _chatReadStorage = ChatReadStorage();
 
   CollectionReference<Chat> get _chatRef {
     return _firestore.collection(Collection.chats).withConverter<Chat>(
