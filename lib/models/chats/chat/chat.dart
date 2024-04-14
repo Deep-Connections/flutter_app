@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/models/chats/info/chat_info.dart';
 import 'package:deep_connections/models/converters/timestamp_converter.dart';
 import 'package:deep_connections/models/message/message.dart';
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'chat.freezed.dart';
@@ -17,7 +15,7 @@ class Chat with _$Chat {
     List<String>? participantIds,
     @TimestampConverter() DateTime? timestamp,
     Message? lastMessage,
-    List<ChatInfo>? chatInfos,
+    Map<String, ChatInfo>? chatInfos,
 
     /// not sent to the server
     String? currentUserId,

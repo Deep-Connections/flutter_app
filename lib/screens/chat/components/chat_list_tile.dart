@@ -4,7 +4,6 @@ import 'package:deep_connections/models/chats/chat/chat.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
-import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
