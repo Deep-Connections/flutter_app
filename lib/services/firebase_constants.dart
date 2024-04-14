@@ -12,6 +12,10 @@ class SerializedField {
   static const id = 'id';
 }
 
+class Update {
+  static unreadMessages(userId) => "chatInfos.$userId.unreadMessages";
+}
+
 class StorageCollection {
   static const profileImages = 'profile_images';
 }

@@ -4,6 +4,7 @@ import 'package:deep_connections/models/chats/chat/chat.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -11,17 +12,17 @@ const unreadSize = 20.0;
 
 class ChatListTile extends StatelessWidget {
   final Chat chat;
-  final bool isUnread;
+  final int _unreadMessages;
   final FutureOr<Profile?> futureOrProfile;
   final void Function()? onTap;
 
   const ChatListTile({
-    Key? key,
+    super.key,
     required this.chat,
-    this.isUnread = true,
+    int? unreadMessages,
     required this.futureOrProfile,
     this.onTap,
-  }) : super(key: key);
+  }) : _unreadMessages = unreadMessages ?? 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +47,21 @@ class ChatListTile extends StatelessWidget {
                 Text(chat.timestamp
                         ?.toDependingOnDateString(loc, todayAsTime: true) ??
                     ""),
-                if (isUnread)
+                if (_unreadMessages > 0)
                   Container(
                     width: unreadSize,
                     height: unreadSize,
                     decoration: BoxDecoration(
                       color: theme.colorScheme.secondary,
                       shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        _unreadMessages.toString(),
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onSecondary,
+                        ),
+                      ),
                     ),
                   ),
               ],

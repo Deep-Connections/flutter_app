@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/models/chats/info/chat_info.dart';
 import 'package:deep_connections/models/converters/timestamp_converter.dart';
 import 'package:deep_connections/models/message/message.dart';
@@ -28,6 +29,5 @@ class Chat with _$Chat {
   ChatInfo? get info {
       return chatInfos?[currentUserId!];
   }
-
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 }

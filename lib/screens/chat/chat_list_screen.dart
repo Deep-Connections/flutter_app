@@ -37,22 +37,17 @@ class ChatListScreen extends StatelessWidget {
                   itemCount: chats.length,
                   itemBuilder: (context, index) {
                     Chat chat = chats[index];
-                    return FutureBuilder(
-                        future: chatReadStorage.isChatUnread(
-                            chat.id!, chat.timestamp),
-                        builder: (context, snapshot) {
-                          final isUnread = snapshot.data;
-                          return ChatListTile(
-                              chat: chat,
-                              isUnread: isUnread ?? false,
-                              onTap: () {
-                                context.push(
-                                    "${MainRoutes.messages.fullPath}/${chat.id}");
-                                chatReadStorage.setChatRead(chat.id!);
-                              },
-                              futureOrProfile: profileService
-                                  .profileByUserId(chat.otherUserId));
-                        });
+                    final chatId = chat.id!;
+                    return ChatListTile(
+                        chat: chat,
+                        unreadMessages: chat.info?.unreadMessages,
+                        onTap: () async {
+                          await context
+                              .push("${MainRoutes.messages.fullPath}/$chatId");
+                          chatService.markChatRead(chatId);
+                        },
+                        futureOrProfile:
+                            profileService.profileByUserId(chat.otherUserId));
                   },
                 );
               },

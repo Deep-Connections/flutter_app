@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/models/message/message.dart';
-import 'package:deep_connections/services/chat/chat_read_storage.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
@@ -23,7 +22,6 @@ class ChatService {
   ChatService(this._userService, this._profileService);
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final ChatReadStorage _chatReadStorage = ChatReadStorage();
 
   CollectionReference<Chat> get _chatRef {
     return _firestore.collection(Collection.chats).withConverter<Chat>(
@@ -41,13 +39,7 @@ class ChatService {
           .where(SerializedField.participantIds, arrayContains: userId)
           .orderBy(SerializedField.timestamp, descending: true)
           .snapshots()
-          .map((snap) => snap.docs
-              .map((doc) => doc.data())
-              .map((chat) => chat.copyWith(
-                  chatInfos: chat.chatInfos
-                      ?.where((info) => info.userId != userId)
-                      .toList()))
-              .toList());
+          .map((snap) => snap.docs.map((doc) => doc.data()).toList());
     })
       // create a new chat if there are no chats or all chats are older than 24h
       ..firstWhere((chats) {
@@ -104,12 +96,33 @@ class ChatService {
       senderId: _userService.userId,
       timestamp: timestamp,
     );
-    return handleFirebaseErrors(() async {
-      _chatRef
-          .doc(chatId)
-          .update(Chat(lastMessage: messageObj, timestamp: timestamp).toJson());
-      return (await _messagesRef(chatId).add(messageObj)).id;
+    final futureMessageResponse = handleFirebaseErrors(
+        () async => (await _messagesRef(chatId).add(messageObj)).id);
+
+    handleFirebaseErrors(() async {
+      final chat = await chatById(chatId);
+      final updateChatJson = Chat(
+        lastMessage: messageObj,
+        timestamp: timestamp,
+      ).toJson();
+
+      chat.participantIds?.forEach((userId) {
+        updateChatJson[Update.unreadMessages(userId)] =
+            userId != chat.currentUserId ? FieldValue.increment(1) : 0;
+      });
+      return await _chatRef.doc(chatId).update(updateChatJson);
     });
+
+    return futureMessageResponse;
+  }
+
+  Future<Response<void>> markChatRead(String chatId) async {
+    final chat = await chatById(chatId);
+    if (chat.info?.unreadMessages == 0) return SuccessRes(null);
+    return await handleFirebaseErrors(
+        () async => await _chatRef.doc(chatId).update({
+              Update.unreadMessages(_userService.userId): 0,
+            }));
   }
 
   Future<Response<String?>> createChat(List<String> excludedUsers) async {
