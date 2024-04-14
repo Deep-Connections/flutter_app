@@ -3,7 +3,6 @@ import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/chat/components/chat_list_tile.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
-import 'package:deep_connections/services/chat/chat_read_storage.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -14,13 +13,12 @@ import '../../services/chat/chat_service.dart';
 class ChatListScreen extends StatelessWidget {
   final ChatService chatService;
   final ProfileService profileService;
-  final ChatReadStorage chatReadStorage;
 
-  const ChatListScreen(
-      {super.key,
-      required this.chatService,
-      required this.profileService,
-      required this.chatReadStorage});
+  const ChatListScreen({
+    super.key,
+    required this.chatService,
+    required this.profileService,
+  });
 
   @override
   Widget build(BuildContext context) {
