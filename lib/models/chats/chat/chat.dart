@@ -26,11 +26,7 @@ class Chat with _$Chat {
   }
 
   ChatInfo? get info {
-    try {
-      return chatInfos?.first;
-    } on StateError {
-      return null;
-    }
+      return chatInfos?[currentUserId!];
   }
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
