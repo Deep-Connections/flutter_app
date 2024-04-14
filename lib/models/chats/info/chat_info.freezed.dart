@@ -21,8 +21,7 @@ ChatInfo _$ChatInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ChatInfo {
   String? get userId => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get imageUrl => throw _privateConstructorUsedError;
+  bool? get unreadMessages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +34,7 @@ abstract class $ChatInfoCopyWith<$Res> {
   factory $ChatInfoCopyWith(ChatInfo value, $Res Function(ChatInfo) then) =
       _$ChatInfoCopyWithImpl<$Res, ChatInfo>;
   @useResult
-  $Res call({String? userId, String? name, String? imageUrl});
+  $Res call({String? userId, bool? unreadMessages});
 }
 
 /// @nodoc
@@ -52,22 +51,17 @@ class _$ChatInfoCopyWithImpl<$Res, $Val extends ChatInfo>
   @override
   $Res call({
     Object? userId = freezed,
-    Object? name = freezed,
-    Object? imageUrl = freezed,
+    Object? unreadMessages = freezed,
   }) {
     return _then(_value.copyWith(
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      unreadMessages: freezed == unreadMessages
+          ? _value.unreadMessages
+          : unreadMessages // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -80,7 +74,7 @@ abstract class _$$ChatInfoImplCopyWith<$Res>
       __$$ChatInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? userId, String? name, String? imageUrl});
+  $Res call({String? userId, bool? unreadMessages});
 }
 
 /// @nodoc
@@ -95,22 +89,17 @@ class __$$ChatInfoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? userId = freezed,
-    Object? name = freezed,
-    Object? imageUrl = freezed,
+    Object? unreadMessages = freezed,
   }) {
     return _then(_$ChatInfoImpl(
       userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+      unreadMessages: freezed == unreadMessages
+          ? _value.unreadMessages
+          : unreadMessages // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -118,7 +107,7 @@ class __$$ChatInfoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
-  const _$ChatInfoImpl({this.userId, this.name, this.imageUrl});
+  const _$ChatInfoImpl({this.userId, this.unreadMessages});
 
   factory _$ChatInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatInfoImplFromJson(json);
@@ -126,13 +115,11 @@ class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
   @override
   final String? userId;
   @override
-  final String? name;
-  @override
-  final String? imageUrl;
+  final bool? unreadMessages;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatInfo(userId: $userId, name: $name, imageUrl: $imageUrl)';
+    return 'ChatInfo(userId: $userId, unreadMessages: $unreadMessages)';
   }
 
   @override
@@ -141,8 +128,7 @@ class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
     properties
       ..add(DiagnosticsProperty('type', 'ChatInfo'))
       ..add(DiagnosticsProperty('userId', userId))
-      ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('imageUrl', imageUrl));
+      ..add(DiagnosticsProperty('unreadMessages', unreadMessages));
   }
 
   @override
@@ -151,14 +137,13 @@ class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
         (other.runtimeType == runtimeType &&
             other is _$ChatInfoImpl &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+            (identical(other.unreadMessages, unreadMessages) ||
+                other.unreadMessages == unreadMessages));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userId, name, imageUrl);
+  int get hashCode => Object.hash(runtimeType, userId, unreadMessages);
 
   @JsonKey(ignore: true)
   @override
@@ -175,10 +160,8 @@ class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
 }
 
 abstract class _ChatInfo implements ChatInfo {
-  const factory _ChatInfo(
-      {final String? userId,
-      final String? name,
-      final String? imageUrl}) = _$ChatInfoImpl;
+  const factory _ChatInfo({final String? userId, final bool? unreadMessages}) =
+      _$ChatInfoImpl;
 
   factory _ChatInfo.fromJson(Map<String, dynamic> json) =
       _$ChatInfoImpl.fromJson;
@@ -186,9 +169,7 @@ abstract class _ChatInfo implements ChatInfo {
   @override
   String? get userId;
   @override
-  String? get name;
-  @override
-  String? get imageUrl;
+  bool? get unreadMessages;
   @override
   @JsonKey(ignore: true)
   _$$ChatInfoImplCopyWith<_$ChatInfoImpl> get copyWith =>
