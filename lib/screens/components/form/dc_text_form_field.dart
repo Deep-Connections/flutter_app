@@ -20,12 +20,14 @@ class DcTextFormField extends StatefulWidget {
 }
 
 class _DcTextFormFieldState extends State<DcTextFormField> {
+  var obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return ListenableBuilder(
       listenable: widget.fieldInput,
-      builder: (context, child) {
+      builder: (context, _) {
         final fieldInput = widget.fieldInput;
         return TextFormField(
           onChanged: fieldInput.onChanged,
@@ -36,12 +38,18 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
           decoration: InputDecoration(
             hintText: fieldInput.placeholder?.localize(loc),
             errorText: widget.error,
+            suffixIcon: fieldInput.obscureText
+                ? IconButton(
+                    onPressed: () => setState(() => obscureText = !obscureText),
+                    icon: Icon(
+                        obscureText ? Icons.visibility : Icons.visibility_off))
+                : null,
           ),
           validator: (value) =>
               fieldInput.validator(fieldInput.preProcess(value), loc),
           textInputAction: widget.textInputAction,
           enabled: fieldInput.enabled,
-          obscureText: fieldInput.obscureText,
+          obscureText: obscureText,
           readOnly: fieldInput.readOnly,
           onTap: fieldInput.onTap != null
               ? () => fieldInput.onTap!(context)
