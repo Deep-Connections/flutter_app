@@ -71,7 +71,7 @@ class PasswordInput extends TextFieldInput {
       if (!value.contains(lowercaseRegex)) {
         return loc.auth_passwordLowercaseError;
       }
-      if (!value.contains(uppercaseRegex)) {
+      if (!value.contains(numberRegex)) {
         return loc.auth_passwordNumberError;
       }
     }

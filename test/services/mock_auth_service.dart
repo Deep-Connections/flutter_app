@@ -4,10 +4,11 @@ import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 const CORRECT_EMAIL = 'correct@email.com';
-const CORRECT_PASSWORD = 'correct123. ';
+const CORRECT_PASSWORD = 'Correct123. ';
 
 class MockAuthService implements AuthService {
   var isSignedIn = false;
+  var isRegistered = false;
 
   @override
   Future<Response<DcUser>> loginWithEmail(
@@ -27,8 +28,11 @@ class MockAuthService implements AuthService {
   @override
   Future<Response<DcUser>> registerWithEmail(
       {required String email, required String password}) {
-    // TODO: implement registerWithEmail
-    throw UnimplementedError();
+    isRegistered = true;
+    return Future.value(SuccessRes(DcUser(
+      email: email,
+      id: '1',
+    )));
   }
 
   @override
