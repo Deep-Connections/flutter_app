@@ -7,7 +7,7 @@ const Set<MaterialState> interactiveStates = <MaterialState>{
 };
 
 class DcColors {
-  static final Color grey = Colors.grey[200]!;
+  static final Color grey = Colors.grey[400]!;
 }
 
 ThemeData theme() {

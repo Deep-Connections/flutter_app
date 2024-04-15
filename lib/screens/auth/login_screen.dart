@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
@@ -34,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? apiError;
 
   loadDebugCredentials() async {
-    if (kDebugMode) {
+    if (kDebugMode && !Platform.environment.containsKey('FLUTTER_TEST')) {
       try {
         final credentials = json.decode(
             await rootBundle.loadString('assets/credentials/credentials.json'));
