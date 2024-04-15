@@ -37,7 +37,13 @@ final authRoutes = GoRoute(
     GoRoute(
         path: AuthRoutes.register.path,
         builder: (context, state) {
-          return RegistrationScreen(auth: getIt());
+          return RegistrationScreen(
+              auth: getIt(),
+              onRegisterSuccess: () async {
+                await getIt<UserStatusService>()
+                    .userStatusStream
+                    .firstWhere((userStatus) => userStatus.isAuthenticated);
+              });
         }),
     GoRoute(
         path: AuthRoutes.forgotPassword.path,

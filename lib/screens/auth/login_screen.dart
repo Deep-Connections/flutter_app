@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
@@ -29,15 +30,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final email = EmailInput();
-  final password = PasswordInput();
+  final password = PasswordInput(verifyPassword: false);
   late final buttonInput = ButtonInput(fields: [email, password]);
   String? apiError;
 
   loadDebugCredentials() async {
-    if (kDebugMode) {
+    if (kDebugMode && !Platform.environment.containsKey('FLUTTER_TEST')) {
       try {
-        final credentials =
-            json.decode(await rootBundle.loadString('credentials.json'));
+        final credentials = json.decode(
+            await rootBundle.loadString('assets/credentials/credentials.json'));
         email.value = credentials['email'];
         password.value = credentials['password'];
       } on AssertionError catch (_) {
@@ -80,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
               actionIfValid: () async {
                 final response = await widget.auth.loginWithEmail(
                     email: email.value, password: password.value);
-                await response.onAwaitSuccess((_) => widget.onLoginSuccess());
+                response.onSuccess((_) async => await widget.onLoginSuccess());
                 setState(() {
                   apiError = response.getUiErrOrNull(loc);
                 });

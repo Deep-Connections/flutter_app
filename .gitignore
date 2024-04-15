@@ -45,4 +45,4 @@ app.*.map.json
 #Firebase
 .firebase
 
-assets/credentials.json
+assets/credentials/credentials.json

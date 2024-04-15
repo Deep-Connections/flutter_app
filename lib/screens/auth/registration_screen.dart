@@ -12,8 +12,10 @@ import '../components/form/button_input.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final AuthService auth;
+  final Future Function() onRegisterSuccess;
 
-  const RegistrationScreen({super.key, required this.auth});
+  const RegistrationScreen(
+      {super.key, required this.auth, required this.onRegisterSuccess});
 
   @override
   State<RegistrationScreen> createState() => _RegistrationScreenState();
@@ -53,6 +55,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 actionIfValid: () async {
                   final response = await widget.auth.registerWithEmail(
                       email: email.value, password: password.value);
+                  response
+                      .onSuccess((_) async => await widget.onRegisterSuccess());
                   setState(() {
                     apiError = response.getUiErrOrNull(loc);
                   });
