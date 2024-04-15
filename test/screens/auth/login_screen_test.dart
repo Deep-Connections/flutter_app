@@ -20,10 +20,10 @@ void main() {
     await tester.tap(find.text(loc.login_loginButton));
     await tester.pumpAndSettle();
     expect(find.text(loc.auth_emailInvalidError), findsOneWidget);
-    expect(find.text(loc.auth_passwordLengthError), findsOneWidget);
+    expect(find.text(loc.auth_passwordNoneError), findsOneWidget);
 
     expect(find.text(loc.input_emailPlaceholder), findsOneWidget);
-    expect(find.text(loc.auth_passwordLengthError), findsOneWidget);
+    expect(find.text(loc.input_passwordPlaceholder), findsOneWidget);
 
     // enter wrong email and password
     await tester.enterText(

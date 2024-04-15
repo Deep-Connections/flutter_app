@@ -29,7 +29,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final email = EmailInput();
-  final password = PasswordInput();
+  final password = PasswordInput(verifyPassword: false);
   late final buttonInput = ButtonInput(fields: [email, password]);
   String? apiError;
 
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
               actionIfValid: () async {
                 final response = await widget.auth.loginWithEmail(
                     email: email.value, password: password.value);
-                await response.onAwaitSuccess((_) => widget.onLoginSuccess());
+                response.onSuccess((_) async => await widget.onLoginSuccess());
                 setState(() {
                   apiError = response.getUiErrOrNull(loc);
                 });

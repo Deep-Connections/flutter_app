@@ -43,16 +43,37 @@ class EmailInput extends TextFieldInput {
 }
 
 class PasswordInput extends TextFieldInput {
-  PasswordInput()
+  final bool verifyPassword;
+
+  PasswordInput({this.verifyPassword = true})
       : super(
             keyboardType: TextInputType.visiblePassword,
             placeholder: LocKey((loc) => loc.input_passwordPlaceholder),
             obscureText: true);
 
+  final minPasswordLength = 8;
+  final uppercaseRegex = RegExp(r'[A-Z]');
+  final lowercaseRegex = RegExp(r'[a-z]');
+  final numberRegex = RegExp(r'[0-9]');
+
   @override
   String? validator(String? value, AppLocalizations loc) {
-    if (value == null || value.length < 8) {
-      return loc.auth_passwordLengthError;
+    if (value == null || value.isEmpty) {
+      return loc.auth_passwordNoneError;
+    }
+    if (verifyPassword) {
+      if (value.length < minPasswordLength) {
+        return loc.auth_passwordLengthError;
+      }
+      if (!value.contains(uppercaseRegex)) {
+        return loc.auth_passwordUppercaseError;
+      }
+      if (!value.contains(lowercaseRegex)) {
+        return loc.auth_passwordLowercaseError;
+      }
+      if (!value.contains(uppercaseRegex)) {
+        return loc.auth_passwordNumberError;
+      }
     }
     return null;
   }
