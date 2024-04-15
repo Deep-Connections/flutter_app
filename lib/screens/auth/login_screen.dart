@@ -36,8 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
   loadDebugCredentials() async {
     if (kDebugMode) {
       try {
-        final credentials =
-            json.decode(await rootBundle.loadString('credentials.json'));
+        final credentials = json.decode(
+            await rootBundle.loadString('assets/credentials/credentials.json'));
         email.value = credentials['email'];
         password.value = credentials['password'];
       } on AssertionError catch (_) {
