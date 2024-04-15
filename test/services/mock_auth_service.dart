@@ -36,7 +36,7 @@ class MockAuthService implements AuthService {
   }
 
   @override
-  Future sendPasswordResetEmail({required String email}) {
+  Future<Response<void>> sendPasswordResetEmail({required String email}) {
     // TODO: implement sendPasswordResetEmail
     throw UnimplementedError();
   }

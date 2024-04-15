@@ -1,6 +1,5 @@
 import 'package:deep_connections/models/user/user.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
-import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
@@ -11,15 +10,34 @@ import '../../utils/loc_key.dart';
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<Response<T>> handleAuthErrors<T>(Future<T?> Function() callback,
-      {LocKey Function(FirebaseAuthException)? getUiErrorMessage}) async {
+  LocKey getAuthExceptionMessage(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'email-already-in-use': // used
+        return LocKey((loc) => loc.register_emailExistsError);
+      case 'invalid-email': // unclear if needed
+        return LocKey((loc) => loc.auth_emailInvalidError);
+      case 'weak-password': // unclear if needed
+        return LocKey((loc) => loc.register_passwordWeakError);
+      case 'user-disabled': // used
+        return LocKey((loc) => loc.login_userDisabledError);
+      case 'invalid-credential': // unclear if needed
+        return LocKey((loc) => loc.login_wrongCredentialsError);
+      case 'network-request-failed': // used
+        return LocKey((loc) => loc.general_noInternetError);
+      default:
+        return DefaultError;
+    }
+  }
+
+  Future<Response<T>> handleAuthErrors<T>(
+    Future<T> Function() callback,
+  ) async {
     try {
-      return createResponse(await callback());
+      final res = await callback();
+      return SuccessRes(res);
     } on FirebaseAuthException catch (e) {
-      print(e.message);
-      final uiMessage = getUiErrorMessage?.call(e);
-      uiMessage ?? MessageHandler.showError(e.message ?? 'An error occurred');
-      return ExceptionRes(e, uiMessage: getUiErrorMessage?.call(e));
+      final uiMessage = getAuthExceptionMessage(e);
+      return ExceptionRes(e, uiMessage: uiMessage);
     }
   }
 
@@ -27,84 +45,33 @@ class FirebaseAuthService implements AuthService {
   Future<Response<DcUser>> loginWithEmail({
     required String email,
     required String password,
-  }) async {
-    try {
+  }) {
+    return handleAuthErrors(() async {
       final userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return createResponse(userCredential.user?.toDcUser());
-    } on FirebaseAuthException catch (e) {
-      print("${e.message}  ${e.code}");
-      final uiMessage = getLoginUiMessage(e);
-      return ExceptionRes(e, uiMessage: uiMessage);
-    }
-  }
-
-  LocKey getLoginUiMessage(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'invalid-email':
-        return LocKey((loc) => loc.auth_emailInvalidError);
-      case 'user-disabled':
-        return LocKey((loc) => loc.login_userDisabledError);
-      case 'invalid-credential':
-        return LocKey((loc) => loc.login_wrongCredentialsError);
-      default:
-        return DefaultError;
-    }
+      return userCredential.user.toDcUserOrThrow();
+    });
   }
 
   @override
   Future<Response<DcUser>> registerWithEmail({
     required String email,
     required String password,
-  }) async {
-    try {
+  }) {
+    return handleAuthErrors(() async {
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return createResponse(userCredential.user?.toDcUser());
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      final uiMessage = getRegisterUiMessage(e);
-      return ExceptionRes(e, uiMessage: uiMessage);
-    }
-  }
-
-  LocKey getRegisterUiMessage(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'email-already-in-use':
-        return LocKey((loc) => loc.register_emailExistsError);
-      case 'invalid-email':
-        return LocKey((loc) => loc.auth_emailInvalidError);
-      case 'weak-password':
-        return LocKey((loc) => loc.register_passwordWeakError);
-      default:
-        return DefaultError;
-    }
+      return userCredential.user.toDcUserOrThrow();
+    });
   }
 
   @override
-  Future sendPasswordResetEmail({required String email}) async {
-    try {
-      return await _auth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      final uiMessage = getResetPasswordUiMessage(e);
-      return ExceptionRes(e, uiMessage: uiMessage);
-    }
-  }
-
-  LocKey getResetPasswordUiMessage(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'invalid-email':
-        return LocKey((loc) => loc.auth_emailInvalidError);
-      case 'user-not-found':
-        return LocKey((loc) => loc.forgotPassword_emailNotFoundError);
-      default:
-        return DefaultError;
-    }
+  Future<Response<void>> sendPasswordResetEmail({required String email}) {
+    return handleAuthErrors(() => _auth.sendPasswordResetEmail(email: email));
   }
 
   @override

@@ -13,7 +13,7 @@ abstract class AuthService {
     required String password,
   });
 
-  Future sendPasswordResetEmail({required String email});
+  Future<Response<void>> sendPasswordResetEmail({required String email});
 
   Future signOut();
 }

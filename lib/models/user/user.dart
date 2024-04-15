@@ -1,3 +1,4 @@
+import 'package:deep_connections/services/firebase/firebase_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DcUser {
@@ -20,4 +21,11 @@ class DcUser {
 
 extension FirebaseUserExtensions on User {
   DcUser toDcUser() => DcUser.fromFirebaseUser(this);
+}
+
+extension FirebaseUserNullExtensions on User? {
+  DcUser toDcUserOrThrow() {
+    if (this == null) throw UserNotFoundException();
+    return DcUser.fromFirebaseUser(this!);
+  }
 }
