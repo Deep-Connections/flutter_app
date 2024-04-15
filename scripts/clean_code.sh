@@ -6,4 +6,4 @@ dart run build_runner build --delete-conflicting-outputs
 flutter test
 
 # Fix dart issues
-dart fix --apply
+dart fix --dry-run

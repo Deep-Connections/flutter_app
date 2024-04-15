@@ -7,9 +7,7 @@ part 'chat_info.g.dart';
 @freezed
 class ChatInfo with _$ChatInfo {
   const factory ChatInfo({
-    String? userId,
-    String? name,
-    String? imageUrl,
+    int? unreadMessages,
   }) = _ChatInfo;
 
   factory ChatInfo.fromJson(Map<String, dynamic> json) =>

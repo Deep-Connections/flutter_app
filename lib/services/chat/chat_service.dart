@@ -39,13 +39,7 @@ class ChatService {
           .where(SerializedField.participantIds, arrayContains: userId)
           .orderBy(SerializedField.timestamp, descending: true)
           .snapshots()
-          .map((snap) => snap.docs
-              .map((doc) => doc.data())
-              .map((chat) => chat.copyWith(
-                  chatInfos: chat.chatInfos
-                      ?.where((info) => info.userId != userId)
-                      .toList()))
-              .toList());
+          .map((snap) => snap.docs.map((doc) => doc.data()).toList());
     })
       // create a new chat if there are no chats or all chats are older than 24h
       ..firstWhere((chats) {
@@ -102,12 +96,36 @@ class ChatService {
       senderId: _userService.userId,
       timestamp: timestamp,
     );
-    return handleFirebaseErrors(() async {
-      _chatRef
-          .doc(chatId)
-          .update(Chat(lastMessage: messageObj, timestamp: timestamp).toJson());
-      return (await _messagesRef(chatId).add(messageObj)).id;
+    final futureMessageResponse = handleFirebaseErrors(
+        () async => (await _messagesRef(chatId).add(messageObj)).id);
+
+    handleFirebaseErrors(() async {
+      final chat = await chatById(chatId);
+      final updateChatJson = Chat(
+        lastMessage: messageObj,
+        timestamp: timestamp,
+      ).toJson();
+
+      chat.participantIds?.forEach((userId) {
+        // when the user sends a message we mark the chat as completely unread with 0 messages
+        updateChatJson[Update.unreadMessages(userId)] =
+            userId != chat.currentUserId ? FieldValue.increment(1) : 0;
+      });
+      return await _chatRef.doc(chatId).update(updateChatJson);
     });
+
+    return futureMessageResponse;
+  }
+
+  Future<Response<void>> markChatRead(String chatId) async {
+    final chat = await chatById(chatId);
+    final unreadMessages = chat.info?.unreadMessages;
+    if (unreadMessages == 0 || unreadMessages == null) return SuccessRes(null);
+    return await handleFirebaseErrors(
+        () async => await _chatRef.doc(chatId).update({
+              // we set the unread messages to null, so the chat still shows up as unread but with 0 messages
+              Update.unreadMessages(_userService.userId): null,
+            }));
   }
 
   Future<Response<String?>> createChat(List<String> excludedUsers) async {

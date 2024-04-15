@@ -14,6 +14,9 @@ import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+// Layout for messages https://medium.com/@ximya/tips-and-tricks-for-implementing-a-successful-chat-ui-in-flutter-190cd81bdc64
+
 class MessageListScreen extends StatelessWidget {
   final String chatId;
   final ChatService chatService;

@@ -8,9 +8,7 @@ part of 'chat_info.dart';
 
 _$ChatInfoImpl _$$ChatInfoImplFromJson(Map<String, dynamic> json) =>
     _$ChatInfoImpl(
-      userId: json['userId'] as String?,
-      name: json['name'] as String?,
-      imageUrl: json['imageUrl'] as String?,
+      unreadMessages: json['unreadMessages'] as int?,
     );
 
 Map<String, dynamic> _$$ChatInfoImplToJson(_$ChatInfoImpl instance) {
@@ -22,8 +20,6 @@ Map<String, dynamic> _$$ChatInfoImplToJson(_$ChatInfoImpl instance) {
     }
   }
 
-  writeNotNull('userId', instance.userId);
-  writeNotNull('name', instance.name);
-  writeNotNull('imageUrl', instance.imageUrl);
+  writeNotNull('unreadMessages', instance.unreadMessages);
   return val;
 }
