@@ -49,7 +49,7 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
               fieldInput.validator(fieldInput.preProcess(value), loc),
           textInputAction: widget.textInputAction,
           enabled: fieldInput.enabled,
-          obscureText: obscureText,
+          obscureText: obscureText && fieldInput.obscureText,
           readOnly: fieldInput.readOnly,
           onTap: fieldInput.onTap != null
               ? () => fieldInput.onTap!(context)
