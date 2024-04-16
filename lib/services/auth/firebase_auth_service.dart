@@ -84,9 +84,7 @@ class FirebaseAuthService implements AuthService {
 
   Future<DcUser> _signInWithGoogleWeb() async {
     final googleProvider = GoogleAuthProvider();
-    googleProvider
-        .addScope('https://www.googleapis.com/auth/contacts.readonly');
-    googleProvider.setCustomParameters({'login_hint': 'user@example.com'});
+    googleProvider.addScope('email');
     final credentialResponse = await _auth.signInWithPopup(googleProvider);
     return credentialResponse.user.toDcUserOrThrow();
   }
