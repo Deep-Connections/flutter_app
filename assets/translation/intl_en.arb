@@ -12,6 +12,7 @@
   "auth_passwordLowercaseError": "Password must contain a lowercase letter",
   "auth_passwordUppercaseError": "Password must contain a uppercase letter",
   "auth_passwordNumberError": "Password must contain a number",
+  "authProvider_google": "Sign in with Google",
   "login_userDisabledError": "Your account is currently unavailable. Please contact support for assistance.",
   "login_wrongCredentialsError": "The email or password you entered is incorrect.",
   "register_emailExistsError": "An account with this email already exists.",

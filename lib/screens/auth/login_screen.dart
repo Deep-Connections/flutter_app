@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sign_in_button/sign_in_button.dart';
 
 import '../../config/constants.dart';
 import '../../services/auth/auth_service.dart';
@@ -92,6 +93,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   context.push(AuthRoutes.forgotPassword.fullPath);
                 },
                 child: Text(loc.login_forgotPasswordLink)),
+            SignInButton(Buttons.google,
+                text: loc.authProvider_google,
+                onPressed: widget.auth.signInWithGoogle),
           ],
         ),
       ),
