@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
@@ -36,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? apiError;
 
   loadDebugCredentials() async {
-    if (kDebugMode && !Platform.environment.containsKey('FLUTTER_TEST')) {
+    if (kDebugMode && !isTest) {
       try {
         final credentials = json.decode(
             await rootBundle.loadString('assets/credentials/credentials.json'));
@@ -93,9 +92,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   context.push(AuthRoutes.forgotPassword.fullPath);
                 },
                 child: Text(loc.login_forgotPasswordLink)),
-            SignInButton(Buttons.google,
+            if (!isTest)
+              SignInButton(
+                Buttons.google,
                 text: loc.authProvider_google,
-                onPressed: widget.auth.signInWithGoogle),
+                onPressed: widget.auth.signInWithGoogle,
+              ),
           ],
         ),
       ),

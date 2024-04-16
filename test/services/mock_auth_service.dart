@@ -46,4 +46,10 @@ class MockAuthService implements AuthService {
     // TODO: implement signOut
     throw UnimplementedError();
   }
+
+  @override
+  Future<Response<DcUser>> signInWithGoogle() {
+    // TODO: implement signInWithGoogle
+    throw UnimplementedError();
+  }
 }
