@@ -83,6 +83,9 @@ class PasswordInput extends TextFieldInput {
 }
 
 class FirstNameInput extends TextFieldInput {
+  FirstNameInput()
+      : super(placeholder: LocKey((loc) => loc.input_firstNamePlaceholder));
+
   final _nameRegex =
       RegExp(r"^[\p{L}\s\-']+$", unicode: true, caseSensitive: false);
 
