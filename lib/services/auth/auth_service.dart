@@ -15,5 +15,7 @@ abstract class AuthService {
 
   Future<Response<void>> sendPasswordResetEmail({required String email});
 
+  Future<Response<DcUser>> signInWithGoogle();
+
   Future signOut();
 }
