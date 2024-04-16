@@ -42,7 +42,7 @@ class MockProfileService implements ProfileService {
   }
 
   @override
-  Future<Response<Picture>> uploadPicture(Uint8List image) {
+  Future<Response<Picture>> uploadPicture(Uint8List image, String? mimeType) {
     throw UnimplementedError();
   }
 }
