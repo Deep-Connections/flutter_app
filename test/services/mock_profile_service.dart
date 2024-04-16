@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
@@ -42,7 +42,7 @@ class MockProfileService implements ProfileService {
   }
 
   @override
-  Future<Response<Picture>> uploadPicture(File image) {
+  Future<Response<Picture>> uploadPicture(Uint8List image, String? mimeType) {
     throw UnimplementedError();
   }
 }

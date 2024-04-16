@@ -7,12 +7,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:950778574468:android:22d5f6b3a710c36ac1b4d1",
+        "mobilesdk_app_id": "1:950778574468:android:1df032c3bcae5ef4c1b4d1",
         "android_client_info": {
-          "package_name": "com.example.deep_connections"
+          "package_name": "app.smetter.android"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "950778574468-680m8e1nupmqc7v0kj0h2j1st3qbgfnd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.smetter.android",
+            "certificate_hash": "9d5fc452030edf6c168e226c836f9b4fa984cd83"
+          }
+        },
+        {
+          "client_id": "950778574468-i6v8rr07s19n64n3g3jfd8u31b342vjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAftaBl3sZN27ijh-73j6uOBbKclI5NODI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "950778574468-i6v8rr07s19n64n3g3jfd8u31b342vjr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "950778574468-90j60cnef4vjbo51bsv5648q9cd2rb5l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.deepConnections"
+              }
+            }
+          ]
         }
       }
     }

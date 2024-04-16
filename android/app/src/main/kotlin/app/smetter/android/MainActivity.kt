@@ -1,4 +1,4 @@
-package com.example.deep_connections
+package app.smetter.android
 
 import io.flutter.embedding.android.FlutterActivity
 

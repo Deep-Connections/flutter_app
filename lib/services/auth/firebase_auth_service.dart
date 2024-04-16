@@ -2,6 +2,8 @@ import 'package:deep_connections/models/user/user.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../utils/loc_key.dart';
@@ -25,7 +27,7 @@ class FirebaseAuthService implements AuthService {
       case 'network-request-failed': // used
         return LocKey((loc) => loc.general_noInternetError);
       default:
-        return DefaultError;
+        return defaultError;
     }
   }
 
@@ -37,6 +39,7 @@ class FirebaseAuthService implements AuthService {
       return SuccessRes(res);
     } on FirebaseAuthException catch (e) {
       final uiMessage = getAuthExceptionMessage(e);
+      print(e.stackTrace);
       return ExceptionRes(e, uiMessage: uiMessage);
     }
   }
@@ -77,5 +80,34 @@ class FirebaseAuthService implements AuthService {
   @override
   Future signOut() async {
     return handleAuthErrors(() => _auth.signOut());
+  }
+
+  Future<DcUser> _signInWithGoogleWeb() async {
+    final googleProvider = GoogleAuthProvider();
+    googleProvider.addScope('email');
+    final credentialResponse = await _auth.signInWithPopup(googleProvider);
+    return credentialResponse.user.toDcUserOrThrow();
+  }
+
+  Future<DcUser> _signInWithGoogleMobile() async {
+    final googleUser = await GoogleSignIn().signIn();
+    final googleAuth = await googleUser?.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    final credentialResponse = await _auth.signInWithCredential(credential);
+    return credentialResponse.user.toDcUserOrThrow();
+  }
+
+  @override
+  Future<Response<DcUser>> signInWithGoogle() {
+    return handleAuthErrors(() {
+      if (kIsWeb) {
+        return _signInWithGoogleWeb();
+      } else {
+        return _signInWithGoogleMobile();
+      }
+    });
   }
 }

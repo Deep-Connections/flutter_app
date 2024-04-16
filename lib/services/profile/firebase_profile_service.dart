@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/models/profile/picture/picture.dart';
@@ -84,19 +84,25 @@ class FirebaseProfileService implements ProfileService {
         .firstWhereOrNull((profile) => !excludedIds.contains(profile.id));
   }
 
-  get _imageRef => _storage
+  Reference get _imageRef => _storage
       .ref()
       .child(StorageCollection.profileImages)
       .child(_userService.userId);
 
   @override
-  Future<Response<Picture>> uploadPicture(File pictureFile) async {
+  Future<Response<Picture>> uploadPicture(
+      Uint8List pictureFile, String? mimeType) async {
     final userId = _userService.userId;
     final timestamp = DateTime.now();
-    var pictureName = "${timestamp.millisecondsSinceEpoch}.jpg";
+    final fileEnding = mimeType?.split("/").last ?? "";
+    var pictureName = "${timestamp.millisecondsSinceEpoch}.$fileEnding";
     return await handleFirebaseErrors(() async {
       final ref = _imageRef.child(pictureName);
-      await ref.putFile(pictureFile);
+      await ref.putData(
+          pictureFile,
+          SettableMetadata(
+            contentType: mimeType,
+          ));
       final url = await ref.getDownloadURL();
       final picture =
           Picture(url: url, timestamp: timestamp, name: pictureName);

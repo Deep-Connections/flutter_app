@@ -1,4 +1,5 @@
 import 'package:deep_connections/services/utils/response.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,10 +22,9 @@ class MessageHandler {
 
   static void showResponseError<T>(Response<T> response, AppLocalizations loc) {
     response.onFailure((failureRes) {
-      final message = failureRes.getUiErrOrNull(loc);
-      if (message != null) {
-        showError(message);
-      }
+      final message =
+          failureRes.getUiErrOrNull(loc) ?? defaultError.localize(loc);
+      showError(message);
     });
   }
 }

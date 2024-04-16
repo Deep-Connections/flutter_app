@@ -19,4 +19,4 @@ class LocKey {
   const LocKey(this.localize);
 }
 
-final DefaultError = LocKey((loc) => loc.general_error);
+final defaultError = LocKey((loc) => loc.general_error);

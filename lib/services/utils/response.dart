@@ -17,7 +17,7 @@ abstract class Response<T> {
     return this;
   }
 
-  Response<T> onFailure(Function(FailureRes uiError) callback) {
+  Response<T> onFailure(Function(FailureRes response) callback) {
     if (this is FailureRes<T>) {
       callback((this as FailureRes<T>));
     }
@@ -35,7 +35,7 @@ class SuccessRes<T> extends Response<T> {
 }
 
 class FailureRes<T> extends Response<T> {
-  LocKey? uiMessage = DefaultError;
+  LocKey? uiMessage = defaultError;
 
   FailureRes({this.uiMessage});
 

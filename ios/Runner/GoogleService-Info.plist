@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>950778574468-c92kk7pkj1okbchas95strk7qoibc05n.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.950778574468-c92kk7pkj1okbchas95strk7qoibc05n</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>950778574468-1bdamcpqpo0irvh4v91v9bm99q8tt214.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBI1lF6mEjlwC13ixaEPExSPY3MWQqI_1o</string>
 	<key>GCM_SENDER_ID</key>
@@ -9,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.deepConnections</string>
+	<string>app.smetter.ios</string>
 	<key>PROJECT_ID</key>
 	<string>deep-connections-7796d</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:950778574468:ios:680277e84a0849bdc1b4d1</string>
+	<string>1:950778574468:ios:6cfcfa658ed4610bc1b4d1</string>
 </dict>
 </plist>
