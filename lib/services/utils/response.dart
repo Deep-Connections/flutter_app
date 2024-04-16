@@ -10,16 +10,18 @@ abstract class Response<T> {
 
   bool get isFailure => this is ErrorRes || this is ExceptionRes;
 
-  void onSuccess(Function(T result) callback) {
+  Response<T> onSuccess(Function(T result) callback) {
     if (this is SuccessRes<T>) {
       callback((this as SuccessRes<T>).data);
     }
+    return this;
   }
 
-  Future onAwaitSuccess(Future Function(T result) callback) async {
-    if (this is SuccessRes<T>) {
-      await callback((this as SuccessRes<T>).data);
+  Response<T> onFailure(Function(FailureRes uiError) callback) {
+    if (this is FailureRes<T>) {
+      callback((this as FailureRes<T>));
     }
+    return this;
   }
 }
 
@@ -32,25 +34,26 @@ class SuccessRes<T> extends Response<T> {
   T? getOrNull() => data;
 }
 
-class ErrorRes<T> extends Response<T> {
-  final String? errorCode;
-  final String? errorMessage;
+class FailureRes<T> extends Response<T> {
   LocKey? uiMessage = DefaultError;
 
-  ErrorRes({this.errorCode, this.errorMessage, this.uiMessage});
+  FailureRes({this.uiMessage});
 
   @override
   String? getUiErrOrNull(AppLocalizations loc) => uiMessage?.localize(loc);
 }
 
-class ExceptionRes<T> extends Response<T> {
+class ErrorRes<T> extends FailureRes<T> {
+  final String? errorCode;
+  final String? errorMessage;
+
+  ErrorRes({this.errorCode, this.errorMessage, super.uiMessage});
+}
+
+class ExceptionRes<T> extends FailureRes<T> {
   final Exception exception;
-  LocKey? uiMessage = DefaultError;
 
-  ExceptionRes(this.exception, {this.uiMessage});
-
-  @override
-  String? getUiErrOrNull(AppLocalizations loc) => uiMessage?.localize(loc);
+  ExceptionRes(this.exception, {super.uiMessage});
 }
 
 Response<T> createResponse<T>(T? value) {
