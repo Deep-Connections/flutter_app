@@ -12,7 +12,12 @@
           "package_name": "com.example.deep_connections"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "950778574468-i6v8rr07s19n64n3g3jfd8u31b342vjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAftaBl3sZN27ijh-73j6uOBbKclI5NODI"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "950778574468-i6v8rr07s19n64n3g3jfd8u31b342vjr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "950778574468-90j60cnef4vjbo51bsv5648q9cd2rb5l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.deepConnections"
+              }
+            }
+          ]
         }
       }
     }
