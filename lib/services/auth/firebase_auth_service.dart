@@ -27,7 +27,7 @@ class FirebaseAuthService implements AuthService {
       case 'network-request-failed': // used
         return LocKey((loc) => loc.general_noInternetError);
       default:
-        return DefaultError;
+        return defaultError;
     }
   }
 
