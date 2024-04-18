@@ -26,10 +26,12 @@ abstract class DateInput extends FieldInput<DateTime> {
 
   @override
   set value(DateTime? value) {
+    throw UnimplementedError();
+  }
+
+  setWithContext(BuildContext context, DateTime? value) {
     pickedDate = value;
-    if (value != null) {
-      controller.text = value.toDateString();
-    }
+    if (value != null) controller.text = value.toDateString(context);
   }
 
   @override
@@ -43,8 +45,8 @@ abstract class DateInput extends FieldInput<DateTime> {
                 minDateTime: DateTime(1900),
                 maxDateTime: DateTime.now())),
       );
-      if (date != null) {
-        value = date;
+      if (date != null && context.mounted) {
+        setWithContext(context, date);
       }
     };
   }

@@ -33,7 +33,7 @@ class MessageBubble extends StatelessWidget {
             child: TimeStackedText(
               text: message.text ?? "",
               style: themeData.textTheme.bodyMedium,
-              time: message.timestamp?.toTimeString() ?? "",
+              time: message.timestamp?.toTimeString(context) ?? "",
               timeStyle: themeData.textTheme.labelSmall?.copyWith(
                   color: themeData.colorScheme.onSurface.withOpacity(0.5)),
               bottomTimePadding: bottomTimePadding,

@@ -4,5 +4,7 @@
   "input_passwordPlaceholder": "Passwort",
   "login_loginButton": "Einloggen",
   "login_forgotPasswordLink": "Passwort vergessen?",
-  "register_registerButton": "Registrieren"
+  "register_registerButton": "Registrieren",
+  "date_today": "Heute",
+  "date_yesterday": "Gestern"
 }

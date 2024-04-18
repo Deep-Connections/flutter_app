@@ -35,7 +35,7 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
           widget.navigateToNext();
         },
         builder: (BuildContext context, Profile profile) {
-          birthdate.value = profile.birthdate;
+          birthdate.setWithContext(context, profile.birthdate);
           return DcListView(
             children: [
               DcTextFormField(
