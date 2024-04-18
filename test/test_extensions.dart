@@ -19,12 +19,14 @@ extension LocalizedWidgetTester on WidgetTester {
     return AppLocalizations.of(context);
   }
 
-  Future<BuildContext> pumpLocalizedWidgetWithContext(Widget child) async {
+  Future<BuildContext> pumpLocalizedWidgetWithContext(Widget child,
+      {Locale locale = const Locale('en')}) async {
     final Key key = UniqueKey();
 
     await pumpWidget(MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
-        locale: const Locale('en'),
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: locale,
         home: Container(
           key: key,
           child: child,

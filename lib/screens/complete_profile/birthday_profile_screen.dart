@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/date_field_input.dart';
-import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -35,11 +35,11 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
           widget.navigateToNext();
         },
         builder: (BuildContext context, Profile profile) {
-          birthdate.value = profile.birthdate;
+          birthdate.setWithContext(context, profile.birthdate);
           return DcListView(
             children: [
               DcTextFormField(
-                  fieldInput: birthdate, textInputAction: TextInputAction.done)
+                  fieldInput: birthdate, textInputAction: TextInputAction.done),
             ],
           );
         });

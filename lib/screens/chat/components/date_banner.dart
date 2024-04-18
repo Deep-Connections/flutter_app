@@ -16,7 +16,7 @@ class DateBanner extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            date?.toDependingOnDateString(loc) ?? "",
+            date?.toDependingOnDateString(loc, context) ?? "",
             style: Theme.of(context).textTheme.labelSmall,
           ),
         ),

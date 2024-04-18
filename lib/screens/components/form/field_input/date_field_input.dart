@@ -1,4 +1,5 @@
 import 'package:age_calculator/age_calculator.dart';
+import 'package:deep_connections/screens/components/date_picker.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
@@ -25,24 +26,27 @@ abstract class DateInput extends FieldInput<DateTime> {
 
   @override
   set value(DateTime? value) {
+    throw UnimplementedError();
+  }
+
+  setWithContext(BuildContext context, DateTime? value) {
     pickedDate = value;
-    if (value != null) {
-      controller.text = value.toDateString();
-    }
+    if (value != null) controller.text = value.toDateString(context);
   }
 
   @override
   void Function(BuildContext context)? get onTap {
     return (context) async {
-      final date = await showDatePicker(
+      final date = await showDialog<DateTime>(
         context: context,
-        initialEntryMode: DatePickerEntryMode.calendar,
-        initialDate: pickedDate ?? DateTime(2000),
-        firstDate: DateTime(1900),
-        lastDate: DateTime.now(),
+        builder: (BuildContext context) => Dialog(
+            child: DcDatePicker(
+                initialDateTime: pickedDate ?? DateTime(2000),
+                minDateTime: DateTime(1900),
+                maxDateTime: DateTime.now())),
       );
-      if (date != null) {
-        value = date;
+      if (date != null && context.mounted) {
+        setWithContext(context, date);
       }
     };
   }

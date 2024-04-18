@@ -42,8 +42,8 @@ class ChatListTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(chat.timestamp
-                        ?.toDependingOnDateString(loc, todayAsTime: true) ??
+                Text(chat.timestamp?.toDependingOnDateString(loc, context,
+                        todayAsTime: true) ??
                     ""),
                 if (chat.isUnread)
                   Container(
