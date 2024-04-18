@@ -4,6 +4,7 @@
   "general_noInternetError": "No internet connection",
   "general_submitButton": "Submit",
   "general_next": "Next",
+  "general_select": "Select",
   "date_today": "Today",
   "date_yesterday": "Yesterday",
   "auth_emailInvalidError": "Please enter a valid email",

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +29,12 @@ extension DateTimeExtensions on DateTime {
   }
 
   String toDateString() {
+    final locale = Intl.getCurrentLocale();
+    return DateFormat.yMd(Intl.getCurrentLocale()).format(this);
+  }
+
+  String toConDateString(BuildContext context) {
+    final locale = Intl.getCurrentLocale();
     return DateFormat.yMd(Intl.getCurrentLocale()).format(this);
   }
 
