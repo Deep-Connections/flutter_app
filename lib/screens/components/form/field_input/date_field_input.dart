@@ -39,7 +39,7 @@ abstract class DateInput extends FieldInput<DateTime> {
         context: context,
         builder: (BuildContext context) => Dialog(
             child: DcDatePicker(
-                initialDateTime: DateTime(2000),
+                initialDateTime: pickedDate ?? DateTime(2000),
                 minDateTime: DateTime(1900),
                 maxDateTime: DateTime.now())),
       );

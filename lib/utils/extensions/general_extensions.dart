@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
@@ -23,23 +22,21 @@ extension LetExtension<T> on T {
   }
 }
 
+String _getLocale() {
+  return Intl.getCurrentLocale();
+}
+
 extension DateTimeExtensions on DateTime {
   String toTimeString() {
-    return DateFormat.jm(Intl.getCurrentLocale()).format(this);
+    return DateFormat.jm(_getLocale()).format(this);
   }
 
   String toDateString() {
-    final locale = Intl.getCurrentLocale();
-    return DateFormat.yMd(Intl.getCurrentLocale()).format(this);
-  }
-
-  String toConDateString(BuildContext context) {
-    final locale = Intl.getCurrentLocale();
-    return DateFormat.yMd(Intl.getCurrentLocale()).format(this);
+    return DateFormat.yMd(_getLocale()).format(this);
   }
 
   String toWeekdayString() {
-    return DateFormat.EEEE(Intl.getCurrentLocale()).format(this);
+    return DateFormat.EEEE(_getLocale()).format(this);
   }
 
   bool isSameDay(DateTime? other) {
