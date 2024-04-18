@@ -5,9 +5,9 @@ flutter_launcher_icons:
   min_sdk_android: 21
   remove_alpha_ios: true
   adaptive_icon_background: "#87b080"
-  adaptive_icon_foreground: "assets/icon/smetter_adaptive_forground_android.png"
-#  web:
-#    generate: true
-#    image_path: "path/to/image.png"
-#    background_color: "#hexcode"
-#    theme_color: "#hexcode"
+  adaptive_icon_foreground: "assets/icon/smetter_adaptive_foreground_android.png"
+  web:
+    generate: true
+    image_path: "assets/icon/smetter_web.png"
+    background_color: "#87b080"
+    theme_color: "#87b080"

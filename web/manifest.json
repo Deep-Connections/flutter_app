@@ -1,11 +1,11 @@
 {
-    "name": "deep_connections",
-    "short_name": "deep_connections",
+  "name": "Smetter",
+  "short_name": "Smetter",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+  "background_color": "#87b080",
+  "theme_color": "#87b080",
+  "description": "Discover Meaningful Connections",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
