@@ -1,6 +1,6 @@
 import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/navigation/auth_navigation.dart';
+import 'package:deep_connections/navigation/graphs/auth_nav_graph.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/material.dart';

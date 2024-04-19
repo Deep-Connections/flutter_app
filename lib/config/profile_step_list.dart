@@ -1,7 +1,7 @@
 import 'package:deep_connections/config/question_list.dart';
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 
-final List<ProfileNavigationStep> profileStepList = [
+final List<ProfileNavigationStep> initialProfileStepList = [
   NameProfileNavigationStep(
     navigationPath: 'name',
     fromProfile: (profile) => profile.firstName,

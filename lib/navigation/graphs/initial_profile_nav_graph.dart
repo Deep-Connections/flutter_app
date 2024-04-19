@@ -7,11 +7,11 @@ import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import '../config/injectable/injectable.dart';
-import '../models/navigation/profile_navigation_step.dart';
-import '../models/user/user_status.dart';
+import '../../config/injectable/injectable.dart';
+import '../../models/navigation/profile_navigation_step.dart';
+import '../../models/user/user_status.dart';
 
-final profileRoutes = GoRoute(
+final initialProfileRoutes = GoRoute(
     path: CompleteProfileRoutes.main.path,
     redirect: (context, state) async {
       final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
@@ -26,14 +26,14 @@ final profileRoutes = GoRoute(
       return null;
     },
     routes: [
-      ...List.generate(profileStepList.length, (index) {
-        final navigationStep = profileStepList[index];
-        final navigateNextPath = index < profileStepList.length - 1
-            ? profileStepList[index + 1]
+      ...List.generate(initialProfileStepList.length, (index) {
+        final navigationStep = initialProfileStepList[index];
+        final navigateNextPath = index < initialProfileStepList.length - 1
+            ? initialProfileStepList[index + 1]
                 .navigationFromBasePath(CompleteProfileRoutes.main.fullPath)
             : null;
         final previousPath = index > 0
-            ? profileStepList[index - 1]
+            ? initialProfileStepList[index - 1]
                 .navigationFromBasePath(CompleteProfileRoutes.main.fullPath)
             : null;
         return GoRoute(

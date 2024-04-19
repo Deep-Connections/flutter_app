@@ -14,8 +14,8 @@ class UserStatus {
 
   ProfileNavigationStep? get uncompletedStep {
     final profile = this.profile;
-    if (profile == null) return profileStepList.first;
-    return profileStepList
+    if (profile == null) return initialProfileStepList.first;
+    return initialProfileStepList
         .firstWhereOrNull((step) => step.fromProfile(profile) == null);
   }
 }
