@@ -1,6 +1,6 @@
 import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/models/question/slider_question.dart';
+import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +20,6 @@ void main() {
     maxValue: 5,
     minText: LocKey((loc) => loc.question_politicalSpectrum_answerMin),
     maxText: LocKey((loc) => loc.question_politicalSpectrum_answerMax),
-    fromProfile: (p) => p.question1,
-    updateProfile: (p, r) => p.copyWith(question1: r),
     navigationPath: '',
     section: ProfileSection.profile,
   );
@@ -50,8 +48,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(
-          profileService.profile?.question1?.response, [selected.toString()]);
+      expect(profileService.profile?.questions?[question1.id]?.response,
+          [selected.toString()]);
     }
 
     await tester.drag(find.byType(Slider), const Offset(300, 0));
@@ -64,14 +62,12 @@ void main() {
   });
 
   final question2 = SliderQuestion(
-    id: '1',
+    id: '2',
     questionText: LocKey((loc) => loc.question_politicalSpectrum_question),
     minValue: -1,
     maxValue: 4,
     minText: LocKey((loc) => loc.question_politicalSpectrum_answerMin),
     maxText: LocKey((loc) => loc.question_politicalSpectrum_answerMax),
-    fromProfile: (p) => p.question2,
-    updateProfile: (p, r) => p.copyWith(question2: r),
     navigationPath: '',
     section: ProfileSection.profile,
   );
@@ -95,8 +91,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(
-          profileService.profile?.question2?.response, [selected.toString()]);
+      expect(profileService.profile?.questions?[question2.id]?.response,
+          [selected.toString()]);
     }
 
     await tester.drag(find.byType(Slider), const Offset(-300, 0));

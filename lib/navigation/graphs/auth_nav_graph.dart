@@ -1,12 +1,11 @@
+import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/user/user_status.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
+import 'package:deep_connections/screens/auth/forgot_password_screen.dart';
+import 'package:deep_connections/screens/auth/login_screen.dart';
+import 'package:deep_connections/screens/auth/registration_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:go_router/go_router.dart';
-
-import '../config/injectable/injectable.dart';
-import '../screens/auth/forgot_password_screen.dart';
-import '../screens/auth/login_screen.dart';
-import '../screens/auth/registration_screen.dart';
 
 final authRoutes = GoRoute(
   path: AuthRoutes.main.path,
@@ -14,7 +13,7 @@ final authRoutes = GoRoute(
     final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
     if (userStatus.isAuthenticated) {
       return userStatus.uncompletedStep
-              ?.navigationFromBasePath(CompleteProfileRoutes.main.fullPath) ??
+              ?.navigationFromBasePath(InitialProfileRoutes.main.fullPath) ??
           homeRoute;
     }
     if (state.fullPath == AuthRoutes.main.fullPath) {

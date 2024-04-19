@@ -28,18 +28,8 @@ mixin _$Profile {
   int? get height => throw _privateConstructorUsedError;
   Picture? get profilePicture => throw _privateConstructorUsedError;
   List<Picture>? get pictures => throw _privateConstructorUsedError;
-  QuestionResponse? get question1 => throw _privateConstructorUsedError;
-  QuestionResponse? get question2 => throw _privateConstructorUsedError;
-  QuestionResponse? get question3 => throw _privateConstructorUsedError;
-  QuestionResponse? get question4 => throw _privateConstructorUsedError;
-  QuestionResponse? get question5 => throw _privateConstructorUsedError;
-  QuestionResponse? get question6 => throw _privateConstructorUsedError;
-  QuestionResponse? get question7 => throw _privateConstructorUsedError;
-  QuestionResponse? get question8 => throw _privateConstructorUsedError;
-  QuestionResponse? get question9 => throw _privateConstructorUsedError;
-  QuestionResponse? get question10 => throw _privateConstructorUsedError;
-  QuestionResponse? get question11 => throw _privateConstructorUsedError;
-  QuestionResponse? get question12 => throw _privateConstructorUsedError;
+  Map<String, QuestionResponse>? get questions =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -60,32 +50,9 @@ abstract class $ProfileCopyWith<$Res> {
       int? height,
       Picture? profilePicture,
       List<Picture>? pictures,
-      QuestionResponse? question1,
-      QuestionResponse? question2,
-      QuestionResponse? question3,
-      QuestionResponse? question4,
-      QuestionResponse? question5,
-      QuestionResponse? question6,
-      QuestionResponse? question7,
-      QuestionResponse? question8,
-      QuestionResponse? question9,
-      QuestionResponse? question10,
-      QuestionResponse? question11,
-      QuestionResponse? question12});
+      Map<String, QuestionResponse>? questions});
 
   $PictureCopyWith<$Res>? get profilePicture;
-  $QuestionResponseCopyWith<$Res>? get question1;
-  $QuestionResponseCopyWith<$Res>? get question2;
-  $QuestionResponseCopyWith<$Res>? get question3;
-  $QuestionResponseCopyWith<$Res>? get question4;
-  $QuestionResponseCopyWith<$Res>? get question5;
-  $QuestionResponseCopyWith<$Res>? get question6;
-  $QuestionResponseCopyWith<$Res>? get question7;
-  $QuestionResponseCopyWith<$Res>? get question8;
-  $QuestionResponseCopyWith<$Res>? get question9;
-  $QuestionResponseCopyWith<$Res>? get question10;
-  $QuestionResponseCopyWith<$Res>? get question11;
-  $QuestionResponseCopyWith<$Res>? get question12;
 }
 
 /// @nodoc
@@ -109,18 +76,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? height = freezed,
     Object? profilePicture = freezed,
     Object? pictures = freezed,
-    Object? question1 = freezed,
-    Object? question2 = freezed,
-    Object? question3 = freezed,
-    Object? question4 = freezed,
-    Object? question5 = freezed,
-    Object? question6 = freezed,
-    Object? question7 = freezed,
-    Object? question8 = freezed,
-    Object? question9 = freezed,
-    Object? question10 = freezed,
-    Object? question11 = freezed,
-    Object? question12 = freezed,
+    Object? questions = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -155,54 +111,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.pictures
           : pictures // ignore: cast_nullable_to_non_nullable
               as List<Picture>?,
-      question1: freezed == question1
-          ? _value.question1
-          : question1 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question2: freezed == question2
-          ? _value.question2
-          : question2 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question3: freezed == question3
-          ? _value.question3
-          : question3 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question4: freezed == question4
-          ? _value.question4
-          : question4 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question5: freezed == question5
-          ? _value.question5
-          : question5 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question6: freezed == question6
-          ? _value.question6
-          : question6 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question7: freezed == question7
-          ? _value.question7
-          : question7 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question8: freezed == question8
-          ? _value.question8
-          : question8 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question9: freezed == question9
-          ? _value.question9
-          : question9 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question10: freezed == question10
-          ? _value.question10
-          : question10 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question11: freezed == question11
-          ? _value.question11
-          : question11 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question12: freezed == question12
-          ? _value.question12
-          : question12 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
+      questions: freezed == questions
+          ? _value.questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as Map<String, QuestionResponse>?,
     ) as $Val);
   }
 
@@ -215,150 +127,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
 
     return $PictureCopyWith<$Res>(_value.profilePicture!, (value) {
       return _then(_value.copyWith(profilePicture: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question1 {
-    if (_value.question1 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question1!, (value) {
-      return _then(_value.copyWith(question1: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question2 {
-    if (_value.question2 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question2!, (value) {
-      return _then(_value.copyWith(question2: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question3 {
-    if (_value.question3 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question3!, (value) {
-      return _then(_value.copyWith(question3: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question4 {
-    if (_value.question4 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question4!, (value) {
-      return _then(_value.copyWith(question4: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question5 {
-    if (_value.question5 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question5!, (value) {
-      return _then(_value.copyWith(question5: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question6 {
-    if (_value.question6 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question6!, (value) {
-      return _then(_value.copyWith(question6: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question7 {
-    if (_value.question7 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question7!, (value) {
-      return _then(_value.copyWith(question7: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question8 {
-    if (_value.question8 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question8!, (value) {
-      return _then(_value.copyWith(question8: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question9 {
-    if (_value.question9 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question9!, (value) {
-      return _then(_value.copyWith(question9: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question10 {
-    if (_value.question10 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question10!, (value) {
-      return _then(_value.copyWith(question10: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question11 {
-    if (_value.question11 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question11!, (value) {
-      return _then(_value.copyWith(question11: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $QuestionResponseCopyWith<$Res>? get question12 {
-    if (_value.question12 == null) {
-      return null;
-    }
-
-    return $QuestionResponseCopyWith<$Res>(_value.question12!, (value) {
-      return _then(_value.copyWith(question12: value) as $Val);
     });
   }
 }
@@ -379,45 +147,10 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       int? height,
       Picture? profilePicture,
       List<Picture>? pictures,
-      QuestionResponse? question1,
-      QuestionResponse? question2,
-      QuestionResponse? question3,
-      QuestionResponse? question4,
-      QuestionResponse? question5,
-      QuestionResponse? question6,
-      QuestionResponse? question7,
-      QuestionResponse? question8,
-      QuestionResponse? question9,
-      QuestionResponse? question10,
-      QuestionResponse? question11,
-      QuestionResponse? question12});
+      Map<String, QuestionResponse>? questions});
 
   @override
   $PictureCopyWith<$Res>? get profilePicture;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question1;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question2;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question3;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question4;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question5;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question6;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question7;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question8;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question9;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question10;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question11;
-  @override
-  $QuestionResponseCopyWith<$Res>? get question12;
 }
 
 /// @nodoc
@@ -439,18 +172,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? height = freezed,
     Object? profilePicture = freezed,
     Object? pictures = freezed,
-    Object? question1 = freezed,
-    Object? question2 = freezed,
-    Object? question3 = freezed,
-    Object? question4 = freezed,
-    Object? question5 = freezed,
-    Object? question6 = freezed,
-    Object? question7 = freezed,
-    Object? question8 = freezed,
-    Object? question9 = freezed,
-    Object? question10 = freezed,
-    Object? question11 = freezed,
-    Object? question12 = freezed,
+    Object? questions = freezed,
   }) {
     return _then(_$ProfileImpl(
       id: freezed == id
@@ -485,54 +207,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value._pictures
           : pictures // ignore: cast_nullable_to_non_nullable
               as List<Picture>?,
-      question1: freezed == question1
-          ? _value.question1
-          : question1 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question2: freezed == question2
-          ? _value.question2
-          : question2 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question3: freezed == question3
-          ? _value.question3
-          : question3 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question4: freezed == question4
-          ? _value.question4
-          : question4 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question5: freezed == question5
-          ? _value.question5
-          : question5 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question6: freezed == question6
-          ? _value.question6
-          : question6 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question7: freezed == question7
-          ? _value.question7
-          : question7 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question8: freezed == question8
-          ? _value.question8
-          : question8 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question9: freezed == question9
-          ? _value.question9
-          : question9 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question10: freezed == question10
-          ? _value.question10
-          : question10 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question11: freezed == question11
-          ? _value.question11
-          : question11 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
-      question12: freezed == question12
-          ? _value.question12
-          : question12 // ignore: cast_nullable_to_non_nullable
-              as QuestionResponse?,
+      questions: freezed == questions
+          ? _value._questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as Map<String, QuestionResponse>?,
     ));
   }
 }
@@ -549,20 +227,10 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       this.height,
       this.profilePicture,
       final List<Picture>? pictures,
-      this.question1,
-      this.question2,
-      this.question3,
-      this.question4,
-      this.question5,
-      this.question6,
-      this.question7,
-      this.question8,
-      this.question9,
-      this.question10,
-      this.question11,
-      this.question12})
+      final Map<String, QuestionResponse>? questions})
       : _genderPreferences = genderPreferences,
         _pictures = pictures,
+        _questions = questions,
         super._();
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
@@ -601,34 +269,19 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
     return EqualUnmodifiableListView(value);
   }
 
+  final Map<String, QuestionResponse>? _questions;
   @override
-  final QuestionResponse? question1;
-  @override
-  final QuestionResponse? question2;
-  @override
-  final QuestionResponse? question3;
-  @override
-  final QuestionResponse? question4;
-  @override
-  final QuestionResponse? question5;
-  @override
-  final QuestionResponse? question6;
-  @override
-  final QuestionResponse? question7;
-  @override
-  final QuestionResponse? question8;
-  @override
-  final QuestionResponse? question9;
-  @override
-  final QuestionResponse? question10;
-  @override
-  final QuestionResponse? question11;
-  @override
-  final QuestionResponse? question12;
+  Map<String, QuestionResponse>? get questions {
+    final value = _questions;
+    if (value == null) return null;
+    if (_questions is EqualUnmodifiableMapView) return _questions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(id: $id, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, birthdate: $birthdate, height: $height, profilePicture: $profilePicture, pictures: $pictures, question1: $question1, question2: $question2, question3: $question3, question4: $question4, question5: $question5, question6: $question6, question7: $question7, question8: $question8, question9: $question9, question10: $question10, question11: $question11, question12: $question12)';
+    return 'Profile(id: $id, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, birthdate: $birthdate, height: $height, profilePicture: $profilePicture, pictures: $pictures, questions: $questions)';
   }
 
   @override
@@ -644,18 +297,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('height', height))
       ..add(DiagnosticsProperty('profilePicture', profilePicture))
       ..add(DiagnosticsProperty('pictures', pictures))
-      ..add(DiagnosticsProperty('question1', question1))
-      ..add(DiagnosticsProperty('question2', question2))
-      ..add(DiagnosticsProperty('question3', question3))
-      ..add(DiagnosticsProperty('question4', question4))
-      ..add(DiagnosticsProperty('question5', question5))
-      ..add(DiagnosticsProperty('question6', question6))
-      ..add(DiagnosticsProperty('question7', question7))
-      ..add(DiagnosticsProperty('question8', question8))
-      ..add(DiagnosticsProperty('question9', question9))
-      ..add(DiagnosticsProperty('question10', question10))
-      ..add(DiagnosticsProperty('question11', question11))
-      ..add(DiagnosticsProperty('question12', question12));
+      ..add(DiagnosticsProperty('questions', questions));
   }
 
   @override
@@ -675,57 +317,23 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
             (identical(other.profilePicture, profilePicture) ||
                 other.profilePicture == profilePicture) &&
             const DeepCollectionEquality().equals(other._pictures, _pictures) &&
-            (identical(other.question1, question1) ||
-                other.question1 == question1) &&
-            (identical(other.question2, question2) ||
-                other.question2 == question2) &&
-            (identical(other.question3, question3) ||
-                other.question3 == question3) &&
-            (identical(other.question4, question4) ||
-                other.question4 == question4) &&
-            (identical(other.question5, question5) ||
-                other.question5 == question5) &&
-            (identical(other.question6, question6) ||
-                other.question6 == question6) &&
-            (identical(other.question7, question7) ||
-                other.question7 == question7) &&
-            (identical(other.question8, question8) ||
-                other.question8 == question8) &&
-            (identical(other.question9, question9) ||
-                other.question9 == question9) &&
-            (identical(other.question10, question10) ||
-                other.question10 == question10) &&
-            (identical(other.question11, question11) ||
-                other.question11 == question11) &&
-            (identical(other.question12, question12) ||
-                other.question12 == question12));
+            const DeepCollectionEquality()
+                .equals(other._questions, _questions));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        firstName,
-        gender,
-        const DeepCollectionEquality().hash(_genderPreferences),
-        birthdate,
-        height,
-        profilePicture,
-        const DeepCollectionEquality().hash(_pictures),
-        question1,
-        question2,
-        question3,
-        question4,
-        question5,
-        question6,
-        question7,
-        question8,
-        question9,
-        question10,
-        question11,
-        question12
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      firstName,
+      gender,
+      const DeepCollectionEquality().hash(_genderPreferences),
+      birthdate,
+      height,
+      profilePicture,
+      const DeepCollectionEquality().hash(_pictures),
+      const DeepCollectionEquality().hash(_questions));
 
   @JsonKey(ignore: true)
   @override
@@ -751,18 +359,7 @@ abstract class _Profile extends Profile {
       final int? height,
       final Picture? profilePicture,
       final List<Picture>? pictures,
-      final QuestionResponse? question1,
-      final QuestionResponse? question2,
-      final QuestionResponse? question3,
-      final QuestionResponse? question4,
-      final QuestionResponse? question5,
-      final QuestionResponse? question6,
-      final QuestionResponse? question7,
-      final QuestionResponse? question8,
-      final QuestionResponse? question9,
-      final QuestionResponse? question10,
-      final QuestionResponse? question11,
-      final QuestionResponse? question12}) = _$ProfileImpl;
+      final Map<String, QuestionResponse>? questions}) = _$ProfileImpl;
   const _Profile._() : super._();
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
@@ -784,29 +381,7 @@ abstract class _Profile extends Profile {
   @override
   List<Picture>? get pictures;
   @override
-  QuestionResponse? get question1;
-  @override
-  QuestionResponse? get question2;
-  @override
-  QuestionResponse? get question3;
-  @override
-  QuestionResponse? get question4;
-  @override
-  QuestionResponse? get question5;
-  @override
-  QuestionResponse? get question6;
-  @override
-  QuestionResponse? get question7;
-  @override
-  QuestionResponse? get question8;
-  @override
-  QuestionResponse? get question9;
-  @override
-  QuestionResponse? get question10;
-  @override
-  QuestionResponse? get question11;
-  @override
-  QuestionResponse? get question12;
+  Map<String, QuestionResponse>? get questions;
   @override
   @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>

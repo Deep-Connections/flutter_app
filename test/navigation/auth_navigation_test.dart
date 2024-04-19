@@ -1,6 +1,6 @@
 import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/navigation/auth_navigation.dart';
+import 'package:deep_connections/navigation/graphs/auth_nav_graph.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +33,10 @@ void main() {
 
     // Assert that the redirect function returns the login path
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
-        "/complete_profile/name");
+        "/initial_profile/name");
 
     profileService.profile = const Profile(firstName: "John");
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
-        "/complete_profile/birthdate");
+        "/initial_profile/birthdate");
   });
 }

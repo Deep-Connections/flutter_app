@@ -1,7 +1,7 @@
-class NavigationStep {
+abstract class NavigationStep {
   final String navigationPath;
 
-  NavigationStep({required this.navigationPath});
+  const NavigationStep({required this.navigationPath});
 
   String navigationFromBasePath(String basePath) => '$basePath/$navigationPath';
 }

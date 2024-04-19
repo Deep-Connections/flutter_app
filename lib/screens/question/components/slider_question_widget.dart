@@ -1,5 +1,5 @@
 import 'package:deep_connections/config/constants.dart';
-import 'package:deep_connections/models/question/slider_question.dart';
+import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

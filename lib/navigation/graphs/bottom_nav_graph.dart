@@ -1,4 +1,5 @@
 import 'package:deep_connections/config/injectable/injectable.dart';
+import 'package:deep_connections/navigation/graphs/additional_profile_nav_graph.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/chat/chat_list_screen.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
@@ -43,14 +44,10 @@ final bottomNavigation = StatefulShellRoute.indexedStack(
             child: ProfileScreen(
               authService: getIt(),
               profileService: getIt(),
+              userStatusService: getIt(),
             ),
           ),
-          routes: [
-            GoRoute(
-              path: 'details',
-              builder: (context, state) => BaseScreen(body: Container()),
-            ),
-          ],
+          routes: [additionalProfileRoutes],
         ),
       ],
     ),

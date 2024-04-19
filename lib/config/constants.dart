@@ -14,7 +14,7 @@ _isTest() {
 
 final isTest = _isTest();
 
-const standardPadding = 20.0;
+const standardPadding = 16.0;
 const roundedBorderRadius = Radius.circular(18);
 
 const maxScreenWidth = 800.0;
