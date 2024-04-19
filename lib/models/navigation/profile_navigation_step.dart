@@ -10,10 +10,11 @@ import 'package:flutter/cupertino.dart';
 
 abstract class ProfileNavigationStep<T> extends NavigationStep {
   T? fromProfile(Profile profile);
+
   final ProfileSection section;
 
-  ProfileNavigationStep({required super.navigationPath,
-    required this.section});
+  const ProfileNavigationStep(
+      {required super.navigationPath, required this.section});
 }
 
 abstract class ProfileNavigationStepWithWidget<T>

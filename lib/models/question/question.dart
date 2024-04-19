@@ -20,7 +20,7 @@ sealed class Question extends ProfileNavigationStep<QuestionResponse> {
     return profile.questions?[id];
   }
 
-  Question({
+  const Question({
     required this.id,
     required this.questionText,
     required super.navigationPath,
@@ -33,7 +33,7 @@ class MultipleChoiceQuestion extends Question {
   final int maxChoices;
   final List<Answer> answers;
 
-  MultipleChoiceQuestion({
+  const MultipleChoiceQuestion({
     required super.id,
     required super.questionText,
     this.minChoices = 1,
@@ -53,7 +53,7 @@ class SliderQuestion extends Question {
 
   get divisions => maxValue - minValue;
 
-  SliderQuestion({
+  const SliderQuestion({
     required super.id,
     required super.questionText,
     required this.minValue,
