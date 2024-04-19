@@ -1,6 +1,6 @@
 import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/question/answer.dart';
-import 'package:deep_connections/models/question/choice_question.dart';
+import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/utils/loc_key.dart';
@@ -22,8 +22,6 @@ void main() {
       Answer('3', LocKey((loc) => loc.question_relationshipType_answer3)),
       Answer('4', LocKey((loc) => loc.question_relationshipType_answer4)),
     ],
-    fromProfile: (p) => p.question1,
-    updateProfile: (p, r) => p.copyWith(question1: r),
     navigationPath: '',
     section: ProfileSection.profile,
   );
@@ -36,8 +34,9 @@ void main() {
   testWidgets('Test question screen with single choice question',
       (WidgetTester tester) async {
     // Select answer 3 initially
-    profileService.updateProfile(
-        (p) => p.copyWith(question1: const QuestionResponse(response: ['3'])));
+    profileService.updateProfile((p) => p.copyWith(questions: {
+          question1.id: const QuestionResponse(response: ['3'])
+        }));
 
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
@@ -50,6 +49,11 @@ void main() {
       expect(find.bySemanticsLabel(text), findsOneWidget);
     }
 
+    checkQuestion(List<String> response) {
+      expect(
+          profileService.profile?.questions?[question1.id]?.response, response);
+    }
+
     // Initially 3 should be selected and 1 should not be selected
     checkSelected(loc.question_relationshipType_answer3, true);
     checkSelected(loc.question_relationshipType_answer1, false);
@@ -60,12 +64,12 @@ void main() {
     checkSelected(loc.question_relationshipType_answer1, true);
     checkSelected(loc.question_relationshipType_answer3, false);
     // the complete_profile should still contain 3
-    expect(profileService.profile?.question1?.response, ['3']);
+    checkQuestion(['3']);
     await tester.tap(find.text(loc.general_next));
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.profile?.question1?.response, ['1']);
+    checkQuestion(['1']);
   });
 
   final question2 = MultipleChoiceQuestion(
@@ -79,8 +83,6 @@ void main() {
     ],
     minChoices: 2,
     maxChoices: 3,
-    fromProfile: (p) => p.question2,
-    updateProfile: (p, r) => p.copyWith(question2: r),
     navigationPath: '',
     section: ProfileSection.profile,
   );
@@ -88,8 +90,9 @@ void main() {
   testWidgets('Test question screen with multiple choice question',
       (WidgetTester tester) async {
     // Select answer 2 initially
-    profileService.updateProfile(
-        (p) => p.copyWith(question2: const QuestionResponse(response: ['2'])));
+    profileService.updateProfile((p) => p.copyWith(questions: {
+          question2.id: const QuestionResponse(response: ['2'])
+        }));
 
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
@@ -100,6 +103,11 @@ void main() {
     checkSelected(String buttonText, bool selected) {
       final text = selected ? loc.semantic_selected(buttonText) : buttonText;
       expect(find.bySemanticsLabel(text), findsOneWidget);
+    }
+
+    checkQuestion(List<String> response) {
+      expect(
+          profileService.profile?.questions?[question2.id]?.response, response);
     }
 
     // Initially 2 should be selected and 1 should not be selected
@@ -117,7 +125,7 @@ void main() {
     checkSelected(loc.question_relationshipType_answer1, true);
     checkSelected(loc.question_relationshipType_answer2, true);
     // the complete_profile should still contain 2
-    expect(profileService.profile?.question2?.response, ['2']);
+    checkQuestion(['2']);
 
     // unselect 2 and check that next button is disabled
     await tester.tap(find.text(loc.question_relationshipType_answer2));
@@ -141,6 +149,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.profile?.question2?.response, ['1', '2', '3']);
+    checkQuestion(['1', '2', '3']);
   });
 }

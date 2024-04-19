@@ -9,7 +9,8 @@ sealed class Question extends ProfileNavigationStep<QuestionResponse> {
   final LocKey questionText;
 
   Profile updateProfile(Profile profile, QuestionResponse questionResponse) {
-    final newQuestions = profile.questions ?? {};
+    Map<String, QuestionResponse> newQuestions =
+        Map.from(profile.questions ?? {});
     newQuestions[id] = questionResponse;
     return profile.copyWith(questions: newQuestions);
   }
