@@ -20,3 +20,7 @@ final List<ProfileNavigationStep> initialProfileStepList = [
   ),
   ...initialQuestionList
 ];
+
+final List<ProfileNavigationStep> additionalProfileStepList = [
+  ...additionalQuestionList
+];

@@ -25,9 +25,9 @@ final appRouter = GoRouter(
     } else {
       final uncompletedStep = userStatus.uncompletedStep;
       if (uncompletedStep != null &&
-          !path.startsWith(CompleteProfileRoutes.main.fullPath)) {
+          !path.startsWith(InitialProfileRoutes.main.fullPath)) {
         return uncompletedStep
-            .navigationFromBasePath(CompleteProfileRoutes.main.fullPath);
+            .navigationFromBasePath(InitialProfileRoutes.main.fullPath);
       }
     }
     return null;

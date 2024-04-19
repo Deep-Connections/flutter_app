@@ -6,19 +6,16 @@ import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:go_router/go_router.dart';
 
-final initialProfileRoutes = GoRoute(
-    path: InitialProfileRoutes.main.path,
+final additionalProfileRoutes = GoRoute(
+    path: AdditionalProfileRoutes.main.path,
     redirect: (context, state) async {
       final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
-      if (userStatus.isProfileComplete) {
-        return homeRoute;
-      }
-      if (state.fullPath == InitialProfileRoutes.main.fullPath) {
-        return userStatus.uncompletedStep
-                ?.navigationFromBasePath(InitialProfileRoutes.main.fullPath) ??
+      if (state.fullPath == AdditionalProfileRoutes.main.fullPath) {
+        return userStatus.uncompletedStep?.navigationFromBasePath(
+                AdditionalProfileRoutes.main.fullPath) ??
             homeRoute;
       }
       return null;
     },
     routes: generateProfileStepGraph(
-        initialProfileStepList, InitialProfileRoutes.main.fullPath));
+        additionalProfileStepList, AdditionalProfileRoutes.main.fullPath));

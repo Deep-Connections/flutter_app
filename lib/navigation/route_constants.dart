@@ -48,6 +48,10 @@ class AuthRoutes {
   static const NavRoute forgotPassword = NavRoute('forgot_password', main);
 }
 
-class CompleteProfileRoutes {
-  static const NavRoute main = NavRoute('complete_profile', null);
+class InitialProfileRoutes {
+  static const NavRoute main = NavRoute('initial_profile', null);
+}
+
+class AdditionalProfileRoutes {
+  static const NavRoute main = NavRoute('additional', null);
 }

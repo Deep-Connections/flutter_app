@@ -13,7 +13,7 @@ final authRoutes = GoRoute(
     final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
     if (userStatus.isAuthenticated) {
       return userStatus.uncompletedStep
-              ?.navigationFromBasePath(CompleteProfileRoutes.main.fullPath) ??
+              ?.navigationFromBasePath(InitialProfileRoutes.main.fullPath) ??
           homeRoute;
     }
     if (state.fullPath == AuthRoutes.main.fullPath) {
