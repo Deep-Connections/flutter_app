@@ -33,10 +33,10 @@ void main() {
 
     // Assert that the redirect function returns the login path
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
-        "/complete_profile/name");
+        "/initial_profile/name");
 
     profileService.profile = const Profile(firstName: "John");
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
-        "/complete_profile/birthdate");
+        "/initial_profile/birthdate");
   });
 }
