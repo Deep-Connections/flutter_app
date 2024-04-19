@@ -1,3 +1,4 @@
+import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/user/user_status.dart';
 import 'package:deep_connections/navigation/graphs/auth_nav_graph.dart';
 import 'package:deep_connections/navigation/graphs/bottom_nav_graph.dart';
@@ -7,8 +8,6 @@ import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/chat/message_list_screen.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../config/injectable/injectable.dart';
 
 final appRouter = GoRouter(
   refreshListenable:

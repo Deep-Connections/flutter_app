@@ -1,5 +1,8 @@
+import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/config/profile_step_list.dart';
+import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/models/question/question.dart';
+import 'package:deep_connections/models/user/user_status.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/complete_profile/components/profile_nav_screen.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
@@ -7,9 +10,6 @@ import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../config/injectable/injectable.dart';
-import '../../models/navigation/profile_navigation_step.dart';
-import '../../models/user/user_status.dart';
 
 final initialProfileRoutes = GoRoute(
     path: CompleteProfileRoutes.main.path,
