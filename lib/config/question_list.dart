@@ -5,7 +5,7 @@ import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/models/question/slider_question.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
-final List<Question> profileQuestionList = [
+final List<Question> initialQuestionList = [
   MultipleChoiceQuestion(
     id: '1',
     questionText: LocKey((loc) => loc.question_relationshipType_question),
@@ -36,18 +36,6 @@ final List<Question> profileQuestionList = [
     fromProfile: (p) => p.question3,
     updateProfile: (p, r) => p.copyWith(question3: r),
   ),
-  SliderQuestion(
-      id: '2',
-      questionText: LocKey((loc) => loc.question_politicalSpectrum_question),
-      minValue: 1,
-      maxValue: 5,
-      minText: LocKey((loc) => loc.question_politicalSpectrum_answerMin),
-      maxText: LocKey((loc) => loc.question_politicalSpectrum_answerMax),
-      fromProfile: (p) => p.question2,
-      updateProfile: (p, r) => p.copyWith(question2: r),
-      navigationPath: 'politics',
-    section: ProfileSection.politics,
-  ),
   MultipleChoiceQuestion(
     id: '4',
     questionText: LocKey((loc) => loc.question_currentLife_question),
@@ -60,5 +48,20 @@ final List<Question> profileQuestionList = [
     updateProfile: (p, r) => p.copyWith(question4: r),
     navigationPath: 'current_life',
     section: ProfileSection.profile,
+  ),
+];
+
+final List<Question> additionalQuestionList = [
+  SliderQuestion(
+    id: '2',
+    questionText: LocKey((loc) => loc.question_politicalSpectrum_question),
+    minValue: 1,
+    maxValue: 5,
+    minText: LocKey((loc) => loc.question_politicalSpectrum_answerMin),
+    maxText: LocKey((loc) => loc.question_politicalSpectrum_answerMax),
+    fromProfile: (p) => p.question2,
+    updateProfile: (p, r) => p.copyWith(question2: r),
+    navigationPath: 'politics',
+    section: ProfileSection.politics,
   ),
 ];

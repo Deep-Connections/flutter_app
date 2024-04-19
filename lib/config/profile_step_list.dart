@@ -18,5 +18,5 @@ final List<ProfileNavigationStep> profileStepList = [
     navigationPath: 'gender_preferences',
     fromProfile: (profile) => profile.genderPreferences,
   ),
-  ...profileQuestionList
+  ...initialQuestionList
 ];
