@@ -54,4 +54,18 @@ final List<Question> additionalQuestionList = [
     navigationPath: 'politics',
     section: ProfileSection.politics,
   ),
+  MultipleChoiceQuestion(
+    id: '5',
+    questionText: LocKey((loc) => loc.questionHabit_smoking_question),
+    answers: [
+      Answer('1', LocKey((loc) => loc.questionHabit_smoking_answer1)),
+      Answer('2', LocKey((loc) => loc.questionHabit_smoking_answer2)),
+      Answer('3', LocKey((loc) => loc.questionHabit_smoking_answer3)),
+      Answer('4', LocKey((loc) => loc.questionHabit_smoking_answer4)),
+    ],
+    navigationPath: 'smoking',
+    section: ProfileSection.habits,
+  ),
 ];
+
+final allQuestions = initialQuestionList + additionalQuestionList;

@@ -87,5 +87,10 @@
   "question_currentLife_question": "Which of these describes your current life the best?",
   "question_currentLife_answer1": "Settle down",
   "question_currentLife_answer2": "Focus on career",
-  "question_currentLife_answer3": "Finding my place in the world"
+  "question_currentLife_answer3": "Finding my place in the world",
+  "questionHabit_smoking_question": "How often do you smoke?",
+  "questionHabit_smoking_answer1": "Daily",
+  "questionHabit_smoking_answer2": "Weekly",
+  "questionHabit_smoking_answer3": "Rarely",
+  "questionHabit_smoking_answer4": "Never"
 }

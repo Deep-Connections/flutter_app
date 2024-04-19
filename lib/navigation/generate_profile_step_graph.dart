@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
-    {Future<void> Function()? navigateLast}) {
+    {Future<void> Function(BuildContext)? navigateLast}) {
   return [
     ...List.generate(steps.length, (index) {
       final navigationStep = steps[index];
@@ -22,8 +22,10 @@ generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
           final Future<void> Function()? navigateToNext;
           if (navigateNextPath != null) {
             navigateToNext = () => context.push(navigateNextPath);
+          } else if (navigateLast != null) {
+            navigateToNext = () => navigateLast(context);
           } else {
-            navigateToNext = navigateLast ?? () => Future.value();
+            navigateToNext = () => Future.value();
           }
           Widget? profileNavWidget;
           if (navigationStep is ProfileNavigationStepWithWidget) {

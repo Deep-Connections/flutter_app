@@ -53,5 +53,5 @@ class InitialProfileRoutes {
 }
 
 class AdditionalProfileRoutes {
-  static const NavRoute main = NavRoute('additional', null);
+  static final NavRoute main = NavRoute('additional', BottomNavigation.profile);
 }
