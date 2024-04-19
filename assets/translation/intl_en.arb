@@ -50,6 +50,8 @@
   "forgotPassword_successText": "An email was sent to your email address with instructions to reset your password.",
   "profile_title": "Profile",
   "chat_title": "Chats",
+  "completeProfile_completeDescription": "Complete your profile to get better matches!",
+  "completeProfile_completeButton": "Complete profile",
   "chat_messageTextField": "Message",
   "completeProfile_firstNameTitle": "What's your name?",
   "completeProfile_birthdayTitle": "When were you born?",

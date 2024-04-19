@@ -1,5 +1,7 @@
 import 'package:deep_connections/screens/components/base_screen.dart';
-import 'package:deep_connections/screens/profile/image_picker.dart';
+import 'package:deep_connections/screens/components/dc_column.dart';
+import 'package:deep_connections/screens/profile/components/complete_profile_card.dart';
+import 'package:deep_connections/screens/profile/components/image_picker.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,11 @@ class ProfileScreen extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.logout), onPressed: authService.signOut)
         ],
-        body: Center(child: AvatarImagePicker(profileService: profileService)));
+        body: DcColumn(
+          children: [
+            Center(child: AvatarImagePicker(profileService: profileService)),
+            const CompleteProfileCard()
+          ],
+        ));
   }
 }
