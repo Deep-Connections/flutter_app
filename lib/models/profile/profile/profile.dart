@@ -20,18 +20,6 @@ class Profile with _$Profile {
     Picture? profilePicture,
     List<Picture>? pictures,
     Map<String, QuestionResponse>? questions,
-    QuestionResponse? question1,
-    QuestionResponse? question2,
-    QuestionResponse? question3,
-    QuestionResponse? question4,
-    QuestionResponse? question5,
-    QuestionResponse? question6,
-    QuestionResponse? question7,
-    QuestionResponse? question8,
-    QuestionResponse? question9,
-    QuestionResponse? question10,
-    QuestionResponse? question11,
-    QuestionResponse? question12,
   }) = _Profile;
 
   String? get mainPictureUrl => pictures?.lastOrNull?.url;
