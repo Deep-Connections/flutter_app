@@ -28,6 +28,9 @@ mixin _$Profile {
   int? get height => throw _privateConstructorUsedError;
   Picture? get profilePicture => throw _privateConstructorUsedError;
   List<Picture>? get pictures => throw _privateConstructorUsedError;
+
+  Map<String, QuestionResponse>? get questions =>
+      throw _privateConstructorUsedError;
   QuestionResponse? get question1 => throw _privateConstructorUsedError;
   QuestionResponse? get question2 => throw _privateConstructorUsedError;
   QuestionResponse? get question3 => throw _privateConstructorUsedError;
@@ -60,6 +63,7 @@ abstract class $ProfileCopyWith<$Res> {
       int? height,
       Picture? profilePicture,
       List<Picture>? pictures,
+      Map<String, QuestionResponse>? questions,
       QuestionResponse? question1,
       QuestionResponse? question2,
       QuestionResponse? question3,
@@ -109,6 +113,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? height = freezed,
     Object? profilePicture = freezed,
     Object? pictures = freezed,
+    Object? questions = freezed,
     Object? question1 = freezed,
     Object? question2 = freezed,
     Object? question3 = freezed,
@@ -155,6 +160,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.pictures
           : pictures // ignore: cast_nullable_to_non_nullable
               as List<Picture>?,
+      questions: freezed == questions
+          ? _value.questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as Map<String, QuestionResponse>?,
       question1: freezed == question1
           ? _value.question1
           : question1 // ignore: cast_nullable_to_non_nullable
@@ -379,6 +388,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       int? height,
       Picture? profilePicture,
       List<Picture>? pictures,
+      Map<String, QuestionResponse>? questions,
       QuestionResponse? question1,
       QuestionResponse? question2,
       QuestionResponse? question3,
@@ -439,6 +449,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? height = freezed,
     Object? profilePicture = freezed,
     Object? pictures = freezed,
+    Object? questions = freezed,
     Object? question1 = freezed,
     Object? question2 = freezed,
     Object? question3 = freezed,
@@ -485,6 +496,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value._pictures
           : pictures // ignore: cast_nullable_to_non_nullable
               as List<Picture>?,
+      questions: freezed == questions
+          ? _value._questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as Map<String, QuestionResponse>?,
       question1: freezed == question1
           ? _value.question1
           : question1 // ignore: cast_nullable_to_non_nullable
@@ -549,6 +564,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       this.height,
       this.profilePicture,
       final List<Picture>? pictures,
+      final Map<String, QuestionResponse>? questions,
       this.question1,
       this.question2,
       this.question3,
@@ -563,6 +579,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       this.question12})
       : _genderPreferences = genderPreferences,
         _pictures = pictures,
+        _questions = questions,
         super._();
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
@@ -601,6 +618,17 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
     return EqualUnmodifiableListView(value);
   }
 
+  final Map<String, QuestionResponse>? _questions;
+
+  @override
+  Map<String, QuestionResponse>? get questions {
+    final value = _questions;
+    if (value == null) return null;
+    if (_questions is EqualUnmodifiableMapView) return _questions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   final QuestionResponse? question1;
   @override
@@ -628,7 +656,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(id: $id, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, birthdate: $birthdate, height: $height, profilePicture: $profilePicture, pictures: $pictures, question1: $question1, question2: $question2, question3: $question3, question4: $question4, question5: $question5, question6: $question6, question7: $question7, question8: $question8, question9: $question9, question10: $question10, question11: $question11, question12: $question12)';
+    return 'Profile(id: $id, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, birthdate: $birthdate, height: $height, profilePicture: $profilePicture, pictures: $pictures, questions: $questions, question1: $question1, question2: $question2, question3: $question3, question4: $question4, question5: $question5, question6: $question6, question7: $question7, question8: $question8, question9: $question9, question10: $question10, question11: $question11, question12: $question12)';
   }
 
   @override
@@ -643,7 +671,8 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('birthdate', birthdate))
       ..add(DiagnosticsProperty('height', height))
       ..add(DiagnosticsProperty('profilePicture', profilePicture))
-      ..add(DiagnosticsProperty('pictures', pictures))
+      ..add(DiagnosticsProperty('pictures', pictures))..add(
+        DiagnosticsProperty('questions', questions))
       ..add(DiagnosticsProperty('question1', question1))
       ..add(DiagnosticsProperty('question2', question2))
       ..add(DiagnosticsProperty('question3', question3))
@@ -675,6 +704,8 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
             (identical(other.profilePicture, profilePicture) ||
                 other.profilePicture == profilePicture) &&
             const DeepCollectionEquality().equals(other._pictures, _pictures) &&
+            const DeepCollectionEquality()
+                .equals(other._questions, _questions) &&
             (identical(other.question1, question1) ||
                 other.question1 == question1) &&
             (identical(other.question2, question2) ||
@@ -713,6 +744,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
         height,
         profilePicture,
         const DeepCollectionEquality().hash(_pictures),
+        const DeepCollectionEquality().hash(_questions),
         question1,
         question2,
         question3,
@@ -751,6 +783,7 @@ abstract class _Profile extends Profile {
       final int? height,
       final Picture? profilePicture,
       final List<Picture>? pictures,
+      final Map<String, QuestionResponse>? questions,
       final QuestionResponse? question1,
       final QuestionResponse? question2,
       final QuestionResponse? question3,
@@ -783,6 +816,9 @@ abstract class _Profile extends Profile {
   Picture? get profilePicture;
   @override
   List<Picture>? get pictures;
+
+  @override
+  Map<String, QuestionResponse>? get questions;
   @override
   QuestionResponse? get question1;
   @override

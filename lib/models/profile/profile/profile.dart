@@ -19,6 +19,7 @@ class Profile with _$Profile {
     int? height,
     Picture? profilePicture,
     List<Picture>? pictures,
+    Map<String, QuestionResponse>? questions,
     QuestionResponse? question1,
     QuestionResponse? question2,
     QuestionResponse? question3,

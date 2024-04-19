@@ -8,12 +8,11 @@ import 'package:deep_connections/screens/complete_profile/name_profile_screen.da
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/cupertino.dart';
 
-class ProfileNavigationStep<T> extends NavigationStep {
-  final T? Function(Profile) fromProfile;
+abstract class ProfileNavigationStep<T> extends NavigationStep {
+  T? fromProfile(Profile profile);
   final ProfileSection section;
 
   ProfileNavigationStep({required super.navigationPath,
-    required this.fromProfile,
     required this.section});
 }
 
@@ -22,9 +21,16 @@ abstract class ProfileNavigationStepWithWidget<T>
   Widget createWidget(
       ProfileService profileService, Future<void> Function() navigateToNext);
 
+  final T? Function(Profile) _fromProfile;
+
+  @override
+  T? fromProfile(Profile profile) => _fromProfile(profile);
+
   ProfileNavigationStepWithWidget(
-      {required super.navigationPath, required super.fromProfile})
-      : super(section: ProfileSection.profile);
+      {required super.navigationPath,
+      required T? Function(Profile) fromProfile})
+      : _fromProfile = fromProfile,
+        super(section: ProfileSection.profile);
 }
 
 class NameProfileNavigationStep

@@ -1,6 +1,4 @@
-import 'package:deep_connections/models/question/choice_question.dart';
 import 'package:deep_connections/models/question/question.dart';
-import 'package:deep_connections/models/question/slider_question.dart';
 import 'package:deep_connections/screens/question/components/choice_question_widget.dart';
 import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:deep_connections/screens/question/components/slider_question_widget.dart';
@@ -15,16 +13,13 @@ class QuestionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (question is MultipleChoiceQuestion) {
-      return ChoiceQuestionWidget(
-          question: question as MultipleChoiceQuestion,
-          questionResponse: questionResponse);
-    }
-    if (question is SliderQuestion) {
-      return SliderQuestionWidget(
+    return switch (question) {
+      SliderQuestion() => SliderQuestionWidget(
           question: question as SliderQuestion,
-          questionResponse: questionResponse);
-    }
-    return const Text("Unknown question type");
+          questionResponse: questionResponse),
+      MultipleChoiceQuestion() => ChoiceQuestionWidget(
+          question: question as MultipleChoiceQuestion,
+          questionResponse: questionResponse),
+    };
   }
 }
