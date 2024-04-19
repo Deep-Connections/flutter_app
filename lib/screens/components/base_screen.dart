@@ -8,6 +8,8 @@ class BaseScreen extends StatelessWidget {
   final Widget body;
   final List<Widget>? actions;
   final Widget? leading;
+  final AppBarType? appBarType;
+
   final void Function(bool)? onBack;
 
   const BaseScreen({
@@ -18,6 +20,7 @@ class BaseScreen extends StatelessWidget {
     this.actions,
     this.onBack,
     this.leading,
+    this.appBarType,
   });
 
   @override
@@ -29,6 +32,13 @@ class BaseScreen extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
                 title: widgetTitle ?? Text(title ?? ""),
+                backgroundColor:
+                    appBarType?.backgroundColor?.call(Theme.of(context)),
+                foregroundColor:
+                    appBarType?.foregroundColor?.call(Theme.of(context)),
+                iconTheme: appBarType?.foregroundColor
+                    ?.call(Theme.of(context))
+                    .let((color) => IconThemeData(color: color)),
                 actions: actions,
                 leading: leading ??
                     onBack?.let((onBack) => IconButton(
@@ -42,4 +52,21 @@ class BaseScreen extends StatelessWidget {
             ))));
     return screen;
   }
+}
+
+sealed class AppBarType {
+  final Color Function(ThemeData)? backgroundColor;
+  final Color Function(ThemeData)? foregroundColor;
+
+  AppBarType({this.backgroundColor, this.foregroundColor});
+}
+
+class AppBarTypeDefault extends AppBarType {}
+
+class AppBarTypeBackground extends AppBarType {
+  AppBarTypeBackground()
+      : super(
+          backgroundColor: (theme) => theme.colorScheme.background,
+          foregroundColor: (theme) => theme.colorScheme.onBackground,
+        );
 }
