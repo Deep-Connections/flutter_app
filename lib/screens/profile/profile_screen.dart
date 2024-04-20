@@ -50,8 +50,8 @@ class ProfileScreen extends StatelessWidget {
                 title: Text(section.title.localize(loc),
                     style: Theme.of(context).textTheme.headlineSmall),
                 trailing: const Icon(Icons.arrow_forward_ios),
-                onTap: () => context.go(
-                    "${AdditionalProfileRoutes.section.fullPath}/${section.path}")))
+                onTap: () => context
+                    .go("${ProfileRoutes.section.fullPath}/${section.path}")))
           ],
         ));
   }

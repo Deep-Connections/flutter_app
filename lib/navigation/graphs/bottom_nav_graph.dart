@@ -47,10 +47,10 @@ final bottomNavigation = StatefulShellRoute.indexedStack(
             additionalProfileRoutes,
             // child route
             GoRoute(
-              path: AdditionalProfileRoutes.section.path,
+              path: ProfileRoutes.section.path,
               redirect: (context, state) {
-                final sectionPath = state.pathParameters[
-                    AdditionalProfileRoutes.section.pathParameter];
+                final sectionPath =
+                    state.pathParameters[ProfileRoutes.section.pathParameter];
                 final section = ProfileSection.fromPath(sectionPath);
                 if (section == null) {
                   return BottomNavigation.profile.path;
@@ -58,14 +58,14 @@ final bottomNavigation = StatefulShellRoute.indexedStack(
                 return null;
               },
               builder: (context, state) {
-                final sectionPath = state.pathParameters[
-                    AdditionalProfileRoutes.section.pathParameter];
+                final sectionPath =
+                    state.pathParameters[ProfileRoutes.section.pathParameter];
                 final section = ProfileSection.fromPath(sectionPath);
                 return ProfileSectionScreen(section: section!);
               },
               routes: [
                 GoRoute(
-                  path: AdditionalProfileRoutes.step.path,
+                  path: ProfileRoutes.step.path,
                   builder: (context, state) => BaseScreen(body: Container()),
                 ),
               ],
