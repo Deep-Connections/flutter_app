@@ -53,5 +53,10 @@ class InitialProfileRoutes {
 }
 
 class AdditionalProfileRoutes {
+  // todo rename
   static final NavRoute main = NavRoute('additional', BottomNavigation.profile);
+  static final NavRoute section = NavRoute('section', BottomNavigation.profile,
+      pathParameter: 'sectionPath');
+  static final NavRoute step =
+      NavRoute('step', section, pathParameter: 'stepPath');
 }
