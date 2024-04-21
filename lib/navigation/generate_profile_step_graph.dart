@@ -1,8 +1,6 @@
-import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
-import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/complete_profile/components/profile_nav_screen.dart';
-import 'package:deep_connections/screens/question/question_screen.dart';
+import 'package:deep_connections/screens/profile/step/profile_step_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -27,17 +25,7 @@ generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
           } else {
             navigateToNext = () => Future.value();
           }
-          Widget? profileNavWidget;
-          if (navigationStep is ProfileNavigationStepWithWidget) {
-            profileNavWidget =
-                navigationStep.createWidget(getIt(), navigateToNext);
-          } else if (navigationStep is Question) {
-            profileNavWidget = QuestionScreen(
-              question: navigationStep,
-              profileService: getIt(),
-              navigate: navigateToNext,
-            );
-          }
+
           return CupertinoPage(
               child: ProfileNavScreen(
                   navigatePrevious: index == 0
@@ -46,7 +34,8 @@ generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
                           ? context.pop()
                           : context.pushReplacement(previousPath),
                   navigationStep: navigationStep,
-                  body: profileNavWidget!));
+                  body: ProfileStepWidget(
+                      step: navigationStep, navigateToNext: navigateToNext)));
         },
       );
     }),

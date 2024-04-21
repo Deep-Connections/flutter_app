@@ -8,8 +8,23 @@ class NavRoute {
 
   const NavRoute(this._path, this.parent, {this.pathParameter});
 
-  get path {
+  String get path {
     return pathParameter != null ? '$_path/:$pathParameter' : _path;
+  }
+
+  String parameterPath(List<String> parameters) {
+    final String subPath;
+    final List<String> restParameters;
+    if (pathParameter != null) {
+      subPath = "$_path/${parameters.last}";
+      restParameters = parameters.sublist(0, parameters.length - 1);
+    } else {
+      subPath = _path;
+      restParameters = parameters;
+    }
+    return parent != null
+        ? '${parent!.parameterPath(restParameters)}/$subPath'
+        : "/$subPath";
   }
 
   String get fullPath {

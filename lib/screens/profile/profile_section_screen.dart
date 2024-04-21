@@ -1,6 +1,7 @@
 import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/config/profile_step_list.dart';
 import 'package:deep_connections/models/navigation/profile_section.dart';
+import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,7 +26,8 @@ class ProfileSectionScreen extends StatelessWidget {
                     title: Text(step.title.localize(loc),
                         style: Theme.of(context).textTheme.bodyMedium),
                     trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: () => context.go("step.path"),
+                    onTap: () => context.go(ProfileRoutes.step.parameterPath(
+                        [step.section.path, step.navigationPath])),
                   ),
                 )
                 .toList()));
