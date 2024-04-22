@@ -20,7 +20,7 @@ const standardPadding = 16.0;
 const bottomBarIconSize = 32.0; // default 24
 
 // Chat
-const chatIconSize = 40.0;
+const matchImageSize = 40.0;
 
 const roundedBorderRadius = Radius.circular(18);
 
