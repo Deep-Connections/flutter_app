@@ -15,6 +15,13 @@ _isTest() {
 final isTest = _isTest();
 
 const standardPadding = 16.0;
+
+// bottom navigation bar
+const bottomBarIconSize = 32.0; // default 24
+
+// Chat
+const chatIconSize = 40.0;
+
 const roundedBorderRadius = Radius.circular(18);
 
 const maxScreenWidth = 800.0;

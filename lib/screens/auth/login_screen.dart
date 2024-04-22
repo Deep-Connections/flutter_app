@@ -58,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final loc = AppLocalizations.of(context);
     return BaseScreen(
       title: loc.login_title,
+      appBarType: AppBarTypeBackground(),
       actions: [
         TextButton.icon(
             onPressed: () => context.push(AuthRoutes.register.fullPath),

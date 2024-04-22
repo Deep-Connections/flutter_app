@@ -50,8 +50,8 @@ class MainRoutes {
 class BottomNavigation {
   static final profile = BottomNavRoute(
       'profile', null, LocKey((loc) => loc.profile_title), Icons.person);
-  static final chat =
-      BottomNavRoute('chat', null, LocKey((loc) => loc.chat_title), Icons.chat);
+  static final chat = BottomNavRoute(
+      'chat', null, LocKey((loc) => loc.chat_title), Icons.message_rounded);
   static final values = [chat, profile];
   static final main = values.first;
 }

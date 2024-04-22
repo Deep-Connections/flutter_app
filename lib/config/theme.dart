@@ -10,8 +10,9 @@ class DcColors {
   static final Color grey = Colors.grey[400]!;
 }
 
+
 ThemeData theme() {
-  const scheme = ColorScheme(
+  const colorScheme = ColorScheme(
       brightness: Brightness.light,
       primary: Color(0xFF87b080),
       onPrimary: Color(0xFFf5f9f5),
@@ -27,8 +28,11 @@ ThemeData theme() {
       surface: Color(0xFFe0e5e0),
       // right bubble
       onSurface: Colors.black);
+  // todo add text theme
+  const textTheme = TextTheme();
   return ThemeData(
-    colorScheme: scheme,
+    colorScheme: colorScheme,
+    //textTheme: textTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
       textStyle: MaterialStateProperty.all(
@@ -40,29 +44,35 @@ ThemeData theme() {
           return const Color(0xFF81a87b);
         }
         if (states.contains(MaterialState.disabled)) return Colors.grey;
-        return scheme.primary;
+        return colorScheme.primary;
       }),
-      foregroundColor: MaterialStateProperty.all(scheme.onPrimary),
+      foregroundColor: MaterialStateProperty.all(colorScheme.onPrimary),
     )),
     textButtonTheme: TextButtonThemeData(style: ButtonStyle(
       backgroundColor:
           MaterialStateProperty.resolveWith((Set<MaterialState> states) {
         if (states.any(interactiveStates.contains)) {
-          return scheme.onPrimary;
+          return colorScheme.onPrimary;
         }
-        return scheme.background;
+        return colorScheme.background;
       }),
     )),
-    /*buttonTheme: ButtonThemeData(
-      buttonColor: scheme.secondary,
-      shape: const ,
-    ),*/
+    listTileTheme: ListTileThemeData(
+        textColor: colorScheme.onBackground,
+        titleTextStyle:
+            const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        subtitleTextStyle: const TextStyle(inherit: true, fontSize: 15),
+        visualDensity: const VisualDensity(vertical: 4)),
     appBarTheme: AppBarTheme(
-        backgroundColor: scheme.primary,
-        foregroundColor: scheme.onPrimary,
-        iconTheme: IconThemeData(color: scheme.onPrimary),
+        backgroundColor: colorScheme.primary,
+        foregroundColor: colorScheme.onPrimary,
+        iconTheme: IconThemeData(color: colorScheme.onPrimary),
         surfaceTintColor: Colors.white,
         toolbarHeight: 60),
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: colorScheme.primary,
+      height: 60,
+    ),
     useMaterial3: true,
   );
 }
