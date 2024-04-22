@@ -95,7 +95,7 @@ void main() {
     await tester.tap(find.text(loc.completeProfile_genderMore));
     await tester.pumpAndSettle();
     await tester.tap(find.text(loc.input_genderEnumNonBinary));
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
 
     // Check that instead of more we show non-binary
@@ -113,7 +113,7 @@ void main() {
     await tester.pumpAndSettle();
     // Select trans woman
     await tester.tap(find.text(loc.input_genderEnumTransWoman));
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
     // Check that instead of more we show non-binary
     expect(find.text(loc.input_genderEnumTransWoman), findsOneWidget);
@@ -150,7 +150,7 @@ void main() {
         customInvalidGender);
     await tester.drag(find.byType(Scrollable).last, const Offset(0, -50));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
     expect(find.text(loc.input_genderError), findsOneWidget);
 
@@ -163,7 +163,7 @@ void main() {
         " $customGender "); // check that it is trimmed
     await tester.drag(find.byType(Scrollable).last, const Offset(0, -50));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
 
     // check that we are back in the complete_profile screen

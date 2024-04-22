@@ -2,7 +2,7 @@
   "semantic_selected": "Selected: {text}",
   "general_error": "An error occurred",
   "general_noInternetError": "No internet connection",
-  "general_submitButton": "Submit",
+  "general_submit": "Submit",
   "general_next": "Next",
   "general_select": "Select",
   "general_done": "Done",

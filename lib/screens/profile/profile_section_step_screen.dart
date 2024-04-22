@@ -19,6 +19,6 @@ class ProfileSectionStepScreen extends StatelessWidget {
         body: ProfileStepWidget(
             step: step,
             onSubmit: () async => context.pop(),
-            submitText: LocKey((loc) => loc.general_submitButton)));
+            submitText: LocKey((loc) => loc.general_submit)));
   }
 }

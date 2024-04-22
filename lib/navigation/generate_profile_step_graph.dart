@@ -40,7 +40,7 @@ generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
                     onSubmit: navigateToNext,
                     submitText: LocKey((loc) => navigateNextPath != null
                         ? loc.general_next
-                        : loc.general_submitButton),
+                        : loc.general_submit),
                   )));
         },
       );
