@@ -42,7 +42,7 @@ class _AvatarImagePickerState extends State<AvatarImagePicker> {
     return GestureDetector(
       onTap: () => _pickImage(loc),
       child: AvatarImage(
-        size: 50,
+        size: 75,
         imageUrl: url ?? widget.profileService.profile?.profilePicture?.url,
         isLoading: isLoading,
       ),
