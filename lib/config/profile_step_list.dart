@@ -1,3 +1,4 @@
+import 'package:deep_connections/config/question/initial_questions.dart';
 import 'package:deep_connections/config/question_list.dart';
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/screens/complete_profile/birthday_profile_screen.dart';
