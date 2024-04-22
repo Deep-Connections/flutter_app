@@ -10,6 +10,8 @@ class DcColors {
   static final Color grey = Colors.grey[400]!;
 }
 
+const bottomBarIconSize = 32.0; // default 24
+
 ThemeData theme() {
   const scheme = ColorScheme(
       brightness: Brightness.light,
@@ -63,6 +65,10 @@ ThemeData theme() {
         iconTheme: IconThemeData(color: scheme.onPrimary),
         surfaceTintColor: Colors.white,
         toolbarHeight: 60),
+    bottomAppBarTheme: BottomAppBarTheme(
+      color: scheme.primary,
+      height: 60,
+    ),
     useMaterial3: true,
   );
 }

@@ -1,3 +1,4 @@
+import 'package:deep_connections/config/theme.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -24,16 +25,24 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
+    final theme = Theme.of(context);
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+        backgroundColor: theme.bottomAppBarTheme.color,
+        indicatorColor: theme.colorScheme.tertiary,
+        height: theme.bottomAppBarTheme.height,
         destinations: [
           ...routes.map(
             (route) => NavigationDestination(
               label: route.title.localize(loc),
-              icon: Icon(route.icon),
+              icon: Icon(
+                route.icon,
+                color: theme.colorScheme.background,
+                size: bottomBarIconSize,
+              ),
             ),
           ),
         ],
@@ -44,12 +53,15 @@ class BottomNavBar extends StatelessWidget {
         currentIndex: navigationShell.currentIndex,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-              label: loc.profile_title, icon: const Icon(Icons.person)),
-          BottomNavigationBarItem(
-              label: loc.chat_title, icon: const Icon(Icons.chat)),
-        ],
+        items: routes.map(
+          (route) => BottomNavigationBarItem(
+            label: route.title.localize(loc),
+            icon: Icon(
+              route.icon,
+              size: 32, // default 24
+            ),
+          ),
+        ).toList(),
         onTap: _goBranch,
       ),*/
     );
