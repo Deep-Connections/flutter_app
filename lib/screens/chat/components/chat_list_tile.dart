@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/models/chats/chat/chat.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
@@ -31,7 +32,10 @@ class ChatListTile extends StatelessWidget {
         builder: (context, profile) {
           return ListTile(
             onTap: onTap,
-            leading: AvatarImage(imageUrl: profile?.profilePicture?.url),
+            leading: AvatarImage(
+              imageUrl: profile?.profilePicture?.url,
+              size: chatIconSize,
+            ),
             title: Text(profile?.firstName ?? ""),
             subtitle: Text(
               chat.lastMessage?.text ?? "",
@@ -45,6 +49,7 @@ class ChatListTile extends StatelessWidget {
                 Text(chat.timestamp?.toDependingOnDateString(loc, context,
                         todayAsTime: true) ??
                     ""),
+                const SizedBox(height: standardPadding),
                 if (chat.isUnread)
                   Container(
                     width: unreadSize,
