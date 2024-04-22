@@ -16,6 +16,7 @@ final List<ProfileNavigationStep> initialProfileStepList = [
         NameProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
     isEditable: false,
   ),
@@ -27,6 +28,7 @@ final List<ProfileNavigationStep> initialProfileStepList = [
         BirthdayProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
     isEditable: false,
   ),
@@ -38,6 +40,7 @@ final List<ProfileNavigationStep> initialProfileStepList = [
         GenderProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
   ),
   ProfileNavigationStepWithWidget(
@@ -48,6 +51,7 @@ final List<ProfileNavigationStep> initialProfileStepList = [
         GenderPreferencesProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
   ),
   ...initialQuestionList
