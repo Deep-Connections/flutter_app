@@ -19,8 +19,7 @@ class CompleteProfileCard extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           ElevatedButton(
-              onPressed: () =>
-                  context.go(AdditionalProfileRoutes.main.fullPath),
+              onPressed: () => context.go(ProfileRoutes.additional.fullPath),
               child: Text(loc.completeProfile_completeButton)),
         ],
       ),

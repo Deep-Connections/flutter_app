@@ -1,26 +1,27 @@
 import 'package:deep_connections/models/navigation/navigation_step.dart';
 import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/screens/complete_profile/birthday_profile_screen.dart';
-import 'package:deep_connections/screens/complete_profile/gender/gender_profile_screen.dart';
-import 'package:deep_connections/screens/complete_profile/gender_preferences/gender_preferences_profile_screen.dart';
-import 'package:deep_connections/screens/complete_profile/name_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/cupertino.dart';
 
 abstract class ProfileNavigationStep<T> extends NavigationStep {
   T? fromProfile(Profile profile);
 
+  final LocKey title;
   final ProfileSection section;
+  final bool isEditable;
 
-  const ProfileNavigationStep(
-      {required super.navigationPath, required this.section});
+  const ProfileNavigationStep({required super.navigationPath,
+    required this.section,
+    required this.title,
+    this.isEditable = true});
 }
 
-abstract class ProfileNavigationStepWithWidget<T>
-    extends ProfileNavigationStep<T> {
-  Widget createWidget(
-      ProfileService profileService, Future<void> Function() navigateToNext);
+class ProfileNavigationStepWithWidget<T> extends ProfileNavigationStep<T> {
+  final Widget Function(
+          ProfileService profileService, Future<void> Function() navigateToNext)
+      createWidget;
 
   final T? Function(Profile) _fromProfile;
 
@@ -29,63 +30,10 @@ abstract class ProfileNavigationStepWithWidget<T>
 
   ProfileNavigationStepWithWidget(
       {required super.navigationPath,
-      required T? Function(Profile) fromProfile})
+      required T? Function(Profile) fromProfile,
+      required super.title,
+      required this.createWidget,
+      super.isEditable = true})
       : _fromProfile = fromProfile,
         super(section: ProfileSection.profile);
-}
-
-class NameProfileNavigationStep
-    extends ProfileNavigationStepWithWidget<String> {
-  NameProfileNavigationStep({
-    required super.navigationPath,
-    required super.fromProfile,
-  });
-
-  @override
-  Widget createWidget(profileService, navigateToNext) {
-    return NameProfileScreen(
-        profileService: profileService, navigateToNext: navigateToNext);
-  }
-}
-
-class BirthdateProfileNavigationStep
-    extends ProfileNavigationStepWithWidget<DateTime> {
-  BirthdateProfileNavigationStep({
-    required super.navigationPath,
-    required super.fromProfile,
-  });
-
-  @override
-  Widget createWidget(profileService, navigateToNext) {
-    return BirthdayProfileScreen(
-        profileService: profileService, navigateToNext: navigateToNext);
-  }
-}
-
-class GenderProfileNavigationStep
-    extends ProfileNavigationStepWithWidget<String> {
-  GenderProfileNavigationStep({
-    required super.navigationPath,
-    required super.fromProfile,
-  });
-
-  @override
-  Widget createWidget(profileService, navigateToNext) {
-    return GenderProfileScreen(
-        profileService: profileService, navigateToNext: navigateToNext);
-  }
-}
-
-class GenderPreferencesProfileNavigationStep
-    extends ProfileNavigationStepWithWidget<List<String>> {
-  GenderPreferencesProfileNavigationStep({
-    required super.navigationPath,
-    required super.fromProfile,
-  });
-
-  @override
-  Widget createWidget(profileService, navigateToNext) {
-    return GenderPreferencesProfileScreen(
-        profileService: profileService, navigateToNext: navigateToNext);
-  }
 }

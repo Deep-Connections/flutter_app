@@ -25,7 +25,7 @@ sealed class Question extends ProfileNavigationStep<QuestionResponse> {
     required this.questionText,
     required super.navigationPath,
     required super.section,
-  });
+  }) : super(isEditable: true, title: questionText);
 }
 
 class MultipleChoiceQuestion extends Question {

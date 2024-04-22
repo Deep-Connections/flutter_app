@@ -8,8 +8,23 @@ class NavRoute {
 
   const NavRoute(this._path, this.parent, {this.pathParameter});
 
-  get path {
+  String get path {
     return pathParameter != null ? '$_path/:$pathParameter' : _path;
+  }
+
+  String parameterPath(List<String> parameters) {
+    final String subPath;
+    final List<String> restParameters;
+    if (pathParameter != null) {
+      subPath = "$_path/${parameters.last}";
+      restParameters = parameters.sublist(0, parameters.length - 1);
+    } else {
+      subPath = _path;
+      restParameters = parameters;
+    }
+    return parent != null
+        ? '${parent!.parameterPath(restParameters)}/$subPath'
+        : "/$subPath";
   }
 
   String get fullPath {
@@ -52,6 +67,11 @@ class InitialProfileRoutes {
   static const NavRoute main = NavRoute('initial_profile', null);
 }
 
-class AdditionalProfileRoutes {
-  static final NavRoute main = NavRoute('additional', BottomNavigation.profile);
+class ProfileRoutes {
+  static final NavRoute additional =
+      NavRoute('additional', BottomNavigation.profile);
+  static final NavRoute section = NavRoute('section', BottomNavigation.profile,
+      pathParameter: 'sectionPath');
+  static final NavRoute step =
+      NavRoute('step', section, pathParameter: 'stepPath');
 }
