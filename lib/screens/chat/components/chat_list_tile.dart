@@ -34,7 +34,7 @@ class ChatListTile extends StatelessWidget {
             onTap: onTap,
             leading: AvatarImage(
               imageUrl: profile?.profilePicture?.url,
-              size: chatIconSize,
+              size: matchImageSize,
             ),
             title: Text(profile?.firstName ?? ""),
             subtitle: Text(
