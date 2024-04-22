@@ -5,6 +5,7 @@
   "general_submitButton": "Submit",
   "general_next": "Next",
   "general_select": "Select",
+  "general_done": "Done",
   "date_today": "Today",
   "date_yesterday": "Yesterday",
   "auth_emailInvalidError": "Please enter a valid email",

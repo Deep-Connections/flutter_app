@@ -19,9 +19,8 @@ abstract class ProfileNavigationStep<T> extends NavigationStep {
 }
 
 class ProfileNavigationStepWithWidget<T> extends ProfileNavigationStep<T> {
-  final Widget Function(
-          ProfileService profileService, Future<void> Function() navigateToNext)
-      createWidget;
+  final Widget Function(ProfileService profileService,
+      Future<void> Function() onSubmit, LocKey submitText) createWidget;
 
   final T? Function(Profile) _fromProfile;
 
