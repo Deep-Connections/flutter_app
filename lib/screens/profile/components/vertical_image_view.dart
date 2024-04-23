@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class VerticalImageView extends StatelessWidget {
@@ -14,14 +15,10 @@ class VerticalImageView extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: imageUrls?.length ?? 0,
         itemBuilder: (context, index) {
-          return Image.network(
+          return CachedNetworkImage(
+            imageUrl: imageUrls![index],
             width: index == 0 ? 0 : MediaQuery.of(context).size.width,
-            imageUrls![index],
             fit: BoxFit.cover,
-            errorBuilder: (BuildContext context, Object exception,
-                StackTrace? stackTrace) {
-              return Container();
-            },
           );
         },
       ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deep_connections/config/theme.dart';
 import 'package:deep_connections/screens/components/progress_indicator.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -16,15 +17,15 @@ class AvatarImage extends StatelessWidget {
     return CircleAvatar(
       backgroundColor: DcColors.grey,
       radius: size,
-      backgroundImage: imageUrl?.let((it) => NetworkImage(it)),
+      backgroundImage: imageUrl?.let((it) => CachedNetworkImageProvider(it)),
       child: isLoading
           ? const DcProgressIndicator()
           : imageUrl == null
               ? Icon(
-              size: size,
-              Icons.person,
-              color: Theme.of(context).colorScheme.surface)
-          : null,
+                  size: size,
+                  Icons.person,
+                  color: Theme.of(context).colorScheme.surface)
+              : null,
     );
   }
 }

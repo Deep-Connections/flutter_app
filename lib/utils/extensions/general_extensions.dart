@@ -21,6 +21,10 @@ extension LetExtension<T> on T {
   R let<R>(R Function(T it) operation) {
     return operation(this);
   }
+
+  void Function() lambda(Function(T it) operation) {
+    return () => operation(this);
+  }
 }
 
 String _getLocale(BuildContext context) {
