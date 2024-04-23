@@ -1,5 +1,6 @@
 import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/models/message/message.dart';
+import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/chat/components/bubble/message_bubble.dart';
 import 'package:deep_connections/screens/chat/components/date_banner.dart';
 import 'package:deep_connections/screens/chat/components/message_text_field.dart';
@@ -13,7 +14,7 @@ import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
 
 // Layout for messages https://medium.com/@ximya/tips-and-tricks-for-implementing-a-successful-chat-ui-in-flutter-190cd81bdc64
 
@@ -41,11 +42,15 @@ class MessageListScreen extends StatelessWidget {
                   chat?.otherUserId?.let((otherUserId) => FutureOrBuilder(
                       futureOr: profileService.profileByUserId(otherUserId),
                       builder: (context, profile) {
-                        return Row(children: [
-                          AvatarImage(imageUrl: profile?.profilePicture?.url),
-                          const SizedBox(width: standardPadding),
-                          Text(profile?.firstName ?? "")
-                        ]);
+                        return GestureDetector(
+                          onTap: () => context.push(
+                              MainRoutes.matchProfile.parameterPath([chatId])),
+                          child: Row(children: [
+                            AvatarImage(imageUrl: profile?.profilePicture?.url),
+                            const SizedBox(width: standardPadding),
+                            Text(profile?.firstName ?? "")
+                          ]),
+                        );
                       })),
               body: Column(
                 children: [

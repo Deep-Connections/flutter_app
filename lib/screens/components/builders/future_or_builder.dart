@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 
 class FutureOrBuilder<T> extends StatelessWidget {
-  final FutureOr<T> futureOr;
+  final FutureOr<T>? futureOr;
   final Widget Function(BuildContext, T?) builder;
 
   const FutureOrBuilder(
@@ -19,7 +19,7 @@ class FutureOrBuilder<T> extends StatelessWidget {
         },
       );
     } else {
-      return builder(context, futureOr as T);
+      return builder(context, futureOr as T?);
     }
   }
 }

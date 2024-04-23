@@ -45,6 +45,7 @@ const homeRoute = "/";
 
 class MainRoutes {
   static const messages = NavRoute('messages', null, pathParameter: 'chatId');
+  static const matchProfile = NavRoute('profile', messages);
 }
 
 class BottomNavigation {
