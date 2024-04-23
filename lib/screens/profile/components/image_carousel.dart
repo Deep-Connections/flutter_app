@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class VerticalImageView extends StatelessWidget {
+class ImageCarousel extends StatelessWidget {
   final List<String>? imageUrls;
 
-  const VerticalImageView({super.key, required this.imageUrls});
+  const ImageCarousel({super.key, required this.imageUrls});
 
   @override
   Widget build(BuildContext context) {

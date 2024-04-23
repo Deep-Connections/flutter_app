@@ -1,6 +1,6 @@
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
-import 'package:deep_connections/screens/profile/components/vertical_image_view.dart';
+import 'package:deep_connections/screens/profile/components/image_carousel.dart';
 import 'package:deep_connections/services/chat/chat_service.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -29,7 +29,7 @@ class MatchProfileScreen extends StatelessWidget {
                 return BaseScreen(
                     title: profile?.firstName ?? "",
                     body: ListView(children: [
-                      VerticalImageView(
+                      ImageCarousel(
                           imageUrls: profile?.pictures
                               ?.mapNotNull((e) => e.url)
                               .toList()),
