@@ -21,6 +21,10 @@ extension LetExtension<T> on T {
   R let<R>(R Function(T it) operation) {
     return operation(this);
   }
+
+  void Function() lambda(Function(T it) operation) {
+    return () => operation(this);
+  }
 }
 
 String _getLocale(BuildContext context) {
@@ -75,7 +79,7 @@ extension DateTimeExtensions on DateTime {
   }
 }
 
-extension ListExtensions<T> on Iterable<T> {
+extension IterableExtensions<T> on Iterable<T> {
   T? firstWhereOrNull(bool Function(T e) test) {
     for (T element in this) {
       if (test(element)) {
@@ -95,4 +99,8 @@ extension ListExtensions<T> on Iterable<T> {
     }
     return result;
   }
+}
+
+extension NullIterableExtensions<T> on Iterable<T>? {
+  bool get isNullOrEmpty => this == null || this!.isEmpty;
 }

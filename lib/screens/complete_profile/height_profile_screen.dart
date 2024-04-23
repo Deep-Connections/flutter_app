@@ -1,8 +1,9 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/integer_field_input.dart';
-import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -12,9 +13,13 @@ import '../components/form/dc_text_form_field.dart';
 class HeightProfileScreen extends StatefulWidget {
   final ProfileService profileService;
   final void Function() navigateToNext;
+  final LocKey submitText;
 
   const HeightProfileScreen(
-      {super.key, required this.profileService, required this.navigateToNext});
+      {super.key,
+      required this.profileService,
+      required this.navigateToNext,
+      required this.submitText});
 
   @override
   State<HeightProfileScreen> createState() => _HeightProfileScreenState();
@@ -32,6 +37,7 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
         profileService: widget.profileService,
         fields: [height],
         title: loc.completeProfile_sizeTitle,
+        submitText: widget.submitText.localize(loc),
         builder: (BuildContext context, Profile profile) {
           height.value = profile.height;
           return DcListView(children: [
@@ -41,7 +47,7 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
             )
           ]);
         },
-        onNext: () async {
+        onSubmit: () async {
           widget.profileService
               .updateProfile((p) => p.copyWith(height: height.value));
           widget.navigateToNext();

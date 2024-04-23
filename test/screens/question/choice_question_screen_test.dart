@@ -42,7 +42,8 @@ void main() {
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question1,
         profileService: profileService,
-        navigate: () => navigateSuccess = true));
+        onSubmit: () => navigateSuccess = true,
+        submitText: LocKey((loc) => loc.general_next)));
 
     checkSelected(String buttonText, bool selected) {
       final text = selected ? loc.semantic_selected(buttonText) : buttonText;
@@ -98,7 +99,8 @@ void main() {
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question2,
         profileService: profileService,
-        navigate: () => navigateSuccess = true));
+        onSubmit: () => navigateSuccess = true,
+        submitText: LocKey((loc) => loc.general_next)));
 
     checkSelected(String buttonText, bool selected) {
       final text = selected ? loc.semantic_selected(buttonText) : buttonText;

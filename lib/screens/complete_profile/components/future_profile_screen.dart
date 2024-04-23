@@ -47,8 +47,8 @@ class FutureFieldProfileScreen extends StatefulWidget {
   final String title;
   final List<FieldInput> fields;
   final ProfileService profileService;
-  final Future<void> Function() onNext;
-  final String? nextButtonText;
+  final Future<void> Function() onSubmit;
+  final String? submitText;
   final Widget Function(BuildContext context, Profile profile) builder;
 
   const FutureFieldProfileScreen(
@@ -56,8 +56,8 @@ class FutureFieldProfileScreen extends StatefulWidget {
       required this.profileService,
       required this.title,
       required this.builder,
-      required this.onNext,
-      this.nextButtonText,
+      required this.onSubmit,
+      this.submitText,
       this.fields = const []});
 
   @override
@@ -75,9 +75,9 @@ class _FutureFieldProfileScreenState extends State<FutureFieldProfileScreen> {
       formKey: buttonInput.formKey,
       title: widget.title,
       bottom: FormButton(
-        text: widget.nextButtonText ?? loc.general_next,
+        text: widget.submitText ?? loc.general_next,
         buttonInput: buttonInput,
-        actionIfValid: widget.onNext,
+        actionIfValid: widget.onSubmit,
       ),
       child: GenericStreamBuilder(
         data: widget.profileService.profileStream,

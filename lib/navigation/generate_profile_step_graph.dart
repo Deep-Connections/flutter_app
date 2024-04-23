@@ -1,6 +1,7 @@
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/screens/complete_profile/components/profile_nav_screen.dart';
 import 'package:deep_connections/screens/profile/step/profile_step_widget.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -35,7 +36,12 @@ generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
                           : context.pushReplacement(previousPath),
                   navigationStep: navigationStep,
                   body: ProfileStepWidget(
-                      step: navigationStep, navigateToNext: navigateToNext)));
+                    step: navigationStep,
+                    onSubmit: navigateToNext,
+                    submitText: LocKey((loc) => navigateNextPath != null
+                        ? loc.general_next
+                        : loc.general_submit),
+                  )));
         },
       );
     }),

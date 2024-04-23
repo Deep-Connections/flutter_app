@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/complete_profile/gender/gender_profile_screen.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -45,6 +46,7 @@ void main() {
     profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
+        submitText: LocKey((loc) => loc.general_next),
         navigateToNext: () async {
           await completer.future;
           navigateSuccess = true;
@@ -86,13 +88,14 @@ void main() {
     profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
+        submitText: LocKey((loc) => loc.general_next),
         navigateToNext: () async => navigateSuccess = true));
 
     // open more and select non-binary
     await tester.tap(find.text(loc.completeProfile_genderMore));
     await tester.pumpAndSettle();
     await tester.tap(find.text(loc.input_genderEnumNonBinary));
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
 
     // Check that instead of more we show non-binary
@@ -110,7 +113,7 @@ void main() {
     await tester.pumpAndSettle();
     // Select trans woman
     await tester.tap(find.text(loc.input_genderEnumTransWoman));
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
     // Check that instead of more we show non-binary
     expect(find.text(loc.input_genderEnumTransWoman), findsOneWidget);
@@ -132,6 +135,7 @@ void main() {
     // Setup
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
+        submitText: LocKey((loc) => loc.general_next),
         navigateToNext: () async => navigateSuccess = true));
 
     // Now we need to press non-binary to go to more
@@ -146,7 +150,7 @@ void main() {
         customInvalidGender);
     await tester.drag(find.byType(Scrollable).last, const Offset(0, -50));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
     expect(find.text(loc.input_genderError), findsOneWidget);
 
@@ -159,7 +163,7 @@ void main() {
         " $customGender "); // check that it is trimmed
     await tester.drag(find.byType(Scrollable).last, const Offset(0, -50));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(loc.general_submitButton));
+    await tester.tap(find.text(loc.general_submit));
     await tester.pumpAndSettle();
 
     // check that we are back in the complete_profile screen

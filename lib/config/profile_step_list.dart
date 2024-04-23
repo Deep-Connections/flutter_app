@@ -12,9 +12,11 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     navigationPath: 'name',
     fromProfile: (profile) => profile.firstName,
     title: LocKey((loc) => loc.completeProfile_firstNameTitle),
-    createWidget: (profileService, navigateToNext) => NameProfileScreen(
+    createWidget: (profileService, navigateToNext, submitText) =>
+        NameProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
     isEditable: false,
   ),
@@ -22,9 +24,11 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     navigationPath: 'birthdate',
     fromProfile: (profile) => profile.birthdate,
     title: LocKey((loc) => loc.completeProfile_birthdayTitle),
-    createWidget: (profileService, navigateToNext) => BirthdayProfileScreen(
+    createWidget: (profileService, navigateToNext, submitText) =>
+        BirthdayProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
     isEditable: false,
   ),
@@ -32,19 +36,22 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     navigationPath: 'gender',
     fromProfile: (profile) => profile.gender,
     title: LocKey((loc) => loc.completeProfile_genderTitle),
-    createWidget: (profileService, navigateToNext) => GenderProfileScreen(
+    createWidget: (profileService, navigateToNext, submitText) =>
+        GenderProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
   ),
   ProfileNavigationStepWithWidget(
     navigationPath: 'gender_preferences',
     fromProfile: (profile) => profile.genderPreferences,
     title: LocKey((loc) => loc.completeProfile_genderPreferencesTitle),
-    createWidget: (profileService, navigateToNext) =>
+    createWidget: (profileService, navigateToNext, submitText) =>
         GenderPreferencesProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
+      submitText: submitText,
     ),
   ),
   ...initialQuestionList

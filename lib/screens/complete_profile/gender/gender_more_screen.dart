@@ -41,7 +41,7 @@ class _GenderMoreScreenState extends State<GenderMoreScreen> {
         )
       ]),
       bottom: FormButton(
-          text: loc.general_submitButton,
+          text: loc.general_submit,
           buttonInput: widget.buttonInput,
           actionIfValid: () async => Navigator.of(context).pop()),
     );

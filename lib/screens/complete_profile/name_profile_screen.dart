@@ -1,8 +1,9 @@
 import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/screens/components/form/field_input/text_field_input.dart';
-import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -11,11 +12,13 @@ import '../components/form/dc_text_form_field.dart';
 class NameProfileScreen extends StatefulWidget {
   final ProfileService profileService;
   final void Function() navigateToNext;
+  final LocKey submitText;
 
   const NameProfileScreen({
     super.key,
     required this.profileService,
     required this.navigateToNext,
+    required this.submitText,
   });
 
   @override
@@ -32,6 +35,7 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
     return FutureFieldProfileScreen(
       profileService: widget.profileService,
       title: loc.completeProfile_firstNameTitle,
+      submitText: widget.submitText.localize(loc),
       builder: (BuildContext context, Profile profile) {
         name.value = profile.firstName;
         return DcListView(
@@ -42,7 +46,7 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
         );
       },
       fields: [name],
-      onNext: () async {
+      onSubmit: () async {
         widget.profileService
             .updateProfile((p) => p.copyWith(firstName: name.value));
         widget.navigateToNext();

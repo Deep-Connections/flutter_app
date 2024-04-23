@@ -1,6 +1,7 @@
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/profile/step/profile_step_widget.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -16,8 +17,8 @@ class ProfileSectionStepScreen extends StatelessWidget {
     return BaseScreen(
         title: step.section.title.localize(loc),
         body: ProfileStepWidget(
-          step: step,
-          navigateToNext: () async => context.pop(),
-        ));
+            step: step,
+            onSubmit: () async => context.pop(),
+            submitText: LocKey((loc) => loc.general_submit)));
   }
 }

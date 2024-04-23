@@ -36,7 +36,8 @@ void main() {
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question1,
         profileService: profileService,
-        navigate: () => navigateSuccess = true));
+        onSubmit: () => navigateSuccess = true,
+        submitText: LocKey((loc) => loc.general_next)));
 
     // Check next disabled in the beginning
     await tester.tap(find.text(loc.general_next));
@@ -79,7 +80,8 @@ void main() {
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question2,
         profileService: profileService,
-        navigate: () => navigateSuccess = true));
+        onSubmit: () => navigateSuccess = true,
+        submitText: LocKey((loc) => loc.general_next)));
 
     // Check next disabled in the beginning
     await tester.tap(find.text(loc.general_next));
