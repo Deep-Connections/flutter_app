@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 
 class FutureOrBuilder<T> extends StatelessWidget {
   final FutureOr<T>? futureOr;
-  final Widget Function(BuildContext, T?) builder;
+  final Widget Function(
+      BuildContext context, T? data, FutureOrSnapshot<T> snapshot) builder;
 
   const FutureOrBuilder(
       {super.key, required this.futureOr, required this.builder});
@@ -15,11 +16,26 @@ class FutureOrBuilder<T> extends StatelessWidget {
       return FutureBuilder<T>(
         future: futureOr as Future<T>,
         builder: (context, snapshot) {
-          return builder(context, snapshot.data);
+          final data = snapshot.data;
+          return builder(context, data, FutureOrSnapshot(data, snapshot));
         },
       );
     } else {
-      return builder(context, futureOr as T?);
+      final data = futureOr as T?;
+      return builder(context, data, FutureOrSnapshot(data, null));
     }
   }
+}
+
+class FutureOrSnapshot<T> {
+  final T? _data;
+  final AsyncSnapshot<T>? _async;
+
+  const FutureOrSnapshot(this._data, this._async);
+
+  bool get loading =>
+      _async != null && _async.connectionState == ConnectionState.waiting;
+
+  bool get completed =>
+      _async == null || _async.connectionState == ConnectionState.done;
 }

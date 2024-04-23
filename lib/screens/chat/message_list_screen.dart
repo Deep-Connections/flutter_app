@@ -35,13 +35,13 @@ class MessageListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureOrBuilder(
         futureOr: chatService.chatById(chatId),
-        builder: (context, chat) {
+        builder: (context, chat, _) {
           final currentUserId = chat?.currentUserId;
           return BaseScreen(
               widgetTitle:
                   chat?.otherUserId?.let((otherUserId) => FutureOrBuilder(
                       futureOr: profileService.profileByUserId(otherUserId),
-                      builder: (context, profile) {
+                      builder: (context, profile, _) {
                         return GestureDetector(
                           onTap: () => context.push(
                               MainRoutes.matchProfile.parameterPath([chatId])),

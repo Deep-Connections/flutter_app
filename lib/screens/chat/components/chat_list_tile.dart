@@ -31,7 +31,7 @@ class ChatListTile extends StatelessWidget {
     final loc = AppLocalizations.of(context);
     return FutureOrBuilder(
         futureOr: futureOrProfile,
-        builder: (context, profile) {
+        builder: (context, profile, _) {
           return ListTile(
             onTap: onTap,
             leading: GestureDetector(
