@@ -2,6 +2,7 @@ import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
+import 'package:deep_connections/screens/profile/components/common_questions.dart';
 import 'package:deep_connections/screens/profile/components/image_carousel.dart';
 import 'package:deep_connections/services/chat/chat_service.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
@@ -38,7 +39,9 @@ class MatchProfileScreen extends StatelessWidget {
                     if (snapshot.completed &&
                         profile != null &&
                         profile.pictures.isNullOrEmpty)
-                      NoImageWidget(profile: profile)
+                      NoImageWidget(profile: profile),
+                    CommonAnswers(
+                        profile1: profileService.profile, profile2: profile)
                   ]),
                 );
               });

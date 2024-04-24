@@ -28,7 +28,11 @@ sealed class Question extends ProfileNavigationStep<Answer> {
     return profile.questions?[id];
   }
 
-  String? localizeAnswer(Answer response, AppLocalizations loc) {
+  Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
+    return null;
+  }
+
+  String? localizeAnswer(Answer answer, AppLocalizations loc) {
     return null;
   }
 }
@@ -47,6 +51,39 @@ class MultipleChoiceQuestion extends Question {
     required super.navigationPath,
     required super.section,
   });
+
+  List<String> _validatedChoiceValues(List<String>? choiceValues) =>
+      (choiceValues ?? [])
+          .where((choiceValue) =>
+              choices.any((choice) => choice.value == choiceValue))
+          .toList();
+
+  bool isAnswerValid(Answer answer) {
+    final choiceValues = _validatedChoiceValues(answer.response);
+    if (choiceValues.length < minChoices) return false;
+    if (choiceValues.length > maxChoices) return false;
+    return true;
+  }
+
+  @override
+  Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
+    final choiceValues1 = _validatedChoiceValues(myAnswer.response);
+    final choiceValues2 = otherAnswer.response ?? [];
+    final commonValues = choiceValues1
+        .where((choiceValue) => choiceValues2.contains(choiceValue));
+    if (commonValues.isEmpty) return null;
+    return Answer(response: commonValues.toList());
+  }
+
+  @override
+  String? localizeAnswer(Answer answer, AppLocalizations loc) {
+    return (answer.response ?? []).mapNotNull((choiceValue) {
+      return choices
+          .firstWhereOrNull((choice) => choice.value == choiceValue)
+          ?.text
+          .localize(loc);
+    }).join(", ");
+  }
 }
 
 class SliderQuestion extends Question {

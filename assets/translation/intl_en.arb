@@ -51,6 +51,7 @@
   "forgotPassword_successText": "An email was sent to your email address with instructions to reset your password.",
   "profile_title": "Profile",
   "matchProfile_noUpload": "{name} hasn't uploaded any photos yet.",
+  "matchProfile_commonAnswers": "Common Answers",
   "chat_title": "Your Smatches",
   "completeProfile_completeDescription": "Complete your profile to get better matches!",
   "completeProfile_completeButton": "Complete profile",
