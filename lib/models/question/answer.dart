@@ -1,8 +1,8 @@
 import 'package:deep_connections/utils/loc_key.dart';
 
-class Answer {
+class Choice {
   final String value;
-  final LocKey answerText;
+  final LocKey text;
 
-  Answer(this.value, this.answerText);
+  Choice(this.value, this.text);
 }

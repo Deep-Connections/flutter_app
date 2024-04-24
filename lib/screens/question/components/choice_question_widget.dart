@@ -21,7 +21,7 @@ class ChoiceQuestionWidget extends StatefulWidget {
 }
 
 class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
-  late List<Answer> selectedAnswers = (widget.questionResponse.values ?? [])
+  late List<Choice> selectedAnswers = (widget.questionResponse.values ?? [])
       .mapNotNull((response) =>
           widget.question.answers.firstWhereOrNull((e) => e.value == response));
 
@@ -40,7 +40,7 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
               ...widget.question.answers.map((a) => SelectableButton(
                   onPressed: () => _onAnswerPressed(a),
                   selected: selectedAnswers.contains(a),
-                  text: a.answerText.localize(loc)))
+                  text: a.text.localize(loc)))
             ],
           ),
         ),
@@ -48,7 +48,7 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
     );
   }
 
-  _onAnswerPressed(Answer a) {
+  _onAnswerPressed(Choice a) {
     setState(() {
       // If the answer is already selected, remove it
       if (selectedAnswers.contains(a)) {
