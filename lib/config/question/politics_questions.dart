@@ -10,6 +10,7 @@ final List<Question> politicsQuestionList = [
     maxValue: 5,
     minText: LocKey((loc) => loc.question_politicalSpectrum_answerMin),
     maxText: LocKey((loc) => loc.question_politicalSpectrum_answerMax),
+    middleText: LocKey((loc) => loc.question_politicalSpectrum_answerMiddle),
     navigationPath: 'politics',
     section: ProfileSection.politics,
   ),

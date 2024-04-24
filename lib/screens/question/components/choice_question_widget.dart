@@ -1,4 +1,4 @@
-import 'package:deep_connections/models/question/answer.dart';
+import 'package:deep_connections/models/question/choice.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/complete_profile/components/gender_button.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
@@ -11,19 +11,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChoiceQuestionWidget extends StatefulWidget {
   final MultipleChoiceQuestion question;
-  final QuestionResponseNotifier questionResponse;
+  final AnswerNotifier answerNotifier;
 
   const ChoiceQuestionWidget(
-      {super.key, required this.question, required this.questionResponse});
+      {super.key, required this.question, required this.answerNotifier});
 
   @override
   State<ChoiceQuestionWidget> createState() => _ChoiceQuestionWidgetState();
 }
 
 class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
-  late List<Answer> selectedAnswers = (widget.questionResponse.values ?? [])
+  late List<Choice> selectedAnswers = (widget.answerNotifier.values ?? [])
       .mapNotNull((response) =>
-          widget.question.answers.firstWhereOrNull((e) => e.value == response));
+          widget.question.choices.firstWhereOrNull((e) => e.value == response));
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +37,10 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
         Expanded(
           child: DcListView(
             children: [
-              ...widget.question.answers.map((a) => SelectableButton(
+              ...widget.question.choices.map((a) => SelectableButton(
                   onPressed: () => _onAnswerPressed(a),
                   selected: selectedAnswers.contains(a),
-                  text: a.answerText.localize(loc)))
+                  text: a.text.localize(loc)))
             ],
           ),
         ),
@@ -48,7 +48,7 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
     );
   }
 
-  _onAnswerPressed(Answer a) {
+  _onAnswerPressed(Choice a) {
     setState(() {
       // If the answer is already selected, remove it
       if (selectedAnswers.contains(a)) {
@@ -70,7 +70,7 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
       final isValidAnswer =
           widget.question.minChoices <= selectedAnswers.length &&
               selectedAnswers.length <= widget.question.maxChoices;
-      widget.questionResponse.values = isValidAnswer
+      widget.answerNotifier.values = isValidAnswer
           ? selectedAnswers.map((answer) => answer.value).toList()
           : null;
     });

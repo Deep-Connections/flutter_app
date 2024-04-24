@@ -1,8 +1,8 @@
-import 'package:deep_connections/models/question/response/question_response.dart';
+import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/material.dart';
 
-class QuestionResponseNotifier extends ChangeNotifier {
+class AnswerNotifier extends ChangeNotifier {
   List<String>? _values;
 
   List<String>? get values => _values;
@@ -14,6 +14,5 @@ class QuestionResponseNotifier extends ChangeNotifier {
     }
   }
 
-  QuestionResponse? get response =>
-      _values?.let((it) => QuestionResponse(response: it));
+  Answer? get response => _values?.let((it) => Answer(response: it));
 }

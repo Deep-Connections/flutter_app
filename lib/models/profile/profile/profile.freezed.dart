@@ -28,8 +28,7 @@ mixin _$Profile {
   int? get height => throw _privateConstructorUsedError;
   Picture? get profilePicture => throw _privateConstructorUsedError;
   List<Picture>? get pictures => throw _privateConstructorUsedError;
-  Map<String, QuestionResponse>? get questions =>
-      throw _privateConstructorUsedError;
+  Map<String, Answer>? get questions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +49,7 @@ abstract class $ProfileCopyWith<$Res> {
       int? height,
       Picture? profilePicture,
       List<Picture>? pictures,
-      Map<String, QuestionResponse>? questions});
+      Map<String, Answer>? questions});
 
   $PictureCopyWith<$Res>? get profilePicture;
 }
@@ -114,7 +113,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       questions: freezed == questions
           ? _value.questions
           : questions // ignore: cast_nullable_to_non_nullable
-              as Map<String, QuestionResponse>?,
+              as Map<String, Answer>?,
     ) as $Val);
   }
 
@@ -147,7 +146,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       int? height,
       Picture? profilePicture,
       List<Picture>? pictures,
-      Map<String, QuestionResponse>? questions});
+      Map<String, Answer>? questions});
 
   @override
   $PictureCopyWith<$Res>? get profilePicture;
@@ -210,7 +209,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
       questions: freezed == questions
           ? _value._questions
           : questions // ignore: cast_nullable_to_non_nullable
-              as Map<String, QuestionResponse>?,
+              as Map<String, Answer>?,
     ));
   }
 }
@@ -227,7 +226,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       this.height,
       this.profilePicture,
       final List<Picture>? pictures,
-      final Map<String, QuestionResponse>? questions})
+      final Map<String, Answer>? questions})
       : _genderPreferences = genderPreferences,
         _pictures = pictures,
         _questions = questions,
@@ -269,9 +268,9 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
     return EqualUnmodifiableListView(value);
   }
 
-  final Map<String, QuestionResponse>? _questions;
+  final Map<String, Answer>? _questions;
   @override
-  Map<String, QuestionResponse>? get questions {
+  Map<String, Answer>? get questions {
     final value = _questions;
     if (value == null) return null;
     if (_questions is EqualUnmodifiableMapView) return _questions;
@@ -359,7 +358,7 @@ abstract class _Profile extends Profile {
       final int? height,
       final Picture? profilePicture,
       final List<Picture>? pictures,
-      final Map<String, QuestionResponse>? questions}) = _$ProfileImpl;
+      final Map<String, Answer>? questions}) = _$ProfileImpl;
   const _Profile._() : super._();
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
@@ -381,7 +380,7 @@ abstract class _Profile extends Profile {
   @override
   List<Picture>? get pictures;
   @override
-  Map<String, QuestionResponse>? get questions;
+  Map<String, Answer>? get questions;
   @override
   @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>

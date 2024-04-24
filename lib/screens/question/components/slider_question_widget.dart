@@ -6,10 +6,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SliderQuestionWidget extends StatelessWidget {
   final SliderQuestion question;
-  final QuestionResponseNotifier questionResponse;
+  final AnswerNotifier answerNotifier;
 
   const SliderQuestionWidget(
-      {super.key, required this.question, required this.questionResponse});
+      {super.key, required this.question, required this.answerNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class SliderQuestionWidget extends StatelessWidget {
         Row(children: [
           Expanded(
             child: QuestionSlider(
-                question: question, questionResponse: questionResponse),
+                question: question, answerNotifier: answerNotifier),
           ),
         ]),
       ],
@@ -51,10 +51,10 @@ class SliderQuestionWidget extends StatelessWidget {
 
 class QuestionSlider extends StatefulWidget {
   final SliderQuestion question;
-  final QuestionResponseNotifier questionResponse;
+  final AnswerNotifier answerNotifier;
 
   const QuestionSlider(
-      {super.key, required this.question, required this.questionResponse});
+      {super.key, required this.question, required this.answerNotifier});
 
   @override
   State<QuestionSlider> createState() => _QuestionSliderState();
@@ -62,7 +62,7 @@ class QuestionSlider extends StatefulWidget {
 
 class _QuestionSliderState extends State<QuestionSlider> {
   late double sliderValue =
-      double.tryParse(widget.questionResponse.values?.firstOrNull ?? "") ??
+      double.tryParse(widget.answerNotifier.values?.firstOrNull ?? "") ??
           widget.question.defaultValue.toDouble();
 
   @override
@@ -78,7 +78,7 @@ class _QuestionSliderState extends State<QuestionSlider> {
         });
       },
       onChangeEnd: (value) {
-        widget.questionResponse.values = [value.toInt().toString()];
+        widget.answerNotifier.values = [value.toInt().toString()];
       },
     );
   }

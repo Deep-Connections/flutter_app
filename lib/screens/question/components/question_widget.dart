@@ -6,20 +6,19 @@ import 'package:flutter/material.dart';
 
 class QuestionWidget extends StatelessWidget {
   final Question question;
-  final QuestionResponseNotifier questionResponse;
+  final AnswerNotifier answerNotifier;
 
   const QuestionWidget(
-      {super.key, required this.question, required this.questionResponse});
+      {super.key, required this.question, required this.answerNotifier});
 
   @override
   Widget build(BuildContext context) {
     return switch (question) {
       SliderQuestion() => SliderQuestionWidget(
-          question: question as SliderQuestion,
-          questionResponse: questionResponse),
+          question: question as SliderQuestion, answerNotifier: answerNotifier),
       MultipleChoiceQuestion() => ChoiceQuestionWidget(
           question: question as MultipleChoiceQuestion,
-          questionResponse: questionResponse),
+          answerNotifier: answerNotifier),
     };
   }
 }

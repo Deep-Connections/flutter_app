@@ -1,21 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'question_response.dart';
+part of 'answer.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$QuestionResponseImpl _$$QuestionResponseImplFromJson(
-        Map<String, dynamic> json) =>
-    _$QuestionResponseImpl(
+_$AnswerImpl _$$AnswerImplFromJson(Map<String, dynamic> json) => _$AnswerImpl(
       response: (json['response'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
     );
 
-Map<String, dynamic> _$$QuestionResponseImplToJson(
-    _$QuestionResponseImpl instance) {
+Map<String, dynamic> _$$AnswerImplToJson(_$AnswerImpl instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {

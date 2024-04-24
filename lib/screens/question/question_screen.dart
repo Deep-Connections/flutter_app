@@ -27,7 +27,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
-  final questionResponse = QuestionResponseNotifier();
+  final answerNotifier = AnswerNotifier();
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +37,19 @@ class _QuestionScreenState extends State<QuestionScreen> {
         data: widget.profileService.profileStream,
         builder: (context, profile) {
           final initialAnswer = widget.question.fromProfile(profile)?.response;
-          questionResponse.values = initialAnswer;
+          answerNotifier.values = initialAnswer;
           return DcColumn(children: [
             Text(widget.question.questionText.localize(loc),
                 style: Theme.of(context).textTheme.headlineSmall),
             Expanded(
                 child: QuestionWidget(
-                    question: widget.question,
-                    questionResponse: questionResponse)),
+                    question: widget.question, answerNotifier: answerNotifier)),
             ListenableBuilder(
-                listenable: questionResponse,
+                listenable: answerNotifier,
                 builder: (context, child) {
                   return ElevatedButton(
-                      onPressed:
-                          questionResponse.response?.let((response) => () {
-                                widget.onSubmit();
+                      onPressed: answerNotifier.response?.let((response) => () {
+                            widget.onSubmit();
                                 widget.profileService.updateProfile((p) =>
                                     widget.question.updateProfile(p, response));
                               }),

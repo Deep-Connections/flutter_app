@@ -7,4 +7,4 @@ import 'question/politics_questions.dart';
 final List<Question> additionalQuestionList =
     habitsQuestionList + politicsQuestionList;
 
-final allQuestions = initialQuestionList + additionalQuestionList;
+final allQuestionsList = initialQuestionList + additionalQuestionList;
