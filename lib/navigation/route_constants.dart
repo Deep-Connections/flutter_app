@@ -43,20 +43,6 @@ class BottomNavRoute extends NavRoute {
 
 const homeRoute = "/";
 
-class MainRoutes {
-  static const messages = NavRoute('messages', null, pathParameter: 'chatId');
-  static const matchProfile = NavRoute('profile', messages);
-}
-
-class BottomNavigation {
-  static final profile = BottomNavRoute(
-      'profile', null, LocKey((loc) => loc.profile_title), Icons.person);
-  static final chat = BottomNavRoute(
-      'chat', null, LocKey((loc) => loc.chat_title), Icons.message_rounded);
-  static final values = [chat, profile];
-  static final main = values.first;
-}
-
 class AuthRoutes {
   static const NavRoute main = NavRoute('auth', null);
   static const NavRoute login = NavRoute('login', main);
@@ -68,6 +54,15 @@ class InitialProfileRoutes {
   static const NavRoute main = NavRoute('initial_profile', null);
 }
 
+class BottomNavigation {
+  static final profile = BottomNavRoute(
+      'profile', null, LocKey((loc) => loc.profile_title), Icons.person);
+  static final chat = BottomNavRoute(
+      'smatches', null, LocKey((loc) => loc.chat_title), Icons.message_rounded);
+  static final values = [chat, profile];
+  static final main = values.first;
+}
+
 class ProfileRoutes {
   static final NavRoute additional =
       NavRoute('additional', BottomNavigation.profile);
@@ -75,4 +70,10 @@ class ProfileRoutes {
       pathParameter: 'sectionPath');
   static final NavRoute step =
       NavRoute('step', section, pathParameter: 'stepPath');
+}
+
+class MainRoutes {
+  static const match = NavRoute('smatch', null);
+  static const messages = NavRoute('messages', match, pathParameter: 'chatId');
+  static const matchProfile = NavRoute('profile', messages);
 }
