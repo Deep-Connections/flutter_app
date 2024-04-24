@@ -1,4 +1,3 @@
-import 'package:deep_connections/screens/components/form/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,20 +29,22 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
       listenable: widget.fieldInput,
       builder: (context, _) {
         final fieldInput = widget.fieldInput;
-        return CustomTextFormField(
+        return TextFormField(
           onChanged: fieldInput.onChanged,
           controller: fieldInput.controller,
           keyboardType: fieldInput.keyboardType,
           maxLength: fieldInput.maxLength,
           inputFormatters: fieldInput.inputFormatter,
-          placeholder: fieldInput.placeholder?.localize(loc),
-          errorText: widget.error,
-          suffixIcon: fieldInput.obscureText
-              ? IconButton(
-                  onPressed: () => setState(() => obscureText = !obscureText),
-                  icon: Icon(
-                      obscureText ? Icons.visibility : Icons.visibility_off))
-              : null,
+          decoration: InputDecoration(
+            hintText: fieldInput.placeholder?.localize(loc),
+            errorText: widget.error,
+            suffixIcon: fieldInput.obscureText
+                ? IconButton(
+                    onPressed: () => setState(() => obscureText = !obscureText),
+                    icon: Icon(
+                        obscureText ? Icons.visibility : Icons.visibility_off))
+                : null,
+          ),
           validator: (value) =>
               fieldInput.validator(fieldInput.preProcess(value), loc),
           textInputAction: widget.textInputAction,
