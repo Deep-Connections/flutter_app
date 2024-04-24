@@ -56,7 +56,7 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     ),
   ),
   ProfileNavigationStepWithWidget(
-    navigationPath: 'language2',
+    navigationPath: 'languages',
     fromProfile: (profile) {
       final languageCodes = profile.languageCodes;
       final languageWithCountryCodes = profile.languageWithCountryCodes;
