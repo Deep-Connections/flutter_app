@@ -14,6 +14,7 @@ import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 // Layout for messages https://medium.com/@ximya/tips-and-tricks-for-implementing-a-successful-chat-ui-in-flutter-190cd81bdc64
@@ -45,10 +46,11 @@ class MessageListScreen extends StatelessWidget {
                         return GestureDetector(
                           onTap: () => context.push(
                               MainRoutes.matchProfile.parameterPath([chatId])),
+                          behavior: HitTestBehavior.opaque,
                           child: Row(children: [
                             AvatarImage(imageUrl: profile?.profilePicture?.url),
                             const SizedBox(width: standardPadding),
-                            Text(profile?.firstName ?? "")
+                            Expanded(child: Text(profile?.firstName ?? "")),
                           ]),
                         );
                       })),
