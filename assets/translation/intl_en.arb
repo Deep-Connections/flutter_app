@@ -67,7 +67,6 @@
   "completeProfile_sizeTitle": "How tall are you?",
   "completeProfile_languageTitle": "What languages do you speak?",
   "completeProfile_languagePlaceholder": "Type in your language",
-  "completeProfile_languageYourLanguages": "Your languages:",
   "completeProfile_languageNoLanguagesSelected": "No languages selected",
   "completeProfile_languageError": "Please select a language",
   "section_profile": "Profile",

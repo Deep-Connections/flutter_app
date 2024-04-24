@@ -87,18 +87,9 @@ class _LanguageProfileScreenState extends State<LanguageProfileScreen> {
               ),
               child: DcListView(
                 children: [
-                  Text(
-                    loc.completeProfile_languageYourLanguages,
-                    style: theme.textTheme.labelLarge,
-                  ),
                   Wrap(
                     spacing: standardPadding / 2,
                     children: [
-                      /* if (selectedCountries.isEmpty)
-                    Text(loc.completeProfile_languageNoLanguagesSelected,
-                        style: theme.textTheme.labelMedium?.copyWith(
-                            color: theme.colorScheme.onSurface
-                                .withOpacity(0.5))),*/
                       ...selectedLanguages.entries.map(
                         (lang) => Chip(
                           label: Text(
