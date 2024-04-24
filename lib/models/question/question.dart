@@ -36,14 +36,14 @@ sealed class Question extends ProfileNavigationStep<Answer> {
 class MultipleChoiceQuestion extends Question {
   final int minChoices;
   final int maxChoices;
-  final List<Choice> answers;
+  final List<Choice> choices;
 
   const MultipleChoiceQuestion({
     required super.id,
     required super.questionText,
     this.minChoices = 1,
     this.maxChoices = 1,
-    required this.answers,
+    required this.choices,
     required super.navigationPath,
     required super.section,
   });
