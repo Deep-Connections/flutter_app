@@ -1,5 +1,5 @@
 import 'package:deep_connections/models/navigation/profile_section.dart';
-import 'package:deep_connections/models/question/answer.dart';
+import 'package:deep_connections/models/question/choice.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 

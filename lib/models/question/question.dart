@@ -1,24 +1,14 @@
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
-import 'package:deep_connections/models/question/answer.dart';
-import 'package:deep_connections/models/question/response/question_response.dart';
+import 'package:deep_connections/models/question/answer/answer.dart';
+import 'package:deep_connections/models/question/choice.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-sealed class Question extends ProfileNavigationStep<QuestionResponse> {
+sealed class Question extends ProfileNavigationStep<Answer> {
   final String id;
   final LocKey questionText;
-
-  Profile updateProfile(Profile profile, QuestionResponse questionResponse) {
-    Map<String, QuestionResponse> newQuestions =
-        Map.from(profile.questions ?? {});
-    newQuestions[id] = questionResponse;
-    return profile.copyWith(questions: newQuestions);
-  }
-
-  @override
-  QuestionResponse? fromProfile(Profile profile) {
-    return profile.questions?[id];
-  }
 
   const Question({
     required this.id,
@@ -26,12 +16,27 @@ sealed class Question extends ProfileNavigationStep<QuestionResponse> {
     required super.navigationPath,
     required super.section,
   }) : super(isEditable: true, title: questionText);
+
+  Profile updateProfile(Profile profile, Answer questionResponse) {
+    Map<String, Answer> newQuestions = Map.from(profile.questions ?? {});
+    newQuestions[id] = questionResponse;
+    return profile.copyWith(questions: newQuestions);
+  }
+
+  @override
+  Answer? fromProfile(Profile profile) {
+    return profile.questions?[id];
+  }
+
+  String? localizeAnswer(Answer response, AppLocalizations loc) {
+    return null;
+  }
 }
 
 class MultipleChoiceQuestion extends Question {
   final int minChoices;
   final int maxChoices;
-  final List<Answer> answers;
+  final List<Choice> answers;
 
   const MultipleChoiceQuestion({
     required super.id,

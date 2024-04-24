@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/navigation/profile_section.dart';
-import 'package:deep_connections/models/question/answer.dart';
+import 'package:deep_connections/models/question/answer/answer.dart';
+import 'package:deep_connections/models/question/choice.dart';
 import 'package:deep_connections/models/question/question.dart';
-import 'package:deep_connections/models/question/response/question_response.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,7 +35,7 @@ void main() {
       (WidgetTester tester) async {
     // Select answer 3 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          question1.id: const QuestionResponse(response: ['3'])
+          question1.id: const Answer(response: ['3'])
         }));
 
     // Setup
@@ -92,7 +92,7 @@ void main() {
       (WidgetTester tester) async {
     // Select answer 2 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          question2.id: const QuestionResponse(response: ['2'])
+          question2.id: const Answer(response: ['2'])
         }));
 
     // Setup
