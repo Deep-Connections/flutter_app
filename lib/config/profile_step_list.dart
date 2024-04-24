@@ -57,8 +57,14 @@ final List<ProfileNavigationStep> initialProfileStepList = [
   ),
   ProfileNavigationStepWithWidget(
     navigationPath: 'language2',
-    fromProfile: (profile) => profile.languageCodes,
-    title: LocKey((loc) => loc.question_languages_question),
+    fromProfile: (profile) {
+      final languageCodes = profile.languageCodes;
+      final languageWithCountryCodes = profile.languageWithCountryCodes;
+      if (languageCodes != null && languageWithCountryCodes != null) {
+        return [languageCodes, languageWithCountryCodes];
+      }
+    },
+    title: LocKey((loc) => loc.completeProfile_languageTitle),
     createWidget: (profileService, navigateToNext, submitText) =>
         LanguageProfileScreen(
       profileService: profileService,
