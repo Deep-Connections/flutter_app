@@ -138,10 +138,10 @@ class SliderQuestion extends Question {
       return middleText!.localize(loc);
     }
     if (sliderValue < middleValue) {
-      return minText.localize(loc);
+      return loc.questionType_slider_tendency(minText.localize(loc));
     }
     if (sliderValue > middleValue) {
-      return maxText.localize(loc);
+      return loc.questionType_slider_tendency(maxText.localize(loc));
     }
     return null;
   }
