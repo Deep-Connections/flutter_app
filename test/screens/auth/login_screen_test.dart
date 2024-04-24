@@ -42,10 +42,10 @@ void main() {
     // enter correct email and password
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_emailPlaceholder),
-        "$CORRECT_EMAIL "); // Check that email is trimmed
+        "$correctEmail "); // Check that email is trimmed
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_passwordPlaceholder),
-        CORRECT_PASSWORD);
+        correctPassword);
     await tester.pump();
     await tester.tap(find.text(loc.login_loginButton));
     await tester.pumpAndSettle();

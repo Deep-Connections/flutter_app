@@ -53,7 +53,7 @@ void main() {
     // enter valid and password
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_passwordPlaceholder),
-        CORRECT_PASSWORD);
+        correctPassword);
     await tester.pump();
     await tester.tap(find.text(loc.register_registerButton));
     await tester.pumpAndSettle();

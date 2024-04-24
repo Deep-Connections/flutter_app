@@ -3,8 +3,8 @@ import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
-const CORRECT_EMAIL = 'correct@email.com';
-const CORRECT_PASSWORD = 'Correct123. ';
+const correctEmail = 'correct@email.com';
+const correctPassword = 'Correct123. ';
 
 class MockAuthService implements AuthService {
   var isSignedIn = false;
@@ -13,7 +13,7 @@ class MockAuthService implements AuthService {
   @override
   Future<Response<DcUser>> loginWithEmail(
       {required String email, required String password}) {
-    if (email == CORRECT_EMAIL && password == CORRECT_PASSWORD) {
+    if (email == correctEmail && password == correctPassword) {
       isSignedIn = true;
       return Future.value(SuccessRes(DcUser(
         email: email,

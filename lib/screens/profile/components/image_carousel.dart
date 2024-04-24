@@ -68,7 +68,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
 }
 
 class _ImageSpinner extends StatelessWidget {
-  const _ImageSpinner({super.key});
+  const _ImageSpinner();
 
   @override
   Widget build(BuildContext context) {
