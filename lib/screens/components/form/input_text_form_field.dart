@@ -3,12 +3,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'field_input/field_input.dart';
 
-class DcTextFormField extends StatefulWidget {
+class InputTextFormField extends StatefulWidget {
   final FieldInput fieldInput;
   final TextInputAction textInputAction;
   final String? error;
 
-  const DcTextFormField({
+  const InputTextFormField({
     Key? key,
     required this.fieldInput,
     this.textInputAction = TextInputAction.next,
@@ -16,10 +16,10 @@ class DcTextFormField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DcTextFormField> createState() => _DcTextFormFieldState();
+  State<InputTextFormField> createState() => _InputTextFormFieldState();
 }
 
-class _DcTextFormFieldState extends State<DcTextFormField> {
+class _InputTextFormFieldState extends State<InputTextFormField> {
   var obscureText = true;
 
   @override

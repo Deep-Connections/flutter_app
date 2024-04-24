@@ -40,6 +40,7 @@ dependencies:
   #Images
   firebase_storage: 11.7.0
   image_picker: 1.0.8
+  cached_network_image: 3.3.1
 
   #serialization
   json_annotation: 4.8.1
@@ -53,6 +54,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: 0.18.1
+  # select language in profile
+  flutter_localized_locales: 2.0.5
+  flutter_typeahead: 5.2.0
 
   # Navigation
   go_router: 13.2.2
@@ -68,7 +72,6 @@ dependencies:
   # Social Signin
   google_sign_in: 6.2.1
   sign_in_button: 3.2.0
-  cached_network_image: 3.3.1
 
 dev_dependencies:
   flutter_test:

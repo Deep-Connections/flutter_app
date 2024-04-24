@@ -7,7 +7,7 @@ import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../components/form/dc_text_form_field.dart';
+import '../components/form/input_text_form_field.dart';
 
 class NameProfileScreen extends StatefulWidget {
   final ProfileService profileService;
@@ -40,7 +40,7 @@ class _NameProfileScreenState extends State<NameProfileScreen> {
         name.value = profile.firstName;
         return DcListView(
           children: [
-            DcTextFormField(
+            InputTextFormField(
                 fieldInput: name, textInputAction: TextInputAction.done)
           ],
         );

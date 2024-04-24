@@ -5,6 +5,7 @@ import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 
@@ -34,7 +35,8 @@ class App extends StatelessWidget {
       scaffoldMessengerKey: globalSnackBarMessengerKey,
       title: appName,
       theme: theme(),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      localizationsDelegates: AppLocalizations.localizationsDelegates +
+          [const LocaleNamesLocalizationsDelegate()],
       supportedLocales: AppLocalizations.supportedLocales,
     );
   }

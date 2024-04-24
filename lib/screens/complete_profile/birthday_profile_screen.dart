@@ -7,7 +7,7 @@ import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../components/form/dc_text_form_field.dart';
+import '../components/form/input_text_form_field.dart';
 
 class BirthdayProfileScreen extends StatefulWidget {
   final ProfileService profileService;
@@ -43,7 +43,7 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
           birthdate.setWithContext(context, profile.birthdate);
           return DcListView(
             children: [
-              DcTextFormField(
+              InputTextFormField(
                   fieldInput: birthdate, textInputAction: TextInputAction.done),
             ],
           );

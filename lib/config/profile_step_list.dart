@@ -4,6 +4,7 @@ import 'package:deep_connections/models/navigation/profile_navigation_step.dart'
 import 'package:deep_connections/screens/complete_profile/birthday_profile_screen.dart';
 import 'package:deep_connections/screens/complete_profile/gender/gender_profile_screen.dart';
 import 'package:deep_connections/screens/complete_profile/gender_preferences/gender_preferences_profile_screen.dart';
+import 'package:deep_connections/screens/complete_profile/language_profile.dart';
 import 'package:deep_connections/screens/complete_profile/name_profile_screen.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
@@ -49,6 +50,23 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     title: LocKey((loc) => loc.completeProfile_genderPreferencesTitle),
     createWidget: (profileService, navigateToNext, submitText) =>
         GenderPreferencesProfileScreen(
+      profileService: profileService,
+      navigateToNext: navigateToNext,
+      submitText: submitText,
+    ),
+  ),
+  ProfileNavigationStepWithWidget(
+    navigationPath: 'languages',
+    fromProfile: (profile) {
+      final languageCodes = profile.languageCodes;
+      final languageWithCountryCodes = profile.languageWithCountryCodes;
+      if (languageCodes != null && languageWithCountryCodes != null) {
+        return [languageCodes, languageWithCountryCodes];
+      }
+    },
+    title: LocKey((loc) => loc.completeProfile_languageTitle),
+    createWidget: (profileService, navigateToNext, submitText) =>
+        LanguageProfileScreen(
       profileService: profileService,
       navigateToNext: navigateToNext,
       submitText: submitText,

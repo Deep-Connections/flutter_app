@@ -15,7 +15,7 @@ import 'package:sign_in_button/sign_in_button.dart';
 
 import '../../config/constants.dart';
 import '../../services/auth/auth_service.dart';
-import '../components/form/dc_text_form_field.dart';
+import '../components/form/input_text_form_field.dart';
 
 class LoginScreen extends StatefulWidget {
   final AuthService auth;
@@ -70,8 +70,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: DcColumn(
           children: [
             const SizedBox(height: standardPadding),
-            DcTextFormField(fieldInput: email),
-            DcTextFormField(
+            InputTextFormField(fieldInput: email),
+            InputTextFormField(
               fieldInput: password,
               textInputAction: TextInputAction.done,
               error: apiError,

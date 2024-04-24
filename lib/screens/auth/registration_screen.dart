@@ -1,8 +1,8 @@
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
-import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
 import 'package:deep_connections/screens/components/form/field_input/text_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
+import 'package:deep_connections/screens/components/form/input_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -44,8 +44,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         child: DcColumn(
           children: [
             const SizedBox(height: standardPadding),
-            DcTextFormField(fieldInput: email),
-            DcTextFormField(
+            InputTextFormField(fieldInput: email),
+            InputTextFormField(
                 fieldInput: password,
                 textInputAction: TextInputAction.done,
                 error: apiError),

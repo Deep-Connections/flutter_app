@@ -18,6 +18,13 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['birthdate'] as String),
       height: json['height'] as int?,
+      languageCodes: (json['languageCodes'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      languageWithCountryCodes:
+          (json['languageWithCountryCodes'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList(),
       profilePicture: json['profilePicture'] == null
           ? null
           : Picture.fromJson(json['profilePicture'] as Map<String, dynamic>),
@@ -44,6 +51,8 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
   writeNotNull('genderPreferences', instance.genderPreferences);
   writeNotNull('birthdate', instance.birthdate?.toIso8601String());
   writeNotNull('height', instance.height);
+  writeNotNull('languageCodes', instance.languageCodes);
+  writeNotNull('languageWithCountryCodes', instance.languageWithCountryCodes);
   writeNotNull('profilePicture', instance.profilePicture?.toJson());
   writeNotNull('pictures', instance.pictures?.map((e) => e.toJson()).toList());
   writeNotNull(
