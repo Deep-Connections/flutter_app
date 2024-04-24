@@ -1,14 +1,15 @@
+import 'package:deep_connections/screens/components/form/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'field_input/field_input.dart';
 
-class DcTextFormField extends StatefulWidget {
+class InputTextFormField extends StatefulWidget {
   final FieldInput fieldInput;
   final TextInputAction textInputAction;
   final String? error;
 
-  const DcTextFormField({
+  const InputTextFormField({
     Key? key,
     required this.fieldInput,
     this.textInputAction = TextInputAction.next,
@@ -16,10 +17,10 @@ class DcTextFormField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<DcTextFormField> createState() => _DcTextFormFieldState();
+  State<InputTextFormField> createState() => _InputTextFormFieldState();
 }
 
-class _DcTextFormFieldState extends State<DcTextFormField> {
+class _InputTextFormFieldState extends State<InputTextFormField> {
   var obscureText = true;
 
   @override
@@ -29,22 +30,20 @@ class _DcTextFormFieldState extends State<DcTextFormField> {
       listenable: widget.fieldInput,
       builder: (context, _) {
         final fieldInput = widget.fieldInput;
-        return TextFormField(
+        return CustomTextFormField(
           onChanged: fieldInput.onChanged,
           controller: fieldInput.controller,
           keyboardType: fieldInput.keyboardType,
           maxLength: fieldInput.maxLength,
           inputFormatters: fieldInput.inputFormatter,
-          decoration: InputDecoration(
-            hintText: fieldInput.placeholder?.localize(loc),
-            errorText: widget.error,
-            suffixIcon: fieldInput.obscureText
-                ? IconButton(
-                    onPressed: () => setState(() => obscureText = !obscureText),
-                    icon: Icon(
-                        obscureText ? Icons.visibility : Icons.visibility_off))
-                : null,
-          ),
+          placeholder: fieldInput.placeholder?.localize(loc),
+          errorText: widget.error,
+          suffixIcon: fieldInput.obscureText
+              ? IconButton(
+                  onPressed: () => setState(() => obscureText = !obscureText),
+                  icon: Icon(
+                      obscureText ? Icons.visibility : Icons.visibility_off))
+              : null,
           validator: (value) =>
               fieldInput.validator(fieldInput.preProcess(value), loc),
           textInputAction: widget.textInputAction,

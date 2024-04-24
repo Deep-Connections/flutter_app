@@ -1,8 +1,8 @@
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
-import 'package:deep_connections/screens/components/form/dc_text_form_field.dart';
 import 'package:deep_connections/screens/components/form/field_input/text_field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
+import 'package:deep_connections/screens/components/form/input_text_form_field.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +35,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               Text(loc.forgotPassword_infoText),
               Form(
                   key: buttonInput.formKey,
-                  child: DcTextFormField(fieldInput: email)),
+                  child: InputTextFormField(fieldInput: email)),
               FormButton(
                   text: loc.forgotPassword_resetButton,
                   buttonInput: buttonInput,

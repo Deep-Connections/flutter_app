@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../components/form/button_input.dart';
-import '../components/form/dc_text_form_field.dart';
+import '../components/form/input_text_form_field.dart';
 
 class HeightProfileScreen extends StatefulWidget {
   final ProfileService profileService;
@@ -41,7 +41,7 @@ class _HeightProfileScreenState extends State<HeightProfileScreen> {
         builder: (BuildContext context, Profile profile) {
           height.value = profile.height;
           return DcListView(children: [
-            DcTextFormField(
+            InputTextFormField(
               fieldInput: height,
               textInputAction: TextInputAction.done,
             )
