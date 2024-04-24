@@ -64,7 +64,7 @@ class _LanguageProfileScreenState extends State<LanguageProfileScreen> {
                 .map((lang) => MapEntry(lang.key, lang.value)));
           }
           return BaseProfileScreen(
-              title: loc.question_languages_question,
+              title: loc.completeProfile_languageTitle,
               bottom: ElevatedButton(
                 onPressed: () {
                   if (selectedLanguages.isEmpty) {
