@@ -7,6 +7,7 @@ import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:deep_connections/utils/logging.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -34,7 +35,7 @@ class ChatService {
     ..addStream(_userService.userIdStream.switchMap((userId) {
       if (userId == null) return const Stream.empty();
 
-      print("Chat Stream reinitialized");
+      logger.d("Chat Stream reinitialized");
       return _chatRef
           .where(SerializedField.participantIds, arrayContains: userId)
           .orderBy(SerializedField.timestamp, descending: true)

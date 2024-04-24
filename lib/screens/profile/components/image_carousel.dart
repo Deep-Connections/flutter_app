@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/screens/components/progress_indicator.dart';
+import 'package:deep_connections/utils/logging.dart';
 import 'package:flutter/material.dart';
 
 class ImageCarousel extends StatefulWidget {
@@ -26,7 +27,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
     Future.delayed(const Duration(microseconds: 1), () {
       if (mounted) {
         setState(() {
-          print("reset image carousel after error url");
+          logger.d("reset image carousel after error url");
           willUpdate = false;
         });
       }

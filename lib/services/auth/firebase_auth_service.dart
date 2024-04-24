@@ -1,6 +1,7 @@
 import 'package:deep_connections/models/user/user.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
 import 'package:deep_connections/services/utils/response.dart';
+import 'package:deep_connections/utils/logging.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -39,7 +40,7 @@ class FirebaseAuthService implements AuthService {
       return SuccessRes(res);
     } on FirebaseAuthException catch (e) {
       final uiMessage = getAuthExceptionMessage(e);
-      print(e.stackTrace);
+      logger.d(e.stackTrace);
       return ExceptionRes(e, uiMessage: uiMessage);
     }
   }
