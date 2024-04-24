@@ -92,6 +92,7 @@ class SliderQuestion extends Question {
   final int defaultValue;
   final LocKey minText;
   final LocKey maxText;
+  final LocKey? middleText;
 
   get divisions => maxValue - minValue;
 
@@ -103,7 +104,45 @@ class SliderQuestion extends Question {
     int? defaultValue,
     required this.minText,
     required this.maxText,
+    this.middleText,
     required super.navigationPath,
     required super.section,
   }) : defaultValue = defaultValue ?? (minValue + maxValue) ~/ 2;
+
+  int? _validatedSliderValue(List<String>? value) {
+    if (value == null || value.isEmpty) return null;
+    final intValue = int.tryParse(value.first);
+    final clampedValue = intValue?.clamp(minValue, maxValue);
+    if (intValue != null && intValue == clampedValue) return intValue;
+    return null;
+  }
+
+  @override
+  Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
+    final mySliderValue = _validatedSliderValue(myAnswer.response);
+    final otherSliderValue = _validatedSliderValue(otherAnswer.response);
+    if (mySliderValue != null && mySliderValue == otherSliderValue) {
+      return Answer(response: [mySliderValue.toString()]);
+    }
+    return null;
+  }
+
+  @override
+  String? localizeAnswer(Answer answer, AppLocalizations loc) {
+    final int? sliderValue = _validatedSliderValue(answer.response);
+    if (sliderValue == null) return null;
+    if (sliderValue == minValue) return minText.localize(loc);
+    if (sliderValue == maxValue) return maxText.localize(loc);
+    final middleValue = (minValue + maxValue) / 2;
+    if (middleText != null && sliderValue.toDouble() == middleValue) {
+      return middleText!.localize(loc);
+    }
+    if (sliderValue < middleValue) {
+      return minText.localize(loc);
+    }
+    if (sliderValue > middleValue) {
+      return maxText.localize(loc);
+    }
+    return null;
+  }
 }

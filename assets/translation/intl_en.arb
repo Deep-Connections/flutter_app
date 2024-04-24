@@ -81,6 +81,7 @@
   "question_politicalSpectrum_question": "Where do you see yourself on the political spectrum?",
   "question_politicalSpectrum_answerMin": "left",
   "question_politicalSpectrum_answerMax": "right",
+  "question_politicalSpectrum_answerMiddle": "center",
   "question_languages_question": "What languages do you speak?",
   "question_languages_answer1": "English",
   "question_languages_answer2": "German",
