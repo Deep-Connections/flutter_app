@@ -1,5 +1,5 @@
 import 'package:deep_connections/models/profile/picture/picture.dart';
-import 'package:deep_connections/models/question/response/question_response.dart';
+import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,7 +19,7 @@ class Profile with _$Profile {
     int? height,
     Picture? profilePicture,
     List<Picture>? pictures,
-    Map<String, QuestionResponse>? questions,
+    Map<String, Answer>? questions,
   }) = _Profile;
 
   String? get mainPictureUrl => pictures?.lastOrNull?.url;

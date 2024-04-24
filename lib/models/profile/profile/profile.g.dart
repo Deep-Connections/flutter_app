@@ -25,8 +25,7 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
           ?.map((e) => Picture.fromJson(e as Map<String, dynamic>))
           .toList(),
       questions: (json['questions'] as Map<String, dynamic>?)?.map(
-        (k, e) =>
-            MapEntry(k, QuestionResponse.fromJson(e as Map<String, dynamic>)),
+        (k, e) => MapEntry(k, Answer.fromJson(e as Map<String, dynamic>)),
       ),
     );
 
