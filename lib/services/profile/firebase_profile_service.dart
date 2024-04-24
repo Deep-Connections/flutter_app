@@ -20,11 +20,10 @@ import '../utils/response.dart';
 @Singleton(as: ProfileService)
 class FirebaseProfileService implements ProfileService {
   final UserService _userService;
+  final FirebaseFirestore _firestore;
+  final FirebaseStorage _storage;
 
-  FirebaseProfileService(this._userService);
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
+  FirebaseProfileService(this._userService, this._firestore, this._storage);
 
   CollectionReference<Profile> get _profileReference =>
       _firestore.collection(Collection.profiles).withConverter<Profile>(
