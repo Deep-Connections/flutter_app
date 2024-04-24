@@ -23,7 +23,7 @@ class ChoiceQuestionWidget extends StatefulWidget {
 class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
   late List<Choice> selectedAnswers = (widget.answerNotifier.values ?? [])
       .mapNotNull((response) =>
-          widget.question.answers.firstWhereOrNull((e) => e.value == response));
+          widget.question.choices.firstWhereOrNull((e) => e.value == response));
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
         Expanded(
           child: DcListView(
             children: [
-              ...widget.question.answers.map((a) => SelectableButton(
+              ...widget.question.choices.map((a) => SelectableButton(
                   onPressed: () => _onAnswerPressed(a),
                   selected: selectedAnswers.contains(a),
                   text: a.text.localize(loc)))

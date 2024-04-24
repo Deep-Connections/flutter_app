@@ -16,7 +16,7 @@ void main() {
   final question1 = MultipleChoiceQuestion(
     id: '1',
     questionText: LocKey((loc) => loc.question_relationshipType_question),
-    answers: [
+    choices: [
       Choice('1', LocKey((loc) => loc.question_relationshipType_answer1)),
       Choice('2', LocKey((loc) => loc.question_relationshipType_answer2)),
       Choice('3', LocKey((loc) => loc.question_relationshipType_answer3)),
@@ -76,7 +76,7 @@ void main() {
   final question2 = MultipleChoiceQuestion(
     id: '2',
     questionText: LocKey((loc) => loc.question_relationshipType_question),
-    answers: [
+    choices: [
       Choice('1', LocKey((loc) => loc.question_relationshipType_answer1)),
       Choice('2', LocKey((loc) => loc.question_relationshipType_answer2)),
       Choice('3', LocKey((loc) => loc.question_relationshipType_answer3)),

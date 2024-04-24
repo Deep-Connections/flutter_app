@@ -7,7 +7,7 @@ final List<Question> initialQuestionList = [
   MultipleChoiceQuestion(
     id: 'relationship',
     questionText: LocKey((loc) => loc.question_relationshipType_question),
-    answers: [
+    choices: [
       Choice('1', LocKey((loc) => loc.question_relationshipType_answer1)),
       Choice('2', LocKey((loc) => loc.question_relationshipType_answer2)),
       Choice('3', LocKey((loc) => loc.question_relationshipType_answer3)),
@@ -19,7 +19,7 @@ final List<Question> initialQuestionList = [
   MultipleChoiceQuestion(
     id: "language",
     questionText: LocKey((loc) => loc.question_languages_question),
-    answers: [
+    choices: [
       Choice('1', LocKey((loc) => loc.question_languages_answer1)),
       Choice('2', LocKey((loc) => loc.question_languages_answer2)),
       Choice('3', LocKey((loc) => loc.question_languages_answer3)),
@@ -33,7 +33,7 @@ final List<Question> initialQuestionList = [
   MultipleChoiceQuestion(
     id: 'current_life',
     questionText: LocKey((loc) => loc.question_currentLife_question),
-    answers: [
+    choices: [
       Choice('1', LocKey((loc) => loc.question_currentLife_answer1)),
       Choice('2', LocKey((loc) => loc.question_currentLife_answer2)),
       Choice('3', LocKey((loc) => loc.question_currentLife_answer3)),

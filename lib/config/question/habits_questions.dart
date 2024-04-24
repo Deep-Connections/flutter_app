@@ -7,7 +7,7 @@ final List<Question> habitsQuestionList = [
   MultipleChoiceQuestion(
     id: 'smoking',
     questionText: LocKey((loc) => loc.questionHabit_smoking_question),
-    answers: [
+    choices: [
       Choice('1', LocKey((loc) => loc.questionHabit_smoking_answer1)),
       Choice('2', LocKey((loc) => loc.questionHabit_smoking_answer2)),
       Choice('3', LocKey((loc) => loc.questionHabit_smoking_answer3)),
