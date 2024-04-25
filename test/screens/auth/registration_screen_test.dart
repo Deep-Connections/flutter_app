@@ -1,13 +1,15 @@
 import 'package:deep_connections/screens/auth/registration_screen.dart';
+import 'package:deep_connections/services/auth/firebase_auth_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../services/mock_auth_service.dart';
+import '../../services/unauth_fake_firebase_auth.dart';
 import '../../test_extensions.dart';
 
 void main() {
   testWidgets('Test registration screen with wrong and correct credentials ',
       (WidgetTester tester) async {
-    final auth = MockAuthService();
+    final firebaseAuth = UnauthFakeFirebaseAuth();
+    final auth = FirebaseAuthService(firebaseAuth);
     var registerSuccess = false;
 
     final loc = await tester.pumpLocalizedWidget(RegistrationScreen(
@@ -25,6 +27,20 @@ void main() {
     expect(find.text(loc.input_emailPlaceholder), findsOneWidget);
     expect(find.text(loc.input_passwordPlaceholder), findsOneWidget);
 
+    // enter existing email
+    await tester.enterText(
+        tester.findTextFieldByHintText(loc.input_emailPlaceholder),
+        correctEmail);
+
+    await tester.enterText(
+        tester.findTextFieldByHintText(loc.input_passwordPlaceholder),
+        "Val1dPassw0rd. ");
+
+    await tester.tap(find.text(loc.register_registerButton));
+    await tester.pumpAndSettle();
+    expect(find.text(loc.register_emailExistsError), findsOneWidget);
+
+    // enter new email
     await tester.enterText(
         tester.findTextFieldByHintText(loc.input_emailPlaceholder),
         'example@email.com');
@@ -39,7 +55,7 @@ void main() {
       expect(find.text(expectedError), findsOneWidget,
           reason:
               "When submitting password=$password there was no error with the text=$expectedError)");
-      expect(auth.isRegistered, false);
+      expect(firebaseAuth.isRegistered, false);
       expect(registerSuccess, false);
     }
 
@@ -58,7 +74,7 @@ void main() {
     await tester.tap(find.text(loc.register_registerButton));
     await tester.pumpAndSettle();
 
-    expect(auth.isRegistered, true);
+    expect(firebaseAuth.isRegistered, true);
     expect(registerSuccess, true);
   });
 }

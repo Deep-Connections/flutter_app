@@ -11,7 +11,9 @@ import '../../utils/loc_key.dart';
 
 @Injectable(as: AuthService)
 class FirebaseAuthService implements AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
+
+  FirebaseAuthService(this._auth);
 
   LocKey getAuthExceptionMessage(FirebaseAuthException e) {
     switch (e.code) {
@@ -40,7 +42,7 @@ class FirebaseAuthService implements AuthService {
       return SuccessRes(res);
     } on FirebaseAuthException catch (e) {
       final uiMessage = getAuthExceptionMessage(e);
-      logger.d(e.stackTrace);
+      logger.e(e);
       return ExceptionRes(e, uiMessage: uiMessage);
     }
   }
