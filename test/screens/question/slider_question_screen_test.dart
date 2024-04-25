@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/navigation/profile_section.dart';
-import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
+import 'package:deep_connections/services/profile/firebase_profile_service.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,7 +11,7 @@ import '../../test_extensions.dart';
 
 void main() {
   late bool navigateSuccess;
-  late MockProfileService profileService;
+  late FirebaseProfileService profileService;
 
   final question1 = SliderQuestion(
     id: '1',
@@ -25,14 +25,13 @@ void main() {
   );
 
   setUp(() {
-    profileService = MockProfileService();
+    profileService = getFakeProfileService();
     navigateSuccess = false;
   });
 
   testWidgets('Test question screen with slider question',
       (WidgetTester tester) async {
     // Setup
-    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question1,
         profileService: profileService,
@@ -76,7 +75,6 @@ void main() {
   testWidgets('Test question screen with slider with negative value',
       (WidgetTester tester) async {
     // Setup
-    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question2,
         profileService: profileService,

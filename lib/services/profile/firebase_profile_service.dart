@@ -7,6 +7,7 @@ import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:deep_connections/utils/logging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -19,11 +20,10 @@ import '../utils/response.dart';
 @Singleton(as: ProfileService)
 class FirebaseProfileService implements ProfileService {
   final UserService _userService;
+  final FirebaseFirestore _firestore;
+  final FirebaseStorage _storage;
 
-  FirebaseProfileService(this._userService);
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
+  FirebaseProfileService(this._userService, this._firestore, this._storage);
 
   CollectionReference<Profile> get _profileReference =>
       _firestore.collection(Collection.profiles).withConverter<Profile>(
@@ -34,7 +34,7 @@ class FirebaseProfileService implements ProfileService {
     ..addStream(_userService.userIdStream.switchMap((userId) {
       if (userId == null) return Stream.value(null);
 
-      print("Profile Stream reinitialized");
+      logger.d("Profile Stream reinitialized");
       return _profileReference
           .doc(userId)
           .snapshots()

@@ -1,6 +1,7 @@
 import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/navigation/graphs/auth_nav_graph.dart';
+import 'package:deep_connections/services/profile/firebase_profile_service.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
 import 'package:flutter/material.dart';
@@ -16,17 +17,17 @@ class MockGoRouterState extends Mock implements GoRouterState {}
 class MockBuildContext extends Mock implements BuildContext {}
 
 void main() {
-  late final MockProfileService profileService;
+  late final FirebaseProfileService profileService;
   setUpAll(() {
     // Setup GetIt with a mock UserStatusService
-    profileService = MockProfileService();
+    profileService = getFakeProfileService();
     getIt.registerSingleton(profileService as ProfileService);
     getIt.registerSingleton(UserStatusService(profileService));
   });
 
   test('When logged in the user is redirected to complete_profile', () async {
     // Setup mock to return a UserStatus indicating the user is not authenticated
-    profileService.profile = const Profile();
+    await profileService.updateProfile((p) => const Profile());
 
     final mockGoRouterState = MockGoRouterState();
     when(mockGoRouterState.fullPath).thenReturn("/");
@@ -35,7 +36,7 @@ void main() {
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
         "/initial_profile/name");
 
-    profileService.profile = const Profile(firstName: "John");
+    await profileService.updateProfile((p) => const Profile(firstName: "John"));
     expect(await authRoutes.redirect!(MockBuildContext(), mockGoRouterState),
         "/initial_profile/birthdate");
   });

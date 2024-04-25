@@ -3,6 +3,7 @@ import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:deep_connections/utils/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -19,7 +20,7 @@ class CommonAnswers extends StatefulWidget {
 
 class _CommonAnswersState extends State<CommonAnswers> {
   List<QuestionAnswerPair> _findCommonAnswers() {
-    print("Recomputing common answers");
+    logger.d("Recomputing common answers");
     return allQuestionsList.mapNotNull((question) {
       final answer1 = widget.profile1?.questions?[question.id];
       final answer2 = widget.profile2?.questions?[question.id];

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:deep_connections/models/gender.dart';
-import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/complete_profile/gender/gender_profile_screen.dart';
+import 'package:deep_connections/services/profile/firebase_profile_service.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,10 +12,10 @@ import '../../test_extensions.dart';
 
 void main() {
   late bool navigateSuccess;
-  late MockProfileService profileService;
+  late FirebaseProfileService profileService;
 
   setUp(() {
-    profileService = MockProfileService();
+    profileService = getFakeProfileService();
     navigateSuccess = false;
     expect(profileService.profile?.gender, null);
   });
@@ -43,7 +43,6 @@ void main() {
       (WidgetTester tester) async {
     // Setup
     final completer = Completer();
-    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
         submitText: LocKey((loc) => loc.general_next),
@@ -85,7 +84,6 @@ void main() {
   testWidgets('Test complete_profile screen selecting additional genders',
       (WidgetTester tester) async {
     // Setup
-    profileService.profile = const Profile();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
         submitText: LocKey((loc) => loc.general_next),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/services/firebase_constants.dart';
+import 'package:deep_connections/utils/logging.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../models/message/message.dart';
@@ -51,7 +52,7 @@ class OptimizedMessageService {
       }
       var messages =
           snapshot.docs.map((doc) => Message.fromJson(doc.data())).toList();
-      print('New messages: $messages');
+      logger.d('New messages: $messages');
       addMessages(messages);
     });
   }
@@ -75,7 +76,7 @@ class OptimizedMessageService {
       _lastDocument = snapshot.docs.last;
       var moreMessages =
           snapshot.docs.map((doc) => Message.fromJson(doc.data())).toList();
-      print('Load more messages: $moreMessages');
+      logger.d('Load more messages: $moreMessages');
       addMessages(moreMessages);
     }
     _isLoading = false;

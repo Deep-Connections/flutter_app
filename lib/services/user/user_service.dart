@@ -7,7 +7,9 @@ import '../firebase/firebase_exceptions.dart';
 
 @singleton
 class UserService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
+
+  UserService(this._auth);
 
   DcUser? get user => _auth.currentUser?.toDcUser();
 
