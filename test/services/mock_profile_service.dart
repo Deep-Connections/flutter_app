@@ -6,6 +6,6 @@ import 'fake_firebase_auth.dart';
 import 'mock_firebase_storage.dart';
 
 FirebaseProfileService getFakeProfileService() => FirebaseProfileService(
-    UserService(getSignedInMockFirebaseAuth()),
+    UserService(getMockFirebaseAuth()),
     FakeFirebaseFirestore(),
     MockFirebaseStorage());

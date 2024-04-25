@@ -12,8 +12,8 @@ final mockUser = MockUser(
   displayName: 'Bob',
 );
 
-MockFirebaseAuth getSignedInMockFirebaseAuth() =>
-    MockFirebaseAuth(signedIn: true, mockUser: mockUser);
+MockFirebaseAuth getMockFirebaseAuth({bool signedIn = true}) =>
+    MockFirebaseAuth(signedIn: signedIn, mockUser: mockUser);
 
 class UnauthFakeFirebaseAuth extends Mock implements FirebaseAuth {
   var isSignedIn = false;
