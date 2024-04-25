@@ -4,23 +4,18 @@ import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/screens/complete_profile/gender/gender_profile_screen.dart';
 import 'package:deep_connections/services/profile/firebase_profile_service.dart';
 import 'package:deep_connections/utils/loc_key.dart';
-import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../services/mock_firebase_storage.dart';
-import '../../services/mock_user_service.dart';
+import '../../services/mock_profile_service.dart';
 import '../../test_extensions.dart';
 
 void main() {
   late bool navigateSuccess;
   late FirebaseProfileService profileService;
-  final mockUserService = MockUserService();
-  final mockFirebaseStorage = MockFirebaseStorage();
 
   setUp(() {
-    profileService = FirebaseProfileService(
-        mockUserService, FakeFirebaseFirestore(), mockFirebaseStorage);
+    profileService = getFakeProfileService();
     navigateSuccess = false;
     expect(profileService.profile?.gender, null);
   });

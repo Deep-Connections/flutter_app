@@ -3,6 +3,7 @@ import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/choice.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
+import 'package:deep_connections/services/profile/firebase_profile_service.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,7 +12,7 @@ import '../../test_extensions.dart';
 
 void main() {
   late bool navigateSuccess;
-  late MockProfileService profileService;
+  late FirebaseProfileService profileService;
 
   final question1 = MultipleChoiceQuestion(
     id: '1',
@@ -27,7 +28,7 @@ void main() {
   );
 
   setUp(() {
-    profileService = MockProfileService();
+    profileService = getFakeProfileService();
     navigateSuccess = false;
   });
 

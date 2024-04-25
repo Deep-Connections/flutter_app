@@ -2,7 +2,7 @@ import 'package:deep_connections/screens/auth/registration_screen.dart';
 import 'package:deep_connections/services/auth/firebase_auth_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../services/unauth_fake_firebase_auth.dart';
+import '../../services/fake_firebase_auth.dart';
 import '../../test_extensions.dart';
 
 void main() {
