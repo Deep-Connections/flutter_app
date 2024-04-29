@@ -5,15 +5,41 @@ service cloud.firestore {
     match /databases/{database}/documents {
         match /profiles/{userId} {
             allow write: if request.auth != null && request.auth.uid == userId;
-            allow read: if request.auth != null;
+            allow get: if request.auth != null;
         }
         match /chats/{chatId} {
-            allow read, write: if true;
+            allow read: if isParticipant(request.auth, resource.data);
+
+            allow update: if isParticipant(request.auth, resource.data)
+            && isValidChat(request.resource.data, resource.data, request.auth.uid);
 
             match /messages/{messageId} {
-                allow read, write: if true;
+                allow read: if request.auth != null && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participantIds;
             }
         }
 
     }
+}
+
+function isParticipant(auth, chat) {
+    return auth != null && auth.uid in chat.participantIds;
+}
+
+function isValidChat(chat, oldChat, senderId) {
+    return chat.participantIds is list
+        && chat.timestamp is timestamp
+        && chat.timestamp.toMillis() >= oldChat.timestamp.toMillis() - 60000
+        && isValidMessage(chat.lastMessage, senderId)
+        && isValidChatInfo(chat.chatInfo, oldChat.chatInfo, senderId, chat.participantIds);
+}
+
+function isValidMessage(message, senderId) {
+    return message.senderId == senderId
+        && message.text is string
+        && message.chatId is string
+        && message.timestamp is timestamp;
+}
+
+function isValidChatInfo(newChatInfo, oldChatInfo, senderId, participantIds) {
+    return newChatInfo[senderId].unreadMessages == 0;
 }
