@@ -21,7 +21,6 @@ service cloud.firestore {
     }
 }
 
-
 function isParticipant(auth, chat) {
     return auth != null && auth.uid in chat.participantIds;
 }
@@ -29,11 +28,10 @@ function isParticipant(auth, chat) {
 function isValidChat(chat, oldChat, senderId) {
     return chat.participantIds is list
         && chat.timestamp is timestamp
-        && chat.timestamp.toMillis() >= oldChat.timestamp.toMillis() - 60000 // If the write is delayed by more than 60 seconds, reject it.
-        && (isValidMessage(chat.lastMessage, senderId))
-        && isValidChatInfos(chat.chatInfos);
+        && chat.timestamp.toMillis() >= oldChat.timestamp.toMillis() - 60000
+        && isValidMessage(chat.lastMessage, senderId)
+        && isValidChatInfo(chat.chatInfo, oldChat.chatInfo, senderId, chat.participantIds);
 }
-
 
 function isValidMessage(message, senderId) {
     return message.senderId == senderId
@@ -42,12 +40,6 @@ function isValidMessage(message, senderId) {
         && message.timestamp is timestamp;
 }
 
-function isValidChatInfos(chatInfos) {
-    for (var key in chatInfos.keys()) {
-        var info = chatInfos[key];
-        if (!(info.unreadMessages is int)) {
-            return false;
-        }
-    }
-    return true;
+function isValidChatInfo(newChatInfo, oldChatInfo, senderId, participantIds) {
+    return newChatInfo[senderId].unreadMessages == 0;
 }
