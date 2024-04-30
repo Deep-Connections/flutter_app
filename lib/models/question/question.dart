@@ -41,6 +41,7 @@ class MultipleChoiceQuestion extends Question {
   final int minChoices;
   final int maxChoices;
   final List<Choice> choices;
+  final double weight;
 
   const MultipleChoiceQuestion({
     required super.id,
@@ -50,7 +51,7 @@ class MultipleChoiceQuestion extends Question {
     required this.choices,
     required super.navigationPath,
     required super.section,
-  });
+      this.weight = 1});
 
   List<String> _validatedChoiceValues(List<String>? choiceValues) =>
       (choiceValues ?? [])

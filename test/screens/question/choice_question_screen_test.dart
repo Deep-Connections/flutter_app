@@ -15,15 +15,15 @@ void main() {
 
   final question1 = MultipleChoiceQuestion(
     id: '1',
-    questionText: LocKey((loc) => loc.question_relationshipType_question),
+    questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
     choices: [
-      Choice('1', LocKey((loc) => loc.question_relationshipType_answer1)),
-      Choice('2', LocKey((loc) => loc.question_relationshipType_answer2)),
-      Choice('3', LocKey((loc) => loc.question_relationshipType_answer3)),
-      Choice('4', LocKey((loc) => loc.question_relationshipType_answer4)),
+      Choice('1', LocKey((loc) => loc.questionBasic_relationshipType_answer1)),
+      Choice('2', LocKey((loc) => loc.questionBasic_relationshipType_answer2)),
+      Choice('3', LocKey((loc) => loc.questionBasic_relationshipType_answer3)),
+      Choice('4', LocKey((loc) => loc.questionBasic_relationshipType_answer4)),
     ],
     navigationPath: '',
-    section: ProfileSection.profile,
+    section: ProfileSection.basic,
   );
 
   setUp(() {
@@ -56,14 +56,14 @@ void main() {
     }
 
     // Initially 3 should be selected and 1 should not be selected
-    checkSelected(loc.question_relationshipType_answer3, true);
-    checkSelected(loc.question_relationshipType_answer1, false);
+    checkSelected(loc.questionBasic_relationshipType_answer3, true);
+    checkSelected(loc.questionBasic_relationshipType_answer1, false);
 
     // Select answer 1 and check if 3 is not selected anymore
-    await tester.tap(find.text(loc.question_relationshipType_answer1));
+    await tester.tap(find.text(loc.questionBasic_relationshipType_answer1));
     await tester.pumpAndSettle();
-    checkSelected(loc.question_relationshipType_answer1, true);
-    checkSelected(loc.question_relationshipType_answer3, false);
+    checkSelected(loc.questionBasic_relationshipType_answer1, true);
+    checkSelected(loc.questionBasic_relationshipType_answer3, false);
     // the complete_profile should still contain 3
     checkQuestion(['3']);
     await tester.tap(find.text(loc.general_next));
@@ -75,17 +75,17 @@ void main() {
 
   final question2 = MultipleChoiceQuestion(
     id: '2',
-    questionText: LocKey((loc) => loc.question_relationshipType_question),
+    questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
     choices: [
-      Choice('1', LocKey((loc) => loc.question_relationshipType_answer1)),
-      Choice('2', LocKey((loc) => loc.question_relationshipType_answer2)),
-      Choice('3', LocKey((loc) => loc.question_relationshipType_answer3)),
-      Choice('4', LocKey((loc) => loc.question_relationshipType_answer4)),
+      Choice('1', LocKey((loc) => loc.questionBasic_relationshipType_answer1)),
+      Choice('2', LocKey((loc) => loc.questionBasic_relationshipType_answer2)),
+      Choice('3', LocKey((loc) => loc.questionBasic_relationshipType_answer3)),
+      Choice('4', LocKey((loc) => loc.questionBasic_relationshipType_answer4)),
     ],
     minChoices: 2,
     maxChoices: 3,
     navigationPath: '',
-    section: ProfileSection.profile,
+    section: ProfileSection.basic,
   );
 
   testWidgets('Test question screen with multiple choice question',
@@ -113,39 +113,39 @@ void main() {
     }
 
     // Initially 2 should be selected and 1 should not be selected
-    checkSelected(loc.question_relationshipType_answer2, true);
-    checkSelected(loc.question_relationshipType_answer1, false);
-    checkSelected(loc.question_relationshipType_answer3, false);
+    checkSelected(loc.questionBasic_relationshipType_answer2, true);
+    checkSelected(loc.questionBasic_relationshipType_answer1, false);
+    checkSelected(loc.questionBasic_relationshipType_answer3, false);
 
     // As we have a previous answer, the next button should be enabled,
     // even though we have not selected the minimum number of answers
     tester.checkButtonEnabled(loc.general_next, enabled: true);
 
     // Select answer 1 and check that both are selected
-    await tester.tap(find.text(loc.question_relationshipType_answer1));
+    await tester.tap(find.text(loc.questionBasic_relationshipType_answer1));
     await tester.pumpAndSettle();
-    checkSelected(loc.question_relationshipType_answer1, true);
-    checkSelected(loc.question_relationshipType_answer2, true);
+    checkSelected(loc.questionBasic_relationshipType_answer1, true);
+    checkSelected(loc.questionBasic_relationshipType_answer2, true);
     // the complete_profile should still contain 2
     checkQuestion(['2']);
 
     // unselect 2 and check that next button is disabled
-    await tester.tap(find.text(loc.question_relationshipType_answer2));
+    await tester.tap(find.text(loc.questionBasic_relationshipType_answer2));
     await tester.pumpAndSettle();
     tester.checkButtonEnabled(loc.general_next, enabled: false);
 
     // select all 3 answers
-    await tester.tap(find.text(loc.question_relationshipType_answer2));
-    await tester.tap(find.text(loc.question_relationshipType_answer3));
+    await tester.tap(find.text(loc.questionBasic_relationshipType_answer2));
+    await tester.tap(find.text(loc.questionBasic_relationshipType_answer3));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(loc.question_relationshipType_answer4));
+    await tester.tap(find.text(loc.questionBasic_relationshipType_answer4));
     await tester.pumpAndSettle();
 
     // check that all answers are selected except for 4, as we can only select 3
-    checkSelected(loc.question_relationshipType_answer1, true);
-    checkSelected(loc.question_relationshipType_answer2, true);
-    checkSelected(loc.question_relationshipType_answer3, true);
-    checkSelected(loc.question_relationshipType_answer4, false);
+    checkSelected(loc.questionBasic_relationshipType_answer1, true);
+    checkSelected(loc.questionBasic_relationshipType_answer2, true);
+    checkSelected(loc.questionBasic_relationshipType_answer3, true);
+    checkSelected(loc.questionBasic_relationshipType_answer4, false);
 
     await tester.tap(find.text(loc.general_next));
     await tester.pumpAndSettle();

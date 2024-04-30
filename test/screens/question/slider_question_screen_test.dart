@@ -15,13 +15,13 @@ void main() {
 
   final question1 = SliderQuestion(
     id: '1',
-    questionText: LocKey((loc) => loc.question_politicalSpectrum_question),
+    questionText: LocKey((loc) => loc.questionPolitics_spectrum_question),
     minValue: 1,
     maxValue: 5,
-    minText: LocKey((loc) => loc.question_politicalSpectrum_answerMin),
-    maxText: LocKey((loc) => loc.question_politicalSpectrum_answerMax),
+    minText: LocKey((loc) => loc.questionPolitics_spectrum_answerMin),
+    maxText: LocKey((loc) => loc.questionPolitics_spectrum_answerMax),
     navigationPath: '',
-    section: ProfileSection.profile,
+    section: ProfileSection.basic,
   );
 
   setUp(() {
@@ -64,13 +64,13 @@ void main() {
 
   final question2 = SliderQuestion(
     id: '2',
-    questionText: LocKey((loc) => loc.question_politicalSpectrum_question),
+    questionText: LocKey((loc) => loc.questionPolitics_spectrum_question),
     minValue: -1,
     maxValue: 4,
-    minText: LocKey((loc) => loc.question_politicalSpectrum_answerMin),
-    maxText: LocKey((loc) => loc.question_politicalSpectrum_answerMax),
+    minText: LocKey((loc) => loc.questionPolitics_spectrum_answerMin),
+    maxText: LocKey((loc) => loc.questionPolitics_spectrum_answerMax),
     navigationPath: '',
-    section: ProfileSection.profile,
+    section: ProfileSection.basic,
   );
 
   testWidgets('Test question screen with slider with negative value',
