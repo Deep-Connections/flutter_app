@@ -7,8 +7,8 @@ class ProfileSection {
 
   const ProfileSection._(this.title, this.path);
 
-  static final ProfileSection profile =
-      ProfileSection._(LocKey((loc) => loc.section_profile), "profile");
+  static final ProfileSection basic =
+      ProfileSection._(LocKey((loc) => loc.section_basic), "basic");
   static final ProfileSection personality =
       ProfileSection._(LocKey((loc) => loc.section_personality), "personality");
   static final ProfileSection habits =
@@ -22,7 +22,7 @@ class ProfileSection {
   static final ProfileSection freeTime =
       ProfileSection._(LocKey((loc) => loc.section_freeTime), "freeTime");
   static final values = [
-    profile,
+    basic,
     personality,
     habits,
     spirituality,

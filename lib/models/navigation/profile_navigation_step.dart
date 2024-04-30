@@ -34,5 +34,5 @@ class ProfileNavigationStepWithWidget<T> extends ProfileNavigationStep<T> {
       required this.createWidget,
       super.isEditable = true})
       : _fromProfile = fromProfile,
-        super(section: ProfileSection.profile);
+        super(section: ProfileSection.basic);
 }
