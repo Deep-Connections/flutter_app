@@ -48,3 +48,5 @@ app.*.map.json
 assets/credentials/credentials.json
 
 /firebase/node_modules/
+
+serviceAccountKey.json

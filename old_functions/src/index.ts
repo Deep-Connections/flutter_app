@@ -4,6 +4,17 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 admin.initializeApp();
 
+export const addCreatedAt = functions.firestore
+    .document('profiles/{userID}')
+    .onCreate((snap, context) => {
+        // Get the current timestamp
+        const timestamp = admin.firestore.FieldValue.serverTimestamp();
+
+        // Return the promise of the update operation
+        return snap.ref.update({
+            createdAt: timestamp
+        });
+    });
 
 export const createInitialMatch = functions.https.onRequest( async (req, res) => {
     debugger;
