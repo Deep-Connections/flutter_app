@@ -1,0 +1,2458 @@
+[
+  {
+    "firstName": "John",
+    "gender": "WOMAN",
+    "genderPreferences": [
+      "MAN"
+    ],
+    "birthdate": "1984-08-25T01:00:00.000",
+    "languageCodes": [
+      "de",
+      "fr",
+      "en",
+      "pt"
+    ],
+    "languageWithCountryCodes": [
+      "de_DE",
+      "fr_FR",
+      "en_US",
+      "pt_PT"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "one_night"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "find"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "2"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "2"
+        ]
+      },
+      "looks": {
+        "response": [
+          "3"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "occasion"
+        ]
+      },
+      "meals": {
+        "response": [
+          "healthy"
+        ]
+      },
+      "diet": {
+        "response": [
+          "vegetarian"
+        ]
+      },
+      "health": {
+        "response": [
+          "1"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "twoTimes"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "daily"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "4"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "6"
+        ]
+      },
+      "environment": {
+        "response": [
+          "3"
+        ]
+      },
+      "racial": {
+        "response": [
+          "5"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "4"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "3"
+        ]
+      },
+      "improving": {
+        "response": [
+          "occasionally"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "career",
+          "emotional",
+          "health"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "total"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "onlyTrust"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "giveIn",
+          "compromise"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "avoidance",
+          "compromise",
+          "confrontation",
+          "giveIn"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "physical",
+          "solution"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "distraction",
+          "solution"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "1"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "relax",
+          "hobby",
+          "friendsFamily"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "creative",
+          "musical",
+          "games",
+          "nature"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "stick"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "hobbies",
+          "visiting",
+          "cities"
+        ]
+      },
+      "planning": {
+        "response": [
+          "1"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "health",
+          "games",
+          "worldAffairs",
+          "beauty"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "scroll",
+          "create"
+        ]
+      },
+      "kids": {
+        "response": [
+          "dont"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "soon"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "both"
+        ]
+      },
+      "pets": {
+        "response": [
+          "ratherYes"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "1"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "yes"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1995-05-15T01:00:00.000",
+    "languageCodes": [
+      "de",
+      "nl",
+      "fr",
+      "da"
+    ],
+    "languageWithCountryCodes": [
+      "de_DE",
+      "nl_NL",
+      "fr_FR",
+      "da_DK"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "short"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "three"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "find"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "5"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "5"
+        ]
+      },
+      "looks": {
+        "response": [
+          "2"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "never"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "often"
+        ]
+      },
+      "meals": {
+        "response": [
+          "selfMade"
+        ]
+      },
+      "diet": {
+        "response": [
+          "vegetarian"
+        ]
+      },
+      "health": {
+        "response": [
+          "2"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "twoTimes"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "never"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "1"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "6"
+        ]
+      },
+      "environment": {
+        "response": [
+          "5"
+        ]
+      },
+      "racial": {
+        "response": [
+          "3"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "5"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "3"
+        ]
+      },
+      "improving": {
+        "response": [
+          "regularly"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "social",
+          "health",
+          "hobbies"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "total"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "dont"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "compromise",
+          "avoidance"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "giveIn",
+          "confrontation",
+          "compromise",
+          "avoidance"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "solution",
+          "physical"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "listening",
+          "solution"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "4"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "friendsFamily",
+          "active",
+          "goingOut"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "games",
+          "creative",
+          "cultural",
+          "party"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "open"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "nature",
+          "visiting",
+          "relaxing"
+        ]
+      },
+      "planning": {
+        "response": [
+          "5"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "health",
+          "games",
+          "psychology",
+          "meaningOfLife"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "scroll",
+          "messaging"
+        ]
+      },
+      "kids": {
+        "response": [
+          "want"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "later"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "both"
+        ]
+      },
+      "pets": {
+        "response": [
+          "ratherYes"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "2"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "no"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1980-04-17T00:00:00.000",
+    "languageCodes": [
+      "en",
+      "nl",
+      "de",
+      "es"
+    ],
+    "languageWithCountryCodes": [
+      "en_US",
+      "nl_NL",
+      "de_DE",
+      "es_ES"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "long"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "daily"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "settle"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "5"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "1"
+        ]
+      },
+      "looks": {
+        "response": [
+          "5"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "never"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "occasion"
+        ]
+      },
+      "meals": {
+        "response": [
+          "healthy"
+        ]
+      },
+      "diet": {
+        "response": [
+          "other"
+        ]
+      },
+      "health": {
+        "response": [
+          "3"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "fourTimes"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "2"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "1"
+        ]
+      },
+      "environment": {
+        "response": [
+          "5"
+        ]
+      },
+      "racial": {
+        "response": [
+          "4"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "3"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "1"
+        ]
+      },
+      "improving": {
+        "response": [
+          "always"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "social",
+          "health",
+          "emotional"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "important"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "onlyTrust"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "compromise",
+          "confrontation"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "avoidance",
+          "confrontation",
+          "compromise",
+          "giveIn"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "physical",
+          "listening"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "solution",
+          "listening"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "2"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "goingOut",
+          "active",
+          "relax"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "party",
+          "musical",
+          "active",
+          "entertainment"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "stick"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "hobbies",
+          "relaxing",
+          "visiting"
+        ]
+      },
+      "planning": {
+        "response": [
+          "3"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "health",
+          "worldAffairs",
+          "holiday",
+          "entertainment"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "create",
+          "scroll"
+        ]
+      },
+      "kids": {
+        "response": [
+          "unsure"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "later"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "both"
+        ]
+      },
+      "pets": {
+        "response": [
+          "ratherNot"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "2"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "generally"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1989-11-05T00:00:00.000",
+    "languageCodes": [
+      "pt",
+      "it",
+      "es",
+      "nl"
+    ],
+    "languageWithCountryCodes": [
+      "pt_PT",
+      "it_IT",
+      "es_ES",
+      "nl_NL"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "life"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "daily"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "find"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "4"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "3"
+        ]
+      },
+      "looks": {
+        "response": [
+          "2"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "occasion"
+        ]
+      },
+      "meals": {
+        "response": [
+          "selfMade"
+        ]
+      },
+      "diet": {
+        "response": [
+          "vegetarian"
+        ]
+      },
+      "health": {
+        "response": [
+          "5"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "twoTimes"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "1"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "6"
+        ]
+      },
+      "environment": {
+        "response": [
+          "1"
+        ]
+      },
+      "racial": {
+        "response": [
+          "3"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "1"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "2"
+        ]
+      },
+      "improving": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "health",
+          "emotional",
+          "social"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "important"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "very"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "confrontation",
+          "giveIn"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "compromise",
+          "confrontation",
+          "avoidance",
+          "giveIn"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "solution",
+          "distraction"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "physical",
+          "distraction"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "4"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "relax",
+          "goingOut",
+          "friendsFamily"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "nature",
+          "active",
+          "entertainment",
+          "musical"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "open"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "nature",
+          "hobbies",
+          "cities"
+        ]
+      },
+      "planning": {
+        "response": [
+          "2"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "worldAffairs",
+          "holiday",
+          "beauty",
+          "psychology"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "messaging",
+          "scroll"
+        ]
+      },
+      "kids": {
+        "response": [
+          "have"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "soon"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "parenting"
+        ]
+      },
+      "pets": {
+        "response": [
+          "ratherNot"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "5"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "yes"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1980-04-09T00:00:00.000",
+    "languageCodes": [
+      "es",
+      "pt",
+      "da"
+    ],
+    "languageWithCountryCodes": [
+      "es_ES",
+      "pt_PT",
+      "da_DK"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "one_night"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "three"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "career"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "5"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "5"
+        ]
+      },
+      "looks": {
+        "response": [
+          "2"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "meals": {
+        "response": [
+          "selfMade"
+        ]
+      },
+      "diet": {
+        "response": [
+          "omnivore"
+        ]
+      },
+      "health": {
+        "response": [
+          "4"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "fourTimes"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "4"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "5"
+        ]
+      },
+      "environment": {
+        "response": [
+          "2"
+        ]
+      },
+      "racial": {
+        "response": [
+          "3"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "4"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "4"
+        ]
+      },
+      "improving": {
+        "response": [
+          "occasionally"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "social",
+          "emotional",
+          "hobbies"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "important"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "very"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "avoidance",
+          "confrontation"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "confrontation",
+          "giveIn",
+          "compromise",
+          "avoidance"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "physical",
+          "solution"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "listening",
+          "solution"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "1"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "hobby",
+          "friendsFamily",
+          "active"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "party",
+          "creative",
+          "games",
+          "cultural"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "always"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "relaxing",
+          "hobbies",
+          "cities"
+        ]
+      },
+      "planning": {
+        "response": [
+          "5"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "worldAffairs",
+          "games",
+          "meaningOfLife",
+          "holiday"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "create",
+          "messaging"
+        ]
+      },
+      "kids": {
+        "response": [
+          "unsure"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "later"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "work"
+        ]
+      },
+      "pets": {
+        "response": [
+          "ratherYes"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "1"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "generally"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1988-10-25T00:00:00.000",
+    "languageCodes": [
+      "de",
+      "it",
+      "en",
+      "fr"
+    ],
+    "languageWithCountryCodes": [
+      "de_DE",
+      "it_IT",
+      "en_GB",
+      "de_CH",
+      "fr_FR"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "short"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "two"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "career"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "2"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "2"
+        ]
+      },
+      "looks": {
+        "response": [
+          "1"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "daily"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "often"
+        ]
+      },
+      "meals": {
+        "response": [
+          "takeOut"
+        ]
+      },
+      "diet": {
+        "response": [
+          "other"
+        ]
+      },
+      "health": {
+        "response": [
+          "1"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "2"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "4"
+        ]
+      },
+      "environment": {
+        "response": [
+          "4"
+        ]
+      },
+      "racial": {
+        "response": [
+          "5"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "4"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "3"
+        ]
+      },
+      "improving": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "hobbies",
+          "emotional",
+          "health"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "no"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "onlyTrust"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "giveIn",
+          "confrontation"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "confrontation",
+          "avoidance",
+          "compromise",
+          "giveIn"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "listening",
+          "solution"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "listening",
+          "physical"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "5"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "active",
+          "hobby",
+          "goingOut"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "party",
+          "games",
+          "nature",
+          "entertainment"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "always"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "hobbies",
+          "nature",
+          "relaxing"
+        ]
+      },
+      "planning": {
+        "response": [
+          "5"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "beauty",
+          "health",
+          "holiday",
+          "meaningOfLife"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "messaging",
+          "scroll"
+        ]
+      },
+      "kids": {
+        "response": [
+          "unsure"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "later"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "both"
+        ]
+      },
+      "pets": {
+        "response": [
+          "never"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "1"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "yes"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1987-09-16T01:00:00.000",
+    "languageCodes": [
+      "da",
+      "en"
+    ],
+    "languageWithCountryCodes": [
+      "da_DK",
+      "en_GB"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "one_night"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "three"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "find"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "4"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "4"
+        ]
+      },
+      "looks": {
+        "response": [
+          "2"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "occasion"
+        ]
+      },
+      "meals": {
+        "response": [
+          "healthy"
+        ]
+      },
+      "diet": {
+        "response": [
+          "vegetarian"
+        ]
+      },
+      "health": {
+        "response": [
+          "1"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "twoTimes"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "1"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "2"
+        ]
+      },
+      "environment": {
+        "response": [
+          "4"
+        ]
+      },
+      "racial": {
+        "response": [
+          "4"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "2"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "4"
+        ]
+      },
+      "improving": {
+        "response": [
+          "regularly"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "spiritual",
+          "health",
+          "emotional"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "no"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "onlyTrust"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "giveIn",
+          "confrontation"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "compromise",
+          "avoidance",
+          "confrontation",
+          "giveIn"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "distraction",
+          "listening"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "listening",
+          "solution"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "3"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "hobby",
+          "relax",
+          "active"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "creative",
+          "games",
+          "party",
+          "musical"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "stick"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "hobbies",
+          "relaxing",
+          "visiting"
+        ]
+      },
+      "planning": {
+        "response": [
+          "1"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "science",
+          "games",
+          "holiday",
+          "entertainment"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "create",
+          "scroll"
+        ]
+      },
+      "kids": {
+        "response": [
+          "have"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "five"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "parenting"
+        ]
+      },
+      "pets": {
+        "response": [
+          "never"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "3"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "no"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1998-02-08T00:00:00.000",
+    "languageCodes": [
+      "en",
+      "it",
+      "de",
+      "pt"
+    ],
+    "languageWithCountryCodes": [
+      "en_GB",
+      "it_IT",
+      "de_CH",
+      "de_DE",
+      "pt_PT"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "one_night"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "career"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "2"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "3"
+        ]
+      },
+      "looks": {
+        "response": [
+          "1"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "daily"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "often"
+        ]
+      },
+      "meals": {
+        "response": [
+          "healthy"
+        ]
+      },
+      "diet": {
+        "response": [
+          "flexitarian"
+        ]
+      },
+      "health": {
+        "response": [
+          "1"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "2"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "3"
+        ]
+      },
+      "environment": {
+        "response": [
+          "1"
+        ]
+      },
+      "racial": {
+        "response": [
+          "1"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "1"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "2"
+        ]
+      },
+      "improving": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "social",
+          "hobbies",
+          "career"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "no"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "dont"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "giveIn",
+          "confrontation"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "confrontation",
+          "giveIn",
+          "compromise",
+          "avoidance"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "listening",
+          "physical"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "listening",
+          "solution"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "5"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "goingOut",
+          "relax",
+          "hobby"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "party",
+          "nature",
+          "entertainment",
+          "games"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "always"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "visiting",
+          "nature",
+          "hobbies"
+        ]
+      },
+      "planning": {
+        "response": [
+          "2"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "science",
+          "entertainment",
+          "meaningOfLife",
+          "holiday"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "messaging",
+          "create"
+        ]
+      },
+      "kids": {
+        "response": [
+          "unsure"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "five"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "work"
+        ]
+      },
+      "pets": {
+        "response": [
+          "must"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "5"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "yes"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1981-02-04T00:00:00.000",
+    "languageCodes": [
+      "nl",
+      "fr",
+      "de"
+    ],
+    "languageWithCountryCodes": [
+      "nl_NL",
+      "fr_FR",
+      "de_DE"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "long"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "settle"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "1"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "3"
+        ]
+      },
+      "looks": {
+        "response": [
+          "4"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "occasion"
+        ]
+      },
+      "meals": {
+        "response": [
+          "selfMade"
+        ]
+      },
+      "diet": {
+        "response": [
+          "vegan"
+        ]
+      },
+      "health": {
+        "response": [
+          "5"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "twoTimes"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "1"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "6"
+        ]
+      },
+      "environment": {
+        "response": [
+          "3"
+        ]
+      },
+      "racial": {
+        "response": [
+          "5"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "2"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "5"
+        ]
+      },
+      "improving": {
+        "response": [
+          "always"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "spiritual",
+          "hobbies",
+          "health"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "no"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "onlyTrust"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "compromise",
+          "confrontation"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "avoidance",
+          "compromise",
+          "confrontation",
+          "giveIn"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "physical",
+          "listening"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "physical",
+          "listening"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "5"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "active",
+          "goingOut",
+          "friendsFamily"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "nature",
+          "party",
+          "creative",
+          "cultural"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "open"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "visiting",
+          "relaxing",
+          "cities"
+        ]
+      },
+      "planning": {
+        "response": [
+          "5"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "health",
+          "entertainment",
+          "science",
+          "psychology"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "create",
+          "scroll"
+        ]
+      },
+      "kids": {
+        "response": [
+          "unsure"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "soon"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "work"
+        ]
+      },
+      "pets": {
+        "response": [
+          "must"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "2"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "yes"
+        ]
+      }
+    }
+  },
+  {
+    "firstName": "John",
+    "gender": "MAN",
+    "genderPreferences": [
+      "WOMAN"
+    ],
+    "birthdate": "1986-02-19T00:00:00.000",
+    "languageCodes": [
+      "nl",
+      "fr",
+      "en",
+      "da",
+      "pt"
+    ],
+    "languageWithCountryCodes": [
+      "nl_NL",
+      "fr_FR",
+      "en_GB",
+      "da_DK",
+      "pt_PT"
+    ],
+    "questions": {
+      "relationship": {
+        "response": [
+          "one_night"
+        ]
+      },
+      "see_partner": {
+        "response": [
+          "daily"
+        ]
+      },
+      "current_life": {
+        "response": [
+          "find"
+        ]
+      },
+      "alone_time": {
+        "response": [
+          "2"
+        ]
+      },
+      "small_talk": {
+        "response": [
+          "1"
+        ]
+      },
+      "looks": {
+        "response": [
+          "4"
+        ]
+      },
+      "smoking": {
+        "response": [
+          "daily"
+        ]
+      },
+      "drinking": {
+        "response": [
+          "often"
+        ]
+      },
+      "meals": {
+        "response": [
+          "takeOut"
+        ]
+      },
+      "diet": {
+        "response": [
+          "flexitarian"
+        ]
+      },
+      "health": {
+        "response": [
+          "5"
+        ]
+      },
+      "physical_activity": {
+        "response": [
+          "weekly"
+        ]
+      },
+      "mindfulness": {
+        "response": [
+          "rarely"
+        ]
+      },
+      "minimalism": {
+        "response": [
+          "1"
+        ]
+      },
+      "spectrum": {
+        "response": [
+          "4"
+        ]
+      },
+      "environment": {
+        "response": [
+          "1"
+        ]
+      },
+      "racial": {
+        "response": [
+          "2"
+        ]
+      },
+      "gender_equality": {
+        "response": [
+          "4"
+        ]
+      },
+      "LGBTQIA+": {
+        "response": [
+          "3"
+        ]
+      },
+      "improving": {
+        "response": [
+          "occasionally"
+        ]
+      },
+      "improvement_focus": {
+        "response": [
+          "emotional",
+          "health",
+          "career"
+        ]
+      },
+      "importance_comfort": {
+        "response": [
+          "no"
+        ]
+      },
+      "emotions": {
+        "response": [
+          "dont"
+        ]
+      },
+      "conflicts_self": {
+        "response": [
+          "confrontation",
+          "avoidance"
+        ]
+      },
+      "conflicts_partner": {
+        "response": [
+          "giveIn",
+          "compromise",
+          "confrontation",
+          "avoidance"
+        ]
+      },
+      "support_need": {
+        "response": [
+          "solution",
+          "distraction"
+        ]
+      },
+      "support_offer": {
+        "response": [
+          "distraction",
+          "listening"
+        ]
+      },
+      "indoor_outdoor": {
+        "response": [
+          "2"
+        ]
+      },
+      "spend_free_time": {
+        "response": [
+          "relax",
+          "friendsFamily",
+          "hobby"
+        ]
+      },
+      "do_with_friends": {
+        "response": [
+          "active",
+          "nature",
+          "musical",
+          "cultural"
+        ]
+      },
+      "new_activities": {
+        "response": [
+          "open"
+        ]
+      },
+      "vacation": {
+        "response": [
+          "cities",
+          "hobbies",
+          "relaxing"
+        ]
+      },
+      "planning": {
+        "response": [
+          "5"
+        ]
+      },
+      "conversation_topics": {
+        "response": [
+          "meaningOfLife",
+          "health",
+          "games",
+          "entertainment"
+        ]
+      },
+      "social_media": {
+        "response": [
+          "messaging",
+          "create"
+        ]
+      },
+      "kids": {
+        "response": [
+          "want"
+        ]
+      },
+      "when_kids": {
+        "response": [
+          "five"
+        ]
+      },
+      "parenting": {
+        "response": [
+          "parenting"
+        ]
+      },
+      "pets": {
+        "response": [
+          "must"
+        ]
+      },
+      "religion_importance": {
+        "response": [
+          "1"
+        ]
+      },
+      "same_religion": {
+        "response": [
+          "yes"
+        ]
+      }
+    }
+  }
+]
