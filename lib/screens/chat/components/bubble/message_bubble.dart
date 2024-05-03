@@ -1,7 +1,7 @@
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/screens/chat/components/bubble/bubble.dart';
 import 'package:deep_connections/screens/chat/components/bubble/time_stacked_text.dart';
-import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:deep_connections/utils/extensions/date_time_extensions.dart';
 import 'package:flutter/material.dart';
 
 const innerPadding = 14.0;

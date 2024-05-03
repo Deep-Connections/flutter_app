@@ -17,9 +17,9 @@ sealed class Question extends ProfileNavigationStep<Answer> {
     required super.section,
   }) : super(isEditable: true, title: questionText);
 
-  Profile updateProfile(Profile profile, Answer questionResponse) {
+  Profile updateProfile(Profile profile, Answer answer) {
     Map<String, Answer> newQuestions = Map.from(profile.questions ?? {});
-    newQuestions[id] = questionResponse;
+    newQuestions[id] = answer;
     return profile.copyWith(questions: newQuestions);
   }
 

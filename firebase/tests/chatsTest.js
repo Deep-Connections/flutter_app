@@ -36,7 +36,6 @@ describe("Chat functionality", () => {
 
     beforeEach(async () => { 
         await clearFirestoreData();
-        // Use the admin app to bypass security rules and set up initial data
         const adminDb = getAdminFirestore();
         await adminDb.collection(Collections.CHATS).doc(chatId).set({
             participantIds,
@@ -56,7 +55,7 @@ describe("Chat functionality", () => {
         assert.equal(chatDocs.docs.length, 1);
     });
 
-    it("forbids access to existing chat where the user is not a participant", async () => {
+    it("forbids access to existing chats where the user is not a participant", async () => {
         const db = getFirestore(wrongAuth);
         const chatsRef = db.collection(Collections.CHATS);
         const query = chatsRef.doc(chatId);
