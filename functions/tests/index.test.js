@@ -27,10 +27,14 @@ const context = {
     }
 };
 
-function convertProfileFirebase(profile, numMatches = undefined) {
+function convertProfileFirebase(profile, numMatches = undefined, firstName = undefined) {
     const birthDate = new Date(profile.birthdate);
     const asFirebaseDate = admin.firestore.Timestamp.fromDate(birthDate);
     profile.birthdate = asFirebaseDate;
+    if (numMatches !== undefined)
+        profile.numMatches = numMatches;
+    if (firstName !== undefined)
+        profile.firstName = firstName;
     return profile;
 }
 
@@ -39,11 +43,15 @@ function storeMyProfile() {
     return admin.firestore().collection('profiles').doc(UID).set(convertProfileFirebase(profileData));
 }
 
-function storeProfiles(numProfiles = 100, numMatches = 0) {
+function storeProfile(numMatches = 0) {
+    const profileData = JSON.parse(fs.readFileSync('../scripts/generated/single_profile.json', 'utf8'));
+    return admin.firestore().collection('profiles').add(convertProfileFirebase(profileData, numMatches));
+}
+
+function storeProfiles(numProfiles = 3, numMatches = 0) {
     const multipleProfilesData = JSON.parse(fs.readFileSync('../scripts/generated/multiple_profile.json', 'utf8')).slice(0, numProfiles);
     return Promise.all(multipleProfilesData.map((profile) => {
-        profile.numMatches = numMatches;
-        admin.firestore().collection('profiles').add(convertProfileFirebase(profile));
+        admin.firestore().collection('profiles').add(convertProfileFirebase(profile, numMatches));
     }));
 }
 
@@ -64,7 +72,7 @@ describe('InitialMatch', () => {
 
     it('can create successfully', async () => {
         await storeMyProfile();
-        await storeProfiles();
+        await storeProfile();
 
         const result = await createInitialMatch({}, context);
         assert.equal(result.message, 'Match created');
@@ -77,13 +85,19 @@ describe('InitialMatch', () => {
         await hasNoMatch();
     });
 
+    it('should prefer people with less matches', async () => {
+        await storeMyProfile();
+        await storeProfiles(4, 4);
+        const ref = await storeProfile(3);
+        const result = await createInitialMatch({}, context);
+        const match = await admin.firestore().collection('matches').doc(result.matchId).get();
+        assert.deepEqual(match.data().participantIds[1], ref.id);
+    });
+
     it('should not find people that already have 5 matches', async () => {
         await storeMyProfile();
-        await storeProfiles(1, numMatches = 5);
+        await storeProfile(numMatches = 5);
         await hasNoMatch();
-        await storeProfiles(1, numMatches = 4);
-        const result = await createInitialMatch({}, context);
-        assert.equal(result.message, 'Match created');
     });
 });
 

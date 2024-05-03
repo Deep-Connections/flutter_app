@@ -22,7 +22,7 @@ async function findPotentialMatches(profileData, userId) {
         .where("birthdate", '>=', fiveYearsYounger)
         .where(admin.firestore.FieldPath.documentId(), '!=', userId)
         .where("numMatches", '<', 5)
-        .orderBy("numMatches", "desc")
+        .orderBy("numMatches", "asc")
         .limit(100).get();
 }
 
@@ -46,7 +46,7 @@ exports.createInitialMatch = functions.https.onCall(async (data, context) => {
     // }
 
     const profiles = await findPotentialMatches(currentProfile, userId);
-
+    const numMatches = profiles.docs.map((profile) => profile.data().numMatches);
     if (profiles.empty) {
         throw new functions.https.HttpsError('not-found', 'No profiles found');
     }
