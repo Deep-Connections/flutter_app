@@ -16,10 +16,10 @@ void main() {
   final question1 = SliderQuestion(
     id: '1',
     questionText: LocKey((loc) => loc.questionPolitics_spectrum_question),
-    minValue: 1,
-    maxValue: 5,
+    divisions: 5,
     minText: LocKey((loc) => loc.questionPolitics_spectrum_answerMin),
     maxText: LocKey((loc) => loc.questionPolitics_spectrum_answerMax),
+    middleText: LocKey((loc) => loc.questionPolitics_spectrum_answerMiddle),
     navigationPath: '',
     section: ProfileSection.basic,
   );
@@ -29,8 +29,9 @@ void main() {
     navigateSuccess = false;
   });
 
-  testWidgets('Test question screen with slider question',
+  testWidgets('Test slider question with 5 divisions',
       (WidgetTester tester) async {
+    expect(question1.defaultValue, 0.5);
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question1,
@@ -43,37 +44,37 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, false);
 
-    checkSelected(int selected) async {
+    checkSelected(double selected) async {
       await tester.tap(find.text(loc.general_next));
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.profile?.questions?[question1.id]?.response,
-          [selected.toString()]);
+      expect(profileService.profile?.questions?[question1.id]?.value, selected);
     }
 
     await tester.drag(find.byType(Slider), const Offset(300, 0));
     await tester.pumpAndSettle();
-    await checkSelected(5);
+    await checkSelected(1.0);
 
     await tester.drag(find.byType(Slider), const Offset(-100, 0));
     await tester.pumpAndSettle();
-    await checkSelected(2);
+    await checkSelected(0.25);
   });
 
   final question2 = SliderQuestion(
     id: '2',
     questionText: LocKey((loc) => loc.questionPolitics_spectrum_question),
-    minValue: -1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionPolitics_spectrum_answerMin),
     maxText: LocKey((loc) => loc.questionPolitics_spectrum_answerMax),
+    divisions: 6,
     navigationPath: '',
     section: ProfileSection.basic,
   );
 
-  testWidgets('Test question screen with slider with negative value',
+  testWidgets('Test slider question with 6 divisions',
       (WidgetTester tester) async {
+    expect(question2.defaultValue, 0.4);
+
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: question2,
@@ -86,21 +87,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, false);
 
-    checkSelected(int selected) async {
+    checkSelected(double selected) async {
       await tester.tap(find.text(loc.general_next));
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.profile?.questions?[question2.id]?.response,
-          [selected.toString()]);
+      expect(profileService.profile?.questions?[question2.id]?.value, selected);
     }
 
     await tester.drag(find.byType(Slider), const Offset(-300, 0));
     await tester.pumpAndSettle();
-    await checkSelected(-1);
+    await checkSelected(0.0);
 
-    await tester.drag(find.byType(Slider), const Offset(-20, 0));
+    await tester.drag(find.byType(Slider), const Offset(20, 0));
     await tester.pumpAndSettle();
-    await checkSelected(1);
+    await checkSelected(0.6);
   });
 }

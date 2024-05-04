@@ -7,8 +7,6 @@ final List<Question> freeTimeQuestionList = [
   SliderQuestion(
     id: 'indoor_outdoor',
     questionText: LocKey((loc) => loc.questionFreeTime_indoorOutdoor_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionFreeTime_indoorOutdoor_answerMin),
     maxText: LocKey((loc) => loc.questionFreeTime_indoorOutdoor_answerMax),
     navigationPath: 'indoor_outdoor',
@@ -98,8 +96,6 @@ final List<Question> freeTimeQuestionList = [
   SliderQuestion(
     id: 'planning',
     questionText: LocKey((loc) => loc.questionFreeTime_planning_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionFreeTime_planning_answerMin),
     maxText: LocKey((loc) => loc.questionFreeTime_planning_answerMax),
     navigationPath: 'planning',

@@ -1,6 +1,6 @@
 import 'package:deep_connections/models/question/question.dart';
+import 'package:deep_connections/screens/question/components/answer_notifier.dart';
 import 'package:deep_connections/screens/question/components/choice_question_widget.dart';
-import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
 import 'package:deep_connections/screens/question/components/slider_question_widget.dart';
 import 'package:flutter/material.dart';
 

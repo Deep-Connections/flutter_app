@@ -1,6 +1,8 @@
 import 'package:deep_connections/config/constants.dart';
+import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/question.dart';
-import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
+import 'package:deep_connections/screens/question/components/answer_notifier.dart';
+import 'package:deep_connections/utils/logging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -62,23 +64,23 @@ class QuestionSlider extends StatefulWidget {
 
 class _QuestionSliderState extends State<QuestionSlider> {
   late double sliderValue =
-      double.tryParse(widget.answerNotifier.values?.firstOrNull ?? "") ??
-          widget.question.defaultValue.toDouble();
+      widget.answerNotifier.answer?.value ?? widget.question.defaultValue;
 
   @override
   Widget build(BuildContext context) {
     return Slider.adaptive(
       value: sliderValue,
-      min: widget.question.minValue.toDouble(),
-      max: widget.question.maxValue.toDouble(),
-      divisions: widget.question.divisions,
+      min: sliderMinValue,
+      max: sliderMaxValue,
+      divisions: widget.question.divisions - 1,
       onChanged: (value) {
+        logger.d('Slider value: $value');
         setState(() {
           sliderValue = value;
         });
       },
       onChangeEnd: (value) {
-        widget.answerNotifier.values = [value.toInt().toString()];
+        widget.answerNotifier.answer = Answer(value: value);
       },
     );
   }

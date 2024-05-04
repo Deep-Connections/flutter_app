@@ -40,7 +40,7 @@ void main() {
       (WidgetTester tester) async {
     // Select answer 3 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          question1.id: const Answer(response: ['3'])
+          question1.id: const Answer(choices: ['3'])
         }));
 
     // Setup
@@ -55,9 +55,9 @@ void main() {
       expect(find.bySemanticsLabel(text), findsOneWidget);
     }
 
-    checkQuestion(List<String> response) {
+    checkQuestion(List<String> choices) {
       expect(
-          profileService.profile?.questions?[question1.id]?.response, response);
+          profileService.profile?.questions?[question1.id]?.choices, choices);
     }
 
     // Initially 3 should be selected and 1 should not be selected
@@ -102,7 +102,7 @@ void main() {
       (WidgetTester tester) async {
     // Select answer 2 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          question2.id: const Answer(response: ['2'])
+          question2.id: const Answer(choices: ['2'])
         }));
 
     // Setup
@@ -117,9 +117,9 @@ void main() {
       expect(find.bySemanticsLabel(text), findsOneWidget);
     }
 
-    checkQuestion(List<String> response) {
+    checkQuestion(List<String> choices) {
       expect(
-          profileService.profile?.questions?[question2.id]?.response, response);
+          profileService.profile?.questions?[question2.id]?.choices, choices);
     }
 
     // Initially 2 should be selected and 1 should not be selected

@@ -56,11 +56,11 @@ class MultipleChoiceQuestion extends Question {
   List<String> _validatedChoiceValues(List<String>? choiceValues) =>
       (choiceValues ?? [])
           .where((choiceValue) =>
-              choices.any((choice) => choice.value == choiceValue))
+              choices.any((choice) => choice.id == choiceValue))
           .toList();
 
   bool isAnswerValid(Answer answer) {
-    final choiceValues = _validatedChoiceValues(answer.response);
+    final choiceValues = _validatedChoiceValues(answer.choices);
     if (choiceValues.length < minChoices) return false;
     if (choiceValues.length > maxChoices) return false;
     return true;
@@ -68,80 +68,78 @@ class MultipleChoiceQuestion extends Question {
 
   @override
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
-    final choiceValues1 = _validatedChoiceValues(myAnswer.response);
-    final choiceValues2 = otherAnswer.response ?? [];
+    final choiceValues1 = _validatedChoiceValues(myAnswer.choices);
+    final choiceValues2 = otherAnswer.choices ?? [];
     final commonValues = choiceValues1
         .where((choiceValue) => choiceValues2.contains(choiceValue));
     if (commonValues.isEmpty) return null;
-    return Answer(response: commonValues.toList());
+    return Answer(choices: commonValues.toList());
   }
 
   @override
   String? localizeAnswer(Answer answer, AppLocalizations loc) {
-    return (answer.response ?? []).mapNotNull((choiceValue) {
+    return (answer.choices ?? []).mapNotNull((choiceValue) {
       return choices
-          .firstWhereOrNull((choice) => choice.value == choiceValue)
+          .firstWhereOrNull((choice) => choice.id == choiceValue)
           ?.text
           .localize(loc);
     }).join(", ");
   }
 }
 
+const sliderMinValue = 0.0;
+const sliderMaxValue = 1.0;
+const sliderMiddleValue = 0.5;
+
 class SliderQuestion extends Question {
-  final int minValue;
-  final int maxValue;
-  final int defaultValue;
+  final int divisions;
+  final double defaultValue;
   final LocKey minText;
   final LocKey maxText;
   final LocKey? middleText;
 
-  get divisions => maxValue - minValue;
 
   const SliderQuestion({
     required super.id,
     required super.questionText,
-    required this.minValue,
-    required this.maxValue,
-    int? defaultValue,
+    this.divisions = 6,
+    double? defaultValue,
     required this.minText,
     required this.maxText,
     this.middleText,
     required super.navigationPath,
     required super.section,
-  }) : defaultValue = defaultValue ?? (minValue + maxValue) ~/ 2;
+  }) : defaultValue = defaultValue ??
+            (1.0 / (divisions - 1)) * ((divisions + 1) ~/ 2 - 1);
 
-  int? _validatedSliderValue(List<String>? value) {
-    if (value == null || value.isEmpty) return null;
-    final intValue = int.tryParse(value.first);
-    final clampedValue = intValue?.clamp(minValue, maxValue);
-    if (intValue != null && intValue == clampedValue) return intValue;
-    return null;
+  double? _validatedSliderValue(double? value) {
+    if (value == null) return null;
+    return value.clamp(sliderMinValue, sliderMaxValue);
   }
 
   @override
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
-    final mySliderValue = _validatedSliderValue(myAnswer.response);
-    final otherSliderValue = _validatedSliderValue(otherAnswer.response);
+    final mySliderValue = _validatedSliderValue(myAnswer.value);
+    final otherSliderValue = _validatedSliderValue(otherAnswer.value);
     if (mySliderValue != null && mySliderValue == otherSliderValue) {
-      return Answer(response: [mySliderValue.toString()]);
+      return Answer(value: mySliderValue);
     }
     return null;
   }
 
   @override
   String? localizeAnswer(Answer answer, AppLocalizations loc) {
-    final int? sliderValue = _validatedSliderValue(answer.response);
+    final double? sliderValue = _validatedSliderValue(answer.value);
     if (sliderValue == null) return null;
-    if (sliderValue == minValue) return minText.localize(loc);
-    if (sliderValue == maxValue) return maxText.localize(loc);
-    final middleValue = (minValue + maxValue) / 2;
-    if (middleText != null && sliderValue.toDouble() == middleValue) {
+    if (sliderValue == sliderMinValue) return minText.localize(loc);
+    if (sliderValue == sliderMaxValue) return maxText.localize(loc);
+    if (middleText != null && sliderValue.toDouble() == sliderMiddleValue) {
       return middleText!.localize(loc);
     }
-    if (sliderValue < middleValue) {
+    if (sliderValue < sliderMiddleValue) {
       return loc.questionType_slider_tendency(minText.localize(loc));
     }
-    if (sliderValue > middleValue) {
+    if (sliderValue > sliderMiddleValue) {
       return loc.questionType_slider_tendency(maxText.localize(loc));
     }
     return null;
