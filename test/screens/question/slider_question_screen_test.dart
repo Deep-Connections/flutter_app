@@ -1,4 +1,5 @@
 import 'package:deep_connections/models/navigation/profile_section.dart';
+import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/services/profile/firebase_profile_service.dart';
@@ -13,7 +14,7 @@ void main() {
   late bool navigateSuccess;
   late FirebaseProfileService profileService;
 
-  final question1 = SliderQuestion(
+  final oddDivisionQuestion = SliderQuestion(
     id: '1',
     questionText: LocKey((loc) => loc.questionPolitics_spectrum_question),
     divisions: 5,
@@ -24,6 +25,31 @@ void main() {
     section: ProfileSection.basic,
   );
 
+  final evenDivisionQuestion = SliderQuestion(
+    id: '2',
+    questionText: LocKey((loc) => loc.questionPolitics_spectrum_question),
+    minText: LocKey((loc) => loc.questionPolitics_spectrum_answerMin),
+    maxText: LocKey((loc) => loc.questionPolitics_spectrum_answerMax),
+    divisions: 6,
+    navigationPath: '',
+    section: ProfileSection.basic,
+  );
+
+  test("Test isAnswerValid for slider questions", () {
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 0.01)), true);
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 0.0)), true);
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 1.0)), true);
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: -1.0)), false);
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 2.0)), false);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 0.01)), true);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 0.5)), true);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 0.0)), true);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 1.0)), true);
+    expect(
+        evenDivisionQuestion.isAnswerValid(const Answer(value: -1.0)), false);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 2.0)), false);
+  });
+
   setUp(() {
     profileService = getFakeProfileService();
     navigateSuccess = false;
@@ -31,10 +57,10 @@ void main() {
 
   testWidgets('Test slider question with 5 divisions',
       (WidgetTester tester) async {
-    expect(question1.defaultValue, 0.5);
+    expect(oddDivisionQuestion.defaultValue, 0.5);
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
-        question: question1,
+        question: oddDivisionQuestion,
         profileService: profileService,
         onSubmit: () => navigateSuccess = true,
         submitText: LocKey((loc) => loc.general_next)));
@@ -49,7 +75,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.profile?.questions?[question1.id]?.value, selected);
+      expect(profileService.profile?.questions?[oddDivisionQuestion.id]?.value,
+          selected);
     }
 
     await tester.drag(find.byType(Slider), const Offset(300, 0));
@@ -61,23 +88,13 @@ void main() {
     await checkSelected(0.25);
   });
 
-  final question2 = SliderQuestion(
-    id: '2',
-    questionText: LocKey((loc) => loc.questionPolitics_spectrum_question),
-    minText: LocKey((loc) => loc.questionPolitics_spectrum_answerMin),
-    maxText: LocKey((loc) => loc.questionPolitics_spectrum_answerMax),
-    divisions: 6,
-    navigationPath: '',
-    section: ProfileSection.basic,
-  );
-
   testWidgets('Test slider question with 6 divisions',
       (WidgetTester tester) async {
-    expect(question2.defaultValue, 0.4);
+    expect(evenDivisionQuestion.defaultValue, 0.4);
 
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
-        question: question2,
+        question: evenDivisionQuestion,
         profileService: profileService,
         onSubmit: () => navigateSuccess = true,
         submitText: LocKey((loc) => loc.general_next)));
@@ -92,7 +109,8 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.profile?.questions?[question2.id]?.value, selected);
+      expect(profileService.profile?.questions?[evenDivisionQuestion.id]?.value,
+          selected);
     }
 
     await tester.drag(find.byType(Slider), const Offset(-300, 0));

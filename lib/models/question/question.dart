@@ -28,6 +28,8 @@ sealed class Question extends ProfileNavigationStep<Answer> {
     return profile.questions?[id];
   }
 
+  bool isAnswerValid(Answer answer);
+
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
     return null;
   }
@@ -43,14 +45,14 @@ class MultipleChoiceQuestion extends Question {
   final List<Choice> choices;
   final double weight;
 
-  const MultipleChoiceQuestion({
-    required super.id,
-    required super.questionText,
-    this.minChoices = 1,
-    this.maxChoices = 1,
-    required this.choices,
-    required super.navigationPath,
-    required super.section,
+  const MultipleChoiceQuestion(
+      {required super.id,
+      required super.questionText,
+      this.minChoices = 1,
+      this.maxChoices = 1,
+      required this.choices,
+      required super.navigationPath,
+      required super.section,
       this.weight = 1});
 
   List<String> _validatedChoiceValues(List<String>? choiceValues) =>
@@ -59,10 +61,16 @@ class MultipleChoiceQuestion extends Question {
               choices.any((choice) => choice.id == choiceValue))
           .toList();
 
+  @override
   bool isAnswerValid(Answer answer) {
-    final choiceValues = _validatedChoiceValues(answer.choices);
-    if (choiceValues.length < minChoices) return false;
-    if (choiceValues.length > maxChoices) return false;
+    final choiceIds = answer.choices;
+    if (choiceIds == null ||
+        !choiceIds.every(
+            (choiceId) => choices.any((choice) => choiceId == choice.id))) {
+      return false;
+    }
+    if (choiceIds.length < minChoices) return false;
+    if (choiceIds.length > maxChoices) return false;
     return true;
   }
 
@@ -97,7 +105,6 @@ class SliderQuestion extends Question {
   final LocKey minText;
   final LocKey maxText;
   final LocKey? middleText;
-
 
   const SliderQuestion({
     required super.id,
@@ -143,5 +150,13 @@ class SliderQuestion extends Question {
       return loc.questionType_slider_tendency(maxText.localize(loc));
     }
     return null;
+  }
+
+  @override
+  bool isAnswerValid(Answer answer) {
+    final sliderValue = answer.value;
+    return sliderValue != null &&
+        sliderValue >= sliderMinValue &&
+        sliderValue <= sliderMaxValue;
   }
 }

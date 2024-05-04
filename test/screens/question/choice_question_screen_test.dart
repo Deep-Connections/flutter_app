@@ -14,7 +14,7 @@ void main() {
   late bool navigateSuccess;
   late FirebaseProfileService profileService;
 
-  final question1 = MultipleChoiceQuestion(
+  final singleChoiceQuestion = MultipleChoiceQuestion(
     id: '1',
     questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
     choices: [
@@ -31,6 +31,59 @@ void main() {
     section: ProfileSection.basic,
   );
 
+  final multipleChoiceQuestion = MultipleChoiceQuestion(
+    id: '2',
+    questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
+    choices: [
+      Choice('1',
+          LocKey((loc) => loc.questionBasic_relationshipType_answer_oneNight)),
+      Choice('2',
+          LocKey((loc) => loc.questionBasic_relationshipType_answer_short)),
+      Choice(
+          '3', LocKey((loc) => loc.questionBasic_relationshipType_answer_long)),
+      Choice(
+          '4', LocKey((loc) => loc.questionBasic_relationshipType_answer_life)),
+    ],
+    minChoices: 2,
+    maxChoices: 3,
+    navigationPath: '',
+    section: ProfileSection.basic,
+  );
+
+  test("Test isAnswerValid for choice questions", () {
+    expect(
+        singleChoiceQuestion.isAnswerValid(const Answer(choices: ['1'])), true);
+    expect(singleChoiceQuestion.isAnswerValid(const Answer(choices: ['5'])),
+        false);
+    expect(
+        singleChoiceQuestion.isAnswerValid(const Answer(choices: ['1', '2'])),
+        false);
+    expect(
+        singleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1', '2', '3', '4'])),
+        false);
+
+    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['1'])),
+        false);
+    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['2'])),
+        false);
+    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['3'])),
+        false);
+    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['4'])),
+        false);
+    expect(
+        multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['1', '2'])),
+        true);
+    expect(
+        multipleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1', '2', '3', '4'])),
+        false);
+    expect(
+        multipleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1', '2', '3'])),
+        true);
+  });
+
   setUp(() {
     profileService = getFakeProfileService();
     navigateSuccess = false;
@@ -40,12 +93,12 @@ void main() {
       (WidgetTester tester) async {
     // Select answer 3 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          question1.id: const Answer(choices: ['3'])
+          singleChoiceQuestion.id: const Answer(choices: ['3'])
         }));
 
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
-        question: question1,
+        question: singleChoiceQuestion,
         profileService: profileService,
         onSubmit: () => navigateSuccess = true,
         submitText: LocKey((loc) => loc.general_next)));
@@ -57,7 +110,8 @@ void main() {
 
     checkQuestion(List<String> choices) {
       expect(
-          profileService.profile?.questions?[question1.id]?.choices, choices);
+          profileService.profile?.questions?[singleChoiceQuestion.id]?.choices,
+          choices);
     }
 
     // Initially 3 should be selected and 1 should not be selected
@@ -79,35 +133,16 @@ void main() {
     checkQuestion(['1']);
   });
 
-  final question2 = MultipleChoiceQuestion(
-    id: '2',
-    questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
-    choices: [
-      Choice('1',
-          LocKey((loc) => loc.questionBasic_relationshipType_answer_oneNight)),
-      Choice('2',
-          LocKey((loc) => loc.questionBasic_relationshipType_answer_short)),
-      Choice(
-          '3', LocKey((loc) => loc.questionBasic_relationshipType_answer_long)),
-      Choice(
-          '4', LocKey((loc) => loc.questionBasic_relationshipType_answer_life)),
-    ],
-    minChoices: 2,
-    maxChoices: 3,
-    navigationPath: '',
-    section: ProfileSection.basic,
-  );
-
   testWidgets('Test question screen with multiple choice question',
       (WidgetTester tester) async {
     // Select answer 2 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          question2.id: const Answer(choices: ['2'])
+          multipleChoiceQuestion.id: const Answer(choices: ['2'])
         }));
 
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
-        question: question2,
+        question: multipleChoiceQuestion,
         profileService: profileService,
         onSubmit: () => navigateSuccess = true,
         submitText: LocKey((loc) => loc.general_next)));
@@ -119,7 +154,9 @@ void main() {
 
     checkQuestion(List<String> choices) {
       expect(
-          profileService.profile?.questions?[question2.id]?.choices, choices);
+          profileService
+              .profile?.questions?[multipleChoiceQuestion.id]?.choices,
+          choices);
     }
 
     // Initially 2 should be selected and 1 should not be selected
