@@ -9,7 +9,7 @@ const ageDifference = 5;
 
 const db = admin.firestore();
 
-async function findPotentialMatches(profileData, userId) {
+async function getPotentialMatches(profileData, userId) {
     const birthdate = profileData.birthdate.toDate();
     const fiveYearsOlder = new Date(birthdate);
     fiveYearsOlder.setFullYear(fiveYearsOlder.getFullYear() + ageDifference);
@@ -82,7 +82,7 @@ exports.createInitialMatch = functions.https.onCall(async (data, context) => {
     //     throw new functions.https.HttpsError('failed-precondition', 'Match already exists');
     // }
 
-    const profiles = await findPotentialMatches(currentProfile, userId);
+    const profiles = await getPotentialMatches(currentProfile, userId);
     if (profiles.empty) {
         throw new functions.https.HttpsError('not-found', 'No profiles found');
     }
