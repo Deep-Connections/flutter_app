@@ -7,9 +7,9 @@ part of 'answer.dart';
 // **************************************************************************
 
 _$AnswerImpl _$$AnswerImplFromJson(Map<String, dynamic> json) => _$AnswerImpl(
-      response: (json['response'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      choices:
+          (json['choices'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      value: (json['value'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$AnswerImplToJson(_$AnswerImpl instance) {
@@ -21,6 +21,7 @@ Map<String, dynamic> _$$AnswerImplToJson(_$AnswerImpl instance) {
     }
   }
 
-  writeNotNull('response', instance.response);
+  writeNotNull('choices', instance.choices);
+  writeNotNull('value', instance.value);
   return val;
 }

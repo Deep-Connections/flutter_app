@@ -7,7 +7,8 @@ part 'answer.g.dart';
 @freezed
 class Answer with _$Answer {
   const factory Answer({
-    List<String>? response,
+    List<String>? choices,
+    double? value,
   }) = _Answer;
 
   factory Answer.fromJson(Map<String, dynamic> json) =>
