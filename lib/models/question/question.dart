@@ -23,12 +23,14 @@ sealed class Question extends ProfileNavigationStep<Answer> {
     return profile.copyWith(questions: newQuestions);
   }
 
+  bool isAnswerValid(Answer answer);
+
   @override
   Answer? fromProfile(Profile profile) {
-    return profile.questions?[id];
+    final answer = profile.questions?[id];
+    if (answer == null || !isAnswerValid(answer)) return null;
+    return answer;
   }
-
-  bool isAnswerValid(Answer answer);
 
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
     return null;

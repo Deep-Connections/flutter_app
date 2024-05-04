@@ -37,7 +37,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         data: widget.profileService.profileStream,
         builder: (context, profile) {
           final initialAnswer = widget.question.fromProfile(profile);
-          answerNotifier.answer = initialAnswer;
+          if (initialAnswer != null) answerNotifier.answer = initialAnswer;
           return DcColumn(children: [
             Text(widget.question.questionText.localize(loc),
                 style: Theme.of(context).textTheme.headlineSmall),
@@ -50,9 +50,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   return ElevatedButton(
                       onPressed: answerNotifier.answer?.let((response) => () {
                             widget.onSubmit();
-                                widget.profileService.updateProfile((p) =>
-                                    widget.question.updateProfile(p, response));
-                              }),
+                            widget.profileService.updateProfile((p) =>
+                                widget.question.updateProfile(p, response));
+                          }),
                       child: Text(widget.submitText.localize(loc)));
                 })
           ]);

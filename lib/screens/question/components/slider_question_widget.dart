@@ -3,6 +3,7 @@ import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/question/components/answer_notifier.dart';
 import 'package:deep_connections/utils/logging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -65,6 +66,15 @@ class QuestionSlider extends StatefulWidget {
 class _QuestionSliderState extends State<QuestionSlider> {
   late double sliderValue =
       widget.answerNotifier.answer?.value ?? widget.question.defaultValue;
+
+  @override
+  void initState() {
+    super.initState();
+    // on web it doesn't work to click on the slider to set the value. So we initialize the value
+    if (kIsWeb) {
+      widget.answerNotifier.answer = Answer(value: sliderValue);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
