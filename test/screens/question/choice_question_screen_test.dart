@@ -20,7 +20,7 @@ void main() {
     choices: [
       Choice('1',
           LocKey((loc) => loc.questionBasic_relationshipType_answer_oneNight),
-          confidence: 0.0),
+          confidence: 0.1),
       Choice(
           '2', LocKey((loc) => loc.questionBasic_relationshipType_answer_short),
           confidence: 0.5),
@@ -61,7 +61,7 @@ void main() {
   test("Create answer for single choice question", () {
     final choices = singleChoiceQuestion.choices;
     expect(singleChoiceQuestion.createAnswer([choices[0]]),
-        const Answer(choices: ['1'], value: 0.0));
+        const Answer(choices: ['1'], value: 0.1));
     expect(singleChoiceQuestion.createAnswer([choices[2]]),
         const Answer(choices: ['3'], value: 0.8));
     expect(singleChoiceQuestion.createAnswer([choices[0], choices[1]]), null);
@@ -147,10 +147,11 @@ void main() {
       expect(find.bySemanticsLabel(text), findsOneWidget);
     }
 
-    checkQuestion(List<String> choices) {
-      expect(
-          profileService.profile?.questions?[singleChoiceQuestion.id]?.choices,
-          choices);
+    checkQuestion(List<String> choices, double confidence) {
+      final answer =
+          profileService.profile?.questions?[singleChoiceQuestion.id];
+      expect(answer?.choices, choices);
+      expect(answer?.value, confidence);
     }
 
     // Initially 3 should be selected and 1 should not be selected
@@ -164,12 +165,12 @@ void main() {
     checkSelected(loc.questionBasic_relationshipType_answer_oneNight, true);
     checkSelected(loc.questionBasic_relationshipType_answer_long, false);
     // the complete_profile should still contain 3
-    checkQuestion(['3']);
+    checkQuestion(['3'], 1);
     await tester.tap(find.text(loc.general_next));
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    checkQuestion(['1']);
+    checkQuestion(['1'], 0.1);
   });
 
   testWidgets('Test question screen with multiple choice question',
@@ -193,11 +194,11 @@ void main() {
       expect(find.bySemanticsLabel(text), findsOneWidget);
     }
 
-    checkQuestion(List<String> choices) {
-      expect(
-          profileService
-              .profile?.questions?[multipleChoiceQuestion.id]?.choices,
-          choices);
+    checkQuestion(List<String> choices, double confidence) {
+      final answer =
+          profileService.profile?.questions?[multipleChoiceQuestion.id];
+      expect(answer?.choices, choices);
+      expect(answer?.value, confidence);
     }
 
     // Initially nothing should be selected, as the answer is invalid
@@ -215,7 +216,7 @@ void main() {
     checkSelected(loc.questionBasic_relationshipType_answer_oneNight, true);
     checkSelected(loc.questionBasic_relationshipType_answer_short, true);
     // the complete_profile should still contain 2
-    checkQuestion(['2']);
+    checkQuestion(['2'], 2);
 
     // unselect 2 and check that next button is disabled
     await tester
@@ -241,6 +242,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    checkQuestion(['1', '2', '3']);
+    checkQuestion(['1', '2', '3'], 0.4);
   });
 }
