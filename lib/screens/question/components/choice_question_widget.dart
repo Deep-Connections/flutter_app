@@ -2,7 +2,7 @@ import 'package:deep_connections/models/question/choice.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/complete_profile/components/gender_button.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
-import 'package:deep_connections/screens/question/components/question_response_notifier.dart';
+import 'package:deep_connections/screens/question/components/answer_notifier.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +21,9 @@ class ChoiceQuestionWidget extends StatefulWidget {
 }
 
 class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
-  late List<Choice> selectedAnswers = (widget.answerNotifier.values ?? [])
-      .mapNotNull((response) =>
-          widget.question.choices.firstWhereOrNull((e) => e.value == response));
+  late List<Choice> selectedChoices =
+      (widget.answerNotifier.answer?.choices ?? []).mapNotNull((choiceId) =>
+          widget.question.choices.firstWhereOrNull((c) => c.id == choiceId));
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +32,14 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text(loc.questionType_multipleChoice_numberSelected(
-            widget.question.maxChoices, selectedAnswers.length)),
+            widget.question.maxChoices, selectedChoices.length)),
         const SizedBox(height: 10),
         Expanded(
           child: DcListView(
             children: [
               ...widget.question.choices.map((a) => SelectableButton(
-                  onPressed: () => _onAnswerPressed(a),
-                  selected: selectedAnswers.contains(a),
+                  onPressed: () => _onChoicePressed(a),
+                  selected: selectedChoices.contains(a),
                   text: a.text.localize(loc)))
             ],
           ),
@@ -48,31 +48,28 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
     );
   }
 
-  _onAnswerPressed(Choice a) {
+  _onChoicePressed(Choice a) {
     setState(() {
       // If the answer is already selected, remove it
-      if (selectedAnswers.contains(a)) {
-        selectedAnswers.remove(a);
+      if (selectedChoices.contains(a)) {
+        selectedChoices.remove(a);
       } else {
         // For single choice questions we always switch the answer
         if (widget.question.maxChoices == 1) {
-          selectedAnswers.clear();
-          selectedAnswers.add(a);
+          selectedChoices.clear();
+          selectedChoices.add(a);
         } else {
           // For multiple choice questions, only add the answer if the max number of choices has not been reached
-          if (widget.question.maxChoices > selectedAnswers.length) {
-            selectedAnswers.add(a);
+          if (widget.question.maxChoices > selectedChoices.length) {
+            selectedChoices.add(a);
           } else {
             // todo blink or something to show that the max number of choices has been reached
           }
         }
       }
-      final isValidAnswer =
-          widget.question.minChoices <= selectedAnswers.length &&
-              selectedAnswers.length <= widget.question.maxChoices;
-      widget.answerNotifier.values = isValidAnswer
-          ? selectedAnswers.map((answer) => answer.value).toList()
-          : null;
+
+      widget.answerNotifier.answer =
+          widget.question.createAnswer(selectedChoices);
     });
   }
 }

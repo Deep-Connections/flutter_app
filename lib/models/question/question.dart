@@ -6,6 +6,15 @@ import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+const minAnswerValue = 0.0;
+const maxAnswerValue = 1.0;
+const sliderMiddleValue = 0.5;
+
+bool isValidConfidence(double? confidence) =>
+    confidence != null &&
+    confidence >= minAnswerValue &&
+    confidence <= maxAnswerValue;
+
 sealed class Question extends ProfileNavigationStep<Answer> {
   final String id;
   final LocKey questionText;
@@ -23,9 +32,13 @@ sealed class Question extends ProfileNavigationStep<Answer> {
     return profile.copyWith(questions: newQuestions);
   }
 
+  bool isAnswerValid(Answer answer) => isValidConfidence(answer.confidence);
+
   @override
   Answer? fromProfile(Profile profile) {
-    return profile.questions?[id];
+    final answer = profile.questions?[id];
+    if (answer == null || !isAnswerValid(answer)) return null;
+    return answer;
   }
 
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
@@ -43,44 +56,64 @@ class MultipleChoiceQuestion extends Question {
   final List<Choice> choices;
   final double weight;
 
-  const MultipleChoiceQuestion({
-    required super.id,
-    required super.questionText,
-    this.minChoices = 1,
-    this.maxChoices = 1,
-    required this.choices,
-    required super.navigationPath,
-    required super.section,
+  const MultipleChoiceQuestion(
+      {required super.id,
+      required super.questionText,
+      this.minChoices = 1,
+      this.maxChoices = 1,
+      required this.choices,
+      required super.navigationPath,
+      required super.section,
       this.weight = 1});
 
-  List<String> _validatedChoiceValues(List<String>? choiceValues) =>
-      (choiceValues ?? [])
-          .where((choiceValue) =>
-              choices.any((choice) => choice.value == choiceValue))
-          .toList();
+  List<String> _validatedChoiceIds(List<String>? choiceIds) => (choiceIds ?? [])
+      .where((choiceId) => choices.any((choice) => choice.id == choiceId))
+      .toList();
 
+  @override
   bool isAnswerValid(Answer answer) {
-    final choiceValues = _validatedChoiceValues(answer.response);
-    if (choiceValues.length < minChoices) return false;
-    if (choiceValues.length > maxChoices) return false;
+    final choiceIds = answer.choices;
+    if (choiceIds == null ||
+        !choiceIds.every(
+            (choiceId) => choices.any((choice) => choiceId == choice.id))) {
+      return false;
+    }
+    final confidence = answer.confidence;
+    if (choices.any((c) => c.confidence != null) &&
+        !isValidConfidence(confidence)) {
+      return false;
+    }
+    if (choiceIds.length < minChoices) return false;
+    if (choiceIds.length > maxChoices) return false;
     return true;
+  }
+
+  Answer? createAnswer(List<Choice> selectedChoices) {
+    final answerValue = choices.any((c) => c.confidence != null)
+        ? selectedChoices.fold<double>(
+            0.0, (sum, choice) => sum + (choice.confidence ?? 0))
+        : null;
+    final answer = Answer(
+        choices: selectedChoices.map((choice) => choice.id).toList(),
+        confidence: answerValue);
+    return isAnswerValid(answer) ? answer : null;
   }
 
   @override
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
-    final choiceValues1 = _validatedChoiceValues(myAnswer.response);
-    final choiceValues2 = otherAnswer.response ?? [];
-    final commonValues = choiceValues1
-        .where((choiceValue) => choiceValues2.contains(choiceValue));
-    if (commonValues.isEmpty) return null;
-    return Answer(response: commonValues.toList());
+    final choiceIds1 = _validatedChoiceIds(myAnswer.choices);
+    final choiceIds2 = otherAnswer.choices ?? [];
+    final commonIds =
+        choiceIds1.where((choiceId) => choiceIds2.contains(choiceId));
+    if (commonIds.isEmpty) return null;
+    return Answer(choices: commonIds.toList());
   }
 
   @override
   String? localizeAnswer(Answer answer, AppLocalizations loc) {
-    return (answer.response ?? []).mapNotNull((choiceValue) {
+    return (answer.choices ?? []).mapNotNull((choiceId) {
       return choices
-          .firstWhereOrNull((choice) => choice.value == choiceValue)
+          .firstWhereOrNull((choice) => choice.id == choiceId)
           ?.text
           .localize(loc);
     }).join(", ");
@@ -88,60 +121,50 @@ class MultipleChoiceQuestion extends Question {
 }
 
 class SliderQuestion extends Question {
-  final int minValue;
-  final int maxValue;
-  final int defaultValue;
+  final int divisions;
+  final double defaultValue;
   final LocKey minText;
   final LocKey maxText;
   final LocKey? middleText;
 
-  get divisions => maxValue - minValue;
-
   const SliderQuestion({
     required super.id,
     required super.questionText,
-    required this.minValue,
-    required this.maxValue,
-    int? defaultValue,
+    this.divisions = 6,
+    double? defaultValue,
     required this.minText,
     required this.maxText,
     this.middleText,
     required super.navigationPath,
     required super.section,
-  }) : defaultValue = defaultValue ?? (minValue + maxValue) ~/ 2;
-
-  int? _validatedSliderValue(List<String>? value) {
-    if (value == null || value.isEmpty) return null;
-    final intValue = int.tryParse(value.first);
-    final clampedValue = intValue?.clamp(minValue, maxValue);
-    if (intValue != null && intValue == clampedValue) return intValue;
-    return null;
-  }
+  }) : defaultValue = defaultValue ??
+            (1.0 / (divisions - 1)) * ((divisions + 1) ~/ 2 - 1);
 
   @override
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
-    final mySliderValue = _validatedSliderValue(myAnswer.response);
-    final otherSliderValue = _validatedSliderValue(otherAnswer.response);
+    if (!isAnswerValid(myAnswer) || !isAnswerValid(otherAnswer)) return null;
+    final mySliderValue = myAnswer.confidence;
+    final otherSliderValue = otherAnswer.confidence;
     if (mySliderValue != null && mySliderValue == otherSliderValue) {
-      return Answer(response: [mySliderValue.toString()]);
+      return Answer(confidence: mySliderValue);
     }
     return null;
   }
 
   @override
   String? localizeAnswer(Answer answer, AppLocalizations loc) {
-    final int? sliderValue = _validatedSliderValue(answer.response);
+    if (!isAnswerValid(answer)) return null;
+    final double? sliderValue = answer.confidence;
     if (sliderValue == null) return null;
-    if (sliderValue == minValue) return minText.localize(loc);
-    if (sliderValue == maxValue) return maxText.localize(loc);
-    final middleValue = (minValue + maxValue) / 2;
-    if (middleText != null && sliderValue.toDouble() == middleValue) {
+    if (sliderValue == minAnswerValue) return minText.localize(loc);
+    if (sliderValue == maxAnswerValue) return maxText.localize(loc);
+    if (middleText != null && sliderValue == sliderMiddleValue) {
       return middleText!.localize(loc);
     }
-    if (sliderValue < middleValue) {
+    if (sliderValue < sliderMiddleValue) {
       return loc.questionType_slider_tendency(minText.localize(loc));
     }
-    if (sliderValue > middleValue) {
+    if (sliderValue > sliderMiddleValue) {
       return loc.questionType_slider_tendency(maxText.localize(loc));
     }
     return null;

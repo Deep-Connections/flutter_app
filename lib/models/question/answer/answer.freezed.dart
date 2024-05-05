@@ -20,7 +20,8 @@ Answer _$AnswerFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Answer {
-  List<String>? get response => throw _privateConstructorUsedError;
+  List<String>? get choices => throw _privateConstructorUsedError;
+  double? get confidence => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -32,7 +33,7 @@ abstract class $AnswerCopyWith<$Res> {
   factory $AnswerCopyWith(Answer value, $Res Function(Answer) then) =
       _$AnswerCopyWithImpl<$Res, Answer>;
   @useResult
-  $Res call({List<String>? response});
+  $Res call({List<String>? choices, double? confidence});
 }
 
 /// @nodoc
@@ -48,13 +49,18 @@ class _$AnswerCopyWithImpl<$Res, $Val extends Answer>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
+    Object? choices = freezed,
+    Object? confidence = freezed,
   }) {
     return _then(_value.copyWith(
-      response: freezed == response
-          ? _value.response
-          : response // ignore: cast_nullable_to_non_nullable
+      choices: freezed == choices
+          ? _value.choices
+          : choices // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      confidence: freezed == confidence
+          ? _value.confidence
+          : confidence // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -66,7 +72,7 @@ abstract class _$$AnswerImplCopyWith<$Res> implements $AnswerCopyWith<$Res> {
       __$$AnswerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String>? response});
+  $Res call({List<String>? choices, double? confidence});
 }
 
 /// @nodoc
@@ -80,13 +86,18 @@ class __$$AnswerImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? response = freezed,
+    Object? choices = freezed,
+    Object? confidence = freezed,
   }) {
     return _then(_$AnswerImpl(
-      response: freezed == response
-          ? _value._response
-          : response // ignore: cast_nullable_to_non_nullable
+      choices: freezed == choices
+          ? _value._choices
+          : choices // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      confidence: freezed == confidence
+          ? _value.confidence
+          : confidence // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -94,24 +105,28 @@ class __$$AnswerImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
-  const _$AnswerImpl({final List<String>? response}) : _response = response;
+  const _$AnswerImpl({final List<String>? choices, this.confidence})
+      : _choices = choices;
 
   factory _$AnswerImpl.fromJson(Map<String, dynamic> json) =>
       _$$AnswerImplFromJson(json);
 
-  final List<String>? _response;
+  final List<String>? _choices;
   @override
-  List<String>? get response {
-    final value = _response;
+  List<String>? get choices {
+    final value = _choices;
     if (value == null) return null;
-    if (_response is EqualUnmodifiableListView) return _response;
+    if (_choices is EqualUnmodifiableListView) return _choices;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
+  final double? confidence;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Answer(response: $response)';
+    return 'Answer(choices: $choices, confidence: $confidence)';
   }
 
   @override
@@ -119,7 +134,8 @@ class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Answer'))
-      ..add(DiagnosticsProperty('response', response));
+      ..add(DiagnosticsProperty('choices', choices))
+      ..add(DiagnosticsProperty('confidence', confidence));
   }
 
   @override
@@ -127,13 +143,15 @@ class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AnswerImpl &&
-            const DeepCollectionEquality().equals(other._response, _response));
+            const DeepCollectionEquality().equals(other._choices, _choices) &&
+            (identical(other.confidence, confidence) ||
+                other.confidence == confidence));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_response));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_choices), confidence);
 
   @JsonKey(ignore: true)
   @override
@@ -150,12 +168,15 @@ class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
 }
 
 abstract class _Answer implements Answer {
-  const factory _Answer({final List<String>? response}) = _$AnswerImpl;
+  const factory _Answer(
+      {final List<String>? choices, final double? confidence}) = _$AnswerImpl;
 
   factory _Answer.fromJson(Map<String, dynamic> json) = _$AnswerImpl.fromJson;
 
   @override
-  List<String>? get response;
+  List<String>? get choices;
+  @override
+  double? get confidence;
   @override
   @JsonKey(ignore: true)
   _$$AnswerImplCopyWith<_$AnswerImpl> get copyWith =>

@@ -45,22 +45,19 @@ void main() {
     for (final question in allQuestionsList) {
       if (question is MultipleChoiceQuestion) {
         final randomAnswerPermutation = question.choices
-            .map((choice) => choice.value)
+            .map((choice) => choice.id)
             .toList()
           ..shuffle(random);
         questions[question.id] = Answer(
-          response: randomAnswerPermutation.sublist(0, question.maxChoices),
+          choices: randomAnswerPermutation.sublist(0, question.maxChoices),
         );
       }
 
       if (question is SliderQuestion) {
-        questions[question.id] = Answer(
-          response: [
-            (random.nextInt(question.maxValue + question.minValue) +
-                    question.minValue)
-                .toString()
-          ],
-        );
+        final step = 1 / (question.divisions - 1);
+        var sliderValue = step * random.nextInt(question.divisions);
+        sliderValue = double.parse(sliderValue.toStringAsFixed(10));
+        questions[question.id] = Answer(confidence: sliderValue);
       }
     }
     return profile.copyWith(questions: questions);

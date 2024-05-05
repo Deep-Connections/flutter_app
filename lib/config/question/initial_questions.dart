@@ -52,8 +52,6 @@ final List<Question> initialQuestionList = [
   SliderQuestion(
     id: 'alone_time',
     questionText: LocKey((loc) => loc.questionBasic_aloneTime_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionBasic_aloneTime_answerMin),
     maxText: LocKey((loc) => loc.questionBasic_aloneTime_answerMax),
     navigationPath: 'alone_time',
@@ -62,8 +60,6 @@ final List<Question> initialQuestionList = [
   SliderQuestion(
     id: 'small_talk',
     questionText: LocKey((loc) => loc.questionBasic_smallTalk_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionBasic_smallTalk_answerMin),
     maxText: LocKey((loc) => loc.questionBasic_smallTalk_answerMax),
     navigationPath: 'small_talk',
@@ -72,8 +68,6 @@ final List<Question> initialQuestionList = [
   SliderQuestion(
     id: 'looks',
     questionText: LocKey((loc) => loc.questionBasic_looks_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionBasic_looks_answerMin),
     maxText: LocKey((loc) => loc.questionBasic_looks_answerMax),
     navigationPath: 'looks',

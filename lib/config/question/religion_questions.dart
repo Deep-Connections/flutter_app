@@ -7,8 +7,6 @@ final List<Question> spiritualityQuestionList = [
   SliderQuestion(
     id: 'religion_importance',
     questionText: LocKey((loc) => loc.questionSpirituality_importance_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionSpirituality_importance_answerMin),
     maxText: LocKey((loc) => loc.questionSpirituality_importance_answerMax),
     navigationPath: 'religion_importance',

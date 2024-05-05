@@ -66,8 +66,6 @@ final List<Question> habitsQuestionList = [
   SliderQuestion(
     id: 'health',
     questionText: LocKey((loc) => loc.questionHabit_health_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionHabit_health_answerMin),
     maxText: LocKey((loc) => loc.questionHabit_health_answerMax),
     navigationPath: 'health',
@@ -106,8 +104,6 @@ final List<Question> habitsQuestionList = [
   SliderQuestion(
     id: 'minimalism',
     questionText: LocKey((loc) => loc.questionHabit_minimalism_question),
-    minValue: 1,
-    maxValue: 4,
     minText: LocKey((loc) => loc.questionHabit_minimalism_answerMin),
     maxText: LocKey((loc) => loc.questionHabit_minimalism_answerMax),
     navigationPath: 'minimalism',
