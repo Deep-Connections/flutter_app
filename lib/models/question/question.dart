@@ -79,12 +79,24 @@ class MultipleChoiceQuestion extends Question {
       return false;
     }
     final value = answer.value;
-    if (choices.any((c) => c.gradient != null) && !isValidAnswerValue(value)) {
+    if (choices.any((c) => c.confidence != null) &&
+        !isValidAnswerValue(value)) {
       return false;
     }
     if (choiceIds.length < minChoices) return false;
     if (choiceIds.length > maxChoices) return false;
     return true;
+  }
+
+  Answer? createAnswer(List<Choice> selectedChoices) {
+    final answerValue = choices.any((c) => c.confidence != null)
+        ? selectedChoices.fold<double>(
+            0.0, (sum, choice) => sum + (choice.confidence ?? 0))
+        : null;
+    final answer = Answer(
+        choices: selectedChoices.map((choice) => choice.id).toList(),
+        value: answerValue);
+    return isAnswerValid(answer) ? answer : null;
   }
 
   @override

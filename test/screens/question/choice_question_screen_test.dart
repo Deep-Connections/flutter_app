@@ -19,13 +19,17 @@ void main() {
     questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
     choices: [
       Choice('1',
-          LocKey((loc) => loc.questionBasic_relationshipType_answer_oneNight)),
-      Choice('2',
-          LocKey((loc) => loc.questionBasic_relationshipType_answer_short)),
+          LocKey((loc) => loc.questionBasic_relationshipType_answer_oneNight),
+          confidence: 0.0),
       Choice(
-          '3', LocKey((loc) => loc.questionBasic_relationshipType_answer_long)),
+          '2', LocKey((loc) => loc.questionBasic_relationshipType_answer_short),
+          confidence: 0.5),
       Choice(
-          '4', LocKey((loc) => loc.questionBasic_relationshipType_answer_life)),
+          '3', LocKey((loc) => loc.questionBasic_relationshipType_answer_long),
+          confidence: 0.8),
+      Choice(
+          '4', LocKey((loc) => loc.questionBasic_relationshipType_answer_life),
+          confidence: 1),
     ],
     navigationPath: '',
     section: ProfileSection.basic,
@@ -36,13 +40,17 @@ void main() {
     questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
     choices: [
       Choice('1',
-          LocKey((loc) => loc.questionBasic_relationshipType_answer_oneNight)),
-      Choice('2',
-          LocKey((loc) => loc.questionBasic_relationshipType_answer_short)),
+          LocKey((loc) => loc.questionBasic_relationshipType_answer_oneNight),
+          confidence: 0.0),
       Choice(
-          '3', LocKey((loc) => loc.questionBasic_relationshipType_answer_long)),
+          '2', LocKey((loc) => loc.questionBasic_relationshipType_answer_short),
+          confidence: 0.1),
       Choice(
-          '4', LocKey((loc) => loc.questionBasic_relationshipType_answer_life)),
+          '3', LocKey((loc) => loc.questionBasic_relationshipType_answer_long),
+          confidence: 0.3),
+      Choice(
+          '4', LocKey((loc) => loc.questionBasic_relationshipType_answer_life),
+          confidence: 0.6),
     ],
     minChoices: 2,
     maxChoices: 3,
@@ -50,48 +58,79 @@ void main() {
     section: ProfileSection.basic,
   );
 
+  test("Create answer for single choice question", () {
+    final choices = singleChoiceQuestion.choices;
+    expect(singleChoiceQuestion.createAnswer([choices[0]]),
+        const Answer(choices: ['1'], value: 0.0));
+    expect(singleChoiceQuestion.createAnswer([choices[2]]),
+        const Answer(choices: ['3'], value: 0.8));
+    expect(singleChoiceQuestion.createAnswer([choices[0], choices[1]]), null);
+  });
+
+  test("Create answer for multiple choice question", () {
+    final choices = multipleChoiceQuestion.choices;
+    expect(multipleChoiceQuestion.createAnswer([choices[0]]), null);
+    expect(multipleChoiceQuestion.createAnswer(choices), null);
+    expect(multipleChoiceQuestion.createAnswer([choices[0], choices[1]]),
+        const Answer(choices: ['1', '2'], value: 0.1));
+    expect(multipleChoiceQuestion.createAnswer([choices[2], choices[1]]),
+        const Answer(choices: ['3', '2'], value: 0.4));
+  });
+
   test("Test isAnswerValid for choice questions", () {
     expect(
-        singleChoiceQuestion.isAnswerValid(const Answer(choices: ['1'])), true);
-    expect(singleChoiceQuestion.isAnswerValid(const Answer(choices: ['5'])),
-        false);
+        singleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1'], value: 1)),
+        true);
     expect(
-        singleChoiceQuestion.isAnswerValid(const Answer(choices: ['1', '2'])),
+        singleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1'], value: 0.2)),
+        true);
+    expect(singleChoiceQuestion.isAnswerValid(const Answer(choices: ['1'])),
         false);
     expect(
         singleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1', '2', '3', '4'])),
+            .isAnswerValid(const Answer(choices: ['5'], value: 1)),
+        false);
+    expect(
+        singleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1', '2'], value: 1)),
+        false);
+    expect(
+        singleChoiceQuestion.isAnswerValid(
+            const Answer(choices: ['1', '2', '3', '4'], value: 1)),
         false);
 
-    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['1'])),
-        false);
-    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['2'])),
-        false);
-    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['3'])),
-        false);
-    expect(multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['4'])),
+    expect(
+        multipleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1'], value: 0.2)),
         false);
     expect(
-        multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['1', '2'])),
+        multipleChoiceQuestion
+            .isAnswerValid(const Answer(choices: ['1', '2'], value: 0.2)),
         true);
     expect(
-        multipleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1', '2', '3', '4'])),
+        multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['1', '2'])),
+        false);
+    expect(
+        multipleChoiceQuestion.isAnswerValid(
+            const Answer(choices: ['1', '2', '3', '4'], value: 0)),
         false);
     expect(
         multipleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1', '2', '3'])),
+            .isAnswerValid(const Answer(choices: ['1', '2', '3'], value: 1)),
         true);
   });
 
   setUp(() {
-    profileService = getFakeProfileService();
     navigateSuccess = false;
   });
 
   testWidgets('Test question screen with single choice question',
       (WidgetTester tester) async {
     // Select answer 3 initially
+    profileService = getFakeProfileService();
+
     profileService.updateProfile((p) => p.copyWith(questions: {
           singleChoiceQuestion.id: const Answer(choices: ['3'])
         }));
@@ -135,6 +174,8 @@ void main() {
 
   testWidgets('Test question screen with multiple choice question',
       (WidgetTester tester) async {
+    profileService = getFakeProfileService();
+
     // Select answer 2 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
           multipleChoiceQuestion.id: const Answer(choices: ['2'])
