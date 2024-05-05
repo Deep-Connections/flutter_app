@@ -132,7 +132,7 @@ void main() {
     profileService = getFakeProfileService();
 
     profileService.updateProfile((p) => p.copyWith(questions: {
-          singleChoiceQuestion.id: const Answer(choices: ['3'])
+          singleChoiceQuestion.id: const Answer(choices: ['3'], value: 1)
         }));
 
     // Setup
@@ -178,7 +178,7 @@ void main() {
 
     // Select answer 2 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          multipleChoiceQuestion.id: const Answer(choices: ['2'])
+          multipleChoiceQuestion.id: const Answer(choices: ['2'], value: 2)
         }));
 
     // Setup
