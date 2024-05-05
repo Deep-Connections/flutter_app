@@ -6,6 +6,13 @@ import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+const minAnswerValue = 0.0;
+const maxAnswerValue = 1.0;
+const sliderMiddleValue = 0.5;
+
+bool isValidAnswerValue(double? value) =>
+    value != null && value >= minAnswerValue && value <= maxAnswerValue;
+
 sealed class Question extends ProfileNavigationStep<Answer> {
   final String id;
   final LocKey questionText;
@@ -23,7 +30,7 @@ sealed class Question extends ProfileNavigationStep<Answer> {
     return profile.copyWith(questions: newQuestions);
   }
 
-  bool isAnswerValid(Answer answer);
+  bool isAnswerValid(Answer answer) => isValidAnswerValue(answer.value);
 
   @override
   Answer? fromProfile(Profile profile) {
@@ -71,6 +78,10 @@ class MultipleChoiceQuestion extends Question {
             (choiceId) => choices.any((choice) => choiceId == choice.id))) {
       return false;
     }
+    final value = answer.value;
+    if (choices.any((c) => c.gradient != null) && !isValidAnswerValue(value)) {
+      return false;
+    }
     if (choiceIds.length < minChoices) return false;
     if (choiceIds.length > maxChoices) return false;
     return true;
@@ -97,10 +108,6 @@ class MultipleChoiceQuestion extends Question {
   }
 }
 
-const sliderMinValue = 0.0;
-const sliderMaxValue = 1.0;
-const sliderMiddleValue = 0.5;
-
 class SliderQuestion extends Question {
   final int divisions;
   final double defaultValue;
@@ -121,15 +128,11 @@ class SliderQuestion extends Question {
   }) : defaultValue = defaultValue ??
             (1.0 / (divisions - 1)) * ((divisions + 1) ~/ 2 - 1);
 
-  double? _validatedSliderValue(double? value) {
-    if (value == null) return null;
-    return value.clamp(sliderMinValue, sliderMaxValue);
-  }
-
   @override
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
-    final mySliderValue = _validatedSliderValue(myAnswer.value);
-    final otherSliderValue = _validatedSliderValue(otherAnswer.value);
+    if (!isAnswerValid(myAnswer) || !isAnswerValid(otherAnswer)) return null;
+    final mySliderValue = myAnswer.value;
+    final otherSliderValue = otherAnswer.value;
     if (mySliderValue != null && mySliderValue == otherSliderValue) {
       return Answer(value: mySliderValue);
     }
@@ -138,11 +141,12 @@ class SliderQuestion extends Question {
 
   @override
   String? localizeAnswer(Answer answer, AppLocalizations loc) {
-    final double? sliderValue = _validatedSliderValue(answer.value);
+    if (!isAnswerValid(answer)) return null;
+    final double? sliderValue = answer.value;
     if (sliderValue == null) return null;
-    if (sliderValue == sliderMinValue) return minText.localize(loc);
-    if (sliderValue == sliderMaxValue) return maxText.localize(loc);
-    if (middleText != null && sliderValue.toDouble() == sliderMiddleValue) {
+    if (sliderValue == minAnswerValue) return minText.localize(loc);
+    if (sliderValue == maxAnswerValue) return maxText.localize(loc);
+    if (middleText != null && sliderValue == sliderMiddleValue) {
       return middleText!.localize(loc);
     }
     if (sliderValue < sliderMiddleValue) {
@@ -152,13 +156,5 @@ class SliderQuestion extends Question {
       return loc.questionType_slider_tendency(maxText.localize(loc));
     }
     return null;
-  }
-
-  @override
-  bool isAnswerValid(Answer answer) {
-    final sliderValue = answer.value;
-    return sliderValue != null &&
-        sliderValue >= sliderMinValue &&
-        sliderValue <= sliderMaxValue;
   }
 }

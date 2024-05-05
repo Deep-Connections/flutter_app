@@ -1,4 +1,3 @@
-import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/choice.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/complete_profile/components/gender_button.dart';
@@ -23,8 +22,8 @@ class ChoiceQuestionWidget extends StatefulWidget {
 
 class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
   late List<Choice> selectedChoices =
-      (widget.answerNotifier.answer?.choices ?? []).mapNotNull((choice) =>
-          widget.question.choices.firstWhereOrNull((c) => c.id == choice));
+      (widget.answerNotifier.answer?.choices ?? []).mapNotNull((choiceId) =>
+          widget.question.choices.firstWhereOrNull((c) => c.id == choiceId));
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +67,9 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
           }
         }
       }
-      final isValidAnswer =
-          widget.question.minChoices <= selectedChoices.length &&
-              selectedChoices.length <= widget.question.maxChoices;
-      widget.answerNotifier.answer = isValidAnswer
-          ? Answer(
-              choices: selectedChoices.map((choice) => choice.id).toList(),
-              value: selectedChoices.fold<double>(
-                  0.0, (sum, choice) => sum + (choice.gradient ?? 0)))
-          : null;
+
+      widget.answerNotifier.answer =
+          widget.question.createAnswer(selectedChoices);
     });
   }
 }

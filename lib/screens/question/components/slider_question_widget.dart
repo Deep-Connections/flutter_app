@@ -80,8 +80,8 @@ class _QuestionSliderState extends State<QuestionSlider> {
   Widget build(BuildContext context) {
     return Slider.adaptive(
       value: sliderValue,
-      min: sliderMinValue,
-      max: sliderMaxValue,
+      min: minAnswerValue,
+      max: maxAnswerValue,
       divisions: widget.question.divisions - 1,
       onChanged: (value) {
         logger.d('Slider value: $value');
