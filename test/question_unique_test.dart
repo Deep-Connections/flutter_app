@@ -1,7 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:deep_connections/config/question_list.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:trotter/trotter.dart';
 
 import 'test_extensions.dart';
 
@@ -88,6 +90,35 @@ void main() {
               checkStringUniqueness(question, middleText);
             }
           }
+      }
+    }
+  });
+
+  test('Choice permutation confidence values, if defined should sum up to 1',
+      () async {
+    final choiceQuestions =
+        allQuestionsList.whereType<MultipleChoiceQuestion>();
+    for (final question in choiceQuestions) {
+      // Skip questions without confidence
+      if (question.choices.every((c) => c.confidence == null)) continue;
+
+      // Check that confidence is between 0 and 1 for all choices
+      final firstInvalidConfidenceChoice = question.choices.firstWhereOrNull(
+          (c) =>
+              c.confidence == null || c.confidence! > 1 || c.confidence! < 0);
+      if (firstInvalidConfidenceChoice != null) {
+        throw Exception(
+            'Confidence for choice is not between 0 and 1 for question=${question.id}, choice=${firstInvalidConfidenceChoice.id}');
+      }
+
+      final combination = Combinations(question.maxChoices, question.choices);
+      for (final choices in combination()) {
+        final sumConfidence = choices.fold<double>(
+            0.0, (sum, choice) => sum + (choice.confidence ?? 0));
+        if (sumConfidence > 1) {
+          throw Exception(
+              'Sum of confidence for choices is greater than 1 for question=${question.id}, choices=${choices.map((e) => e.id).toList()}');
+        }
       }
     }
   });
