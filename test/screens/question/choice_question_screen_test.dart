@@ -159,18 +159,17 @@ void main() {
           choices);
     }
 
-    // Initially 2 should be selected and 1 should not be selected
-    checkSelected(loc.questionBasic_relationshipType_answer_short, true);
+    // Initially nothing should be selected, as the answer is invalid
+    checkSelected(loc.questionBasic_relationshipType_answer_short, false);
     checkSelected(loc.questionBasic_relationshipType_answer_oneNight, false);
     checkSelected(loc.questionBasic_relationshipType_answer_long, false);
+    tester.checkButtonEnabled(loc.general_next, enabled: false);
 
-    // As we have a previous answer, the next button should be enabled,
-    // even though we have not selected the minimum number of answers
-    tester.checkButtonEnabled(loc.general_next, enabled: true);
-
-    // Select answer 1 and check that both are selected
+    // Select answer 1 and 2, check that both are selected
     await tester
         .tap(find.text(loc.questionBasic_relationshipType_answer_oneNight));
+    await tester
+        .tap(find.text(loc.questionBasic_relationshipType_answer_short));
     await tester.pumpAndSettle();
     checkSelected(loc.questionBasic_relationshipType_answer_oneNight, true);
     checkSelected(loc.questionBasic_relationshipType_answer_short, true);
@@ -183,7 +182,7 @@ void main() {
     await tester.pumpAndSettle();
     tester.checkButtonEnabled(loc.general_next, enabled: false);
 
-    // select all 3 answers
+    // select all answers
     await tester
         .tap(find.text(loc.questionBasic_relationshipType_answer_short));
     await tester.tap(find.text(loc.questionBasic_relationshipType_answer_long));
