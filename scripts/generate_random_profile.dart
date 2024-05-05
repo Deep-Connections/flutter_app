@@ -57,7 +57,7 @@ void main() {
         final step = 1 / (question.divisions - 1);
         var sliderValue = step * random.nextInt(question.divisions);
         sliderValue = double.parse(sliderValue.toStringAsFixed(10));
-        questions[question.id] = Answer(value: sliderValue);
+        questions[question.id] = Answer(confidence: sliderValue);
       }
     }
     return profile.copyWith(questions: questions);

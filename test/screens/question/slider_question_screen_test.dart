@@ -36,18 +36,28 @@ void main() {
   );
 
   test("Test isAnswerValid for slider questions", () {
-    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 0.01)), true);
-    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 0.0)), true);
-    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 1.0)), true);
-    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: -1.0)), false);
-    expect(oddDivisionQuestion.isAnswerValid(const Answer(value: 2.0)), false);
-    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 0.01)), true);
-    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 0.5)), true);
-    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 0.0)), true);
-    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 1.0)), true);
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(confidence: 0.01)),
+        true);
     expect(
-        evenDivisionQuestion.isAnswerValid(const Answer(value: -1.0)), false);
-    expect(evenDivisionQuestion.isAnswerValid(const Answer(value: 2.0)), false);
+        oddDivisionQuestion.isAnswerValid(const Answer(confidence: 0.0)), true);
+    expect(
+        oddDivisionQuestion.isAnswerValid(const Answer(confidence: 1.0)), true);
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(confidence: -1.0)),
+        false);
+    expect(oddDivisionQuestion.isAnswerValid(const Answer(confidence: 2.0)),
+        false);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(confidence: 0.01)),
+        true);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(confidence: 0.5)),
+        true);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(confidence: 0.0)),
+        true);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(confidence: 1.0)),
+        true);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(confidence: -1.0)),
+        false);
+    expect(evenDivisionQuestion.isAnswerValid(const Answer(confidence: 2.0)),
+        false);
   });
 
   setUp(() {
@@ -75,7 +85,9 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.profile?.questions?[oddDivisionQuestion.id]?.value,
+      expect(
+          profileService
+              .profile?.questions?[oddDivisionQuestion.id]?.confidence,
           selected);
     }
 
@@ -109,7 +121,9 @@ void main() {
       await tester.pumpAndSettle();
       expect(navigateSuccess, true);
       navigateSuccess = false;
-      expect(profileService.profile?.questions?[evenDivisionQuestion.id]?.value,
+      expect(
+          profileService
+              .profile?.questions?[evenDivisionQuestion.id]?.confidence,
           selected);
     }
 

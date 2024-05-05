@@ -10,8 +10,10 @@ const minAnswerValue = 0.0;
 const maxAnswerValue = 1.0;
 const sliderMiddleValue = 0.5;
 
-bool isValidAnswerValue(double? value) =>
-    value != null && value >= minAnswerValue && value <= maxAnswerValue;
+bool isValidConfidence(double? confidence) =>
+    confidence != null &&
+    confidence >= minAnswerValue &&
+    confidence <= maxAnswerValue;
 
 sealed class Question extends ProfileNavigationStep<Answer> {
   final String id;
@@ -30,7 +32,7 @@ sealed class Question extends ProfileNavigationStep<Answer> {
     return profile.copyWith(questions: newQuestions);
   }
 
-  bool isAnswerValid(Answer answer) => isValidAnswerValue(answer.value);
+  bool isAnswerValid(Answer answer) => isValidConfidence(answer.confidence);
 
   @override
   Answer? fromProfile(Profile profile) {
@@ -64,11 +66,9 @@ class MultipleChoiceQuestion extends Question {
       required super.section,
       this.weight = 1});
 
-  List<String> _validatedChoiceValues(List<String>? choiceValues) =>
-      (choiceValues ?? [])
-          .where((choiceValue) =>
-              choices.any((choice) => choice.id == choiceValue))
-          .toList();
+  List<String> _validatedChoiceIds(List<String>? choiceIds) => (choiceIds ?? [])
+      .where((choiceId) => choices.any((choice) => choice.id == choiceId))
+      .toList();
 
   @override
   bool isAnswerValid(Answer answer) {
@@ -78,9 +78,9 @@ class MultipleChoiceQuestion extends Question {
             (choiceId) => choices.any((choice) => choiceId == choice.id))) {
       return false;
     }
-    final value = answer.value;
+    final confidence = answer.confidence;
     if (choices.any((c) => c.confidence != null) &&
-        !isValidAnswerValue(value)) {
+        !isValidConfidence(confidence)) {
       return false;
     }
     if (choiceIds.length < minChoices) return false;
@@ -95,25 +95,25 @@ class MultipleChoiceQuestion extends Question {
         : null;
     final answer = Answer(
         choices: selectedChoices.map((choice) => choice.id).toList(),
-        value: answerValue);
+        confidence: answerValue);
     return isAnswerValid(answer) ? answer : null;
   }
 
   @override
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
-    final choiceValues1 = _validatedChoiceValues(myAnswer.choices);
-    final choiceValues2 = otherAnswer.choices ?? [];
-    final commonValues = choiceValues1
-        .where((choiceValue) => choiceValues2.contains(choiceValue));
-    if (commonValues.isEmpty) return null;
-    return Answer(choices: commonValues.toList());
+    final choiceIds1 = _validatedChoiceIds(myAnswer.choices);
+    final choiceIds2 = otherAnswer.choices ?? [];
+    final commonIds =
+        choiceIds1.where((choiceId) => choiceIds2.contains(choiceId));
+    if (commonIds.isEmpty) return null;
+    return Answer(choices: commonIds.toList());
   }
 
   @override
   String? localizeAnswer(Answer answer, AppLocalizations loc) {
-    return (answer.choices ?? []).mapNotNull((choiceValue) {
+    return (answer.choices ?? []).mapNotNull((choiceId) {
       return choices
-          .firstWhereOrNull((choice) => choice.id == choiceValue)
+          .firstWhereOrNull((choice) => choice.id == choiceId)
           ?.text
           .localize(loc);
     }).join(", ");
@@ -143,10 +143,10 @@ class SliderQuestion extends Question {
   @override
   Answer? findCommonAnswer(Answer myAnswer, Answer otherAnswer) {
     if (!isAnswerValid(myAnswer) || !isAnswerValid(otherAnswer)) return null;
-    final mySliderValue = myAnswer.value;
-    final otherSliderValue = otherAnswer.value;
+    final mySliderValue = myAnswer.confidence;
+    final otherSliderValue = otherAnswer.confidence;
     if (mySliderValue != null && mySliderValue == otherSliderValue) {
-      return Answer(value: mySliderValue);
+      return Answer(confidence: mySliderValue);
     }
     return null;
   }
@@ -154,7 +154,7 @@ class SliderQuestion extends Question {
   @override
   String? localizeAnswer(Answer answer, AppLocalizations loc) {
     if (!isAnswerValid(answer)) return null;
-    final double? sliderValue = answer.value;
+    final double? sliderValue = answer.confidence;
     if (sliderValue == null) return null;
     if (sliderValue == minAnswerValue) return minText.localize(loc);
     if (sliderValue == maxAnswerValue) return maxText.localize(loc);

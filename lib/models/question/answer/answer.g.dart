@@ -9,7 +9,7 @@ part of 'answer.dart';
 _$AnswerImpl _$$AnswerImplFromJson(Map<String, dynamic> json) => _$AnswerImpl(
       choices:
           (json['choices'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      value: (json['value'] as num?)?.toDouble(),
+      confidence: (json['confidence'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$AnswerImplToJson(_$AnswerImpl instance) {
@@ -22,6 +22,6 @@ Map<String, dynamic> _$$AnswerImplToJson(_$AnswerImpl instance) {
   }
 
   writeNotNull('choices', instance.choices);
-  writeNotNull('value', instance.value);
+  writeNotNull('confidence', instance.confidence);
   return val;
 }

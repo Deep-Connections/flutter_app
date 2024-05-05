@@ -8,7 +8,7 @@ part 'answer.g.dart';
 class Answer with _$Answer {
   const factory Answer({
     List<String>? choices,
-    double? value,
+    double? confidence,
   }) = _Answer;
 
   factory Answer.fromJson(Map<String, dynamic> json) =>

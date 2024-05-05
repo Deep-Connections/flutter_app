@@ -61,9 +61,9 @@ void main() {
   test("Create answer for single choice question", () {
     final choices = singleChoiceQuestion.choices;
     expect(singleChoiceQuestion.createAnswer([choices[0]]),
-        const Answer(choices: ['1'], value: 0.1));
+        const Answer(choices: ['1'], confidence: 0.1));
     expect(singleChoiceQuestion.createAnswer([choices[2]]),
-        const Answer(choices: ['3'], value: 0.8));
+        const Answer(choices: ['3'], confidence: 0.8));
     expect(singleChoiceQuestion.createAnswer([choices[0], choices[1]]), null);
   });
 
@@ -72,53 +72,53 @@ void main() {
     expect(multipleChoiceQuestion.createAnswer([choices[0]]), null);
     expect(multipleChoiceQuestion.createAnswer(choices), null);
     expect(multipleChoiceQuestion.createAnswer([choices[0], choices[1]]),
-        const Answer(choices: ['1', '2'], value: 0.1));
+        const Answer(choices: ['1', '2'], confidence: 0.1));
     expect(multipleChoiceQuestion.createAnswer([choices[2], choices[1]]),
-        const Answer(choices: ['3', '2'], value: 0.4));
+        const Answer(choices: ['3', '2'], confidence: 0.4));
   });
 
   test("Test isAnswerValid for choice questions", () {
     expect(
         singleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1'], value: 1)),
+            .isAnswerValid(const Answer(choices: ['1'], confidence: 1)),
         true);
     expect(
         singleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1'], value: 0.2)),
+            .isAnswerValid(const Answer(choices: ['1'], confidence: 0.2)),
         true);
     expect(singleChoiceQuestion.isAnswerValid(const Answer(choices: ['1'])),
         false);
     expect(
         singleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['5'], value: 1)),
+            .isAnswerValid(const Answer(choices: ['5'], confidence: 1)),
         false);
     expect(
         singleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1', '2'], value: 1)),
+            .isAnswerValid(const Answer(choices: ['1', '2'], confidence: 1)),
         false);
     expect(
         singleChoiceQuestion.isAnswerValid(
-            const Answer(choices: ['1', '2', '3', '4'], value: 1)),
+            const Answer(choices: ['1', '2', '3', '4'], confidence: 1)),
         false);
 
     expect(
         multipleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1'], value: 0.2)),
+            .isAnswerValid(const Answer(choices: ['1'], confidence: 0.2)),
         false);
     expect(
         multipleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1', '2'], value: 0.2)),
+            .isAnswerValid(const Answer(choices: ['1', '2'], confidence: 0.2)),
         true);
     expect(
         multipleChoiceQuestion.isAnswerValid(const Answer(choices: ['1', '2'])),
         false);
     expect(
         multipleChoiceQuestion.isAnswerValid(
-            const Answer(choices: ['1', '2', '3', '4'], value: 0)),
+            const Answer(choices: ['1', '2', '3', '4'], confidence: 0)),
         false);
     expect(
-        multipleChoiceQuestion
-            .isAnswerValid(const Answer(choices: ['1', '2', '3'], value: 1)),
+        multipleChoiceQuestion.isAnswerValid(
+            const Answer(choices: ['1', '2', '3'], confidence: 1)),
         true);
   });
 
@@ -132,7 +132,7 @@ void main() {
     profileService = getFakeProfileService();
 
     profileService.updateProfile((p) => p.copyWith(questions: {
-          singleChoiceQuestion.id: const Answer(choices: ['3'], value: 1)
+          singleChoiceQuestion.id: const Answer(choices: ['3'], confidence: 1)
         }));
 
     // Setup
@@ -151,7 +151,7 @@ void main() {
       final answer =
           profileService.profile?.questions?[singleChoiceQuestion.id];
       expect(answer?.choices, choices);
-      expect(answer?.value, confidence);
+      expect(answer?.confidence, confidence);
     }
 
     // Initially 3 should be selected and 1 should not be selected
@@ -179,7 +179,7 @@ void main() {
 
     // Select answer 2 initially
     profileService.updateProfile((p) => p.copyWith(questions: {
-          multipleChoiceQuestion.id: const Answer(choices: ['2'], value: 2)
+          multipleChoiceQuestion.id: const Answer(choices: ['2'], confidence: 2)
         }));
 
     // Setup
@@ -198,7 +198,7 @@ void main() {
       final answer =
           profileService.profile?.questions?[multipleChoiceQuestion.id];
       expect(answer?.choices, choices);
-      expect(answer?.value, confidence);
+      expect(answer?.confidence, confidence);
     }
 
     // Initially nothing should be selected, as the answer is invalid

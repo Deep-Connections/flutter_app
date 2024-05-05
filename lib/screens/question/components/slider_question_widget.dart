@@ -65,14 +65,14 @@ class QuestionSlider extends StatefulWidget {
 
 class _QuestionSliderState extends State<QuestionSlider> {
   late double sliderValue =
-      widget.answerNotifier.answer?.value ?? widget.question.defaultValue;
+      widget.answerNotifier.answer?.confidence ?? widget.question.defaultValue;
 
   @override
   void initState() {
     super.initState();
     // on web it doesn't work to click on the slider to set the value. So we initialize the value
     if (kIsWeb) {
-      widget.answerNotifier.answer = Answer(value: sliderValue);
+      widget.answerNotifier.answer = Answer(confidence: sliderValue);
     }
   }
 
@@ -90,7 +90,7 @@ class _QuestionSliderState extends State<QuestionSlider> {
         });
       },
       onChangeEnd: (value) {
-        widget.answerNotifier.answer = Answer(value: value);
+        widget.answerNotifier.answer = Answer(confidence: value);
       },
     );
   }
