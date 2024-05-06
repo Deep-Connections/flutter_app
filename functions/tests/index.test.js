@@ -13,7 +13,7 @@ admin.initializeApp({ projectId });
 // make sure cloud functions don't reinitialize firebase app
 require('sinon').stub(admin, 'initializeApp');
 
-const createInitialMatch = test.wrap(require('../index').createInitialMatch)
+const createInitialMatch = test.wrap(require('../src/index').createInitialMatch)
 
 const firebase = require('@firebase/testing');
 const fs = require('fs');

@@ -39,14 +39,14 @@ function computeMatchScore(profile1, profile2) {
     if (isObject(profile1.questions) && isObject(profile2.questions))
         for (const key in profile1.questions) {
             try {
-                const confidence1 = profile1.questions[key]?.confidence;
-                const confidence2 = profile2.questions[key]?.confidence;
+                const confidence1 = profile1.questions[key].confidence;
+                const confidence2 = profile2.questions[key].confidence;
                 if (isNumber(confidence1) && isNumber(confidence2)) {
                     score += 0.5 - Math.abs(confidence1 - confidence2);
                     continue;
                 }
-                const choices1 = profile1.questions[key]?.choices;
-                const choices2 = profile2.questions[key]?.choices;
+                const choices1 = profile1.questions[key].choices;
+                const choices2 = profile2.questions[key].choices;
                 if (Array.isArray(choices1) && Array.isArray(choices2)) {
                     let subScore = 0;
                     for (const choice of choices1) {
