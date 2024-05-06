@@ -80,7 +80,7 @@ function sortProfilesByMatchScore(profiles, user) {
   return profilesWithScores;
 }
 
-exports.createInitialMatch = functions.https.onCall(async (data, context) => {
+exports.createInitialMatch = functions.region("europe-west6").https.onCall(async (data, context) => {
   if (!context.auth || !context.auth.uid) {
     throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated.");
   }
