@@ -36,11 +36,11 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
         submitText: widget.submitText.localize(loc),
         onSubmit: () async {
           widget.profileService
-              .updateProfile((p) => p.copyWith(birthdate: birthdate.value));
+              .updateProfile((p) => p.copyWith(dateOfBirth: birthdate.value));
           widget.navigateToNext();
         },
         builder: (BuildContext context, Profile profile) {
-          birthdate.setWithContext(context, profile.birthdate);
+          birthdate.setWithContext(context, profile.dateOfBirth);
           return DcListView(
             children: [
               InputTextFormField(

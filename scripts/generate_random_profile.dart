@@ -33,7 +33,7 @@ void main() {
         .toList();
     var profile = Profile(
       firstName: 'John',
-      birthdate: randomDate,
+      dateOfBirth: randomDate,
       gender: randomGender.enumValue,
       genderPreferences: [genderLookingFor.enumValue],
       languageCodes: languageCodes,

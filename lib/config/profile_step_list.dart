@@ -23,7 +23,7 @@ final List<ProfileNavigationStep> initialProfileStepList = [
   ),
   ProfileNavigationStepWithWidget(
     navigationPath: 'birthdate',
-    fromProfile: (profile) => profile.birthdate,
+    fromProfile: (profile) => profile.dateOfBirth,
     title: LocKey((loc) => loc.completeProfile_birthdayTitle),
     createWidget: (profileService, navigateToNext, submitText) =>
         BirthdayProfileScreen(
