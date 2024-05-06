@@ -4,7 +4,7 @@
     "genderPreferences": [
         "MAN"
     ],
-    "birthdate": "1996-02-27T00:00:00.000",
+    "dateOfBirth": "1996-02-27T00:00:00.000",
     "languageCodes": [
         "en",
         "es",

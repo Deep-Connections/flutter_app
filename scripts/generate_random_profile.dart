@@ -15,9 +15,8 @@ import 'package:flutter_test/flutter_test.dart';
 final random = Random();
 
 void main() {
-  Profile generateRandomProfile() {
-    final randomDate =
-        DateTime(1980, 1, 1).add(Duration(days: random.nextInt(365 * 20)));
+  Map<String, dynamic> generateRandomProfile() {
+
     final genderInt = random.nextInt(2);
     final randomGender = Gender.base[genderInt];
     final genderLookingFor = Gender.base[1 - genderInt];
@@ -33,7 +32,6 @@ void main() {
         .toList();
     var profile = Profile(
       firstName: 'John',
-      dateOfBirth: randomDate,
       gender: randomGender.enumValue,
       genderPreferences: [genderLookingFor.enumValue],
       languageCodes: languageCodes,
@@ -60,15 +58,20 @@ void main() {
         questions[question.id] = Answer(confidence: sliderValue);
       }
     }
-    return profile.copyWith(questions: questions);
+
+    final randomDate =
+    DateTime(1980, 1, 1).add(Duration(days: random.nextInt(365 * 20)));
+    final json =  profile.copyWith(questions: questions).toJson();
+    json['dateOfBirth'] = randomDate.toIso8601String();
+    return json;
   }
 
   test('Generate random profile', () {
     File file = File('scripts/generated/single_profile.json');
-    file.writeAsStringSync(jsonEncode(generateRandomProfile().toJson()));
+    file.writeAsStringSync(jsonEncode(generateRandomProfile()));
     File fileMultiple = File('scripts/generated/multiple_profile.json');
     final profiles = List.generate(10, (_) => generateRandomProfile());
     fileMultiple.writeAsStringSync(
-        jsonEncode(profiles.map((e) => e.toJson()).toList()));
+        jsonEncode(profiles));
   });
 }

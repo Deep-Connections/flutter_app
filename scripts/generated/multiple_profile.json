@@ -5,7 +5,7 @@
     "genderPreferences": [
       "WOMAN"
     ],
-    "birthdate": "1991-06-04T01:00:00.000",
+    "dateOfBirth": "1991-06-04T01:00:00.000",
     "languageCodes": [
       "it",
       "de",
@@ -223,7 +223,7 @@
     "genderPreferences": [
       "MAN"
     ],
-    "birthdate": "1998-08-22T01:00:00.000",
+    "dateOfBirth": "1998-08-22T01:00:00.000",
     "languageCodes": [
       "en",
       "es",
@@ -422,7 +422,7 @@
     "genderPreferences": [
       "WOMAN"
     ],
-    "birthdate": "1996-04-06T01:00:00.000",
+    "dateOfBirth": "1996-04-06T01:00:00.000",
     "languageCodes": [
       "en",
       "da",
@@ -640,7 +640,7 @@
     "genderPreferences": [
       "WOMAN"
     ],
-    "birthdate": "1990-03-19T00:00:00.000",
+    "dateOfBirth": "1990-03-19T00:00:00.000",
     "languageCodes": [
       "nl",
       "en",
@@ -856,7 +856,7 @@
     "genderPreferences": [
       "MAN"
     ],
-    "birthdate": "1993-11-25T00:00:00.000",
+    "dateOfBirth": "1993-11-25T00:00:00.000",
     "languageCodes": [
       "it",
       "pt",
@@ -1076,7 +1076,7 @@
     "genderPreferences": [
       "MAN"
     ],
-    "birthdate": "1994-01-24T00:00:00.000",
+    "dateOfBirth": "1994-01-24T00:00:00.000",
     "languageCodes": [
       "de",
       "nl",
@@ -1296,7 +1296,7 @@
     "genderPreferences": [
       "WOMAN"
     ],
-    "birthdate": "1992-03-27T00:00:00.000",
+    "dateOfBirth": "1992-03-27T00:00:00.000",
     "languageCodes": [
       "en",
       "da",
@@ -1516,7 +1516,7 @@
     "genderPreferences": [
       "WOMAN"
     ],
-    "birthdate": "1998-09-04T01:00:00.000",
+    "dateOfBirth": "1998-09-04T01:00:00.000",
     "languageCodes": [
       "da",
       "pt",
@@ -1736,7 +1736,7 @@
     "genderPreferences": [
       "WOMAN"
     ],
-    "birthdate": "1998-08-02T01:00:00.000",
+    "dateOfBirth": "1998-08-02T01:00:00.000",
     "languageCodes": [
       "de",
       "da",
@@ -1957,7 +1957,7 @@
     "genderPreferences": [
       "WOMAN"
     ],
-    "birthdate": "1986-06-09T01:00:00.000",
+    "dateOfBirth": "1986-06-09T01:00:00.000",
     "languageCodes": [
       "fr",
       "nl",

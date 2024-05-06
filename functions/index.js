@@ -10,16 +10,16 @@ const ageDifference = 5;
 const db = admin.firestore();
 
 async function getPotentialMatches(profileData, userId) {
-    const birthdate = profileData.birthdate.toDate();
-    const fiveYearsOlder = new Date(birthdate);
+    const dateOfBirth = profileData.dateOfBirth.toDate();
+    const fiveYearsOlder = new Date(dateOfBirth);
     fiveYearsOlder.setFullYear(fiveYearsOlder.getFullYear() + ageDifference);
-    const fiveYearsYounger = new Date(birthdate);
+    const fiveYearsYounger = new Date(dateOfBirth);
     fiveYearsYounger.setFullYear(fiveYearsYounger.getFullYear() - ageDifference);
 
     return await db.collection('profiles')
         .where("languageCodes", 'array-contains-any', profileData.languageCodes)
-        .where("birthdate", '<=', fiveYearsOlder)
-        .where("birthdate", '>=', fiveYearsYounger)
+        .where("dateOfBirth", '<=', fiveYearsOlder)
+        .where("dateOfBirth", '>=', fiveYearsYounger)
         .where(admin.firestore.FieldPath.documentId(), '!=', userId)
         .where("numMatches", '<', 5)
         .orderBy("numMatches", "asc")
