@@ -65,7 +65,7 @@ async function hasNoMatch() {
 }
 
 const bestProfileName = 'Profile 0';
-const bestProfileScore = 14;
+const bestProfileScore = 16;
 
 describe('InitialMatch', () => {
 
