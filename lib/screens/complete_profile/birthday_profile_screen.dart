@@ -24,7 +24,7 @@ class BirthdayProfileScreen extends StatefulWidget {
 }
 
 class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
-  final birthdate = BirthdayInput();
+  final dateOfBirth = BirthdayInput();
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +32,19 @@ class _BirthdayProfileScreenState extends State<BirthdayProfileScreen> {
     return FutureFieldProfileScreen(
         title: loc.completeProfile_birthdayTitle,
         profileService: widget.profileService,
-        fields: [birthdate],
+        fields: [dateOfBirth],
         submitText: widget.submitText.localize(loc),
         onSubmit: () async {
           widget.profileService
-              .updateProfile((p) => p.copyWith(birthdate: birthdate.value));
+              .updateProfile((p) => p.copyWith(dateOfBirth: dateOfBirth.value));
           widget.navigateToNext();
         },
         builder: (BuildContext context, Profile profile) {
-          birthdate.setWithContext(context, profile.birthdate);
+          dateOfBirth.setWithContext(context, profile.dateOfBirth);
           return DcListView(
             children: [
               InputTextFormField(
-                  fieldInput: birthdate, textInputAction: TextInputAction.done),
+                  fieldInput: dateOfBirth, textInputAction: TextInputAction.done),
             ],
           );
         });

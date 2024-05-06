@@ -28,9 +28,9 @@ const context = {
 };
 
 function convertProfileFirebase(profile, numMatches = null, firstName = null) {
-    const birthDate = new Date(profile.birthdate);
-    const asFirebaseDate = admin.firestore.Timestamp.fromDate(birthDate);
-    profile.birthdate = asFirebaseDate;
+    const dateOfBirth = new Date(profile.dateOfBirth);
+    const asFirebaseDate = admin.firestore.Timestamp.fromDate(dateOfBirth);
+    profile.dateOfBirth = asFirebaseDate;
     if (numMatches !== undefined)
         profile.numMatches = numMatches;
     if (firstName !== undefined)
@@ -65,7 +65,7 @@ async function hasNoMatch() {
 }
 
 const bestProfileName = 'Profile 0';
-const bestProfileScore = 14;
+const bestProfileScore = 16;
 
 describe('InitialMatch', () => {
 

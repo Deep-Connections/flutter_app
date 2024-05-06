@@ -10,43 +10,57 @@ const ageDifference = 5;
 const db = admin.firestore();
 
 async function getPotentialMatches(profileData, userId) {
-    const birthdate = profileData.birthdate.toDate();
-    const fiveYearsOlder = new Date(birthdate);
+    const dateOfBirth = profileData.dateOfBirth.toDate();
+    const fiveYearsOlder = new Date(dateOfBirth);
     fiveYearsOlder.setFullYear(fiveYearsOlder.getFullYear() + ageDifference);
-    const fiveYearsYounger = new Date(birthdate);
+    const fiveYearsYounger = new Date(dateOfBirth);
     fiveYearsYounger.setFullYear(fiveYearsYounger.getFullYear() - ageDifference);
 
     return await db.collection('profiles')
         .where("languageCodes", 'array-contains-any', profileData.languageCodes)
-        .where("birthdate", '<=', fiveYearsOlder)
-        .where("birthdate", '>=', fiveYearsYounger)
+        .where("dateOfBirth", '<=', fiveYearsOlder)
+        .where("dateOfBirth", '>=', fiveYearsYounger)
         .where(admin.firestore.FieldPath.documentId(), '!=', userId)
         .where("numMatches", '<', 5)
         .orderBy("numMatches", "asc")
         .limit(100).get();
 }
 
+function isObject(value) {
+    return value && typeof value === "object" && value.constructor === Object;
+}
+
+function isNumber(value) {
+    return typeof value === "number" && !isNaN(value);
+}
+
 function computeMatchScore(profile1, profile2) {
     let score = 0;
-    try {
+    if (isObject(profile1.questions) && isObject(profile2.questions))
         for (const key in profile1.questions) {
             try {
-                const array1 = profile1.questions[key].response;
-                const array2 = profile2.questions[key].response;
-                let subScore = 0;
-                for (const element of array1) {
-                    if (array2.includes(element)) {
-                        subScore++;
-                    }
+                const confidence1 = profile1.questions[key]?.confidence;
+                const confidence2 = profile2.questions[key]?.confidence;
+                if (isNumber(confidence1) && isNumber(confidence2)) {
+                    score += 0.5 - Math.abs(confidence1 - confidence2);
+                    continue;
                 }
-                score += subScore * 2 / (array1.length + array2.length);
+                const choices1 = profile1.questions[key]?.choices;
+                const choices2 = profile2.questions[key]?.choices;
+                if (Array.isArray(choices1) && Array.isArray(choices2)) {
+                    let subScore = 0;
+                    for (const choice of choices1) {
+                        if (choices2.includes(choice)) {
+                            subScore++;
+                        }
+                    }
+                    score += subScore * 2 / (choices1.length + choices2.length);
+                    continue;
+                }
             } catch (e) {
                 console.log(e);
             }
         }
-    } catch (e) {
-        console.log(e);
-    }
     return score;
 }
 
@@ -56,9 +70,9 @@ function sortProfilesByMatchScore(profiles, user) {
         score: computeMatchScore(user, profile)
     }));
 
-    //console.log(profilesWithScores.map(item => item.profile.firstName + ", score: " + item.score));
-
     profilesWithScores.sort((a, b) => b.score - a.score);
+
+    console.log(profilesWithScores.map(item => item.profile.firstName + ", score: " + item.score));
 
     return profilesWithScores;
 }

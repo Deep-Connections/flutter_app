@@ -1,6 +1,6 @@
-import 'package:collection/collection.dart';
 import 'package:deep_connections/config/question_list.dart';
 import 'package:deep_connections/models/question/question.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:trotter/trotter.dart';

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deep_connections/models/converters/timestamp_converter.dart';
 import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:flutter/foundation.dart';
@@ -15,7 +17,9 @@ class Profile with _$Profile {
     String? firstName,
     String? gender,
     List<String>? genderPreferences,
-    DateTime? birthdate,
+    @TimestampConverter()
+    DateTime? dateOfBirth,
+
     int? height,
     List<String>? languageCodes,
     List<String>? languageWithCountryCodes,

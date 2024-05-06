@@ -14,9 +14,8 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
       genderPreferences: (json['genderPreferences'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      birthdate: json['birthdate'] == null
-          ? null
-          : DateTime.parse(json['birthdate'] as String),
+      dateOfBirth: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['dateOfBirth'], const TimestampConverter().fromJson),
       height: json['height'] as int?,
       languageCodes: (json['languageCodes'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -49,7 +48,10 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
   writeNotNull('firstName', instance.firstName);
   writeNotNull('gender', instance.gender);
   writeNotNull('genderPreferences', instance.genderPreferences);
-  writeNotNull('birthdate', instance.birthdate?.toIso8601String());
+  writeNotNull(
+      'dateOfBirth',
+      _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.dateOfBirth, const TimestampConverter().toJson));
   writeNotNull('height', instance.height);
   writeNotNull('languageCodes', instance.languageCodes);
   writeNotNull('languageWithCountryCodes', instance.languageWithCountryCodes);
@@ -59,3 +61,15 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
       'questions', instance.questions?.map((k, e) => MapEntry(k, e.toJson())));
   return val;
 }
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
