@@ -9,7 +9,6 @@ const myAuth = { uid: UID, email: "example@gmail.com" };
 describe("Profiles collection", () => {
 
     beforeEach(clearFirestoreData);
-    after(clearFirestoreData);
 
     it("should be able to read and write to your own profile", async () => {
         const db = getFirestore(myAuth);

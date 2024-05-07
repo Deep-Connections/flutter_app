@@ -4,8 +4,8 @@
   "description": "Unit tests for the Smetter flutter app",
   "main": "test.js",
   "scripts": {
-    "test": "mocha tests/*.js --exit",
-    "test-file": "mocha --exit tests/${npm_config_file}"
+    "test": "mocha tests/*.test.js --exit",
+    "test-file": "mocha --exit tests/profileCoin.test.js"
   },
   "author": "",
   "license": "ISC",
