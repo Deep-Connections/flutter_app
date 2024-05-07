@@ -40,11 +40,11 @@ function convertProfileFirebase(profile, numMatches = null, firstName = null) {
   return profile;
 }
 
-function storeMyProfile() {
+function storeMyProfile(numMatches = null) {
   const profileData = JSON.parse(fs.readFileSync(
       "../scripts/generated/single_profile.json", "utf8",
   ));
-  return admin.firestore().collection("profiles").doc(UID).set(convertProfileFirebase(profileData));
+  return admin.firestore().collection("profiles").doc(UID).set(convertProfileFirebase(profileData, numMatches));
 }
 
 function storeProfile(numMatches = 0) {
@@ -88,7 +88,7 @@ describe("InitialMatch", () => {
   });
 
   it("should not find yourself", async () => {
-    await storeMyProfile();
+    await storeMyProfile(0);
     await hasNoMatch();
   });
 

@@ -16,14 +16,21 @@ async function getPotentialMatches(profileData, userId) {
   const fiveYearsYounger = new Date(dateOfBirth);
   fiveYearsYounger.setFullYear(fiveYearsYounger.getFullYear() - ageDifference);
 
-  return await db.collection("profiles")
+  let profiles = (await db.collection("profiles")
+      .where("numMatches", "<", 5)
       .where("languageCodes", "array-contains-any", profileData.languageCodes)
       .where("dateOfBirth", "<=", fiveYearsOlder)
       .where("dateOfBirth", ">=", fiveYearsYounger)
-      .where(admin.firestore.FieldPath.documentId(), "!=", userId)
-      .where("numMatches", "<", 5)
       .orderBy("numMatches", "asc")
-      .limit(100).get();
+      .limit(100).get()).docs;
+
+  profiles = profiles.filter((doc) => doc.id !== userId);
+
+  if (profiles.length === 0) {
+    throw new functions.https.HttpsError("not-found", "No profiles found");
+  }
+
+  return profiles;
 }
 
 function isObject(value) {
@@ -100,11 +107,8 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
   // }
 
   const profiles = await getPotentialMatches(currentProfile, userId);
-  if (profiles.empty) {
-    throw new functions.https.HttpsError("not-found", "No profiles found");
-  }
 
-  const profilesWithScores = sortProfilesByMatchScore(profiles.docs.map((doc) => {
+  const profilesWithScores = sortProfilesByMatchScore(profiles.map((doc) => {
     return {id: doc.id, ...doc.data()};
   }), currentProfile);
 
