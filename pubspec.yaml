@@ -37,6 +37,7 @@ dependencies:
   firebase_auth: ^4.19.0
   cloud_firestore: ^4.16.1
   firebase_storage: ^11.7.0
+  cloud_functions: ^4.7.3
 
   logger: 2.2.0
 

@@ -15,7 +15,10 @@
   },
   "firestore": {
     "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
+    "indexes": "firestore.indexes.json",
+    "predeploy": [
+      "npm --prefix \"firebase\" test"
+    ]
   },
   "functions": [
     {
@@ -25,10 +28,12 @@
         "node_modules",
         ".git",
         "firebase-debug.log",
-        "firebase-debug.*.log"
+        "firebase-debug.*.log",
+        "*.test.js"
       ],
       "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint"
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" test"
       ]
     }
   ],
@@ -36,6 +41,9 @@
     "rules": "storage.rules"
   },
   "emulators": {
+    "hosting": {
+      "port": 5002
+    },
     "firestore": {
       "port": 8080
     },

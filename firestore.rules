@@ -4,7 +4,7 @@ service cloud.firestore {
 
     match /databases/{database}/documents {
         match /profiles/{userId} {
-            allow write: if request.auth != null && request.auth.uid == userId;
+            allow create, update: if isOwn(userId) && correctlyUpdatesCoins();
             allow get: if request.auth != null;
         }
         match /chats/{chatId} {
@@ -21,6 +21,36 @@ service cloud.firestore {
     }
 }
 
+function isOwn(userId) {
+    return request.auth != null && request.auth.uid == userId;
+}
+
+function isPresent(field) {
+    return resource != null && field in resource.data;
+}
+
+function isInRequest(field) {
+    return field in request.resource.data;
+}
+
+function isUnchanged(field) {
+    return !isInRequest(field) || (isPresent(field) && request.resource.data[field] == resource.data[field]);
+}
+
+function coinsAreIncreasedByOne() {
+    return (request.resource.data.coins == 1 && !isPresent("coins")) || request.resource.data.coins == resource.data.coins + 1;
+}
+
+function lastCollectedValid() {
+    // should be now and 24 younger than previous lastCollected
+    return request.resource.data.lastCollected == request.time && (!isPresent("lastCollected")
+    || resource.data.lastCollected <= request.resource.data.lastCollected - duration.value(1, "d"));
+}
+
+function correctlyUpdatesCoins() {
+    return isUnchanged("coins") || (coinsAreIncreasedByOne() && lastCollectedValid());
+}
+
 function isParticipant(auth, chat) {
     return auth != null && auth.uid in chat.participantIds;
 }
@@ -28,7 +58,7 @@ function isParticipant(auth, chat) {
 function isValidChat(chat, oldChat, senderId) {
     return chat.participantIds is list
         && chat.timestamp is timestamp
-        && chat.timestamp.toMillis() >= oldChat.timestamp.toMillis() - 60000
+        && chat.timestamp >= oldChat.timestamp - duration.value(1, 'm')
         && isValidMessage(chat.lastMessage, senderId)
         && isValidChatInfo(chat.chatInfo, oldChat.chatInfo, senderId, chat.participantIds);
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
@@ -8,6 +9,7 @@ import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/logging.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -142,5 +144,25 @@ class ChatService {
           () async => (await _chatRef.add(chat)).id);
     }
     return SuccessRes(null);
+  }
+
+  createMatch() async {
+    final app = Firebase.app();
+    logger.d(app.name);
+    final callable = FirebaseFunctions.instanceFor(region: "europe-west6")
+        .httpsCallable('createInitialMatch');
+
+    try {
+      final response = await callable();
+      // Handle response here
+      logger.d('Function executed successfully');
+    } on FirebaseFunctionsException catch (e) {
+      // Handle function error
+      logger.d('Error executing function: ${e.code} ${e.message} ${e.details}');
+      logger.e(e);
+    } catch (e) {
+      // Handle other errors
+      logger.d('Error: $e');
+    }
   }
 }
