@@ -59,4 +59,10 @@ describe("Coin collection in profile", () => {
     });
 
 
+    it("allows leaving coins unchanged", async () => {
+        await firebase.assertSucceeds(updateProfile(1));
+        await firebase.assertSucceeds(db.collection(Collections.PROFILES).doc(UID).set({firstName: "Bob"}));
+    });
+
+
 });
