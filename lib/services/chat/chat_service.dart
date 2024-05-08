@@ -63,9 +63,6 @@ class ChatService {
         createChat(excludedUsers);
       }));
 
-  Stream<List<Chat>> get chatStream =>
-      _chatSubject.stream as Stream<List<Chat>>;
-
   FutureOr<Chat> chatById(String chatId) {
     final chat =
         _chatSubject.valueOrNull?.firstWhereOrNull((chat) => chat.id == chatId);
@@ -98,19 +95,20 @@ class ChatService {
       .where(SerializedField.participantIds, arrayContains: _userService.userId)
       .orderBy(SerializedField.timestamp, descending: true);
 
-  List<Message> _combineMessages(List<Message> messages) {
+  void _addMessages(List<Message> messages) {
     final messageMap = (messages + (_messageSubject.valueOrNull ?? []))
         .fold<Map<String, Message>>(
             {}, (map, message) => map..putIfAbsent(message.id!, () => message));
-    return messageMap.values.toList()
+    final combinedMessages = messageMap.values.toList()
       ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
+    _messageSubject.add(combinedMessages);
   }
 
   late final _messageSubject = BehaviorSubject<List<Message>>()
     ..let((messageSubject) {
-      _messageGroupRef
+      /*_messageGroupRef
           .limit(_messagePrefetchLimit)
-          .get(/*const GetOptions(source: Source.cache)*/)
+          .get(*/ /*const GetOptions(source: Source.cache)*/ /*)
           .then((snap) {
         final messages = snap.docs.map((doc) => doc.data()).toList();
         messageSubject.add(messages);
@@ -118,17 +116,24 @@ class ChatService {
         if (messages.isNotEmpty) {
           streamRef = streamRef.where(SerializedField.timestamp,
               isGreaterThan: messages.first.timestamp);
-        } else {
-          streamRef = streamRef.limit(_messagePrefetchLimit);
-        }
-        final stream = streamRef.snapshots();
-        stream
-            .map((snap) =>
-                _combineMessages(snap.docs.map((doc) => doc.data()).toList()))
-            .listen((messages) => messageSubject.add(messages));
-      });
-      return messageSubject;
+        } else {*/
+      final streamRef = _messageGroupRef.limit(_messagePrefetchLimit);
+      return streamRef.snapshots().listen((query) =>
+          _addMessages(query.docs.map((doc) => doc.data()).toList()));
     });
+
+  Stream<List<Chat>> get chatStream =>
+      _chatSubject.stream.switchMap((chatList) => _messageSubject.stream
+          .map((messages) => chatList.map((chat) {
+                final lastMessage = messages
+                    .firstWhereOrNull((message) => message.chatId == chat.id);
+                return chat.copyWith(
+                    timestamp: lastMessage?.timestamp ?? chat.timestamp,
+                    lastMessage: messages.firstWhereOrNull(
+                        (message) => message.chatId == chat.id));
+              }).toList()
+                ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!)))
+          .distinct());
 
   Stream<List<Message>> messageStream(String chatId) =>
       _messageSubject.stream.map((messages) =>
@@ -145,7 +150,7 @@ class ChatService {
     }
     return ref.limit(_messagePageLimit).get().then((snap) {
       final newMessages = snap.docs.map((doc) => doc.data()).toList();
-      _messageSubject.add(_combineMessages(newMessages));
+      _addMessages(newMessages);
       return newMessages.isEmpty || newMessages.every((m) => m.chatId == null);
     });
   }
@@ -164,7 +169,7 @@ class ChatService {
     final futureMessageResponse = handleFirebaseErrors(
         () async => (await _messagesRef(chatId).add(messageObj)).id);
 
-    handleFirebaseErrors(() async {
+    /*handleFirebaseErrors(() async {
       final updateChatJson = Chat(
         lastMessage: messageObj,
         timestamp: timestamp,
@@ -176,7 +181,7 @@ class ChatService {
             userId != chat.currentUserId ? FieldValue.increment(1) : 0;
       });
       return await _chatRef.doc(chatId).update(updateChatJson);
-    });
+    });*/
 
     return await futureMessageResponse;
   }
