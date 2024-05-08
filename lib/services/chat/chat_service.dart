@@ -18,6 +18,7 @@ import '../firebase_constants.dart';
 import '../user/user_service.dart';
 
 const _messagePrefetchLimit = 50;
+const _messagePageLimit = 10;
 
 @lazySingleton
 class ChatService {
@@ -98,7 +99,7 @@ class ChatService {
       .orderBy(SerializedField.timestamp, descending: true);
 
   List<Message> _combineMessages(List<Message> messages) {
-    final messageMap = ((_messageSubject.valueOrNull ?? []) + messages)
+    final messageMap = (messages + (_messageSubject.valueOrNull ?? []))
         .fold<Map<String, Message>>(
             {}, (map, message) => map..putIfAbsent(message.id!, () => message));
     return messageMap.values.toList()
@@ -121,8 +122,10 @@ class ChatService {
           streamRef = streamRef.limit(_messagePrefetchLimit);
         }
         final stream = streamRef.snapshots();
-        messageSubject.addStream(stream.map((snap) =>
-            _combineMessages(snap.docs.map((doc) => doc.data()).toList())));
+        stream
+            .map((snap) =>
+                _combineMessages(snap.docs.map((doc) => doc.data()).toList()))
+            .listen((messages) => messageSubject.add(messages));
       });
       return messageSubject;
     });
@@ -131,10 +134,21 @@ class ChatService {
       _messageSubject.stream.map((messages) =>
           messages.where((message) => message.chatId == chatId).toList());
 
-  /* Stream<List<Message>> messageStream(String chatId) => _messagesRef(chatId)
-      .orderBy(SerializedField.timestamp, descending: true)
-      .snapshots()
-      .map((snap) => snap.docs.map((doc) => doc.data()).toList());*/
+  Future<bool> loadMoreMessages(String chatId) {
+    logger.d("Loading more messages");
+    final lastMessage = _messageSubject.valueOrNull
+        ?.lastWhereOrNull((message) => message.chatId == chatId);
+    var ref = _messagesRef(chatId)
+        .orderBy(SerializedField.timestamp, descending: true);
+    if (lastMessage != null) {
+      ref = ref.startAfter([lastMessage.timestamp]);
+    }
+    return ref.limit(_messagePageLimit).get().then((snap) {
+      final newMessages = snap.docs.map((doc) => doc.data()).toList();
+      _messageSubject.add(_combineMessages(newMessages));
+      return newMessages.isEmpty || newMessages.every((m) => m.chatId == null);
+    });
+  }
 
   Future<Response<String>> sendMessage(String message, chatId) async {
     final timestamp = DateTime.now();
