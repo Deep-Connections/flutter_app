@@ -17,6 +17,8 @@ import '../../models/chats/chat/chat.dart';
 import '../firebase_constants.dart';
 import '../user/user_service.dart';
 
+const _messagePrefetchLimit = 50;
+
 @lazySingleton
 class ChatService {
   final UserService _userService;
@@ -87,23 +89,68 @@ class ChatService {
           fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
           toFirestore: (chat, _) => chat.toJson());
 
-  Stream<List<Message>> messageStream(String chatId) => _messagesRef(chatId)
+  Query<Message> get _messageGroupRef => _firestore
+      .collectionGroup(Collection.messages)
+      .withConverter<Message>(
+          fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
+          toFirestore: (chat, _) => chat.toJson())
+      .where(SerializedField.participantIds, arrayContains: _userService.userId)
+      .orderBy(SerializedField.timestamp, descending: true);
+
+  List<Message> _combineMessages(List<Message> messages) {
+    final messageMap = ((_messageSubject.valueOrNull ?? []) + messages)
+        .fold<Map<String, Message>>(
+            {}, (map, message) => map..putIfAbsent(message.id!, () => message));
+    return messageMap.values.toList()
+      ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
+  }
+
+  late final _messageSubject = BehaviorSubject<List<Message>>()
+    ..let((messageSubject) {
+      _messageGroupRef
+          .limit(_messagePrefetchLimit)
+          .get(/*const GetOptions(source: Source.cache)*/)
+          .then((snap) {
+        final messages = snap.docs.map((doc) => doc.data()).toList();
+        messageSubject.add(messages);
+        var streamRef = _messageGroupRef;
+        if (messages.isNotEmpty) {
+          streamRef = streamRef.where(SerializedField.timestamp,
+              isGreaterThan: messages.first.timestamp);
+        } else {
+          streamRef = streamRef.limit(_messagePrefetchLimit);
+        }
+        final stream = streamRef.snapshots();
+        messageSubject.addStream(stream.map((snap) =>
+            _combineMessages(snap.docs.map((doc) => doc.data()).toList())));
+      });
+      return messageSubject;
+    });
+
+  Stream<List<Message>> messageStream(String chatId) =>
+      _messageSubject.stream.map((messages) =>
+          messages.where((message) => message.chatId == chatId).toList());
+
+  /* Stream<List<Message>> messageStream(String chatId) => _messagesRef(chatId)
       .orderBy(SerializedField.timestamp, descending: true)
       .snapshots()
-      .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+      .map((snap) => snap.docs.map((doc) => doc.data()).toList());*/
 
-  Future<Response<String>> sendMessage(String message, chatId) {
+  Future<Response<String>> sendMessage(String message, chatId) async {
     final timestamp = DateTime.now();
+    final chat = await chatById(chatId);
+
     final messageObj = Message(
       text: message,
       senderId: _userService.userId,
       timestamp: timestamp,
+      chatId: chatId,
+      participantIds: chat.participantIds,
     );
     final futureMessageResponse = handleFirebaseErrors(
         () async => (await _messagesRef(chatId).add(messageObj)).id);
 
     handleFirebaseErrors(() async {
-      final chat = await chatById(chatId);
       final updateChatJson = Chat(
         lastMessage: messageObj,
         timestamp: timestamp,
@@ -117,7 +164,7 @@ class ChatService {
       return await _chatRef.doc(chatId).update(updateChatJson);
     });
 
-    return futureMessageResponse;
+    return await futureMessageResponse;
   }
 
   Future<Response<void>> markChatRead(String chatId) async {
