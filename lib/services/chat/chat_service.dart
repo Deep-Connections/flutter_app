@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
-import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -23,11 +22,10 @@ const _messagePageLimit = 10;
 @lazySingleton
 class ChatService {
   final UserService _userService;
-  final ProfileService _profileService;
+  final FirebaseFirestore _firestore;
+  final FirebaseFunctions _functions;
 
-  ChatService(this._userService, this._profileService);
-
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  ChatService(this._userService, this._firestore, this._functions);
 
   Query<Message> get _messageGroupQuery => _firestore
       .collectionGroup(Collection.messages)
@@ -235,8 +233,7 @@ class ChatService {
   createMatch() async {
     final app = Firebase.app();
     logger.d(app.name);
-    final callable = FirebaseFunctions.instanceFor(region: "europe-west6")
-        .httpsCallable('createInitialMatch');
+    final callable = _functions.httpsCallable('createInitialMatch');
 
     try {
       final response = await callable();

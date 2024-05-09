@@ -51,7 +51,7 @@ dependencies:
 
   # Dependency Injection
   get_it: 7.6.7
-  injectable: 2.2.0 # todo increase once library issue is fixed
+  injectable: 2.3.5
   provider: 6.1.1
 
   flutter_localizations:
@@ -95,7 +95,7 @@ dev_dependencies:
 
   # Code generation
   build_runner: 2.4.8
-  injectable_generator: 2.3.0 # todo increase once library issue is fixed
+  injectable_generator: 2.5.1
   json_serializable: 6.7.1
   freezed: 2.4.7
 
