@@ -13,7 +13,7 @@ class Chat with _$Chat {
 
   const factory Chat({
     String? id,
-    required List<String>  participantIds,
+    required List<String> participantIds,
     @TimestampConverter() DateTime? timestamp,
     @TimestampConverter() DateTime? createdAt,
     Map<String, ChatInfo>? chatInfos,
