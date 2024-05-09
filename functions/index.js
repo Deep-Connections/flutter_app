@@ -2,7 +2,7 @@
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const { Firestore } = require("firebase-admin/firestore");
+const FieldValue = require("firebase-admin/firestore").FieldValue;
 
 admin.initializeApp();
 
@@ -117,15 +117,15 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
 
   const match = {
     participantIds: [userId, otherUserId],
-    createdAt: Firestore.FieldValue.serverTimestamp(),
+    createdAt: FieldValue.serverTimestamp(),
     score: profilesWithScores[0].score,
   };
 
   const matchDocRef = db.collection("matches").doc();
   const matchId = matchDocRef.id;
   await matchDocRef.set(match);
-  await profileRef.update({numMatches: Firestore.FieldValue.increment(1)});
-  await db.collection("profiles").doc(otherUserId).update({numMatches: Firestore.FieldValue.increment(1)});
+  await profileRef.update({numMatches: FieldValue.increment(1)});
+  await db.collection("profiles").doc(otherUserId).update({numMatches: FieldValue.increment(1)});
 
   return {message: "Match created", matchId: matchId};
 });
