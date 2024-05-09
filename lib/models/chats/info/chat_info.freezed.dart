@@ -20,7 +20,8 @@ ChatInfo _$ChatInfoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ChatInfo {
-  int? get unreadMessages => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get lastRead => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,7 @@ abstract class $ChatInfoCopyWith<$Res> {
   factory $ChatInfoCopyWith(ChatInfo value, $Res Function(ChatInfo) then) =
       _$ChatInfoCopyWithImpl<$Res, ChatInfo>;
   @useResult
-  $Res call({int? unreadMessages});
+  $Res call({@TimestampConverter() DateTime? lastRead});
 }
 
 /// @nodoc
@@ -49,13 +50,13 @@ class _$ChatInfoCopyWithImpl<$Res, $Val extends ChatInfo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? unreadMessages = freezed,
+    Object? lastRead = freezed,
   }) {
     return _then(_value.copyWith(
-      unreadMessages: freezed == unreadMessages
-          ? _value.unreadMessages
-          : unreadMessages // ignore: cast_nullable_to_non_nullable
-              as int?,
+      lastRead: freezed == lastRead
+          ? _value.lastRead
+          : lastRead // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -68,7 +69,7 @@ abstract class _$$ChatInfoImplCopyWith<$Res>
       __$$ChatInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? unreadMessages});
+  $Res call({@TimestampConverter() DateTime? lastRead});
 }
 
 /// @nodoc
@@ -82,13 +83,13 @@ class __$$ChatInfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? unreadMessages = freezed,
+    Object? lastRead = freezed,
   }) {
     return _then(_$ChatInfoImpl(
-      unreadMessages: freezed == unreadMessages
-          ? _value.unreadMessages
-          : unreadMessages // ignore: cast_nullable_to_non_nullable
-              as int?,
+      lastRead: freezed == lastRead
+          ? _value.lastRead
+          : lastRead // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -96,17 +97,18 @@ class __$$ChatInfoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
-  const _$ChatInfoImpl({this.unreadMessages});
+  const _$ChatInfoImpl({@TimestampConverter() this.lastRead});
 
   factory _$ChatInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChatInfoImplFromJson(json);
 
   @override
-  final int? unreadMessages;
+  @TimestampConverter()
+  final DateTime? lastRead;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ChatInfo(unreadMessages: $unreadMessages)';
+    return 'ChatInfo(lastRead: $lastRead)';
   }
 
   @override
@@ -114,7 +116,7 @@ class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ChatInfo'))
-      ..add(DiagnosticsProperty('unreadMessages', unreadMessages));
+      ..add(DiagnosticsProperty('lastRead', lastRead));
   }
 
   @override
@@ -122,13 +124,13 @@ class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ChatInfoImpl &&
-            (identical(other.unreadMessages, unreadMessages) ||
-                other.unreadMessages == unreadMessages));
+            (identical(other.lastRead, lastRead) ||
+                other.lastRead == lastRead));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, unreadMessages);
+  int get hashCode => Object.hash(runtimeType, lastRead);
 
   @JsonKey(ignore: true)
   @override
@@ -145,13 +147,15 @@ class _$ChatInfoImpl with DiagnosticableTreeMixin implements _ChatInfo {
 }
 
 abstract class _ChatInfo implements ChatInfo {
-  const factory _ChatInfo({final int? unreadMessages}) = _$ChatInfoImpl;
+  const factory _ChatInfo({@TimestampConverter() final DateTime? lastRead}) =
+      _$ChatInfoImpl;
 
   factory _ChatInfo.fromJson(Map<String, dynamic> json) =
       _$ChatInfoImpl.fromJson;
 
   @override
-  int? get unreadMessages;
+  @TimestampConverter()
+  DateTime? get lastRead;
   @override
   @JsonKey(ignore: true)
   _$$ChatInfoImplCopyWith<_$ChatInfoImpl> get copyWith =>

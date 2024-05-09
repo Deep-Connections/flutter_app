@@ -13,7 +13,7 @@ class Chat with _$Chat {
 
   const factory Chat({
     String? id,
-    List<String>? participantIds,
+    required List<String>  participantIds,
     @TimestampConverter() DateTime? timestamp,
     @TimestampConverter() DateTime? createdAt,
     Map<String, ChatInfo>? chatInfos,
@@ -25,14 +25,16 @@ class Chat with _$Chat {
   }) = _Chat;
 
   String? get otherUserId {
-    return participantIds?.firstWhere((id) => id != currentUserId);
+    return participantIds.firstWhere((id) => id != currentUserId);
   }
 
   ChatInfo? get info {
     return chatInfos?[currentUserId!];
   }
 
-  bool get isUnread => info?.unreadMessages != 0;
+  bool get isUnread => unreadMessages != 0;
+
+  DateTime? get lastRead => info?.lastRead;
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 }

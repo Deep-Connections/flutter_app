@@ -13,7 +13,7 @@ class SerializedField {
 }
 
 class Update {
-  static unreadMessages(userId) => "chatInfos.$userId.unreadMessages";
+  static lastReadChat(userId) => "chatInfos.$userId.lastRead";
 }
 
 class StorageCollection {

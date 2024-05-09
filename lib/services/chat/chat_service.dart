@@ -47,9 +47,8 @@ class ChatService {
     _messageSubject.add(combinedMessages);
   }
 
-  late final _messageSubject = BehaviorSubject<List<Message>>()
+  late final _messageSubject = BehaviorSubject<List<Message>>.seeded([])
     ..let((messageSubject) {
-      messageSubject.add([]);
       _userService.userIdStream.forEach((userId) {
         if (userId == null) {
           messageSubject.add([]);
@@ -108,11 +107,14 @@ class ChatService {
           .switchMap((chatList) => _messageSubject.stream
               .map((messages) => chatList.map((chat) {
                     Message? lastMessage;
-                    int unreadMessages = 0;
+                    int? unreadMessages;
+                    final chatLastRead = chat.lastRead ?? DateTime(0);
                     for (final message in messages) {
                       if (message.chatId == chat.id) {
                         lastMessage ??= message;
-                        if (message.senderId != userId) {
+                        if (message.senderId != userId &&
+                            message.timestamp!.isAfter(chatLastRead)) {
+                          unreadMessages ??= 0;
                           unreadMessages++;
                         } else {
                           break;
@@ -206,12 +208,12 @@ class ChatService {
 
   Future<Response<void>> markChatRead(String chatId) async {
     final chat = await chatById(chatId);
-    final unreadMessages = chat.info?.unreadMessages;
+    final unreadMessages = chat.unreadMessages;
     if (unreadMessages == 0 || unreadMessages == null) return SuccessRes(null);
     return await handleFirebaseErrors(
         () async => await _chatRef.doc(chatId).update({
-              // we set the unread messages to null, so the chat still shows up as unread but with 0 messages
-              Update.unreadMessages(_userService.userId): null,
+              // we set the unread messages to current firebase timestamp
+              Update.lastReadChat(_userService.userId): Timestamp.now()
             }));
   }
 

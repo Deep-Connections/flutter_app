@@ -8,8 +8,8 @@ part of 'chat.dart';
 
 _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       id: json['id'] as String?,
-      participantIds: (json['participantIds'] as List<dynamic>?)
-          ?.map((e) => e as String)
+      participantIds: (json['participantIds'] as List<dynamic>)
+          .map((e) => e as String)
           .toList(),
       timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['timestamp'], const TimestampConverter().fromJson),
@@ -35,7 +35,7 @@ Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
   }
 
   writeNotNull('id', instance.id);
-  writeNotNull('participantIds', instance.participantIds);
+  val['participantIds'] = instance.participantIds;
   writeNotNull(
       'timestamp',
       _$JsonConverterToJson<Timestamp, DateTime>(

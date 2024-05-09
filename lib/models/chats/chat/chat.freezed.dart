@@ -21,7 +21,7 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chat {
   String? get id => throw _privateConstructorUsedError;
-  List<String>? get participantIds => throw _privateConstructorUsedError;
+  List<String> get participantIds => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -45,7 +45,7 @@ abstract class $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      List<String>? participantIds,
+      List<String> participantIds,
       @TimestampConverter() DateTime? timestamp,
       @TimestampConverter() DateTime? createdAt,
       Map<String, ChatInfo>? chatInfos,
@@ -70,7 +70,7 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
   @override
   $Res call({
     Object? id = freezed,
-    Object? participantIds = freezed,
+    Object? participantIds = null,
     Object? timestamp = freezed,
     Object? createdAt = freezed,
     Object? chatInfos = freezed,
@@ -83,10 +83,10 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      participantIds: freezed == participantIds
+      participantIds: null == participantIds
           ? _value.participantIds
           : participantIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
       timestamp: freezed == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -136,7 +136,7 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      List<String>? participantIds,
+      List<String> participantIds,
       @TimestampConverter() DateTime? timestamp,
       @TimestampConverter() DateTime? createdAt,
       Map<String, ChatInfo>? chatInfos,
@@ -159,7 +159,7 @@ class __$$ChatImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? participantIds = freezed,
+    Object? participantIds = null,
     Object? timestamp = freezed,
     Object? createdAt = freezed,
     Object? chatInfos = freezed,
@@ -172,10 +172,10 @@ class __$$ChatImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      participantIds: freezed == participantIds
+      participantIds: null == participantIds
           ? _value._participantIds
           : participantIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+              as List<String>,
       timestamp: freezed == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
@@ -209,7 +209,7 @@ class __$$ChatImplCopyWithImpl<$Res>
 class _$ChatImpl extends _Chat {
   const _$ChatImpl(
       {this.id,
-      final List<String>? participantIds,
+      required final List<String> participantIds,
       @TimestampConverter() this.timestamp,
       @TimestampConverter() this.createdAt,
       final Map<String, ChatInfo>? chatInfos,
@@ -225,14 +225,12 @@ class _$ChatImpl extends _Chat {
 
   @override
   final String? id;
-  final List<String>? _participantIds;
+  final List<String> _participantIds;
   @override
-  List<String>? get participantIds {
-    final value = _participantIds;
-    if (value == null) return null;
+  List<String> get participantIds {
     if (_participantIds is EqualUnmodifiableListView) return _participantIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_participantIds);
   }
 
   @override
@@ -316,7 +314,7 @@ class _$ChatImpl extends _Chat {
 abstract class _Chat extends Chat {
   const factory _Chat(
       {final String? id,
-      final List<String>? participantIds,
+      required final List<String> participantIds,
       @TimestampConverter() final DateTime? timestamp,
       @TimestampConverter() final DateTime? createdAt,
       final Map<String, ChatInfo>? chatInfos,
@@ -330,7 +328,7 @@ abstract class _Chat extends Chat {
   @override
   String? get id;
   @override
-  List<String>? get participantIds;
+  List<String> get participantIds;
   @override
   @TimestampConverter()
   DateTime? get timestamp;

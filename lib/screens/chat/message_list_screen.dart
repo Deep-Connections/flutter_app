@@ -25,7 +25,7 @@ class MessageListScreen extends StatefulWidget {
   final ChatService chatService;
   final ProfileService profileService;
 
-  MessageListScreen(
+  const MessageListScreen(
       {super.key,
       required this.chatId,
       required this.chatService,
