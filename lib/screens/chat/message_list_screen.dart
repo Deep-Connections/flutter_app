@@ -81,7 +81,7 @@ class _MessageListScreenState extends State<MessageListScreen> {
                       child: currentUserId != null
                           ? StreamBuilder(
                               stream: widget.chatService
-                                  .messageStream(widget.chatId),
+                                  .messagesByChatIdStream(widget.chatId),
                               builder: (context, snapshot) {
                                 final messages = snapshot.data ?? [];
                                 if (snapshot.hasData &&

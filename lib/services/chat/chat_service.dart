@@ -29,6 +29,66 @@ class ChatService {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  Query<Message> get _messageGroupQuery => _firestore
+      .collectionGroup(Collection.messages)
+      .withConverter<Message>(
+          fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
+          toFirestore: (chat, _) => chat.toJson())
+      .where(SerializedField.participantIds, arrayContains: _userService.userId)
+      .orderBy(SerializedField.timestamp, descending: true);
+
+  void _addMessages(List<Message> messages) {
+    if (messages.isEmpty) return;
+    final messageMap = (messages + (_messageSubject.valueOrNull ?? []))
+        .fold<Map<String, Message>>(
+            {}, (map, message) => map..putIfAbsent(message.id!, () => message));
+    final combinedMessages = messageMap.values.toList()
+      ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
+    _messageSubject.add(combinedMessages);
+  }
+
+  late final _messageSubject = BehaviorSubject<List<Message>>()
+    ..let((messageSubject) {
+      messageSubject.add([]);
+      _userService.userIdStream.forEach((userId) {
+        if (userId == null) {
+          messageSubject.add([]);
+          return;
+        }
+        logger.d("Message Stream reinitialized");
+        /*_messageGroupRef
+          .limit(_messagePrefetchLimit)
+          .get(*/ /*const GetOptions(source: Source.cache)*/ /*)
+          .then((snap) {
+        final messages = snap.docs.map((doc) => doc.data()).toList();
+        messageSubject.add(messages);
+        var streamRef = _messageGroupRef;
+        if (messages.isNotEmpty) {
+          streamRef = streamRef.where(SerializedField.timestamp,
+              isGreaterThan: messages.first.timestamp);
+        } else {*/
+        _messageGroupQuery.limit(_messagePrefetchLimit).snapshots().listen(
+            (e) => _addMessages(
+                e.docChanges.mapNotNull((d) => d.doc.data()).toList()));
+      });
+    });
+
+  Future<bool> loadMoreMessages(String chatId) {
+    logger.d("Loading more messages");
+    final lastMessage = _messageSubject.valueOrNull
+        ?.lastWhereOrNull((message) => message.chatId == chatId);
+    var ref = _messagesByChatIdRef(chatId)
+        .orderBy(SerializedField.timestamp, descending: true);
+    if (lastMessage != null) {
+      ref = ref.startAfter([lastMessage.timestamp]);
+    }
+    return ref.limit(_messagePageLimit).get().then((snap) {
+      final newMessages = snap.docs.map((doc) => doc.data()).toList();
+      _addMessages(newMessages);
+      return newMessages.isEmpty || newMessages.every((m) => m.chatId == null);
+    });
+  }
+
   CollectionReference<Chat> get _chatRef {
     return _firestore.collection(Collection.chats).withConverter<Chat>(
         fromFirestore: (doc, _) => Chat.fromJson(doc.withId())
@@ -43,12 +103,35 @@ class ChatService {
       logger.d("Chat Stream reinitialized");
       return _chatRef
           .where(SerializedField.participantIds, arrayContains: userId)
-          .orderBy(SerializedField.timestamp, descending: true)
           .snapshots()
-          .map((snap) => snap.docs.map((doc) => doc.data()).toList());
+          .map((snap) => snap.docs.map((doc) => doc.data()).toList())
+          .switchMap((chatList) => _messageSubject.stream
+              .map((messages) => chatList.map((chat) {
+                    Message? lastMessage;
+                    int unreadMessages = 0;
+                    for (final message in messages) {
+                      if (message.chatId == chat.id) {
+                        lastMessage ??= message;
+                        if (message.senderId != userId) {
+                          unreadMessages++;
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+
+                    return chat.copyWith(
+                        timestamp: lastMessage?.timestamp ??
+                            chat.createdAt ??
+                            chat.timestamp,
+                        lastMessage: lastMessage,
+                        unreadMessages: unreadMessages);
+                  }).toList()
+                    ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!)))
+              .distinct());
     })
-      // create a new chat if there are no chats or all chats are older than 24h
-      ..firstWhere((chats) {
+        // create a new chat if there are no chats or all chats are older than 24h
+        /*..firstWhere((chats) {
         if (chats.isEmpty) return true;
         final areAllChatsOlderThan24h = !chats.any((chat) {
           final youngerThan24h = chat.timestamp
@@ -61,7 +144,8 @@ class ChatService {
         final chats = await asyncChatList;
         final excludedUsers = chats.mapNotNull((chat) => chat.otherUserId);
         createChat(excludedUsers);
-      }));
+      })*/
+        );
 
   FutureOr<Chat> chatById(String chatId) {
     final chat =
@@ -76,84 +160,18 @@ class ChatService {
     }
   }
 
-  Stream<Chat> chatByIdStream(String chatId) => chatStream
-      .map((chats) => chats.firstWhereOrNull((chat) => chat.id == chatId))
-      .whereNotNull();
+  Stream<List<Chat>> get chatStream => _chatSubject.stream;
 
-  CollectionReference<Message> _messagesRef(String chatId) => _chatRef
+  CollectionReference<Message> _messagesByChatIdRef(String chatId) => _chatRef
       .doc(chatId)
       .collection(Collection.messages)
       .withConverter<Message>(
           fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
           toFirestore: (chat, _) => chat.toJson());
 
-  Query<Message> get _messageGroupRef => _firestore
-      .collectionGroup(Collection.messages)
-      .withConverter<Message>(
-          fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
-          toFirestore: (chat, _) => chat.toJson())
-      .where(SerializedField.participantIds, arrayContains: _userService.userId)
-      .orderBy(SerializedField.timestamp, descending: true);
-
-  void _addMessages(List<Message> messages) {
-    final messageMap = (messages + (_messageSubject.valueOrNull ?? []))
-        .fold<Map<String, Message>>(
-            {}, (map, message) => map..putIfAbsent(message.id!, () => message));
-    final combinedMessages = messageMap.values.toList()
-      ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
-    _messageSubject.add(combinedMessages);
-  }
-
-  late final _messageSubject = BehaviorSubject<List<Message>>()
-    ..let((messageSubject) {
-      /*_messageGroupRef
-          .limit(_messagePrefetchLimit)
-          .get(*/ /*const GetOptions(source: Source.cache)*/ /*)
-          .then((snap) {
-        final messages = snap.docs.map((doc) => doc.data()).toList();
-        messageSubject.add(messages);
-        var streamRef = _messageGroupRef;
-        if (messages.isNotEmpty) {
-          streamRef = streamRef.where(SerializedField.timestamp,
-              isGreaterThan: messages.first.timestamp);
-        } else {*/
-      final streamRef = _messageGroupRef.limit(_messagePrefetchLimit);
-      return streamRef.snapshots().listen((query) =>
-          _addMessages(query.docs.map((doc) => doc.data()).toList()));
-    });
-
-  Stream<List<Chat>> get chatStream =>
-      _chatSubject.stream.switchMap((chatList) => _messageSubject.stream
-          .map((messages) => chatList.map((chat) {
-                final lastMessage = messages
-                    .firstWhereOrNull((message) => message.chatId == chat.id);
-                return chat.copyWith(
-                    timestamp: lastMessage?.timestamp ?? chat.timestamp,
-                    lastMessage: messages.firstWhereOrNull(
-                        (message) => message.chatId == chat.id));
-              }).toList()
-                ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!)))
-          .distinct());
-
-  Stream<List<Message>> messageStream(String chatId) =>
+  Stream<List<Message>> messagesByChatIdStream(String chatId) =>
       _messageSubject.stream.map((messages) =>
           messages.where((message) => message.chatId == chatId).toList());
-
-  Future<bool> loadMoreMessages(String chatId) {
-    logger.d("Loading more messages");
-    final lastMessage = _messageSubject.valueOrNull
-        ?.lastWhereOrNull((message) => message.chatId == chatId);
-    var ref = _messagesRef(chatId)
-        .orderBy(SerializedField.timestamp, descending: true);
-    if (lastMessage != null) {
-      ref = ref.startAfter([lastMessage.timestamp]);
-    }
-    return ref.limit(_messagePageLimit).get().then((snap) {
-      final newMessages = snap.docs.map((doc) => doc.data()).toList();
-      _addMessages(newMessages);
-      return newMessages.isEmpty || newMessages.every((m) => m.chatId == null);
-    });
-  }
 
   Future<Response<String>> sendMessage(String message, chatId) async {
     final timestamp = DateTime.now();
@@ -167,7 +185,7 @@ class ChatService {
       participantIds: chat.participantIds,
     );
     final futureMessageResponse = handleFirebaseErrors(
-        () async => (await _messagesRef(chatId).add(messageObj)).id);
+        () async => (await _messagesByChatIdRef(chatId).add(messageObj)).id);
 
     /*handleFirebaseErrors(() async {
       final updateChatJson = Chat(
@@ -197,7 +215,7 @@ class ChatService {
             }));
   }
 
-  Future<Response<String?>> createChat(List<String> excludedUsers) async {
+  /*Future<Response<String?>> createChat(List<String> excludedUsers) async {
     final newMatch = await _profileService.getNewMatch(excludedUsers);
     final matchUserId = newMatch?.id;
 
@@ -210,7 +228,7 @@ class ChatService {
           () async => (await _chatRef.add(chat)).id);
     }
     return SuccessRes(null);
-  }
+  }*/
 
   createMatch() async {
     final app = Firebase.app();

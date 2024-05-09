@@ -15,10 +15,12 @@ class Chat with _$Chat {
     String? id,
     List<String>? participantIds,
     @TimestampConverter() DateTime? timestamp,
-    Message? lastMessage,
+    @TimestampConverter() DateTime? createdAt,
     Map<String, ChatInfo>? chatInfos,
 
-    /// not sent to the server
+    /// not received from server
+    Message? lastMessage,
+    int? unreadMessages,
     String? currentUserId,
   }) = _Chat;
 

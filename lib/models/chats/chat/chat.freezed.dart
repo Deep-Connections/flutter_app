@@ -24,10 +24,13 @@ mixin _$Chat {
   List<String>? get participantIds => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
-  Message? get lastMessage => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   Map<String, ChatInfo>? get chatInfos => throw _privateConstructorUsedError;
 
-  /// not sent to the server
+  /// not received from server
+  Message? get lastMessage => throw _privateConstructorUsedError;
+  int? get unreadMessages => throw _privateConstructorUsedError;
   String? get currentUserId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,8 +47,10 @@ abstract class $ChatCopyWith<$Res> {
       {String? id,
       List<String>? participantIds,
       @TimestampConverter() DateTime? timestamp,
-      Message? lastMessage,
+      @TimestampConverter() DateTime? createdAt,
       Map<String, ChatInfo>? chatInfos,
+      Message? lastMessage,
+      int? unreadMessages,
       String? currentUserId});
 
   $MessageCopyWith<$Res>? get lastMessage;
@@ -67,8 +72,10 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
     Object? id = freezed,
     Object? participantIds = freezed,
     Object? timestamp = freezed,
-    Object? lastMessage = freezed,
+    Object? createdAt = freezed,
     Object? chatInfos = freezed,
+    Object? lastMessage = freezed,
+    Object? unreadMessages = freezed,
     Object? currentUserId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -84,14 +91,22 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       chatInfos: freezed == chatInfos
           ? _value.chatInfos
           : chatInfos // ignore: cast_nullable_to_non_nullable
               as Map<String, ChatInfo>?,
+      lastMessage: freezed == lastMessage
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as Message?,
+      unreadMessages: freezed == unreadMessages
+          ? _value.unreadMessages
+          : unreadMessages // ignore: cast_nullable_to_non_nullable
+              as int?,
       currentUserId: freezed == currentUserId
           ? _value.currentUserId
           : currentUserId // ignore: cast_nullable_to_non_nullable
@@ -123,8 +138,10 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
       {String? id,
       List<String>? participantIds,
       @TimestampConverter() DateTime? timestamp,
-      Message? lastMessage,
+      @TimestampConverter() DateTime? createdAt,
       Map<String, ChatInfo>? chatInfos,
+      Message? lastMessage,
+      int? unreadMessages,
       String? currentUserId});
 
   @override
@@ -144,8 +161,10 @@ class __$$ChatImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? participantIds = freezed,
     Object? timestamp = freezed,
-    Object? lastMessage = freezed,
+    Object? createdAt = freezed,
     Object? chatInfos = freezed,
+    Object? lastMessage = freezed,
+    Object? unreadMessages = freezed,
     Object? currentUserId = freezed,
   }) {
     return _then(_$ChatImpl(
@@ -161,14 +180,22 @@ class __$$ChatImplCopyWithImpl<$Res>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      lastMessage: freezed == lastMessage
-          ? _value.lastMessage
-          : lastMessage // ignore: cast_nullable_to_non_nullable
-              as Message?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       chatInfos: freezed == chatInfos
           ? _value._chatInfos
           : chatInfos // ignore: cast_nullable_to_non_nullable
               as Map<String, ChatInfo>?,
+      lastMessage: freezed == lastMessage
+          ? _value.lastMessage
+          : lastMessage // ignore: cast_nullable_to_non_nullable
+              as Message?,
+      unreadMessages: freezed == unreadMessages
+          ? _value.unreadMessages
+          : unreadMessages // ignore: cast_nullable_to_non_nullable
+              as int?,
       currentUserId: freezed == currentUserId
           ? _value.currentUserId
           : currentUserId // ignore: cast_nullable_to_non_nullable
@@ -184,8 +211,10 @@ class _$ChatImpl extends _Chat {
       {this.id,
       final List<String>? participantIds,
       @TimestampConverter() this.timestamp,
-      this.lastMessage,
+      @TimestampConverter() this.createdAt,
       final Map<String, ChatInfo>? chatInfos,
+      this.lastMessage,
+      this.unreadMessages,
       this.currentUserId})
       : _participantIds = participantIds,
         _chatInfos = chatInfos,
@@ -210,7 +239,8 @@ class _$ChatImpl extends _Chat {
   @TimestampConverter()
   final DateTime? timestamp;
   @override
-  final Message? lastMessage;
+  @TimestampConverter()
+  final DateTime? createdAt;
   final Map<String, ChatInfo>? _chatInfos;
   @override
   Map<String, ChatInfo>? get chatInfos {
@@ -221,13 +251,17 @@ class _$ChatImpl extends _Chat {
     return EqualUnmodifiableMapView(value);
   }
 
-  /// not sent to the server
+  /// not received from server
+  @override
+  final Message? lastMessage;
+  @override
+  final int? unreadMessages;
   @override
   final String? currentUserId;
 
   @override
   String toString() {
-    return 'Chat(id: $id, participantIds: $participantIds, timestamp: $timestamp, lastMessage: $lastMessage, chatInfos: $chatInfos, currentUserId: $currentUserId)';
+    return 'Chat(id: $id, participantIds: $participantIds, timestamp: $timestamp, createdAt: $createdAt, chatInfos: $chatInfos, lastMessage: $lastMessage, unreadMessages: $unreadMessages, currentUserId: $currentUserId)';
   }
 
   @override
@@ -240,10 +274,14 @@ class _$ChatImpl extends _Chat {
                 .equals(other._participantIds, _participantIds) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
-            (identical(other.lastMessage, lastMessage) ||
-                other.lastMessage == lastMessage) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             const DeepCollectionEquality()
                 .equals(other._chatInfos, _chatInfos) &&
+            (identical(other.lastMessage, lastMessage) ||
+                other.lastMessage == lastMessage) &&
+            (identical(other.unreadMessages, unreadMessages) ||
+                other.unreadMessages == unreadMessages) &&
             (identical(other.currentUserId, currentUserId) ||
                 other.currentUserId == currentUserId));
   }
@@ -255,8 +293,10 @@ class _$ChatImpl extends _Chat {
       id,
       const DeepCollectionEquality().hash(_participantIds),
       timestamp,
-      lastMessage,
+      createdAt,
       const DeepCollectionEquality().hash(_chatInfos),
+      lastMessage,
+      unreadMessages,
       currentUserId);
 
   @JsonKey(ignore: true)
@@ -278,8 +318,10 @@ abstract class _Chat extends Chat {
       {final String? id,
       final List<String>? participantIds,
       @TimestampConverter() final DateTime? timestamp,
-      final Message? lastMessage,
+      @TimestampConverter() final DateTime? createdAt,
       final Map<String, ChatInfo>? chatInfos,
+      final Message? lastMessage,
+      final int? unreadMessages,
       final String? currentUserId}) = _$ChatImpl;
   const _Chat._() : super._();
 
@@ -293,12 +335,17 @@ abstract class _Chat extends Chat {
   @TimestampConverter()
   DateTime? get timestamp;
   @override
-  Message? get lastMessage;
+  @TimestampConverter()
+  DateTime? get createdAt;
   @override
   Map<String, ChatInfo>? get chatInfos;
   @override
 
-  /// not sent to the server
+  /// not received from server
+  Message? get lastMessage;
+  @override
+  int? get unreadMessages;
+  @override
   String? get currentUserId;
   @override
   @JsonKey(ignore: true)
