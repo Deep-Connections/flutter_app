@@ -2,6 +2,7 @@
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const { Firestore } = require("firebase-admin/firestore");
 
 admin.initializeApp();
 
@@ -113,17 +114,18 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
   }), currentProfile);
 
   const otherUserId = profilesWithScores[0].profile.id;
+
   const match = {
     participantIds: [userId, otherUserId],
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    createdAt: Firestore.FieldValue.serverTimestamp(),
     score: profilesWithScores[0].score,
   };
 
   const matchDocRef = db.collection("matches").doc();
   const matchId = matchDocRef.id;
   await matchDocRef.set(match);
-  await profileRef.update({numMatches: admin.firestore.FieldValue.increment(1)});
-  await db.collection("profiles").doc(otherUserId).update({numMatches: admin.firestore.FieldValue.increment(1)});
+  await profileRef.update({numMatches: Firestore.FieldValue.increment(1)});
+  await db.collection("profiles").doc(otherUserId).update({numMatches: Firestore.FieldValue.increment(1)});
 
   return {message: "Match created", matchId: matchId};
 });
