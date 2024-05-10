@@ -7,8 +7,8 @@ import 'package:deep_connections/screens/chat/components/message_text_field.dart
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
+import 'package:deep_connections/screens/components/pagination_controller.dart';
 import 'package:deep_connections/screens/components/progress_indicator.dart';
-import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/services/chat/chat_service.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/utils/extensions/date_time_extensions.dart';
@@ -20,33 +20,53 @@ import 'package:go_router/go_router.dart';
 
 // Layout for messages https://medium.com/@ximya/tips-and-tricks-for-implementing-a-successful-chat-ui-in-flutter-190cd81bdc64
 
-class MessageListScreen extends StatelessWidget {
+class MessageListScreen extends StatefulWidget {
   final String chatId;
   final ChatService chatService;
   final ProfileService profileService;
 
-  MessageListScreen(
+  const MessageListScreen(
       {super.key,
       required this.chatId,
       required this.chatService,
       required this.profileService});
 
-  final _scrollController = ScrollController();
+  @override
+  State<MessageListScreen> createState() => _MessageListScreenState();
+}
+
+class _MessageListScreenState extends State<MessageListScreen> {
+  final paginationScrollController = PaginationScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    paginationScrollController
+        .init(() => widget.chatService.loadMoreMessages(widget.chatId));
+  }
+
+  @override
+  void dispose() {
+    paginationScrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureOrBuilder(
-        futureOr: chatService.chatById(chatId),
+        futureOr: widget.chatService.chatById(widget.chatId),
         builder: (context, chat, _) {
           final currentUserId = chat?.currentUserId;
           return BaseScreen(
-              widgetTitle:
-                  chat?.otherUserId?.let((otherUserId) => FutureOrBuilder(
-                      futureOr: profileService.profileByUserId(otherUserId),
+              widgetTitle: chat?.otherUserId?.let((otherUserId) =>
+                  FutureOrBuilder(
+                      futureOr:
+                          widget.profileService.profileByUserId(otherUserId),
                       builder: (context, profile, _) {
                         return GestureDetector(
-                          onTap: () => context.push(
-                              MainRoutes.matchProfile.parameterPath([chatId])),
+                          onTap: () => context.push(MainRoutes.matchProfile
+                              .parameterPath([widget.chatId])),
                           behavior: HitTestBehavior.opaque,
                           child: Row(children: [
                             AvatarImage(imageUrl: profile?.profilePicture?.url),
@@ -59,15 +79,25 @@ class MessageListScreen extends StatelessWidget {
                 children: [
                   Expanded(
                       child: currentUserId != null
-                          ? GenericStreamBuilder(
-                              data: chatService.messageStream(chatId),
-                              builder: (context, messages) {
+                          ? StreamBuilder(
+                              stream: widget.chatService
+                                  .messagesByChatIdStream(widget.chatId),
+                              builder: (context, snapshot) {
+                                final messages = snapshot.data ?? [];
+                                if (snapshot.hasData &&
+                                    snapshot.data!.length < 20) {
+                                  paginationScrollController.scrollListener();
+                                }
+                                if (!snapshot.hasData) {
+                                  return const CenteredProgressIndicator();
+                                }
                                 return Align(
                                   alignment: Alignment.topCenter,
                                   child: ListView.builder(
                                     padding:
                                         const EdgeInsets.all(standardPadding),
-                                    controller: _scrollController,
+                                    controller: paginationScrollController
+                                        .scrollController,
                                     shrinkWrap: true,
                                     reverse: true,
                                     itemCount: messages.length,
@@ -97,15 +127,16 @@ class MessageListScreen extends StatelessWidget {
                                 );
                               },
                             )
-                          : const DcProgressIndicator()),
+                          : const CenteredProgressIndicator()),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: standardPadding / 2,
                         horizontal: standardPadding),
                     child: MessageTextField(
-                        chatId: chatId,
-                        chatService: chatService,
-                        scrollController: _scrollController),
+                        chatId: widget.chatId,
+                        chatService: widget.chatService,
+                        scrollController:
+                            paginationScrollController.scrollController),
                   )
                 ],
               ));

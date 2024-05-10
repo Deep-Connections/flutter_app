@@ -14,6 +14,9 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       chatId: json['chatId'] as String?,
       timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['timestamp'], const TimestampConverter().fromJson),
+      participantIds: (json['participantIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
@@ -33,6 +36,7 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
       'timestamp',
       _$JsonConverterToJson<Timestamp, DateTime>(
           instance.timestamp, const TimestampConverter().toJson));
+  writeNotNull('participantIds', instance.participantIds);
   return val;
 }
 

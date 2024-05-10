@@ -14,6 +14,7 @@ class Message with _$Message {
     String? text,
     String? chatId,
     @TimestampConverter() DateTime? timestamp,
+    List<String>? participantIds,
   }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) =>

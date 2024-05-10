@@ -26,6 +26,7 @@ mixin _$Message {
   String? get chatId => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get timestamp => throw _privateConstructorUsedError;
+  List<String>? get participantIds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,8 @@ abstract class $MessageCopyWith<$Res> {
       String? senderId,
       String? text,
       String? chatId,
-      @TimestampConverter() DateTime? timestamp});
+      @TimestampConverter() DateTime? timestamp,
+      List<String>? participantIds});
 }
 
 /// @nodoc
@@ -63,6 +65,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? text = freezed,
     Object? chatId = freezed,
     Object? timestamp = freezed,
+    Object? participantIds = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -85,6 +88,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      participantIds: freezed == participantIds
+          ? _value.participantIds
+          : participantIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -101,7 +108,8 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       String? senderId,
       String? text,
       String? chatId,
-      @TimestampConverter() DateTime? timestamp});
+      @TimestampConverter() DateTime? timestamp,
+      List<String>? participantIds});
 }
 
 /// @nodoc
@@ -120,6 +128,7 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? text = freezed,
     Object? chatId = freezed,
     Object? timestamp = freezed,
+    Object? participantIds = freezed,
   }) {
     return _then(_$MessageImpl(
       id: freezed == id
@@ -142,6 +151,10 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      participantIds: freezed == participantIds
+          ? _value._participantIds
+          : participantIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -154,7 +167,9 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
       this.senderId,
       this.text,
       this.chatId,
-      @TimestampConverter() this.timestamp});
+      @TimestampConverter() this.timestamp,
+      final List<String>? participantIds})
+      : _participantIds = participantIds;
 
   factory _$MessageImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageImplFromJson(json);
@@ -170,10 +185,19 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   @override
   @TimestampConverter()
   final DateTime? timestamp;
+  final List<String>? _participantIds;
+  @override
+  List<String>? get participantIds {
+    final value = _participantIds;
+    if (value == null) return null;
+    if (_participantIds is EqualUnmodifiableListView) return _participantIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Message(id: $id, senderId: $senderId, text: $text, chatId: $chatId, timestamp: $timestamp)';
+    return 'Message(id: $id, senderId: $senderId, text: $text, chatId: $chatId, timestamp: $timestamp, participantIds: $participantIds)';
   }
 
   @override
@@ -185,7 +209,8 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
       ..add(DiagnosticsProperty('senderId', senderId))
       ..add(DiagnosticsProperty('text', text))
       ..add(DiagnosticsProperty('chatId', chatId))
-      ..add(DiagnosticsProperty('timestamp', timestamp));
+      ..add(DiagnosticsProperty('timestamp', timestamp))
+      ..add(DiagnosticsProperty('participantIds', participantIds));
   }
 
   @override
@@ -199,13 +224,15 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
             (identical(other.text, text) || other.text == text) &&
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
             (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp));
+                other.timestamp == timestamp) &&
+            const DeepCollectionEquality()
+                .equals(other._participantIds, _participantIds));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, senderId, text, chatId, timestamp);
+  int get hashCode => Object.hash(runtimeType, id, senderId, text, chatId,
+      timestamp, const DeepCollectionEquality().hash(_participantIds));
 
   @JsonKey(ignore: true)
   @override
@@ -227,7 +254,8 @@ abstract class _Message implements Message {
       final String? senderId,
       final String? text,
       final String? chatId,
-      @TimestampConverter() final DateTime? timestamp}) = _$MessageImpl;
+      @TimestampConverter() final DateTime? timestamp,
+      final List<String>? participantIds}) = _$MessageImpl;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
 
@@ -242,6 +270,8 @@ abstract class _Message implements Message {
   @override
   @TimestampConverter()
   DateTime? get timestamp;
+  @override
+  List<String>? get participantIds;
   @override
   @JsonKey(ignore: true)
   _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>

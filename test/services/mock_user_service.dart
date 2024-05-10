@@ -3,7 +3,7 @@ import 'package:deep_connections/services/user/user_service.dart';
 import 'package:mockito/mockito.dart';
 
 class MockUserService extends Mock implements UserService {
-  var _user = DcUser(id: "123");
+  final _user = DcUser(id: "123");
 
   @override
   DcUser? get user => _user;
