@@ -30,8 +30,6 @@ describe("Chat functionality", () => {
         });
     });
 
-    after(clearFirestoreData);
-
     it("can fetch a list of chats where the user is a participant", async () => {
         const db = getFirestore(myAuth);
         const chatsRef = db.collection(Collections.CHATS);

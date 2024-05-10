@@ -4,22 +4,23 @@ service cloud.firestore {
 
     match /databases/{database}/documents {
 
-        match /{path=**}/messages/{messageId} {
-    		allow read: if request.auth.uid in resource.data.participantIds;
-        }
+        
         match /profiles/{userId} {
             allow create, update: if isOwn(userId) && correctlyUpdatesCoins();
             allow get: if request.auth != null;
         }
         match /chats/{chatId} {
-            allow read: if isParticipant(request.auth, resource.data);
+            allow read: if isParticipant(resource.data);
 
-            allow update: if isParticipant(request.auth, resource.data) && isValidChatUpdate(request.resource.data, resource.data);
+            allow update: if isParticipant(resource.data) && isValidChatUpdate(request.resource.data, resource.data);
 
             match /messages/{messageId} {
-                //let chat = get(/databases/$(database)/documents/chats/$(chatId)).data;
-                allow create: if isParticipant(request.auth, chat) && isValidMessage(request.resource.data, request.auth.uid);
+                allow create: if validateCreateMessage(get(/databases/$(database)/documents/chats/$(chatId)).data, chatId);
+                allow read: if isParticipant(get(/databases/$(database)/documents/chats/$(chatId)).data);
             }
+        }
+        match /{path=**}/messages/{messageId} {
+    		allow read: if request.auth.uid in resource.data.participantIds;
         }
 
     }
@@ -38,7 +39,7 @@ function isInRequest(field) {
 }
 
 function isUnchanged(field) {
-    return !(field in request.resource.data) || !(field in request.resource.data.diff(resource.data).affectedKeys());
+    return !(field in request.resource.data) || field in request.resource.data.diff(resource.data).unchangedKeys();
 }
 
 function coinsAreIncreasedByOne() {
@@ -55,8 +56,8 @@ function correctlyUpdatesCoins() {
     return isUnchanged("coins") || (coinsAreIncreasedByOne() && lastCollectedValid());
 }
 
-function isParticipant(auth, object) {
-    return auth != null && auth.uid in object.participantIds;
+function isParticipant(object) {
+    return request.auth != null && request.auth.uid in object.participantIds;
 }
 
 function isValidChatUpdate(chat, oldChat) {
@@ -66,11 +67,17 @@ function isValidChatUpdate(chat, oldChat) {
     ) && chat.chatInfos[request.auth.uid].lastRead is timestamp;
 }
 
-function isValidMessage(message, senderId, chatId) {
-    return message.keys().hasOnly(["senderId", "text", "chatId", "createdAt", "participantIds"]) &&
-         message.senderId == senderId
-        && message.text is string
-        && message.chatId is string
-        && message.createdAt is timestamp
-        && participantIds is list;
+function validateCreateMessage(chat, chatId){
+    return isParticipant(chat) && isValidMessage(request.resource.data, request.auth.uid, chat, chatId);
+}
+
+function isValidMessage(message, senderId, chat, chatId) {
+    return debug(message.keys()).hasAll(["senderId", "text", "chatId", "createdAt", "participantIds"]) &&
+        message.senderId == senderId &&
+        message.chatId == chatId &&
+        message.text is string &&
+        message.createdAt <= request.time &&
+        message.createdAt >= request.time - duration.value(7, "d") &&
+        message.participantIds.hasOnly(chat.participantIds) &&
+        senderId in message.participantIds;
 }
