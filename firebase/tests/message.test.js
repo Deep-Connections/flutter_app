@@ -16,6 +16,7 @@ function getMessageData() {
         text: "Hello",
         chatId: chatId,
         createdAt: firebase.firestore.Timestamp.now(),
+        lastUpdated: firebase.firestore.Timestamp.now(),
         participantIds: participantIds,
     };
 }
@@ -111,6 +112,7 @@ describe("Messages", () => {
         await firebase.assertSucceeds(messageRef.add(messageData));
 
         messageData.createdAt = FieldValue.serverTimestamp();
+        messageData.lastUpdated = FieldValue.serverTimestamp();
         await firebase.assertSucceeds(messageRef.add(messageData));
     });
 
