@@ -1,36 +1,23 @@
 const assert = require("assert");
 const firebase = require("@firebase/testing");
 const { getFirestore, getAdminFirestore, clearFirestoreData } = require('./setup');
+const FieldValue = firebase.firestore.FieldValue;
 const Collections = require('./constants');
 
 const UID = "testUser";
 const myAuth = { uid: UID, email: "example@gmail.com" };
-const wrongAuth = { uid: "wrong", email: "otheruser@gmail.com" };
+const wrongAuth = { uid: "wrongUser", email: "wrong@gmail.com" };
 const chatId = "chat1";
-const participantIds = [UID, "otherUser"];
-const initialTimestamp = firebase.firestore.Timestamp.now();
 
-function getChatData() {
+function updateChatData() {
     return {
-        participantIds,
-        timestamp: initialTimestamp,
-        lastMessage: {
-            senderId: UID,
-            text: "Initial message",
-            chatId: chatId,
-            timestamp: initialTimestamp
-        },
-        chatInfo: {
+        chatInfos: {
             testUser: {
-                unreadMessages: 0,
-            },
-            otherUser: {
-                unreadMessages: 0,
+                lastRead: firebase.firestore.Timestamp.now(),
             }
         }
     };
 }
-
 
 describe("Chat functionality", () => {
 
@@ -38,8 +25,8 @@ describe("Chat functionality", () => {
         await clearFirestoreData();
         const adminDb = getAdminFirestore();
         await adminDb.collection(Collections.CHATS).doc(chatId).set({
-            participantIds,
-            timestamp: initialTimestamp
+            participantIds: [UID, "otherUser"],
+            createdAt: firebase.firestore.Timestamp.now()
         });
     });
 
@@ -48,44 +35,69 @@ describe("Chat functionality", () => {
     it("can fetch a list of chats where the user is a participant", async () => {
         const db = getFirestore(myAuth);
         const chatsRef = db.collection(Collections.CHATS);
-        const query = chatsRef.where("participantIds", "array-contains", myAuth.uid);
-        
-        const chatDocs = await query.get();
+
+        const query = chatsRef.doc(chatId);
+        const chatDoc = await query.get();
+        await firebase.assertSucceeds(chatDoc);
+        assert.equal(chatDoc.data().participantIds.length, 2);
+        const query2 = chatsRef.where("participantIds", "array-contains", myAuth.uid);
+        const chatDocs = await query2.get();
         await firebase.assertSucceeds(chatDocs);
         assert.equal(chatDocs.docs.length, 1);
+
     });
 
     it("forbids access to existing chats where the user is not a participant", async () => {
         const db = getFirestore(wrongAuth);
         const chatsRef = db.collection(Collections.CHATS);
         const query = chatsRef.doc(chatId);
-        
         await firebase.assertFails(query.get());
+
+        const query2 = chatsRef.where("participantIds", "array-contains", myAuth.uid);
+        await firebase.assertFails(query2.get());
     });
 
-    it("allows updating a chat when the user is a participant and all fields are valid", async () => {
+    it("allows updating a chat when the user is a participant and only their own chatInfo is updated", async () => {
         const db = getFirestore(myAuth);
         const chatRef = db.collection(Collections.CHATS).doc(chatId);
-        const updateData = getChatData();
-
+        await firebase.assertSucceeds(chatRef.update(updateChatData()));
+        let updateData = updateChatData();
+        let now = new Date();
+        now.setSeconds(now.getSeconds() + 1);
+        updateData.chatInfos.testUser.lastRead = firebase.firestore.Timestamp.fromDate(now);
         await firebase.assertSucceeds(chatRef.update(updateData));
     });
 
-    it("forbids updates older than 1min than the previous update", async () => {
-        // more than 1min older
-        const tooOldTimestamp = new firebase.firestore.Timestamp.fromMillis(initialTimestamp.toMillis() - 60001);
+    it("forbids writing wrong values to chatInfos", async () => {
         const db = getFirestore(myAuth);
         const chatRef = db.collection(Collections.CHATS).doc(chatId);
-        const updateData = getChatData();
-        updateData.timestamp = tooOldTimestamp;
-
+        let updateData = updateChatData();
+        updateData.chatInfos.testUser.lastRead = "wrongValue";
+        await firebase.assertFails(chatRef.update(updateData));
+        updateData.chatInfos.testUser = "wrongValue";
+        await firebase.assertFails(chatRef.update(updateData));
+        updateData.chatInfos = "wrongValue";
         await firebase.assertFails(chatRef.update(updateData));
 
-        // exactly 1min older
-        const exactlyOldTimestamp = new firebase.firestore.Timestamp.fromMillis(initialTimestamp.toMillis() - 60000);
-        updateData.timestamp = exactlyOldTimestamp;
+        let otherUserData = {
+            chatInfos: {
+                otherUser: {
+                    lastRead: firebase.firestore.Timestamp.now(),
+                }
+            }
+        };
+        await firebase.assertFails(chatRef.update(otherUserData));
+    });
 
-        await firebase.assertSucceeds(chatRef.update(updateData));
+    it("forbids updating the participants or createdAt fields", async () => {
+        const db = getFirestore(myAuth);
+        const chatRef = db.collection(Collections.CHATS).doc(chatId);
+        let updateData = updateChatData();
+        updateData.participantIds = [UID, "newUser"];
+        await firebase.assertFails(chatRef.update(updateData));
+        let updateDataTime = updateChatData()
+        updateDataTime.createdAt = firebase.firestore.Timestamp.now();
+        await firebase.assertFails(chatRef.update(updateDataTime));
     });
 
 });

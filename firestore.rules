@@ -3,6 +3,10 @@ rules_version = '2';
 service cloud.firestore {
 
     match /databases/{database}/documents {
+
+        match /{path=**}/messages/{messageId} {
+    		allow read: if request.auth.uid in resource.data.participantIds;
+        }
         match /profiles/{userId} {
             allow create, update: if isOwn(userId) && correctlyUpdatesCoins();
             allow get: if request.auth != null;
@@ -10,11 +14,11 @@ service cloud.firestore {
         match /chats/{chatId} {
             allow read: if isParticipant(request.auth, resource.data);
 
-            allow update: if isParticipant(request.auth, resource.data)
-            && isValidChat(request.resource.data, resource.data, request.auth.uid);
+            allow update: if isParticipant(request.auth, resource.data) && isValidChatUpdate(request.resource.data, resource.data);
 
             match /messages/{messageId} {
-                allow read: if request.auth != null && request.auth.uid in get(/databases/$(database)/documents/chats/$(chatId)).data.participantIds;
+                //let chat = get(/databases/$(database)/documents/chats/$(chatId)).data;
+                allow create: if isParticipant(request.auth, chat) && isValidMessage(request.resource.data, request.auth.uid);
             }
         }
 
@@ -34,11 +38,11 @@ function isInRequest(field) {
 }
 
 function isUnchanged(field) {
-    return !isInRequest(field) || (isPresent(field) && request.resource.data[field] == resource.data[field]);
+    return !(field in request.resource.data) || !(field in request.resource.data.diff(resource.data).affectedKeys());
 }
 
 function coinsAreIncreasedByOne() {
-    return (request.resource.data.coins == 1 && !isPresent("coins")) || request.resource.data.coins == resource.data.coins + 1;
+    return request.resource.data.coins == resource.data.get("coins", 0) + 1;
 }
 
 function lastCollectedValid() {
@@ -51,25 +55,22 @@ function correctlyUpdatesCoins() {
     return isUnchanged("coins") || (coinsAreIncreasedByOne() && lastCollectedValid());
 }
 
-function isParticipant(auth, chat) {
-    return auth != null && auth.uid in chat.participantIds;
+function isParticipant(auth, object) {
+    return auth != null && auth.uid in object.participantIds;
 }
 
-function isValidChat(chat, oldChat, senderId) {
-    return chat.participantIds is list
-        && chat.timestamp is timestamp
-        && chat.timestamp >= oldChat.timestamp - duration.value(1, 'm')
-        && isValidMessage(chat.lastMessage, senderId)
-        && isValidChatInfo(chat.chatInfo, oldChat.chatInfo, senderId, chat.participantIds);
+function isValidChatUpdate(chat, oldChat) {
+    return chat.diff(oldChat).affectedKeys().hasOnly(["chatInfos"]) &&  
+    ((!("chatInfos" in oldChat) && chat.chatInfos.keys().hasOnly([request.auth.uid]))
+     || chat.chatInfos.diff(oldChat.chatInfos).affectedKeys().hasOnly([request.auth.uid])
+    ) && chat.chatInfos[request.auth.uid].lastRead is timestamp;
 }
 
-function isValidMessage(message, senderId) {
-    return message.senderId == senderId
+function isValidMessage(message, senderId, chatId) {
+    return message.keys().hasOnly(["senderId", "text", "chatId", "createdAt", "participantIds"]) &&
+         message.senderId == senderId
         && message.text is string
         && message.chatId is string
-        && message.timestamp is timestamp;
-}
-
-function isValidChatInfo(newChatInfo, oldChatInfo, senderId, participantIds) {
-    return newChatInfo[senderId].unreadMessages == 0;
+        && message.createdAt is timestamp
+        && participantIds is list;
 }
