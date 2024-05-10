@@ -60,9 +60,9 @@ describe("Chat functionality", () => {
         const chatRef = db.collection(Collections.CHATS).doc(chatId);
         await firebase.assertSucceeds(chatRef.update(updateChatData()));
         let updateData = updateChatData();
-        let now = new Date();
-        now.setSeconds(now.getSeconds() + 1);
-        updateData.chatInfos.testUser.lastRead = firebase.firestore.Timestamp.fromDate(now);
+        let differentDate = new Date();
+        differentDate.setSeconds(differentDate.getSeconds() + 1);
+        updateData.chatInfos.testUser.lastRead = firebase.firestore.Timestamp.fromDate(differentDate);
         await firebase.assertSucceeds(chatRef.update(updateData));
     });
 
