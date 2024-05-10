@@ -3,6 +3,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const FieldValue = require("firebase-admin/firestore").FieldValue;
+const Collections = require("../firebase/tests/constants");
 
 admin.initializeApp();
 
@@ -17,7 +18,7 @@ async function getPotentialMatches(profileData, userId) {
   const fiveYearsYounger = new Date(dateOfBirth);
   fiveYearsYounger.setFullYear(fiveYearsYounger.getFullYear() - ageDifference);
 
-  let profiles = (await db.collection("profiles")
+  let profiles = (await db.collection(Collections.PROFILES)
       .where("numMatches", "<", 5)
       .where("languageCodes", "array-contains-any", profileData.languageCodes)
       .where("dateOfBirth", "<=", fiveYearsOlder)
@@ -96,7 +97,7 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
   const userId = context.auth.uid;
 
 
-  const profileRef = db.collection("profiles").doc(userId);
+  const profileRef = db.collection(Collections.PROFILES).doc(userId);
   const currentProfile = (await profileRef.get()).data();
 
   if (!currentProfile) {
@@ -121,11 +122,11 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
     score: profilesWithScores[0].score,
   };
 
-  const matchDocRef = db.collection("matches").doc();
+  const matchDocRef = db.collection(Collections.CHATS).doc();
   const matchId = matchDocRef.id;
   await matchDocRef.set(match);
   await profileRef.update({numMatches: FieldValue.increment(1)});
-  await db.collection("profiles").doc(otherUserId).update({numMatches: FieldValue.increment(1)});
+  await db.collection(Collections.PROFILES).doc(otherUserId).update({numMatches: FieldValue.increment(1)});
 
   return {message: "Match created", matchId: matchId};
 });

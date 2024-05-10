@@ -4,9 +4,9 @@ const test = require("firebase-functions-test")();
 const assert = require("assert");
 const admin = require("firebase-admin");
 
-const projectId = "deep-connections-7796d";
+const projectId = "function-test";
 
-process.env.GCLOUD_PROJECT = projectId;
+process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
 admin.initializeApp({projectId});
 
@@ -17,6 +17,7 @@ const createInitialMatch = test.wrap(require("../index").createInitialMatch);
 
 const firebase = require("@firebase/testing");
 const fs = require("fs");
+const Collections = require("../../firebase/tests/constants");
 
 const UID = "test-uid";
 
@@ -44,12 +45,13 @@ function storeMyProfile(numMatches = null) {
   const profileData = JSON.parse(fs.readFileSync(
       "../scripts/generated/single_profile.json", "utf8",
   ));
-  return admin.firestore().collection("profiles").doc(UID).set(convertProfileFirebase(profileData, numMatches));
+  return admin.firestore().collection(Collections.PROFILES)
+      .doc(UID).set(convertProfileFirebase(profileData, numMatches));
 }
 
 function storeProfile(numMatches = 0) {
   const profileData = JSON.parse(fs.readFileSync("../scripts/generated/single_profile.json", "utf8"));
-  return admin.firestore().collection("profiles").add(convertProfileFirebase(profileData, numMatches));
+  return admin.firestore().collection(Collections.PROFILES).add(convertProfileFirebase(profileData, numMatches));
 }
 
 function storeProfiles(numProfiles = 3, numMatches = 0) {
@@ -57,7 +59,8 @@ function storeProfiles(numProfiles = 3, numMatches = 0) {
       "../scripts/generated/multiple_profile.json", "utf8"),
   ).slice(0, numProfiles);
   return Promise.all(multipleProfilesData.map((profile, index) => {
-    admin.firestore().collection("profiles").add(convertProfileFirebase(profile, numMatches, `Profile ${index}`));
+    admin.firestore().collection(Collections.PROFILES)
+        .add(convertProfileFirebase(profile, numMatches, `Profile ${index}`));
   }));
 }
 
@@ -78,12 +81,16 @@ describe("InitialMatch", () => {
     await firebase.clearFirestoreData({projectId});
   });
 
+  after(async () => {
+    firebase.clearFirestoreData({projectId});
+  });
+
   it("can create successfully", async () => {
     await Promise.all([storeMyProfile(), storeProfile()]);
 
     const result = await createInitialMatch({}, context);
     assert.equal(result.message, "Match created");
-    const match = await admin.firestore().collection("matches").doc(result.matchId).get();
+    const match = await admin.firestore().collection(Collections.CHATS).doc(result.matchId).get();
     assert.equal(match.data().participantIds[0], UID);
   });
 
@@ -98,7 +105,7 @@ describe("InitialMatch", () => {
     await promise;
 
     const result = await createInitialMatch({}, context);
-    const match = await admin.firestore().collection("matches").doc(result.matchId).get();
+    const match = await admin.firestore().collection(Collections.CHATS).doc(result.matchId).get();
     assert.equal(match.data().participantIds[1], ref.id);
   });
 
@@ -113,8 +120,9 @@ describe("InitialMatch", () => {
     await storeProfiles(10, 1);
 
     const result = await createInitialMatch({}, context);
-    const match = await admin.firestore().collection("matches").doc(result.matchId).get();
-    const otherProfile = await admin.firestore().collection("profiles").doc(match.data().participantIds[1]).get();
+    const match = await admin.firestore().collection(Collections.CHATS).doc(result.matchId).get();
+    const otherProfile = await admin.firestore().collection(Collections.PROFILES)
+        .doc(match.data().participantIds[1]).get();
     assert.equal(otherProfile.data().firstName, bestProfileName);
     assert.equal(Math.floor(match.data().score), bestProfileScore);
   });
