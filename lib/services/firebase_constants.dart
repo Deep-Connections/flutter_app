@@ -4,16 +4,22 @@ class Collection {
   static const messages = 'messages';
 }
 
-class SerializedField {
-  static const timestamp = 'timestamp';
+class FieldName {
+  static const createdAt = 'createdAt';
   static const participantIds = 'participantIds';
   static const pictures = 'pictures';
   static const profilePicture = 'profilePicture';
   static const id = 'id';
+
+  static String lastReadChat(userId) => "chatInfos.$userId.lastRead";
 }
 
-class Update {
-  static lastReadChat(userId) => "chatInfos.$userId.lastRead";
+class Functions {
+  static const createInitialMatch = 'createInitialMatch';
+}
+
+class Regions {
+  static const europeWest6 = 'europe-west6';
 }
 
 class StorageCollection {

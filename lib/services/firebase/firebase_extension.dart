@@ -7,7 +7,7 @@ extension QueryDocumentSnapshotExtension
     on QueryDocumentSnapshot<Map<String, dynamic>> {
   Map<String, dynamic> withId() {
     var dataWithId = data();
-    dataWithId[SerializedField.id] = id;
+    dataWithId[FieldName.id] = id;
     return dataWithId;
   }
 }
@@ -16,7 +16,7 @@ extension DocumentSnapshotExtension on DocumentSnapshot<Map<String, dynamic>> {
   Map<String, dynamic> withId() {
     var dataWithId = data();
     if (dataWithId == null) throw DocumentSnapshotNullException();
-    dataWithId[SerializedField.id] = id;
+    dataWithId[FieldName.id] = id;
     return dataWithId;
   }
 }

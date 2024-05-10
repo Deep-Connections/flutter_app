@@ -105,16 +105,16 @@ class _MessageListScreenState extends State<MessageListScreen> {
                                       Message message = messages[index];
                                       final nextDate =
                                           index < messages.length - 1
-                                              ? messages[index + 1].timestamp
+                                              ? messages[index + 1].createdAt
                                               : null;
-                                      final thisDate = message.timestamp;
+                                      final thisDate = message.createdAt;
                                       final isSameDay =
                                           nextDate?.isSameDay(thisDate);
                                       return Column(
                                         children: [
                                           if (isSameDay == false ||
                                               index == messages.length - 1)
-                                            DateBanner(date: message.timestamp),
+                                            DateBanner(date: message.createdAt),
                                           MessageBubble(
                                             message: message,
                                             isRight: currentUserId ==

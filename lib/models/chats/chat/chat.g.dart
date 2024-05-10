@@ -7,17 +7,15 @@ part of 'chat.dart';
 // **************************************************************************
 
 _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
-      id: json['id'] as String?,
       participantIds: (json['participantIds'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
-          json['timestamp'], const TimestampConverter().fromJson),
-      createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
-          json['createdAt'], const TimestampConverter().fromJson),
+      createdAt:
+          const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
       chatInfos: (json['chatInfos'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, ChatInfo.fromJson(e as Map<String, dynamic>)),
       ),
+      id: json['id'] as String?,
       lastMessage: json['lastMessage'] == null
           ? null
           : Message.fromJson(json['lastMessage'] as Map<String, dynamic>),
@@ -26,7 +24,10 @@ _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
     );
 
 Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'participantIds': instance.participantIds,
+    'createdAt': const TimestampConverter().toJson(instance.createdAt),
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -34,32 +35,11 @@ Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
     }
   }
 
-  writeNotNull('id', instance.id);
-  val['participantIds'] = instance.participantIds;
-  writeNotNull(
-      'timestamp',
-      _$JsonConverterToJson<Timestamp, DateTime>(
-          instance.timestamp, const TimestampConverter().toJson));
-  writeNotNull(
-      'createdAt',
-      _$JsonConverterToJson<Timestamp, DateTime>(
-          instance.createdAt, const TimestampConverter().toJson));
   writeNotNull(
       'chatInfos', instance.chatInfos?.map((k, e) => MapEntry(k, e.toJson())));
+  writeNotNull('id', instance.id);
   writeNotNull('lastMessage', instance.lastMessage?.toJson());
   writeNotNull('unreadMessages', instance.unreadMessages);
   writeNotNull('currentUserId', instance.currentUserId);
   return val;
 }
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

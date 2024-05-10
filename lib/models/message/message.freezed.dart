@@ -20,13 +20,16 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Message {
-  String? get id => throw _privateConstructorUsedError;
-  String? get senderId => throw _privateConstructorUsedError;
-  String? get text => throw _privateConstructorUsedError;
-  String? get chatId => throw _privateConstructorUsedError;
+  String get senderId => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
+  String get chatId => throw _privateConstructorUsedError;
   @TimestampConverter()
-  DateTime? get timestamp => throw _privateConstructorUsedError;
-  List<String>? get participantIds => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime get lastUpdated => throw _privateConstructorUsedError;
+  List<String> get participantIds => throw _privateConstructorUsedError;
+  @Freezed(fromJson: false, toJson: false)
+  String? get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,12 +42,13 @@ abstract class $MessageCopyWith<$Res> {
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
   $Res call(
-      {String? id,
-      String? senderId,
-      String? text,
-      String? chatId,
-      @TimestampConverter() DateTime? timestamp,
-      List<String>? participantIds});
+      {String senderId,
+      String text,
+      String chatId,
+      @TimestampConverter() DateTime createdAt,
+      @TimestampConverter() DateTime lastUpdated,
+      List<String> participantIds,
+      @Freezed(fromJson: false, toJson: false) String? id});
 }
 
 /// @nodoc
@@ -60,38 +64,43 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? senderId = null,
+    Object? text = null,
+    Object? chatId = null,
+    Object? createdAt = null,
+    Object? lastUpdated = null,
+    Object? participantIds = null,
     Object? id = freezed,
-    Object? senderId = freezed,
-    Object? text = freezed,
-    Object? chatId = freezed,
-    Object? timestamp = freezed,
-    Object? participantIds = freezed,
   }) {
     return _then(_value.copyWith(
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      chatId: null == chatId
+          ? _value.chatId
+          : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      lastUpdated: null == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      participantIds: null == participantIds
+          ? _value.participantIds
+          : participantIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      senderId: freezed == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      text: freezed == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String?,
-      chatId: freezed == chatId
-          ? _value.chatId
-          : chatId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      timestamp: freezed == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      participantIds: freezed == participantIds
-          ? _value.participantIds
-          : participantIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
     ) as $Val);
   }
 }
@@ -104,12 +113,13 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? id,
-      String? senderId,
-      String? text,
-      String? chatId,
-      @TimestampConverter() DateTime? timestamp,
-      List<String>? participantIds});
+      {String senderId,
+      String text,
+      String chatId,
+      @TimestampConverter() DateTime createdAt,
+      @TimestampConverter() DateTime lastUpdated,
+      List<String> participantIds,
+      @Freezed(fromJson: false, toJson: false) String? id});
 }
 
 /// @nodoc
@@ -123,38 +133,43 @@ class __$$MessageImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? senderId = null,
+    Object? text = null,
+    Object? chatId = null,
+    Object? createdAt = null,
+    Object? lastUpdated = null,
+    Object? participantIds = null,
     Object? id = freezed,
-    Object? senderId = freezed,
-    Object? text = freezed,
-    Object? chatId = freezed,
-    Object? timestamp = freezed,
-    Object? participantIds = freezed,
   }) {
     return _then(_$MessageImpl(
+      senderId: null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      chatId: null == chatId
+          ? _value.chatId
+          : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      lastUpdated: null == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      participantIds: null == participantIds
+          ? _value._participantIds
+          : participantIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      senderId: freezed == senderId
-          ? _value.senderId
-          : senderId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      text: freezed == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String?,
-      chatId: freezed == chatId
-          ? _value.chatId
-          : chatId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      timestamp: freezed == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      participantIds: freezed == participantIds
-          ? _value._participantIds
-          : participantIds // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
     ));
   }
 }
@@ -163,41 +178,45 @@ class __$$MessageImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   const _$MessageImpl(
-      {this.id,
-      this.senderId,
-      this.text,
-      this.chatId,
-      @TimestampConverter() this.timestamp,
-      final List<String>? participantIds})
+      {required this.senderId,
+      required this.text,
+      required this.chatId,
+      @TimestampConverter() required this.createdAt,
+      @TimestampConverter() required this.lastUpdated,
+      required final List<String> participantIds,
+      @Freezed(fromJson: false, toJson: false) this.id})
       : _participantIds = participantIds;
 
   factory _$MessageImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageImplFromJson(json);
 
   @override
-  final String? id;
+  final String senderId;
   @override
-  final String? senderId;
+  final String text;
   @override
-  final String? text;
-  @override
-  final String? chatId;
+  final String chatId;
   @override
   @TimestampConverter()
-  final DateTime? timestamp;
-  final List<String>? _participantIds;
+  final DateTime createdAt;
   @override
-  List<String>? get participantIds {
-    final value = _participantIds;
-    if (value == null) return null;
+  @TimestampConverter()
+  final DateTime lastUpdated;
+  final List<String> _participantIds;
+  @override
+  List<String> get participantIds {
     if (_participantIds is EqualUnmodifiableListView) return _participantIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
+    return EqualUnmodifiableListView(_participantIds);
   }
 
   @override
+  @Freezed(fromJson: false, toJson: false)
+  final String? id;
+
+  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Message(id: $id, senderId: $senderId, text: $text, chatId: $chatId, timestamp: $timestamp, participantIds: $participantIds)';
+    return 'Message(senderId: $senderId, text: $text, chatId: $chatId, createdAt: $createdAt, lastUpdated: $lastUpdated, participantIds: $participantIds, id: $id)';
   }
 
   @override
@@ -205,12 +224,13 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Message'))
-      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('senderId', senderId))
       ..add(DiagnosticsProperty('text', text))
       ..add(DiagnosticsProperty('chatId', chatId))
-      ..add(DiagnosticsProperty('timestamp', timestamp))
-      ..add(DiagnosticsProperty('participantIds', participantIds));
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('lastUpdated', lastUpdated))
+      ..add(DiagnosticsProperty('participantIds', participantIds))
+      ..add(DiagnosticsProperty('id', id));
   }
 
   @override
@@ -218,21 +238,30 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MessageImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
             (identical(other.text, text) || other.text == text) &&
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
-            (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.lastUpdated, lastUpdated) ||
+                other.lastUpdated == lastUpdated) &&
             const DeepCollectionEquality()
-                .equals(other._participantIds, _participantIds));
+                .equals(other._participantIds, _participantIds) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, senderId, text, chatId,
-      timestamp, const DeepCollectionEquality().hash(_participantIds));
+  int get hashCode => Object.hash(
+      runtimeType,
+      senderId,
+      text,
+      chatId,
+      createdAt,
+      lastUpdated,
+      const DeepCollectionEquality().hash(_participantIds),
+      id);
 
   @JsonKey(ignore: true)
   @override
@@ -250,28 +279,34 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
 
 abstract class _Message implements Message {
   const factory _Message(
-      {final String? id,
-      final String? senderId,
-      final String? text,
-      final String? chatId,
-      @TimestampConverter() final DateTime? timestamp,
-      final List<String>? participantIds}) = _$MessageImpl;
+          {required final String senderId,
+          required final String text,
+          required final String chatId,
+          @TimestampConverter() required final DateTime createdAt,
+          @TimestampConverter() required final DateTime lastUpdated,
+          required final List<String> participantIds,
+          @Freezed(fromJson: false, toJson: false) final String? id}) =
+      _$MessageImpl;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
 
   @override
-  String? get id;
+  String get senderId;
   @override
-  String? get senderId;
+  String get text;
   @override
-  String? get text;
-  @override
-  String? get chatId;
+  String get chatId;
   @override
   @TimestampConverter()
-  DateTime? get timestamp;
+  DateTime get createdAt;
   @override
-  List<String>? get participantIds;
+  @TimestampConverter()
+  DateTime get lastUpdated;
+  @override
+  List<String> get participantIds;
+  @override
+  @Freezed(fromJson: false, toJson: false)
+  String? get id;
   @override
   @JsonKey(ignore: true)
   _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>
