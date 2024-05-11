@@ -15,9 +15,10 @@ require("sinon").stub(admin, "initializeApp");
 
 const createInitialMatch = test.wrap(require("../index").createInitialMatch);
 
+
 const firebase = require("@firebase/testing");
 const fs = require("fs");
-const Collections = require("../../firebase/tests/constants");
+const { Collections, FunctionErrors } = require("../../firebase/tests/constants");
 
 const UID = "test-uid";
 
@@ -75,7 +76,7 @@ async function createMatch() {
 
 async function hasNoMatch() {
   const e = await createMatch();
-  assert.equal(e.message, "No profiles found", "Should not find a match");
+  assert.equal(e.code, FunctionErrors.NOT_FOUND, "Should not find a match");
 }
 
 const bestProfileName = "Profile 0";
@@ -142,12 +143,12 @@ describe("InitialMatch", () => {
     const docRef = admin.firestore().collection(Collections.PROFILES).doc(UID);
     await Promise.all([docRef.set(profileData), storeProfile()]);
     const error = await createMatch();
-    assert.equal(error.message, "User profile is not fully setup");
+    assert.equal(error.code, FunctionErrors.FAILED_PRECONDITION);
     profileData.languageCodes = languageCodes;
     delete profileData.dateOfBirth;
     await docRef.set(profileData);
     const error2 = await createMatch();
-    assert.equal(error2.message, "User profile is not fully setup");
+    assert.equal(error2.code, FunctionErrors.FAILED_PRECONDITION);
   });
 
   it("should not match the same user twice", async () => {
@@ -174,6 +175,8 @@ describe("InitialMatch", () => {
     const results = await Promise.all([createMatch(), createMatch(), createMatch()]);
     const success = results.filter((result) => result.message === "Match created");
     assert.equal(success.length, 1);
+    const failures = results.filter((result) => result.code === FunctionErrors.ALREADY_EXISTS);
+    assert.equal(failures.length, 2);
   });
 });
 

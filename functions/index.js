@@ -3,7 +3,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const { FieldValue } = require("firebase-admin/firestore");
-const Collections = require("../firebase/tests/constants");
+const { Collections, FunctionErrors } = require("../firebase/tests/constants");
 
 admin.initializeApp();
 
@@ -39,7 +39,7 @@ async function getPotentialMatches(profileData, userId) {
 
     if (profiles.filter((doc) => !matchedUserIds.includes(doc.id).length) === 0) {
       db.collection(Collections.PROFILES).doc(userId).update({ numMatches: 0 });
-      throw new functions.https.HttpsError("not-found", "No profiles found");
+      throw new functions.https.HttpsError(FunctionErrors.NOT_FOUND, "No matching profiles found");
     }
   }
 
@@ -102,7 +102,9 @@ function sortProfilesByMatchScore(profiles, user) {
 
 exports.createInitialMatch = functions.region("europe-west6").https.onCall(async (data, context) => {
   if (!context.auth || !context.auth.uid) {
-    throw new functions.https.HttpsError("unauthenticated", "The function must be called while authenticated.");
+    throw new functions.https.HttpsError(
+        FunctionErrors.UNAUTHENTICATED,
+        "The function must be called while authenticated.");
   }
 
   const userId = context.auth.uid;
@@ -112,16 +114,16 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
   await db.runTransaction(async (transaction) => {
     const profileDoc = await transaction.get(profileRef);
     if (!profileDoc.exists) {
-      throw new functions.https.HttpsError("failed-precondition", "Current user's profile not found");
+      throw new functions.https.HttpsError(FunctionErrors.FAILED_PRECONDITION, "Current user's profile not found");
     }
     currentProfile = profileDoc.data();
 
     if (!currentProfile.dateOfBirth) {
-      throw new functions.https.HttpsError("failed-precondition", "User profile is not fully setup");
+      throw new functions.https.HttpsError(FunctionErrors.FAILED_PRECONDITION, "User profile missing dateOfBirth");
     }
 
     if (!currentProfile.languageCodes || currentProfile.languageCodes.length === 0) {
-      throw new functions.https.HttpsError("failed-precondition", "User profile is not fully setup");
+      throw new functions.https.HttpsError(FunctionErrors.FAILED_PRECONDITION, "User profile missing languageCodes");
     }
 
     const lastMatchedAt = currentProfile.lastMatchedAt;
@@ -133,7 +135,7 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
     if (!lastMatchedAt || hoursSinceLastMatch >= 24) {
       transaction.update(profileRef, { lastMatchedAt: FieldValue.serverTimestamp() });
     } else {
-      throw new functions.https.HttpsError("failed-precondition", "User has already been matched today");
+      throw new functions.https.HttpsError(FunctionErrors.ALREADY_EXISTS, "User has already been matched today");
     }
   });
 
@@ -149,7 +151,7 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
   const matchedUser = profilesWithScores.find((profileWScore) => !matchedUserIds.includes(profileWScore.profile.id));
 
   if (!matchedUser) {
-    throw new functions.https.HttpsError("not-found", "No profiles found");
+    throw new functions.https.HttpsError(FunctionErrors.NOT_FOUND, "No profiles found");
   }
 
   const matchUserId = matchedUser.profile.id;

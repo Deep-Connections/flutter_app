@@ -4,7 +4,7 @@ import 'package:deep_connections/screens/chat/components/chat_list_tile.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
-import 'package:flutter/foundation.dart';
+import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
@@ -26,16 +26,15 @@ class ChatListScreen extends StatelessWidget {
     final loc = AppLocalizations.of(context);
     return BaseScreen(
       title: loc.chat_title,
-      actions: kDebugMode
-          ? [
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () {
-                  chatService.createMatch();
-                },
-              )
-            ]
-          : null,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.add_circle_outlined, size: 30),
+          onPressed: () async {
+            final response = await chatService.createMatch();
+            MessageHandler.showResponseError(response, loc);
+          },
+        )
+      ],
       body: Column(
         children: [
           Expanded(

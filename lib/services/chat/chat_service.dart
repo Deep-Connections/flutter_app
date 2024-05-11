@@ -7,6 +7,7 @@ import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:deep_connections/utils/logging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
@@ -229,22 +230,31 @@ class ChatService {
     return SuccessRes(null);
   }*/
 
-  createMatch() async {
+  LocKey? getInitialMatchUiErrorMessages(FirebaseFunctionsException exception) {
+    switch (exception.code) {
+      case FunctionErrors.notFound:
+        return LocKey((loc) => loc.matching_notFoundError);
+      case FunctionErrors.alreadyExists:
+        return LocKey((loc) => loc.matching_alreadyExistsError);
+      case FunctionErrors.failedPrecondition:
+        return LocKey((loc) => loc.matching_failedPreconditionError);
+    }
+    return null;
+  }
+
+  Future<Response> createMatch() async {
     final app = Firebase.app();
     logger.d(app.name);
     final callable = _functions.httpsCallable('createInitialMatch');
 
     try {
-      final response = await callable();
-      // Handle response here
-      logger.d('Function executed successfully');
+      await callable();
+      return SuccessRes(null);
     } on FirebaseFunctionsException catch (e) {
-      // Handle function error
-      logger.d('Error executing function: ${e.code} ${e.message} ${e.details}');
-      logger.e(e);
-    } catch (e) {
-      // Handle other errors
-      logger.d('Error: $e');
+      return ErrorRes(
+          errorCode: e.code,
+          errorMessage: e.message,
+          uiMessage: getInitialMatchUiErrorMessages(e));
     }
   }
 }
