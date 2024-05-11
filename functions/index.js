@@ -2,12 +2,13 @@
 
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const FieldValue = require("firebase-admin/firestore").FieldValue;
+const { FieldValue } = require("firebase-admin/firestore");
 const Collections = require("../firebase/tests/constants");
 
 admin.initializeApp();
 
 const ageDifference = 5;
+const maxNumMatches = 5;
 
 const db = admin.firestore();
 
@@ -17,19 +18,29 @@ async function getPotentialMatches(profileData, userId) {
   fiveYearsOlder.setFullYear(fiveYearsOlder.getFullYear() + ageDifference);
   const fiveYearsYounger = new Date(dateOfBirth);
   fiveYearsYounger.setFullYear(fiveYearsYounger.getFullYear() - ageDifference);
+  const matchedUserIds = (profileData.matchedUserIds || []);
 
   let profiles = (await db.collection(Collections.PROFILES)
-      .where("numMatches", "<", 5)
-      .where("languageCodes", "array-contains-any", profileData.languageCodes)
+      .where("numMatches", "<", maxNumMatches)
+      .where("languageCodes", "array-contains-any", profileData.languageCodes.slice(0, 10))
       .where("dateOfBirth", "<=", fiveYearsOlder)
       .where("dateOfBirth", ">=", fiveYearsYounger)
       .orderBy("numMatches", "asc")
-      .limit(100).get()).docs;
+      .limit(100).get()).docs.filter((doc) => doc.id !== userId);
 
-  profiles = profiles.filter((doc) => doc.id !== userId);
+  if (profiles.filter((doc) => !matchedUserIds.includes(doc.id)).length === 0) {
+    // get one more user than the number of matched users (max 100)
+    const limit = Math.min(matchedUserIds.length + 2, 100);
+    profiles = (await db.collection(Collections.PROFILES)
+        // only find profiles that have been matched before, to exclude unfinished profiles
+        .where("numMatches", ">=", 0)
+        .orderBy("numMatches", "asc")
+        .limit(limit).get()).docs.filter((doc) => doc.id !== userId);
 
-  if (profiles.length === 0) {
-    throw new functions.https.HttpsError("not-found", "No profiles found");
+    if (profiles.filter((doc) => !matchedUserIds.includes(doc.id).length) === 0) {
+      db.collection(Collections.PROFILES).doc(userId).update({ numMatches: 0 });
+      throw new functions.https.HttpsError("not-found", "No profiles found");
+    }
   }
 
   return profiles;
@@ -96,28 +107,55 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
 
   const userId = context.auth.uid;
 
-
   const profileRef = db.collection(Collections.PROFILES).doc(userId);
-  const currentProfile = (await profileRef.get()).data();
+  let currentProfile;
+  await db.runTransaction(async (transaction) => {
+    const profileDoc = await transaction.get(profileRef);
+    if (!profileDoc.exists) {
+      throw new functions.https.HttpsError("failed-precondition", "Current user's profile not found");
+    }
+    currentProfile = profileDoc.data();
 
-  if (!currentProfile) {
-    throw new functions.https.HttpsError("not-found", "Current user's profile not found");
-  }
+    if (!currentProfile.dateOfBirth) {
+      throw new functions.https.HttpsError("failed-precondition", "User profile is not fully setup");
+    }
 
-  // if (currentProfile.numMatches >= 1) {
-  //     throw new functions.https.HttpsError('failed-precondition', 'Match already exists');
-  // }
+    if (!currentProfile.languageCodes || currentProfile.languageCodes.length === 0) {
+      throw new functions.https.HttpsError("failed-precondition", "User profile is not fully setup");
+    }
+
+    const lastMatchedAt = currentProfile.lastMatchedAt;
+    let hoursSinceLastMatch = 0;
+    if (lastMatchedAt) {
+      hoursSinceLastMatch = (new Date() - lastMatchedAt.toDate()) / (1000 * 60 * 60);
+    }
+
+    if (!lastMatchedAt || hoursSinceLastMatch >= 24) {
+      transaction.update(profileRef, { lastMatchedAt: FieldValue.serverTimestamp() });
+    } else {
+      throw new functions.https.HttpsError("failed-precondition", "User has already been matched today");
+    }
+  });
 
   const profiles = await getPotentialMatches(currentProfile, userId);
 
   const profilesWithScores = sortProfilesByMatchScore(profiles.map((doc) => {
-    return {id: doc.id, ...doc.data()};
+    return { id: doc.id, ...doc.data() };
   }), currentProfile);
 
-  const otherUserId = profilesWithScores[0].profile.id;
+  const matchedUserIds = currentProfile.matchedUserIds || [];
+
+  // find first profile that has not been matched yet
+  const matchedUser = profilesWithScores.find((profileWScore) => !matchedUserIds.includes(profileWScore.profile.id));
+
+  if (!matchedUser) {
+    throw new functions.https.HttpsError("not-found", "No profiles found");
+  }
+
+  const matchUserId = matchedUser.profile.id;
 
   const match = {
-    participantIds: [userId, otherUserId],
+    participantIds: [userId, matchUserId],
     createdAt: FieldValue.serverTimestamp(),
     score: profilesWithScores[0].score,
   };
@@ -125,9 +163,18 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
   const matchDocRef = db.collection(Collections.CHATS).doc();
   const matchId = matchDocRef.id;
   await matchDocRef.set(match);
-  await profileRef.update({numMatches: FieldValue.increment(1)});
-  await db.collection(Collections.PROFILES).doc(otherUserId).update({numMatches: FieldValue.increment(1)});
+  await profileRef.update({
+    numMatches: FieldValue.increment(1),
+    matchedUserIds: FieldValue.arrayUnion(matchUserId),
+    lastMatchedAt: FieldValue.serverTimestamp(),
+  });
+  await db.collection(Collections.PROFILES).doc(matchUserId)
+      .update({
+        numMatches: FieldValue.increment(1),
+        matchedUserIds: FieldValue.arrayUnion(userId),
+        lastMatchedAt: FieldValue.serverTimestamp(),
+      });
 
-  return {message: "Match created", matchId: matchId};
+  return { message: "Match created", matchId: matchId };
 });
 
