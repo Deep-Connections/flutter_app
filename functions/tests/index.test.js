@@ -18,7 +18,7 @@ const createInitialMatch = test.wrap(require("../index").createInitialMatch);
 
 const firebase = require("@firebase/testing");
 const fs = require("fs");
-const { Collections, FunctionErrors } = require("../../firebase/tests/constants");
+const { Collections, FunctionErrors } = require("../constants");
 
 const UID = "test-uid";
 
