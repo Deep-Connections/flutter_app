@@ -13,7 +13,7 @@ class Message with _$Message {
     required String text,
     required String chatId,
     @TimestampConverter() required DateTime createdAt,
-    @TimestampConverter() required DateTime lastUpdated,
+    @TimestampConverter() required DateTime lastUpdatedAt,
     required List<String> participantIds,
     @Freezed(fromJson: false, toJson: false) String? id,
   }) = _Message;

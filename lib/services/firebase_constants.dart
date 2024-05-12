@@ -6,6 +6,7 @@ class Collection {
 
 class FieldName {
   static const createdAt = 'createdAt';
+  static const lastUpdatedAt = 'lastUpdatedAt';
   static const participantIds = 'participantIds';
   static const pictures = 'pictures';
   static const profilePicture = 'profilePicture';

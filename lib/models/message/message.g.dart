@@ -13,8 +13,8 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       chatId: json['chatId'] as String,
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
-      lastUpdated:
-          const TimestampConverter().fromJson(json['lastUpdated'] as Timestamp),
+      lastUpdatedAt: const TimestampConverter()
+          .fromJson(json['lastUpdatedAt'] as Timestamp),
       participantIds: (json['participantIds'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
@@ -27,7 +27,7 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
     'text': instance.text,
     'chatId': instance.chatId,
     'createdAt': const TimestampConverter().toJson(instance.createdAt),
-    'lastUpdated': const TimestampConverter().toJson(instance.lastUpdated),
+    'lastUpdatedAt': const TimestampConverter().toJson(instance.lastUpdatedAt),
     'participantIds': instance.participantIds,
   };
 

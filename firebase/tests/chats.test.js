@@ -2,7 +2,7 @@ const assert = require("assert");
 const firebase = require("@firebase/testing");
 const { getFirestore, getAdminFirestore, clearFirestoreData } = require('./setup');
 const FieldValue = firebase.firestore.FieldValue;
-const Collections = require('./constants');
+const { Collections } = require('./constants');
 
 const UID = "testUser";
 const myAuth = { uid: UID, email: "example@gmail.com" };
