@@ -48,5 +48,6 @@ app.*.map.json
 assets/credentials/credentials.json
 
 /firebase/node_modules/
+/firebase/emulator_storage
 
 serviceAccountKey.json

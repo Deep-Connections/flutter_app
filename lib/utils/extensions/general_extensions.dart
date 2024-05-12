@@ -33,6 +33,16 @@ extension IterableExtensions<T> on Iterable<T> {
     return null;
   }
 
+  T? lastWhereOrNull(bool Function(T e) test) {
+    T? result;
+    for (T element in this) {
+      if (test(element)) {
+        result = element;
+      }
+    }
+    return result;
+  }
+
   List<R> mapNotNull<R>(R? Function(T e) transform) {
     List<R> result = [];
     for (T element in this) {

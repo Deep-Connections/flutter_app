@@ -12,25 +12,26 @@ class Chat with _$Chat {
   const Chat._();
 
   const factory Chat({
-    String? id,
-    List<String>? participantIds,
-    @TimestampConverter() DateTime? timestamp,
-    Message? lastMessage,
+    required List<String> participantIds,
+    @TimestampConverter() required DateTime createdAt,
     Map<String, ChatInfo>? chatInfos,
-
-    /// not sent to the server
-    String? currentUserId,
+    @Freezed(fromJson: false, toJson: false) String? id,
+    @Freezed(fromJson: false, toJson: false) Message? lastMessage,
+    @Freezed(fromJson: false, toJson: false) int? unreadMessages,
+    @Freezed(fromJson: false, toJson: false) String? currentUserId,
   }) = _Chat;
 
   String? get otherUserId {
-    return participantIds?.firstWhere((id) => id != currentUserId);
+    return participantIds.firstWhere((id) => id != currentUserId);
   }
 
   ChatInfo? get info {
     return chatInfos?[currentUserId!];
   }
 
-  bool get isUnread => info?.unreadMessages != 0;
+  bool get isUnread => unreadMessages != 0;
+
+  DateTime? get lastRead => info?.lastRead;
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
 }

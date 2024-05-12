@@ -8,7 +8,8 @@ part of 'chat_info.dart';
 
 _$ChatInfoImpl _$$ChatInfoImplFromJson(Map<String, dynamic> json) =>
     _$ChatInfoImpl(
-      unreadMessages: json['unreadMessages'] as int?,
+      lastRead: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['lastRead'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$ChatInfoImplToJson(_$ChatInfoImpl instance) {
@@ -20,6 +21,21 @@ Map<String, dynamic> _$$ChatInfoImplToJson(_$ChatInfoImpl instance) {
     }
   }
 
-  writeNotNull('unreadMessages', instance.unreadMessages);
+  writeNotNull(
+      'lastRead',
+      _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.lastRead, const TimestampConverter().toJson));
   return val;
 }
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

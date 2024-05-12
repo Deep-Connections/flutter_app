@@ -9,11 +9,13 @@ part 'message.g.dart';
 @freezed
 class Message with _$Message {
   const factory Message({
-    String? id,
-    String? senderId,
-    String? text,
-    String? chatId,
-    @TimestampConverter() DateTime? timestamp,
+    required String senderId,
+    required String text,
+    required String chatId,
+    @TimestampConverter() required DateTime createdAt,
+    @TimestampConverter() required DateTime lastUpdated,
+    required List<String> participantIds,
+    @Freezed(fromJson: false, toJson: false) String? id,
   }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) =>

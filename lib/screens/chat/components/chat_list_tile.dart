@@ -53,9 +53,8 @@ class ChatListTile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(chat.timestamp?.toDependingOnDateString(loc, context,
-                        todayAsTime: true) ??
-                    ""),
+                Text(chat.createdAt
+                    .toDependingOnDateString(loc, context, todayAsTime: true)),
                 const SizedBox(height: standardPadding),
                 if (chat.isUnread)
                   Container(
@@ -67,9 +66,10 @@ class ChatListTile extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        chat.info?.unreadMessages?.toString() ?? "",
+                        chat.unreadMessages?.toString() ?? "",
                         style: theme.textTheme.labelSmall?.copyWith(
                           color: theme.colorScheme.onSecondary,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),

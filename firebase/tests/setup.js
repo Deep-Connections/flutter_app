@@ -1,6 +1,6 @@
 const firebase = require("@firebase/testing");
 
-const MY_PROJECT_ID = "deep-connections-7796d";
+const MY_PROJECT_ID = "test";
 
 function getFirestore(auth) {
     return firebase.initializeTestApp({ projectId: MY_PROJECT_ID, auth: auth }).firestore();
