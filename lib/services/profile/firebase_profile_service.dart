@@ -107,8 +107,8 @@ class FirebaseProfileService implements ProfileService {
       final picture =
           Picture(url: url, timestamp: timestamp, name: pictureName);
       _profileReference.doc(userId).update({
-        SerializedField.profilePicture: picture.toJson(),
-        SerializedField.pictures: FieldValue.arrayUnion([picture.toJson()])
+        FieldName.profilePicture: picture.toJson(),
+        FieldName.pictures: FieldValue.arrayUnion([picture.toJson()])
       });
       return Picture(url: url, timestamp: timestamp);
     });

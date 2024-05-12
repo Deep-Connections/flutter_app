@@ -12,16 +12,13 @@ class Chat with _$Chat {
   const Chat._();
 
   const factory Chat({
-    String? id,
     required List<String> participantIds,
-    @TimestampConverter() DateTime? timestamp,
-    @TimestampConverter() DateTime? createdAt,
+    @TimestampConverter() required DateTime createdAt,
     Map<String, ChatInfo>? chatInfos,
-
-    /// not received from server
-    Message? lastMessage,
-    int? unreadMessages,
-    String? currentUserId,
+    @Freezed(fromJson: false, toJson: false) String? id,
+    @Freezed(fromJson: false, toJson: false) Message? lastMessage,
+    @Freezed(fromJson: false, toJson: false) int? unreadMessages,
+    @Freezed(fromJson: false, toJson: false) String? currentUserId,
   }) = _Chat;
 
   String? get otherUserId {

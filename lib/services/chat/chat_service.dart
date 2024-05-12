@@ -7,6 +7,7 @@ import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
+import 'package:deep_connections/utils/loc_key.dart';
 import 'package:deep_connections/utils/logging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
@@ -32,8 +33,8 @@ class ChatService {
       .withConverter<Message>(
           fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
           toFirestore: (chat, _) => chat.toJson())
-      .where(SerializedField.participantIds, arrayContains: _userService.userId)
-      .orderBy(SerializedField.timestamp, descending: true);
+      .where(FieldName.participantIds, arrayContains: _userService.userId)
+      .orderBy(FieldName.createdAt, descending: true);
 
   void _addMessages(List<Message> messages) {
     if (messages.isEmpty) return;
@@ -41,7 +42,7 @@ class ChatService {
         .fold<Map<String, Message>>(
             {}, (map, message) => map..putIfAbsent(message.id!, () => message));
     final combinedMessages = messageMap.values.toList()
-      ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     _messageSubject.add(combinedMessages);
   }
 
@@ -75,14 +76,14 @@ class ChatService {
     final lastMessage = _messageSubject.valueOrNull
         ?.lastWhereOrNull((message) => message.chatId == chatId);
     var ref = _messagesByChatIdRef(chatId)
-        .orderBy(SerializedField.timestamp, descending: true);
+        .orderBy(FieldName.createdAt, descending: true);
     if (lastMessage != null) {
-      ref = ref.startAfter([lastMessage.timestamp]);
+      ref = ref.startAfter([lastMessage.createdAt]);
     }
     return ref.limit(_messagePageLimit).get().then((snap) {
       final newMessages = snap.docs.map((doc) => doc.data()).toList();
       _addMessages(newMessages);
-      return newMessages.isEmpty || newMessages.every((m) => m.chatId == null);
+      return newMessages.isEmpty;
     });
   }
 
@@ -99,7 +100,7 @@ class ChatService {
 
       logger.d("Chat Stream reinitialized");
       return _chatRef
-          .where(SerializedField.participantIds, arrayContains: userId)
+          .where(FieldName.participantIds, arrayContains: userId)
           .snapshots()
           .map((snap) => snap.docs.map((doc) => doc.data()).toList())
           .switchMap((chatList) => _messageSubject.stream
@@ -111,7 +112,7 @@ class ChatService {
                       if (message.chatId == chat.id) {
                         lastMessage ??= message;
                         if (message.senderId != userId &&
-                            message.timestamp!.isAfter(chatLastRead)) {
+                            message.createdAt.isAfter(chatLastRead)) {
                           unreadMessages ??= 0;
                           unreadMessages++;
                         } else {
@@ -121,13 +122,11 @@ class ChatService {
                     }
 
                     return chat.copyWith(
-                        timestamp: lastMessage?.timestamp ??
-                            chat.createdAt ??
-                            chat.timestamp,
+                        createdAt: lastMessage?.createdAt ?? chat.createdAt,
                         lastMessage: lastMessage,
                         unreadMessages: unreadMessages);
                   }).toList()
-                    ..sort((a, b) => b.timestamp!.compareTo(a.timestamp!)))
+                    ..sort((a, b) => b.createdAt.compareTo(a.createdAt)))
               .distinct());
     })
         // create a new chat if there are no chats or all chats are older than 24h
@@ -180,7 +179,8 @@ class ChatService {
     final messageObj = Message(
       text: message,
       senderId: _userService.userId,
-      timestamp: timestamp,
+      createdAt: timestamp,
+      lastUpdated: timestamp,
       chatId: chatId,
       participantIds: chat.participantIds,
     );
@@ -211,7 +211,7 @@ class ChatService {
     return await handleFirebaseErrors(
         () async => await _chatRef.doc(chatId).update({
               // we set the unread messages to current firebase timestamp
-              Update.lastReadChat(_userService.userId): Timestamp.now()
+              FieldName.lastReadChat(_userService.userId): Timestamp.now()
             }));
   }
 
@@ -230,22 +230,31 @@ class ChatService {
     return SuccessRes(null);
   }*/
 
-  createMatch() async {
+  LocKey? getInitialMatchUiErrorMessages(FirebaseFunctionsException exception) {
+    switch (exception.code) {
+      case FunctionErrors.notFound:
+        return LocKey((loc) => loc.matching_notFoundError);
+      case FunctionErrors.alreadyExists:
+        return LocKey((loc) => loc.matching_alreadyExistsError);
+      case FunctionErrors.failedPrecondition:
+        return LocKey((loc) => loc.matching_failedPreconditionError);
+    }
+    return null;
+  }
+
+  Future<Response> createMatch() async {
     final app = Firebase.app();
     logger.d(app.name);
     final callable = _functions.httpsCallable('createInitialMatch');
 
     try {
-      final response = await callable();
-      // Handle response here
-      logger.d('Function executed successfully');
+      await callable();
+      return SuccessRes(null);
     } on FirebaseFunctionsException catch (e) {
-      // Handle function error
-      logger.d('Error executing function: ${e.code} ${e.message} ${e.details}');
-      logger.e(e);
-    } catch (e) {
-      // Handle other errors
-      logger.d('Error: $e');
+      return ErrorRes(
+          errorCode: e.code,
+          errorMessage: e.message,
+          uiMessage: getInitialMatchUiErrorMessages(e));
     }
   }
 }
