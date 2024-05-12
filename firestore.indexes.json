@@ -1,19 +1,44 @@
 {
   "indexes": [
     {
-      "collectionGroup": "chats",
-      "queryScope": "COLLECTION",
+      "collectionGroup": "messages",
+      "queryScope": "COLLECTION_GROUP",
       "fields": [
         {
           "fieldPath": "participantIds",
           "arrayConfig": "CONTAINS"
         },
         {
-          "fieldPath": "timestamp",
+          "fieldPath": "lastUpdatedAt",
           "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "profiles",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "languageCodes",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "numMatches",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "dateOfBirth",
+          "order": "ASCENDING"
         }
       ]
     }
   ],
-  "fieldOverrides": []
+  "fieldOverrides": [
+    {
+      "collectionGroup": "profiles",
+      "fieldPath": "questions",
+      "ttl": false,
+      "indexes": []
+    }
+  ]
 }
