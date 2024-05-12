@@ -26,7 +26,7 @@ mixin _$Message {
   @TimestampConverter()
   DateTime get createdAt => throw _privateConstructorUsedError;
   @TimestampConverter()
-  DateTime get lastUpdated => throw _privateConstructorUsedError;
+  DateTime get lastUpdatedAt => throw _privateConstructorUsedError;
   List<String> get participantIds => throw _privateConstructorUsedError;
   @Freezed(fromJson: false, toJson: false)
   String? get id => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $MessageCopyWith<$Res> {
       String text,
       String chatId,
       @TimestampConverter() DateTime createdAt,
-      @TimestampConverter() DateTime lastUpdated,
+      @TimestampConverter() DateTime lastUpdatedAt,
       List<String> participantIds,
       @Freezed(fromJson: false, toJson: false) String? id});
 }
@@ -68,7 +68,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? text = null,
     Object? chatId = null,
     Object? createdAt = null,
-    Object? lastUpdated = null,
+    Object? lastUpdatedAt = null,
     Object? participantIds = null,
     Object? id = freezed,
   }) {
@@ -89,9 +89,9 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      lastUpdated: null == lastUpdated
-          ? _value.lastUpdated
-          : lastUpdated // ignore: cast_nullable_to_non_nullable
+      lastUpdatedAt: null == lastUpdatedAt
+          ? _value.lastUpdatedAt
+          : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       participantIds: null == participantIds
           ? _value.participantIds
@@ -117,7 +117,7 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       String text,
       String chatId,
       @TimestampConverter() DateTime createdAt,
-      @TimestampConverter() DateTime lastUpdated,
+      @TimestampConverter() DateTime lastUpdatedAt,
       List<String> participantIds,
       @Freezed(fromJson: false, toJson: false) String? id});
 }
@@ -137,7 +137,7 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? text = null,
     Object? chatId = null,
     Object? createdAt = null,
-    Object? lastUpdated = null,
+    Object? lastUpdatedAt = null,
     Object? participantIds = null,
     Object? id = freezed,
   }) {
@@ -158,9 +158,9 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      lastUpdated: null == lastUpdated
-          ? _value.lastUpdated
-          : lastUpdated // ignore: cast_nullable_to_non_nullable
+      lastUpdatedAt: null == lastUpdatedAt
+          ? _value.lastUpdatedAt
+          : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
       participantIds: null == participantIds
           ? _value._participantIds
@@ -182,7 +182,7 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
       required this.text,
       required this.chatId,
       @TimestampConverter() required this.createdAt,
-      @TimestampConverter() required this.lastUpdated,
+      @TimestampConverter() required this.lastUpdatedAt,
       required final List<String> participantIds,
       @Freezed(fromJson: false, toJson: false) this.id})
       : _participantIds = participantIds;
@@ -201,7 +201,7 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   final DateTime createdAt;
   @override
   @TimestampConverter()
-  final DateTime lastUpdated;
+  final DateTime lastUpdatedAt;
   final List<String> _participantIds;
   @override
   List<String> get participantIds {
@@ -216,7 +216,7 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Message(senderId: $senderId, text: $text, chatId: $chatId, createdAt: $createdAt, lastUpdated: $lastUpdated, participantIds: $participantIds, id: $id)';
+    return 'Message(senderId: $senderId, text: $text, chatId: $chatId, createdAt: $createdAt, lastUpdatedAt: $lastUpdatedAt, participantIds: $participantIds, id: $id)';
   }
 
   @override
@@ -228,7 +228,7 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
       ..add(DiagnosticsProperty('text', text))
       ..add(DiagnosticsProperty('chatId', chatId))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('lastUpdated', lastUpdated))
+      ..add(DiagnosticsProperty('lastUpdatedAt', lastUpdatedAt))
       ..add(DiagnosticsProperty('participantIds', participantIds))
       ..add(DiagnosticsProperty('id', id));
   }
@@ -244,8 +244,8 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.lastUpdated, lastUpdated) ||
-                other.lastUpdated == lastUpdated) &&
+            (identical(other.lastUpdatedAt, lastUpdatedAt) ||
+                other.lastUpdatedAt == lastUpdatedAt) &&
             const DeepCollectionEquality()
                 .equals(other._participantIds, _participantIds) &&
             (identical(other.id, id) || other.id == id));
@@ -259,7 +259,7 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
       text,
       chatId,
       createdAt,
-      lastUpdated,
+      lastUpdatedAt,
       const DeepCollectionEquality().hash(_participantIds),
       id);
 
@@ -283,7 +283,7 @@ abstract class _Message implements Message {
           required final String text,
           required final String chatId,
           @TimestampConverter() required final DateTime createdAt,
-          @TimestampConverter() required final DateTime lastUpdated,
+          @TimestampConverter() required final DateTime lastUpdatedAt,
           required final List<String> participantIds,
           @Freezed(fromJson: false, toJson: false) final String? id}) =
       _$MessageImpl;
@@ -301,7 +301,7 @@ abstract class _Message implements Message {
   DateTime get createdAt;
   @override
   @TimestampConverter()
-  DateTime get lastUpdated;
+  DateTime get lastUpdatedAt;
   @override
   List<String> get participantIds;
   @override

@@ -34,11 +34,11 @@ class ChatService {
           fromFirestore: (doc, _) => Message.fromJson(doc.withId()),
           toFirestore: (chat, _) => chat.toJson())
       .where(FieldName.participantIds, arrayContains: _userService.userId)
-      .orderBy(FieldName.createdAt, descending: true);
+      .orderBy(FieldName.lastUpdatedAt, descending: true);
 
-  void _addMessages(List<Message> messages) {
-    if (messages.isEmpty) return;
-    final messageMap = (messages + (_messageSubject.valueOrNull ?? []))
+  void _addMessages(List<Message> newMessages) {
+    if (newMessages.isEmpty) return;
+    final messageMap = (newMessages + (_messageSubject.valueOrNull ?? []))
         .fold<Map<String, Message>>(
             {}, (map, message) => map..putIfAbsent(message.id!, () => message));
     final combinedMessages = messageMap.values.toList()
@@ -180,7 +180,7 @@ class ChatService {
       text: message,
       senderId: _userService.userId,
       createdAt: timestamp,
-      lastUpdated: timestamp,
+      lastUpdatedAt: timestamp,
       chatId: chatId,
       participantIds: chat.participantIds,
     );

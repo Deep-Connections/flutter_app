@@ -2,7 +2,7 @@ const assert = require("assert");
 const firebase = require("@firebase/testing");
 const { getFirestore, getAdminFirestore, clearFirestoreData } = require('./setup');
 const FieldValue = firebase.firestore.FieldValue;
-const Collections = require('./constants');
+const { Collections } = require('./constants');
 
 const UID = "testUser";
 const myAuth = { uid: UID, email: "example@gmail.com" };
@@ -16,7 +16,7 @@ function getMessageData() {
         text: "Hello",
         chatId: chatId,
         createdAt: firebase.firestore.Timestamp.now(),
-        lastUpdated: firebase.firestore.Timestamp.now(),
+        lastUpdatedAt: firebase.firestore.Timestamp.now(),
         participantIds: participantIds,
     };
 }
@@ -112,7 +112,7 @@ describe("Messages", () => {
         await firebase.assertSucceeds(messageRef.add(messageData));
 
         messageData.createdAt = FieldValue.serverTimestamp();
-        messageData.lastUpdated = FieldValue.serverTimestamp();
+        messageData.lastUpdatedAt = FieldValue.serverTimestamp();
         await firebase.assertSucceeds(messageRef.add(messageData));
     });
 

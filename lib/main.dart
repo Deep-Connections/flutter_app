@@ -18,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  configureDependencies(kDebugMode ? Environment.dev : Environment.prod);
+  configureDependencies(/*kDebugMode ? Environment.dev :*/ Environment.prod);
 
   // url routing
   usePathUrlStrategy();

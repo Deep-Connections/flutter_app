@@ -67,16 +67,16 @@ function validateCreateMessage(chat, chatId){
 }
 
 function isValidMessage(message, senderId, chat, chatId) {
-    return debug(message.keys()).hasAll(["senderId", "text", "chatId", "createdAt", "lastUpdated", "participantIds"]) &&
+    return debug(message.keys()).hasAll(["senderId", "text", "chatId", "createdAt", "lastUpdatedAt", "participantIds"]) &&
         message.senderId == senderId &&
         message.chatId == chatId &&
         message.text is string &&
         message.createdAt is timestamp &&
-        message.lastUpdated is timestamp &&
+        message.lastUpdatedAt is timestamp &&
         message.createdAt <= request.time &&
-        message.lastUpdated <= request.time &&
+        message.lastUpdatedAt <= request.time &&
         message.createdAt >= request.time - duration.value(7, "d") &&
-        message.lastUpdated >= message.createdAt &&
+        message.lastUpdatedAt >= message.createdAt &&
         message.participantIds.hasOnly(chat.participantIds) &&
         senderId in message.participantIds;
 }
