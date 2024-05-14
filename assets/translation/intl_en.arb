@@ -57,6 +57,8 @@
   "profile_title": "Profile",
   "matchProfile_noUpload": "{name} hasn't uploaded any photos yet.",
   "matchProfile_commonAnswers": "{number} Common Answers",
+  "matchProfile_languages": "Languages: {languages}",
+  "matchProfile_gender": "Gender: {gender}",
   "chat_title": "Your Smatches",
   "completeProfile_completeDescription": "Complete your profile to get better matches!",
   "completeProfile_completeButton": "Complete profile",

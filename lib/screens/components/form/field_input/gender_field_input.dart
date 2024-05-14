@@ -23,6 +23,7 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
 
   set selectedGender(Gender? value) {
     _selectedGender = value;
+    if (value?.customName != null) super.value = value!.customName;
     notifyListeners();
   }
 
@@ -33,7 +34,7 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
       : super(placeholder: LocKey((loc) => loc.input_genderPlaceholder));
 
   final _genderRegex =
-      RegExp(r"^[\p{L}\s\-]+$", unicode: true, caseSensitive: false);
+  RegExp(r"^[\p{L}\s\-]+$", unicode: true, caseSensitive: false);
 
   @override
   String? validator(String? value, AppLocalizations loc) {
@@ -50,17 +51,11 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
   }
 
   @override
-  String get value => selectedGender!.enumValue;
+  String get value => throw UnimplementedError();
 
   @override
   set value(String? value) {
-    Gender? gender = Gender.fromEnum(value);
-    if (gender != null) {
-      selectedGender = gender;
-    } else if (value != null) {
-      super.value = value;
-      selectedGender = Gender.fromCustomName(value);
-    }
+    throw UnimplementedError();
   }
 
   @override
@@ -75,7 +70,7 @@ class SingleGenderInput extends TextFieldInput implements GenderInput {
 
   @override
   void Function(BuildContext context)? get onTap =>
-      (_) => selectedGender = null;
+          (_) => selectedGender = null;
 }
 
 class MultipleGenderInput extends ChangeNotifier implements GenderInput {
@@ -120,7 +115,7 @@ class MultipleGenderInput extends ChangeNotifier implements GenderInput {
       _selectedGenders.clear();
       final uniqueGenders = genderEnums.toSet().toList();
       final List<Gender> genders =
-          uniqueGenders.mapNotNull((g) => Gender.fromEnum(g));
+      uniqueGenders.mapNotNull((g) => Gender.fromEnum(g));
       if (genders.any((g) => g == Gender.everyone) ||
           genders.length == Gender.values.length) {
         _selectedGenders.add(Gender.everyone);
@@ -139,7 +134,7 @@ class MultipleGenderInput extends ChangeNotifier implements GenderInput {
   @override
   String? moreText(AppLocalizations loc) {
     final genders =
-        _selectedGenders.where((g) => Gender.additionalOther.contains(g));
+    _selectedGenders.where((g) => Gender.additionalOther.contains(g));
     return genders.isEmpty
         ? null
         : genders.map((e) => e.localize(loc)).join(", ");

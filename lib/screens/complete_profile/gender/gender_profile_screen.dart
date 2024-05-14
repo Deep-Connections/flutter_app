@@ -38,9 +38,7 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
       profileService: widget.profileService,
       fields: [genderInput],
       builder: (BuildContext context, Profile profile) {
-        final customGender =
-            (profile.customGender ?? "") != "" ? profile.customGender : null;
-        genderInput.value = customGender ?? profile.gender;
+        genderInput.selectedGender = Gender.fromProfile(profile);
         return DcListView(children: [
           ...Gender.base
               .map((g) => GenderButton(gender: g, genderInput: genderInput)),
