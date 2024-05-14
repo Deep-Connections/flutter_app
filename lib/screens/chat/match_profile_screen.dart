@@ -39,10 +39,8 @@ class MatchProfileScreen extends StatelessWidget {
                         ?.let((birthdate) => AgeCalculator.age(birthdate).years)
                         .toString() ??
                     "";
-                final languages = profile?.languageWithCountryCodes
-                        ?.map((lang) => getLanguageText(context, lang))
-                        .join(", ") ??
-                    "";
+                final languages = combinedLanguageText(
+                    context, profile?.languageWithCountryCodes);
                 final gender = Gender.fromProfile(profile)?.localize(loc) ?? "";
                 return BaseScreen(
                   title: name,
@@ -51,13 +49,16 @@ class MatchProfileScreen extends StatelessWidget {
                     DcColumn(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("$name, $age",
+                        Text.rich(TextSpan(
+                            text: "$name, $age",
                             style: theme.textTheme.headlineMedium
-                                ?.copyWith(fontWeight: FontWeight.bold)),
-                        Text(
-                          loc.matchProfile_gender(gender),
-                          style: theme.textTheme.bodyLarge,
-                        ),
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                            children: [
+                              TextSpan(
+                                text: ", $gender",
+                                style: theme.textTheme.bodyLarge,
+                              )
+                            ])),
                         Text(loc.matchProfile_languages(languages),
                             style: theme.textTheme.bodyLarge),
                       ],
