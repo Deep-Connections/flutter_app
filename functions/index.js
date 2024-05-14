@@ -4,6 +4,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const { FieldValue } = require("firebase-admin/firestore");
 const { Collections, FunctionErrors } = require("./constants");
+const { AllQuestions } = require("./generated_flutter_constants");
 
 admin.initializeApp();
 
@@ -22,18 +23,23 @@ async function getPotentialMatches(profileData, userId) {
 
   let profiles = (await db.collection(Collections.PROFILES)
       .where("numMatches", "<", maxNumMatches)
-      .where("languageCodes", "array-contains-any", profileData.languageCodes.slice(0, 10))
+      .where("gender", "in", profileData.genderPreferences.slice(0, 10))
+      .where("genderPreferences", "array-contains", profileData.gender)
       .where("dateOfBirth", "<=", fiveYearsOlder)
       .where("dateOfBirth", ">=", fiveYearsYounger)
       .orderBy("numMatches", "asc")
       .limit(100).get()).docs.filter((doc) => doc.id !== userId);
 
+  profiles = profiles.filter((profile) =>
+    profile.data().languageCodes.some((language) => profileData.languageCodes.includes(language)));
+
   if (profiles.filter((doc) => !matchedUserIds.includes(doc.id)).length === 0) {
-    // get one more user than the number of matched users (max 100)
-    const limit = Math.min(matchedUserIds.length + 2, 100);
+    // To make sure we find a new user, search for more users than we have already matched with
+    const limit = matchedUserIds.length + 2;
     profiles = (await db.collection(Collections.PROFILES)
-        // only find profiles that have been matched before, to exclude unfinished profiles
-        .where("numMatches", ">=", 0)
+        .where("numMatches", ">=", 0) // to exclude unfinished profiles that don't have numMatches
+        .where("gender", "in", profileData.genderPreferences.slice(0, 10))
+        .where("genderPreferences", "array-contains", profileData.gender)
         .orderBy("numMatches", "asc")
         .limit(limit).get()).docs.filter((doc) => doc.id !== userId);
 
@@ -57,17 +63,17 @@ function isNumber(value) {
 function computeMatchScore(profile1, profile2) {
   let score = 0;
   if (isObject(profile1.questions) && isObject(profile2.questions)) {
-    for (const key in profile1.questions) {
-      if (Object.hasOwn(profile1.questions, key) && Object.hasOwn(profile2.questions, key)) {
+    for (const id of AllQuestions) {
+      if (Object.hasOwn(profile1.questions, id) && Object.hasOwn(profile2.questions, id)) {
         try {
-          const confidence1 = profile1.questions[key].confidence;
-          const confidence2 = profile2.questions[key].confidence;
+          const confidence1 = profile1.questions[id].confidence;
+          const confidence2 = profile2.questions[id].confidence;
           if (isNumber(confidence1) && isNumber(confidence2)) {
             score += 0.5 - Math.abs(confidence1 - confidence2);
             continue;
           }
-          const choices1 = profile1.questions[key].choices;
-          const choices2 = profile2.questions[key].choices;
+          const choices1 = profile1.questions[id].choices;
+          const choices2 = profile2.questions[id].choices;
           if (Array.isArray(choices1) && Array.isArray(choices2)) {
             let subScore = 0;
             for (const choice of choices1) {
@@ -126,6 +132,16 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
       throw new functions.https.HttpsError(FunctionErrors.FAILED_PRECONDITION, "User profile missing languageCodes");
     }
 
+    if (!currentProfile.gender) {
+      throw new functions.https.HttpsError(FunctionErrors.FAILED_PRECONDITION, "User profile missing gender");
+    }
+
+    if (!currentProfile.genderPreferences || currentProfile.genderPreferences.length === 0) {
+      throw new functions.https.HttpsError(
+          FunctionErrors.FAILED_PRECONDITION, "User profile missing genderPreferences",
+      );
+    }
+
     const lastMatchedAt = currentProfile.lastMatchedAt;
     let hoursSinceLastMatch = 0;
     if (lastMatchedAt) {
@@ -168,13 +184,11 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
   await profileRef.update({
     numMatches: FieldValue.increment(1),
     matchedUserIds: FieldValue.arrayUnion(matchUserId),
-    lastMatchedAt: FieldValue.serverTimestamp(),
   });
   await db.collection(Collections.PROFILES).doc(matchUserId)
       .update({
         numMatches: FieldValue.increment(1),
         matchedUserIds: FieldValue.arrayUnion(userId),
-        lastMatchedAt: FieldValue.serverTimestamp(),
       });
 
   return { message: "Match created", matchId: matchId };

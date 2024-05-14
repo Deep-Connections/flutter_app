@@ -23,6 +23,7 @@ mixin _$Profile {
   String? get id => throw _privateConstructorUsedError;
   String? get firstName => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
+  String? get customGender => throw _privateConstructorUsedError;
   List<String>? get genderPreferences => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get dateOfBirth => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $ProfileCopyWith<$Res> {
       {String? id,
       String? firstName,
       String? gender,
+      String? customGender,
       List<String>? genderPreferences,
       @TimestampConverter() DateTime? dateOfBirth,
       int? height,
@@ -76,6 +78,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? id = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
+    Object? customGender = freezed,
     Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
     Object? height = freezed,
@@ -97,6 +100,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customGender: freezed == customGender
+          ? _value.customGender
+          : customGender // ignore: cast_nullable_to_non_nullable
               as String?,
       genderPreferences: freezed == genderPreferences
           ? _value.genderPreferences
@@ -157,6 +164,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       {String? id,
       String? firstName,
       String? gender,
+      String? customGender,
       List<String>? genderPreferences,
       @TimestampConverter() DateTime? dateOfBirth,
       int? height,
@@ -184,6 +192,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? firstName = freezed,
     Object? gender = freezed,
+    Object? customGender = freezed,
     Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
     Object? height = freezed,
@@ -205,6 +214,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
       gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
+      customGender: freezed == customGender
+          ? _value.customGender
+          : customGender // ignore: cast_nullable_to_non_nullable
               as String?,
       genderPreferences: freezed == genderPreferences
           ? _value._genderPreferences
@@ -249,6 +262,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       {this.id,
       this.firstName,
       this.gender,
+      this.customGender,
       final List<String>? genderPreferences,
       @TimestampConverter() this.dateOfBirth,
       this.height,
@@ -273,6 +287,8 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
   final String? firstName;
   @override
   final String? gender;
+  @override
+  final String? customGender;
   final List<String>? _genderPreferences;
   @override
   List<String>? get genderPreferences {
@@ -334,7 +350,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(id: $id, firstName: $firstName, gender: $gender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, height: $height, languageCodes: $languageCodes, languageWithCountryCodes: $languageWithCountryCodes, profilePicture: $profilePicture, pictures: $pictures, questions: $questions)';
+    return 'Profile(id: $id, firstName: $firstName, gender: $gender, customGender: $customGender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, height: $height, languageCodes: $languageCodes, languageWithCountryCodes: $languageWithCountryCodes, profilePicture: $profilePicture, pictures: $pictures, questions: $questions)';
   }
 
   @override
@@ -345,6 +361,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('firstName', firstName))
       ..add(DiagnosticsProperty('gender', gender))
+      ..add(DiagnosticsProperty('customGender', customGender))
       ..add(DiagnosticsProperty('genderPreferences', genderPreferences))
       ..add(DiagnosticsProperty('dateOfBirth', dateOfBirth))
       ..add(DiagnosticsProperty('height', height))
@@ -365,6 +382,8 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.customGender, customGender) ||
+                other.customGender == customGender) &&
             const DeepCollectionEquality()
                 .equals(other._genderPreferences, _genderPreferences) &&
             (identical(other.dateOfBirth, dateOfBirth) ||
@@ -388,6 +407,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       id,
       firstName,
       gender,
+      customGender,
       const DeepCollectionEquality().hash(_genderPreferences),
       dateOfBirth,
       height,
@@ -416,6 +436,7 @@ abstract class _Profile extends Profile {
       {final String? id,
       final String? firstName,
       final String? gender,
+      final String? customGender,
       final List<String>? genderPreferences,
       @TimestampConverter() final DateTime? dateOfBirth,
       final int? height,
@@ -434,6 +455,8 @@ abstract class _Profile extends Profile {
   String? get firstName;
   @override
   String? get gender;
+  @override
+  String? get customGender;
   @override
   List<String>? get genderPreferences;
   @override
