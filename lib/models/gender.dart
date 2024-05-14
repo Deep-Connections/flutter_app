@@ -21,13 +21,18 @@ class Gender {
   // additional genders, not used yet
   static final nonBinary =
       Gender("NON_BINARY", LocKey((loc) => loc.input_genderEnumNonBinary));
-  static final interSex =
-      Gender("INTERSEX", LocKey((loc) => loc.input_genderEnumIntersex));
 
   static final transWoman =
       Gender("TRANS_WOMAN", LocKey((loc) => loc.input_genderEnumTransWoman));
   static final transMan =
       Gender("TRANS_MAN", LocKey((loc) => loc.input_genderEnumTransMan));
+
+  static final genderFluid =
+      Gender("GENDER_FLUID", LocKey((loc) => loc.input_genderEnumGenderFluid));
+
+  static final agender =
+      Gender("AGENDER", LocKey((loc) => loc.input_genderEnumAgender));
+
 
   // everyone
   static final everyone =
@@ -35,18 +40,19 @@ class Gender {
 
   static final List<Gender> base = [woman, man];
 
-  //static final List<Gender> genderLookingFor = base + [everyone];
   static final List<Gender> additional = [
     nonBinary,
-    interSex,
     transWoman,
-    transMan
+    transMan,
+    genderFluid,
+    agender
   ];
 
-  static final List<Gender> all = base + additional + [everyone];
+  static final List<Gender> values = base + additional;
+  static final List<Gender> valuesEveryone = values + [everyone];
 
   static fromEnum(String? enumValue) {
     if (enumValue == null) return null;
-    return all.firstWhereOrNull((gender) => gender.enumValue == enumValue);
+    return valuesEveryone.firstWhereOrNull((gender) => gender.enumValue == enumValue);
   }
 }

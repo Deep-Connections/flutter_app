@@ -4,7 +4,7 @@ const test = require("firebase-functions-test")();
 const assert = require("assert");
 const admin = require("firebase-admin");
 
-const projectId = "function-test";
+const projectId = "deep-connections-7796d";
 
 process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
@@ -53,6 +53,9 @@ function storeMyProfile(matchedUserIds = null) {
 
 function storeProfile(matchedUserIds = []) {
   const profileData = JSON.parse(fs.readFileSync("../scripts/generated/single_profile.json", "utf8"));
+  const gender = profileData.gender;
+  profileData.gender = profileData.genderPreferences[0];
+  profileData.genderPreferences = [gender];
   return admin.firestore().collection(Collections.PROFILES).add(convertProfileFirebase(profileData, matchedUserIds));
 }
 
@@ -159,15 +162,12 @@ describe("InitialMatch", () => {
 
   it("In a second step it should match users that don't speak the same language", async () => {
     const profileData = JSON.parse(fs.readFileSync("../scripts/generated/single_profile.json", "utf8"));
-    const profileData2 = JSON.parse(fs.readFileSync("../scripts/generated/single_profile.json", "utf8"));
-    profileData.languageCodes = ["en"];
-    profileData2.languageCodes = ["de"];
+    profileData.languageCodes = ["ak"];
     await admin.firestore().collection(Collections.PROFILES).doc(UID).set(convertProfileFirebase(profileData, []));
-    await admin.firestore().collection(Collections.PROFILES).doc("2").set(convertProfileFirebase(profileData2, []));
-
+    const otherProfile = await storeProfile();
     const result = await createInitialMatch({}, context);
     const match = await admin.firestore().collection(Collections.CHATS).doc(result.matchId).get();
-    assert.equal(match.data().participantIds[1], "2");
+    assert.equal(match.data().participantIds[1], otherProfile.id);
   });
 
   it("should forbid multiple concurrent calls", async () => {
