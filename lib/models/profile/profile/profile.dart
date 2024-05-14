@@ -16,6 +16,7 @@ class Profile with _$Profile {
     String? id,
     String? firstName,
     String? gender,
+    String? customGender,
     List<String>? genderPreferences,
     @TimestampConverter()
     DateTime? dateOfBirth,

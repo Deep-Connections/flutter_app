@@ -11,6 +11,7 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       firstName: json['firstName'] as String?,
       gender: json['gender'] as String?,
+      customGender: json['customGender'] as String?,
       genderPreferences: (json['genderPreferences'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -47,6 +48,7 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
   writeNotNull('id', instance.id);
   writeNotNull('firstName', instance.firstName);
   writeNotNull('gender', instance.gender);
+  writeNotNull('customGender', instance.customGender);
   writeNotNull('genderPreferences', instance.genderPreferences);
   writeNotNull(
       'dateOfBirth',
