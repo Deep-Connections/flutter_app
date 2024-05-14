@@ -27,7 +27,7 @@ class GenderProfileScreen extends StatefulWidget {
 }
 
 class _GenderProfileScreenState extends State<GenderProfileScreen> {
-  final gender = SingleGenderInput();
+  final genderInput = SingleGenderInput();
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +36,27 @@ class _GenderProfileScreenState extends State<GenderProfileScreen> {
       title: loc.completeProfile_genderTitle,
       submitText: widget.submitText.localize(loc),
       profileService: widget.profileService,
-      fields: [gender],
+      fields: [genderInput],
       builder: (BuildContext context, Profile profile) {
-        gender.value = profile.gender;
+        final customGender =
+            (profile.customGender ?? "") != "" ? profile.customGender : null;
+        genderInput.value = customGender ?? profile.gender;
         return DcListView(children: [
           ...Gender.base
-              .map((g) => GenderButton(gender: g, genderInput: gender)),
+              .map((g) => GenderButton(gender: g, genderInput: genderInput)),
           MoreGenderButton(
-            genderInput: gender,
+            genderInput: genderInput,
             onPressed: () =>
-                context.navigate(GenderMoreScreen(genderInput: gender)),
+                context.navigate(GenderMoreScreen(genderInput: genderInput)),
           ),
         ]);
       },
       onSubmit: () async {
-        widget.profileService
-            .updateProfile((p) => p.copyWith(gender: gender.value));
+        widget.profileService.updateProfile((p) {
+          final gender = genderInput.selectedGender!;
+          return p.copyWith(
+              gender: gender.enumValue, customGender: gender.customName ?? "");
+        });
         await widget.navigateToNext();
       },
     );

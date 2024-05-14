@@ -40,6 +40,7 @@
   "input_genderEnumTransMan": "Trans Man",
   "input_genderEnumGenderFluid": "Genderfluid",
   "input_genderEnumAgender": "Agender",
+  "input_genderEnumOther": "Other",
   "input_genderEnumEveryone": "Everyone",
   "login_loginButton": "Sign in",
   "login_title": "Welcome to Smetter!",

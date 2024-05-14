@@ -1,24 +1,24 @@
+
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 class Gender {
   final String enumValue;
   final LocKey? localizedName;
-  String? _customName;
+  String? customName;
 
   Gender(this.enumValue, this.localizedName);
 
-  static fromCustomName(String customName) =>
-      Gender(customName, null).._customName = customName;
+  static fromCustomName(String customName) => other..customName = customName;
 
-  String localize(loc) => localizedName?.localize(loc) ?? _customName ?? "";
+  String localize(loc) => customName ?? localizedName?.localize(loc) ?? "";
 
   // base
   static final man = Gender('MAN', LocKey((loc) => loc.input_genderEnumMan));
   static final woman =
       Gender('WOMAN', LocKey((loc) => loc.input_genderEnumWoman));
 
-  // additional genders, not used yet
+  // additional genders
   static final nonBinary =
       Gender("NON_BINARY", LocKey((loc) => loc.input_genderEnumNonBinary));
 
@@ -33,6 +33,8 @@ class Gender {
   static final agender =
       Gender("AGENDER", LocKey((loc) => loc.input_genderEnumAgender));
 
+  static Gender get other =>
+      Gender("OTHER", LocKey((loc) => loc.input_genderEnumOther));
 
   // everyone
   static final everyone =
@@ -48,11 +50,13 @@ class Gender {
     agender
   ];
 
-  static final List<Gender> values = base + additional;
-  static final List<Gender> valuesEveryone = values + [everyone];
+  static final additionalOther = additional + [other];
+
+  static final List<Gender> values = base + additionalOther;
 
   static fromEnum(String? enumValue) {
     if (enumValue == null) return null;
-    return valuesEveryone.firstWhereOrNull((gender) => gender.enumValue == enumValue);
+    return (values + [everyone])
+        .firstWhereOrNull((gender) => gender.enumValue == enumValue);
   }
 }

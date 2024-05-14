@@ -1,3 +1,4 @@
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -107,16 +108,24 @@ class MultipleGenderInput extends ChangeNotifier implements GenderInput {
     notifyListeners();
   }
 
-  List<String> get value => _selectedGenders.map((e) => e.enumValue).toList();
+  List<String> get value {
+    final genders = _selectedGenders.any((g) => g == Gender.everyone)
+        ? Gender.values
+        : _selectedGenders;
+    return genders.map((e) => e.enumValue).toList();
+  }
 
   set value(List<String>? genderEnums) {
     if (genderEnums != null && genderEnums.isNotEmpty) {
       _selectedGenders.clear();
-      for (final value in genderEnums) {
-        final gender = Gender.fromEnum(value);
-        if (gender != null) {
-          _selectedGenders.add(gender);
-        }
+      final uniqueGenders = genderEnums.toSet().toList();
+      final List<Gender> genders =
+          uniqueGenders.mapNotNull((g) => Gender.fromEnum(g));
+      if (genders.any((g) => g == Gender.everyone) ||
+          genders.length == Gender.values.length) {
+        _selectedGenders.add(Gender.everyone);
+      } else {
+        _selectedGenders.addAll(genders);
       }
       notifyListeners();
     }
@@ -130,7 +139,7 @@ class MultipleGenderInput extends ChangeNotifier implements GenderInput {
   @override
   String? moreText(AppLocalizations loc) {
     final genders =
-        _selectedGenders.where((g) => Gender.additional.contains(g));
+        _selectedGenders.where((g) => Gender.additionalOther.contains(g));
     return genders.isEmpty
         ? null
         : genders.map((e) => e.localize(loc)).join(", ");

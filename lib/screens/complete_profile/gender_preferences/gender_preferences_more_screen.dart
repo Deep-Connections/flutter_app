@@ -22,7 +22,7 @@ class GenderPreferencesMoreProfileScreen extends StatelessWidget {
         ),
         body: DcListView(
           children: [
-            ...Gender.additional
+            ...Gender.additionalOther
                 .map((g) => GenderButton(gender: g, genderInput: genderInput))
           ],
         ));

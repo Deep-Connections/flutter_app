@@ -174,6 +174,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(navigateSuccess, true);
     navigateSuccess = false;
-    expect(profileService.profile?.gender, customGender);
+    expect(profileService.profile?.gender, Gender.other.enumValue);
+    expect(profileService.profile?.customGender, customGender);
   });
 }
