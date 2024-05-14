@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -16,7 +15,6 @@ final random = Random();
 
 void main() {
   Map<String, dynamic> generateRandomProfile() {
-
     final genderInt = random.nextInt(2);
     final randomGender = Gender.base[genderInt];
     final genderLookingFor = Gender.base[1 - genderInt];
@@ -60,18 +58,40 @@ void main() {
     }
 
     final randomDate =
-    DateTime(1980, 1, 1).add(Duration(days: random.nextInt(365 * 20)));
-    final json =  profile.copyWith(questions: questions).toJson();
+        DateTime(1980, 1, 1).add(Duration(days: random.nextInt(365 * 20)));
+    final json = profile.copyWith(questions: questions).toJson();
     json['dateOfBirth'] = randomDate.toIso8601String();
     return json;
   }
 
-  test('Generate random profile', () {
+  /*test('Generate random profile', () {
     File file = File('scripts/generated/single_profile.json');
     file.writeAsStringSync(jsonEncode(generateRandomProfile()));
     File fileMultiple = File('scripts/generated/multiple_profile.json');
     final profiles = List.generate(10, (_) => generateRandomProfile());
     fileMultiple.writeAsStringSync(
         jsonEncode(profiles));
+  });*/
+
+  String newLineList(List<String> list) {
+    return "[\n  ${list.map((e) => '"$e"').join(',\n  ')},\n]";
+  }
+
+  test('Generate javascript constants', () {
+    final genderValues = Gender.values.map((g) => g.enumValue).toList();
+
+    final questionIds = allQuestionsList.map((q) => q.id).toList();
+
+    final genderJS = """
+const AllGenders = ${newLineList(genderValues)};
+
+const GenderEveryone = \"${Gender.everyone.enumValue}\";
+
+const AllQuestions = ${newLineList(questionIds)};
+
+module.exports = { AllGenders, GenderEveryone, AllQuestions };
+""";
+    File file = File('functions/generated_flutter_constants.js');
+    file.writeAsStringSync(genderJS);
   });
 }
