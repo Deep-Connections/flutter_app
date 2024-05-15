@@ -1,4 +1,5 @@
 
+import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
@@ -8,8 +9,6 @@ class Gender {
   String? customName;
 
   Gender(this.enumValue, this.localizedName);
-
-  static fromCustomName(String customName) => other..customName = customName;
 
   String localize(loc) => customName ?? localizedName?.localize(loc) ?? "";
 
@@ -54,9 +53,19 @@ class Gender {
 
   static final List<Gender> values = base + additionalOther;
 
-  static fromEnum(String? enumValue) {
+  static Gender fromCustomName(String customName) => other..customName = customName;
+
+  static Gender? fromEnum(String? enumValue) {
     if (enumValue == null) return null;
-    return (values + [everyone])
+    return (values)
         .firstWhereOrNull((gender) => gender.enumValue == enumValue);
+  }
+
+  static Gender? fromProfile(Profile? profile) {
+    final customName = profile?.customGender;
+    if (customName != null && customName.isNotEmpty) {
+      return fromCustomName(customName);
+    }
+    return fromEnum(profile?.gender);
   }
 }

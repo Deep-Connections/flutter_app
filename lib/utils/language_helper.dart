@@ -24,7 +24,7 @@ _cleanLanguageName(String languageName, bool removeBrackets) {
   if (!removeBrackets) {
     return languageName;
   }
-  return languageName.replaceAll(removeBracketsRegex, '');
+  return languageName.replaceAll(removeBracketsRegex, '').trim();
 }
 
 String getLanguageText(BuildContext context, String languageCode,
@@ -34,7 +34,17 @@ String getLanguageText(BuildContext context, String languageCode,
               LocaleNames.of(context)?.nameOf(languageCode) ??
               languageCode,
           removeBrackets) +
+      "\u00A0" + // Non-breaking space
       _countryCodeToFlagEmoji(languageCode);
+}
+
+String combinedLanguageText(BuildContext context, List<String>? languageCodes,
+    {bool removeBrackets = true}) {
+  return languageCodes
+          ?.map((languageCode) => getLanguageText(context, languageCode,
+              removeBrackets: removeBrackets))
+          .join(', ') ??
+      "";
 }
 
 const firstLanguageCodes = [

@@ -1,8 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:deep_connections/models/profile/picture/picture.dart';
+import 'package:deep_connections/models/profile/profile/profile.dart';
+import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
+import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/progress_indicator.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/logging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ImageCarousel extends StatefulWidget {
   final List<Picture>? pictures;
@@ -59,7 +64,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
               errorWidget: (context, url, error) {
                 errorUrls.add(url);
                 delayedSetState();
-                return const _ImageSpinner();
+                return const CenteredProgressIndicator();
               },
             );
           },
@@ -67,11 +72,43 @@ class _ImageCarouselState extends State<ImageCarousel> {
   }
 }
 
-class _ImageSpinner extends StatelessWidget {
-  const _ImageSpinner();
+class ProfileImageCarousel extends StatelessWidget {
+  final Profile? profile;
+  final FutureOrSnapshot snapshot;
+
+  const ProfileImageCarousel(
+      {super.key, required this.profile, required this.snapshot});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: (DcProgressIndicator()));
+    final profile = this.profile;
+    if (snapshot.completed &&
+        profile != null &&
+        profile.pictures.isNullOrEmpty) {
+      return NoImageWidget(profile: profile);
+    } else {
+      return ImageCarousel(
+          pictures: profile?.pictures ?? [], isLoading: snapshot.loading);
+    }
+  }
+}
+
+class NoImageWidget extends StatelessWidget {
+  final Profile profile;
+
+  const NoImageWidget({super.key, required this.profile});
+
+  @override
+  Widget build(BuildContext context) {
+    final loc = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    return DcColumn(children: [
+      const Icon(Icons.no_photography),
+      Text(
+        loc.matchProfile_noUpload(profile.firstName ?? ""),
+        style: theme.textTheme.bodyLarge,
+        textAlign: TextAlign.center,
+      ),
+    ]);
   }
 }
