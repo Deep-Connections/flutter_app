@@ -22,13 +22,14 @@
   },
   "functions": [
     {
-      "source": "functions",
-      "codebase": "default",
+      "source": "functions/javascript",
+      "codebase": "javascript",
       "ignore": [
         "node_modules",
+        "tests",
         ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
+        "*.log",
+        ".gitignore",
         "*.test.js"
       ],
       "predeploy": [
