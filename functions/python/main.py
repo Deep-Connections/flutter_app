@@ -1,26 +1,17 @@
-# Welcome to Cloud Functions for Firebase for Python!
-# To get started, simply uncomment the below code or create your own.
-# Deploy with `firebase deploy`
 
 from firebase_functions import https_fn
-from firebase_admin import initialize_app
+from firebase_admin import initialize_app, firestore
 
-# initialize_app()
-#
-#
-# @https_fn.on_request()
-# def on_request_example(req: https_fn.Request) -> https_fn.Response:
-#     return https_fn.Response("Hello world!")
+initialize_app()
 
-# ,
-#     {
-#       "source": "func/python",
-#       "codebase": "python-functions",
-#       "ignore": [
-#         "venv",
-#         ".git",
-#         "firebase-debug.log",
-#         "firebase-debug.*.log",
-#         "*.local"
-#       ]
-#     }
+db = firestore.client()
+
+@https_fn.on_call()
+def request_example(data, context):
+
+    
+    docs = db.collection('profiles').limit(1).get()
+    id = docs[0].id
+    db.collection('profiles').document(id).update({"counter": firestore.Increment(1)})
+
+    return docs[0]._data["firstName"]

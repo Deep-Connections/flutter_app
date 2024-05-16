@@ -3,7 +3,7 @@
 const test = require("firebase-functions-test")();
 const admin = require("firebase-admin");
 
-const projectId = "deep-connections-7796d";
+const projectId = "javascript-functions";
 
 process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
@@ -52,10 +52,6 @@ const bestProfileScore = 16;
 describe("InitialMatch", () => {
   beforeEach(async () => {
     await firebase.clearFirestoreData({ projectId });
-  });
-
-  after(async () => {
-    firebase.clearFirestoreData({ projectId });
   });
 
   it("can create successfully", async () => {
