@@ -27,6 +27,9 @@ mixin _$Profile {
   List<String>? get genderPreferences => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime? get dateOfBirth => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  DateTime? get lastMatchedAt => throw _privateConstructorUsedError;
+  int? get numMatches => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
   List<String>? get languageCodes => throw _privateConstructorUsedError;
   List<String>? get languageWithCountryCodes =>
@@ -52,6 +55,8 @@ abstract class $ProfileCopyWith<$Res> {
       String? customGender,
       List<String>? genderPreferences,
       @TimestampConverter() DateTime? dateOfBirth,
+      @TimestampConverter() DateTime? lastMatchedAt,
+      int? numMatches,
       int? height,
       List<String>? languageCodes,
       List<String>? languageWithCountryCodes,
@@ -81,6 +86,8 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? customGender = freezed,
     Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
+    Object? lastMatchedAt = freezed,
+    Object? numMatches = freezed,
     Object? height = freezed,
     Object? languageCodes = freezed,
     Object? languageWithCountryCodes = freezed,
@@ -113,6 +120,14 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      lastMatchedAt: freezed == lastMatchedAt
+          ? _value.lastMatchedAt
+          : lastMatchedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      numMatches: freezed == numMatches
+          ? _value.numMatches
+          : numMatches // ignore: cast_nullable_to_non_nullable
+              as int?,
       height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
@@ -167,6 +182,8 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       String? customGender,
       List<String>? genderPreferences,
       @TimestampConverter() DateTime? dateOfBirth,
+      @TimestampConverter() DateTime? lastMatchedAt,
+      int? numMatches,
       int? height,
       List<String>? languageCodes,
       List<String>? languageWithCountryCodes,
@@ -195,6 +212,8 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? customGender = freezed,
     Object? genderPreferences = freezed,
     Object? dateOfBirth = freezed,
+    Object? lastMatchedAt = freezed,
+    Object? numMatches = freezed,
     Object? height = freezed,
     Object? languageCodes = freezed,
     Object? languageWithCountryCodes = freezed,
@@ -227,6 +246,14 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.dateOfBirth
           : dateOfBirth // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      lastMatchedAt: freezed == lastMatchedAt
+          ? _value.lastMatchedAt
+          : lastMatchedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      numMatches: freezed == numMatches
+          ? _value.numMatches
+          : numMatches // ignore: cast_nullable_to_non_nullable
+              as int?,
       height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
@@ -265,6 +292,8 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       this.customGender,
       final List<String>? genderPreferences,
       @TimestampConverter() this.dateOfBirth,
+      @TimestampConverter() this.lastMatchedAt,
+      this.numMatches,
       this.height,
       final List<String>? languageCodes,
       final List<String>? languageWithCountryCodes,
@@ -303,6 +332,11 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
   @override
   @TimestampConverter()
   final DateTime? dateOfBirth;
+  @override
+  @TimestampConverter()
+  final DateTime? lastMatchedAt;
+  @override
+  final int? numMatches;
   @override
   final int? height;
   final List<String>? _languageCodes;
@@ -350,7 +384,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(id: $id, firstName: $firstName, gender: $gender, customGender: $customGender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, height: $height, languageCodes: $languageCodes, languageWithCountryCodes: $languageWithCountryCodes, profilePicture: $profilePicture, pictures: $pictures, questions: $questions)';
+    return 'Profile(id: $id, firstName: $firstName, gender: $gender, customGender: $customGender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, lastMatchedAt: $lastMatchedAt, numMatches: $numMatches, height: $height, languageCodes: $languageCodes, languageWithCountryCodes: $languageWithCountryCodes, profilePicture: $profilePicture, pictures: $pictures, questions: $questions)';
   }
 
   @override
@@ -364,6 +398,8 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('customGender', customGender))
       ..add(DiagnosticsProperty('genderPreferences', genderPreferences))
       ..add(DiagnosticsProperty('dateOfBirth', dateOfBirth))
+      ..add(DiagnosticsProperty('lastMatchedAt', lastMatchedAt))
+      ..add(DiagnosticsProperty('numMatches', numMatches))
       ..add(DiagnosticsProperty('height', height))
       ..add(DiagnosticsProperty('languageCodes', languageCodes))
       ..add(DiagnosticsProperty(
@@ -388,6 +424,10 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
                 .equals(other._genderPreferences, _genderPreferences) &&
             (identical(other.dateOfBirth, dateOfBirth) ||
                 other.dateOfBirth == dateOfBirth) &&
+            (identical(other.lastMatchedAt, lastMatchedAt) ||
+                other.lastMatchedAt == lastMatchedAt) &&
+            (identical(other.numMatches, numMatches) ||
+                other.numMatches == numMatches) &&
             (identical(other.height, height) || other.height == height) &&
             const DeepCollectionEquality()
                 .equals(other._languageCodes, _languageCodes) &&
@@ -410,6 +450,8 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       customGender,
       const DeepCollectionEquality().hash(_genderPreferences),
       dateOfBirth,
+      lastMatchedAt,
+      numMatches,
       height,
       const DeepCollectionEquality().hash(_languageCodes),
       const DeepCollectionEquality().hash(_languageWithCountryCodes),
@@ -439,6 +481,8 @@ abstract class _Profile extends Profile {
       final String? customGender,
       final List<String>? genderPreferences,
       @TimestampConverter() final DateTime? dateOfBirth,
+      @TimestampConverter() final DateTime? lastMatchedAt,
+      final int? numMatches,
       final int? height,
       final List<String>? languageCodes,
       final List<String>? languageWithCountryCodes,
@@ -462,6 +506,11 @@ abstract class _Profile extends Profile {
   @override
   @TimestampConverter()
   DateTime? get dateOfBirth;
+  @override
+  @TimestampConverter()
+  DateTime? get lastMatchedAt;
+  @override
+  int? get numMatches;
   @override
   int? get height;
   @override

@@ -20,7 +20,9 @@ class Profile with _$Profile {
     List<String>? genderPreferences,
     @TimestampConverter()
     DateTime? dateOfBirth,
-
+    @TimestampConverter()
+    DateTime? lastMatchedAt,
+    int? numMatches,
     int? height,
     List<String>? languageCodes,
     List<String>? languageWithCountryCodes,
