@@ -6,8 +6,8 @@ part of 'message.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
-    _$MessageImpl(
+_$MessageDataImpl _$$MessageDataImplFromJson(Map<String, dynamic> json) =>
+    _$MessageDataImpl(
       senderId: json['senderId'] as String,
       text: json['text'] as String,
       chatId: json['chatId'] as String,
@@ -19,9 +19,10 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
           .map((e) => e as String)
           .toList(),
       id: json['id'] as String?,
+      $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
+Map<String, dynamic> _$$MessageDataImplToJson(_$MessageDataImpl instance) {
   final val = <String, dynamic>{
     'senderId': instance.senderId,
     'text': instance.text,
@@ -38,5 +39,42 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['runtimeType'] = instance.$type;
+  return val;
+}
+
+_$MessageUnmatchImpl _$$MessageUnmatchImplFromJson(Map<String, dynamic> json) =>
+    _$MessageUnmatchImpl(
+      json['senderId'] as String,
+      json['senderFirstName'] as String,
+      json['chatId'] as String,
+      const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
+      const TimestampConverter().fromJson(json['lastUpdatedAt'] as Timestamp),
+      (json['participantIds'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      id: json['id'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$MessageUnmatchImplToJson(
+    _$MessageUnmatchImpl instance) {
+  final val = <String, dynamic>{
+    'senderId': instance.senderId,
+    'senderFirstName': instance.senderFirstName,
+    'chatId': instance.chatId,
+    'createdAt': const TimestampConverter().toJson(instance.createdAt),
+    'lastUpdatedAt': const TimestampConverter().toJson(instance.lastUpdatedAt),
+    'participantIds': instance.participantIds,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['runtimeType'] = instance.$type;
   return val;
 }
