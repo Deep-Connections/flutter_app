@@ -77,6 +77,22 @@ final List<Question> freeTimeQuestionList = [
     section: ProfileSection.freeTime,
   ),
   MultipleChoiceQuestion(
+    id: 'see_partner',
+    questionText: LocKey((loc) => loc.questionFreeTime_seePartner_question),
+    choices: [
+      Choice('daily',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_daily)),
+      Choice('three',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_three)),
+      Choice(
+          'two', LocKey((loc) => loc.questionFreeTime_seePartner_answer_two)),
+      Choice('rarely',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_rarely))
+    ],
+    navigationPath: 'see_partner',
+    section: ProfileSection.freeTime,
+  ),
+  MultipleChoiceQuestion(
     id: 'vacation',
     questionText: LocKey((loc) => loc.questionFreeTime_vacation_question),
     choices: [

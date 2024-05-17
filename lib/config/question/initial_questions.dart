@@ -21,21 +21,6 @@ final List<Question> initialQuestionList = [
     section: ProfileSection.basic,
   ),
   MultipleChoiceQuestion(
-    id: 'see_partner',
-    questionText: LocKey((loc) => loc.questionBasic_seePartner_question),
-    choices: [
-      Choice(
-          'daily', LocKey((loc) => loc.questionBasic_seePartner_answer_daily)),
-      Choice(
-          'three', LocKey((loc) => loc.questionBasic_seePartner_answer_three)),
-      Choice('two', LocKey((loc) => loc.questionBasic_seePartner_answer_two)),
-      Choice(
-          'rarely', LocKey((loc) => loc.questionBasic_seePartner_answer_rarely))
-    ],
-    navigationPath: 'see_partner',
-    section: ProfileSection.basic,
-  ),
-  MultipleChoiceQuestion(
     id: 'current_life',
     questionText: LocKey((loc) => loc.questionBasic_currentLife_question),
     choices: [
