@@ -85,7 +85,7 @@ void main() {
     final genderJS = """
 const AllGenders = ${newLineList(genderValues)};
 
-const GenderEveryone = \"${Gender.everyone.enumValue}\";
+const GenderEveryone = "${Gender.everyone.enumValue}";
 
 const AllQuestions = ${newLineList(questionIds)};
 

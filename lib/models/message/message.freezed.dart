@@ -15,13 +15,18 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 Message _$MessageFromJson(Map<String, dynamic> json) {
-  return _Message.fromJson(json);
+  switch (json['runtimeType']) {
+    case 'unmatch':
+      return MessageUnmatch.fromJson(json);
+
+    default:
+      return MessageData.fromJson(json);
+  }
 }
 
 /// @nodoc
 mixin _$Message {
   String get senderId => throw _privateConstructorUsedError;
-  String get text => throw _privateConstructorUsedError;
   String get chatId => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -30,7 +35,92 @@ mixin _$Message {
   List<String> get participantIds => throw _privateConstructorUsedError;
   @Freezed(fromJson: false, toJson: false)
   String? get id => throw _privateConstructorUsedError;
-
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)
+        $default, {
+    required TResult Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)
+        unmatch,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        $default, {
+    TResult? Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        unmatch,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        $default, {
+    TResult Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        unmatch,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(MessageData value) $default, {
+    required TResult Function(MessageUnmatch value) unmatch,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(MessageData value)? $default, {
+    TResult? Function(MessageUnmatch value)? unmatch,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(MessageData value)? $default, {
+    TResult Function(MessageUnmatch value)? unmatch,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $MessageCopyWith<Message> get copyWith => throw _privateConstructorUsedError;
@@ -43,7 +133,6 @@ abstract class $MessageCopyWith<$Res> {
   @useResult
   $Res call(
       {String senderId,
-      String text,
       String chatId,
       @TimestampConverter() DateTime createdAt,
       @TimestampConverter() DateTime lastUpdatedAt,
@@ -65,7 +154,6 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @override
   $Res call({
     Object? senderId = null,
-    Object? text = null,
     Object? chatId = null,
     Object? createdAt = null,
     Object? lastUpdatedAt = null,
@@ -76,10 +164,6 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
-              as String,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
               as String,
       chatId: null == chatId
           ? _value.chatId
@@ -106,10 +190,11 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
 }
 
 /// @nodoc
-abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
-  factory _$$MessageImplCopyWith(
-          _$MessageImpl value, $Res Function(_$MessageImpl) then) =
-      __$$MessageImplCopyWithImpl<$Res>;
+abstract class _$$MessageDataImplCopyWith<$Res>
+    implements $MessageCopyWith<$Res> {
+  factory _$$MessageDataImplCopyWith(
+          _$MessageDataImpl value, $Res Function(_$MessageDataImpl) then) =
+      __$$MessageDataImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -123,11 +208,11 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$MessageImplCopyWithImpl<$Res>
-    extends _$MessageCopyWithImpl<$Res, _$MessageImpl>
-    implements _$$MessageImplCopyWith<$Res> {
-  __$$MessageImplCopyWithImpl(
-      _$MessageImpl _value, $Res Function(_$MessageImpl) _then)
+class __$$MessageDataImplCopyWithImpl<$Res>
+    extends _$MessageCopyWithImpl<$Res, _$MessageDataImpl>
+    implements _$$MessageDataImplCopyWith<$Res> {
+  __$$MessageDataImplCopyWithImpl(
+      _$MessageDataImpl _value, $Res Function(_$MessageDataImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -141,7 +226,7 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? participantIds = null,
     Object? id = freezed,
   }) {
-    return _then(_$MessageImpl(
+    return _then(_$MessageDataImpl(
       senderId: null == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
@@ -176,19 +261,21 @@ class __$$MessageImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
-  const _$MessageImpl(
+class _$MessageDataImpl with DiagnosticableTreeMixin implements MessageData {
+  const _$MessageDataImpl(
       {required this.senderId,
       required this.text,
       required this.chatId,
       @TimestampConverter() required this.createdAt,
       @TimestampConverter() required this.lastUpdatedAt,
       required final List<String> participantIds,
-      @Freezed(fromJson: false, toJson: false) this.id})
-      : _participantIds = participantIds;
+      @Freezed(fromJson: false, toJson: false) this.id,
+      final String? $type})
+      : _participantIds = participantIds,
+        $type = $type ?? 'default';
 
-  factory _$MessageImpl.fromJson(Map<String, dynamic> json) =>
-      _$$MessageImplFromJson(json);
+  factory _$MessageDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MessageDataImplFromJson(json);
 
   @override
   final String senderId;
@@ -214,6 +301,9 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   @Freezed(fromJson: false, toJson: false)
   final String? id;
 
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'Message(senderId: $senderId, text: $text, chatId: $chatId, createdAt: $createdAt, lastUpdatedAt: $lastUpdatedAt, participantIds: $participantIds, id: $id)';
@@ -237,7 +327,7 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MessageImpl &&
+            other is _$MessageDataImpl &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
             (identical(other.text, text) || other.text == text) &&
@@ -266,19 +356,132 @@ class _$MessageImpl with DiagnosticableTreeMixin implements _Message {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>
-      __$$MessageImplCopyWithImpl<_$MessageImpl>(this, _$identity);
+  _$$MessageDataImplCopyWith<_$MessageDataImpl> get copyWith =>
+      __$$MessageDataImplCopyWithImpl<_$MessageDataImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)
+        $default, {
+    required TResult Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)
+        unmatch,
+  }) {
+    return $default(
+        senderId, text, chatId, createdAt, lastUpdatedAt, participantIds, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        $default, {
+    TResult? Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        unmatch,
+  }) {
+    return $default?.call(
+        senderId, text, chatId, createdAt, lastUpdatedAt, participantIds, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        $default, {
+    TResult Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        unmatch,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(
+          senderId, text, chatId, createdAt, lastUpdatedAt, participantIds, id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(MessageData value) $default, {
+    required TResult Function(MessageUnmatch value) unmatch,
+  }) {
+    return $default(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(MessageData value)? $default, {
+    TResult? Function(MessageUnmatch value)? unmatch,
+  }) {
+    return $default?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(MessageData value)? $default, {
+    TResult Function(MessageUnmatch value)? unmatch,
+    required TResult orElse(),
+  }) {
+    if ($default != null) {
+      return $default(this);
+    }
+    return orElse();
+  }
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MessageImplToJson(
+    return _$$MessageDataImplToJson(
       this,
     );
   }
 }
 
-abstract class _Message implements Message {
-  const factory _Message(
+abstract class MessageData implements Message {
+  const factory MessageData(
           {required final String senderId,
           required final String text,
           required final String chatId,
@@ -286,13 +489,13 @@ abstract class _Message implements Message {
           @TimestampConverter() required final DateTime lastUpdatedAt,
           required final List<String> participantIds,
           @Freezed(fromJson: false, toJson: false) final String? id}) =
-      _$MessageImpl;
+      _$MessageDataImpl;
 
-  factory _Message.fromJson(Map<String, dynamic> json) = _$MessageImpl.fromJson;
+  factory MessageData.fromJson(Map<String, dynamic> json) =
+      _$MessageDataImpl.fromJson;
 
   @override
   String get senderId;
-  @override
   String get text;
   @override
   String get chatId;
@@ -309,6 +512,337 @@ abstract class _Message implements Message {
   String? get id;
   @override
   @JsonKey(ignore: true)
-  _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>
+  _$$MessageDataImplCopyWith<_$MessageDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$MessageUnmatchImplCopyWith<$Res>
+    implements $MessageCopyWith<$Res> {
+  factory _$$MessageUnmatchImplCopyWith(_$MessageUnmatchImpl value,
+          $Res Function(_$MessageUnmatchImpl) then) =
+      __$$MessageUnmatchImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String senderId,
+      String senderFirstName,
+      String chatId,
+      @TimestampConverter() DateTime createdAt,
+      @TimestampConverter() DateTime lastUpdatedAt,
+      List<String> participantIds,
+      @Freezed(fromJson: false, toJson: false) String? id});
+}
+
+/// @nodoc
+class __$$MessageUnmatchImplCopyWithImpl<$Res>
+    extends _$MessageCopyWithImpl<$Res, _$MessageUnmatchImpl>
+    implements _$$MessageUnmatchImplCopyWith<$Res> {
+  __$$MessageUnmatchImplCopyWithImpl(
+      _$MessageUnmatchImpl _value, $Res Function(_$MessageUnmatchImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? senderId = null,
+    Object? senderFirstName = null,
+    Object? chatId = null,
+    Object? createdAt = null,
+    Object? lastUpdatedAt = null,
+    Object? participantIds = null,
+    Object? id = freezed,
+  }) {
+    return _then(_$MessageUnmatchImpl(
+      null == senderId
+          ? _value.senderId
+          : senderId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == senderFirstName
+          ? _value.senderFirstName
+          : senderFirstName // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == chatId
+          ? _value.chatId
+          : chatId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      null == lastUpdatedAt
+          ? _value.lastUpdatedAt
+          : lastUpdatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      null == participantIds
+          ? _value._participantIds
+          : participantIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MessageUnmatchImpl
+    with DiagnosticableTreeMixin
+    implements MessageUnmatch {
+  const _$MessageUnmatchImpl(
+      this.senderId,
+      this.senderFirstName,
+      this.chatId,
+      @TimestampConverter() this.createdAt,
+      @TimestampConverter() this.lastUpdatedAt,
+      final List<String> participantIds,
+      {@Freezed(fromJson: false, toJson: false) this.id,
+      final String? $type})
+      : _participantIds = participantIds,
+        $type = $type ?? 'unmatch';
+
+  factory _$MessageUnmatchImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MessageUnmatchImplFromJson(json);
+
+  @override
+  final String senderId;
+  @override
+  final String senderFirstName;
+  @override
+  final String chatId;
+  @override
+  @TimestampConverter()
+  final DateTime createdAt;
+  @override
+  @TimestampConverter()
+  final DateTime lastUpdatedAt;
+  final List<String> _participantIds;
+  @override
+  List<String> get participantIds {
+    if (_participantIds is EqualUnmodifiableListView) return _participantIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_participantIds);
+  }
+
+  @override
+  @Freezed(fromJson: false, toJson: false)
+  final String? id;
+
+  @JsonKey(name: 'runtimeType')
+  final String $type;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Message.unmatch(senderId: $senderId, senderFirstName: $senderFirstName, chatId: $chatId, createdAt: $createdAt, lastUpdatedAt: $lastUpdatedAt, participantIds: $participantIds, id: $id)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Message.unmatch'))
+      ..add(DiagnosticsProperty('senderId', senderId))
+      ..add(DiagnosticsProperty('senderFirstName', senderFirstName))
+      ..add(DiagnosticsProperty('chatId', chatId))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('lastUpdatedAt', lastUpdatedAt))
+      ..add(DiagnosticsProperty('participantIds', participantIds))
+      ..add(DiagnosticsProperty('id', id));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MessageUnmatchImpl &&
+            (identical(other.senderId, senderId) ||
+                other.senderId == senderId) &&
+            (identical(other.senderFirstName, senderFirstName) ||
+                other.senderFirstName == senderFirstName) &&
+            (identical(other.chatId, chatId) || other.chatId == chatId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.lastUpdatedAt, lastUpdatedAt) ||
+                other.lastUpdatedAt == lastUpdatedAt) &&
+            const DeepCollectionEquality()
+                .equals(other._participantIds, _participantIds) &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      senderId,
+      senderFirstName,
+      chatId,
+      createdAt,
+      lastUpdatedAt,
+      const DeepCollectionEquality().hash(_participantIds),
+      id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MessageUnmatchImplCopyWith<_$MessageUnmatchImpl> get copyWith =>
+      __$$MessageUnmatchImplCopyWithImpl<_$MessageUnmatchImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)
+        $default, {
+    required TResult Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)
+        unmatch,
+  }) {
+    return unmatch(senderId, senderFirstName, chatId, createdAt, lastUpdatedAt,
+        participantIds, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        $default, {
+    TResult? Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        unmatch,
+  }) {
+    return unmatch?.call(senderId, senderFirstName, chatId, createdAt,
+        lastUpdatedAt, participantIds, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            String senderId,
+            String text,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        $default, {
+    TResult Function(
+            String senderId,
+            String senderFirstName,
+            String chatId,
+            @TimestampConverter() DateTime createdAt,
+            @TimestampConverter() DateTime lastUpdatedAt,
+            List<String> participantIds,
+            @Freezed(fromJson: false, toJson: false) String? id)?
+        unmatch,
+    required TResult orElse(),
+  }) {
+    if (unmatch != null) {
+      return unmatch(senderId, senderFirstName, chatId, createdAt,
+          lastUpdatedAt, participantIds, id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(MessageData value) $default, {
+    required TResult Function(MessageUnmatch value) unmatch,
+  }) {
+    return unmatch(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(MessageData value)? $default, {
+    TResult? Function(MessageUnmatch value)? unmatch,
+  }) {
+    return unmatch?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(MessageData value)? $default, {
+    TResult Function(MessageUnmatch value)? unmatch,
+    required TResult orElse(),
+  }) {
+    if (unmatch != null) {
+      return unmatch(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MessageUnmatchImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class MessageUnmatch implements Message {
+  const factory MessageUnmatch(
+          final String senderId,
+          final String senderFirstName,
+          final String chatId,
+          @TimestampConverter() final DateTime createdAt,
+          @TimestampConverter() final DateTime lastUpdatedAt,
+          final List<String> participantIds,
+          {@Freezed(fromJson: false, toJson: false) final String? id}) =
+      _$MessageUnmatchImpl;
+
+  factory MessageUnmatch.fromJson(Map<String, dynamic> json) =
+      _$MessageUnmatchImpl.fromJson;
+
+  @override
+  String get senderId;
+  String get senderFirstName;
+  @override
+  String get chatId;
+  @override
+  @TimestampConverter()
+  DateTime get createdAt;
+  @override
+  @TimestampConverter()
+  DateTime get lastUpdatedAt;
+  @override
+  List<String> get participantIds;
+  @override
+  @Freezed(fromJson: false, toJson: false)
+  String? get id;
+  @override
+  @JsonKey(ignore: true)
+  _$$MessageUnmatchImplCopyWith<_$MessageUnmatchImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

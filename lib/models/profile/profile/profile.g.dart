@@ -17,6 +17,9 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       dateOfBirth: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['dateOfBirth'], const TimestampConverter().fromJson),
+      lastMatchedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['lastMatchedAt'], const TimestampConverter().fromJson),
+      numMatches: json['numMatches'] as int?,
       height: json['height'] as int?,
       languageCodes: (json['languageCodes'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -54,6 +57,11 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
       'dateOfBirth',
       _$JsonConverterToJson<Timestamp, DateTime>(
           instance.dateOfBirth, const TimestampConverter().toJson));
+  writeNotNull(
+      'lastMatchedAt',
+      _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.lastMatchedAt, const TimestampConverter().toJson));
+  writeNotNull('numMatches', instance.numMatches);
   writeNotNull('height', instance.height);
   writeNotNull('languageCodes', instance.languageCodes);
   writeNotNull('languageWithCountryCodes', instance.languageWithCountryCodes);

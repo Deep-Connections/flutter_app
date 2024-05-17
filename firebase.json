@@ -71,6 +71,6 @@
       "enabled": true,
       "port": 9991
     },
-    "singleProjectMode": true
+    "singleProjectMode": false
   }
 }

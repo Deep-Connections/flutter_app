@@ -46,7 +46,7 @@ class _MessageTextFieldState extends State<MessageTextField> {
             controller: _controller,
             maxLines: null,
             decoration: InputDecoration(
-              hintText: loc.chat_messageTextField,
+              hintText: loc.messages_messageTextField,
               filled: true,
               fillColor: DcColors.grey,
               border: OutlineInputBorder(

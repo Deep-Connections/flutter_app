@@ -7,9 +7,10 @@ const Set<MaterialState> interactiveStates = <MaterialState>{
 };
 
 class DcColors {
-  static final Color grey = Colors.grey[400]!;
+  static final Color grey = Colors.grey.shade400;
 }
 
+late ButtonStyle cancelElevatedButtonTheme;
 
 ThemeData theme() {
   const colorScheme = ColorScheme(
@@ -28,6 +29,16 @@ ThemeData theme() {
       surface: Color(0xFFe0e5e0),
       // right bubble
       onSurface: Colors.black);
+
+  cancelElevatedButtonTheme = ElevatedButton.styleFrom(
+    side: BorderSide(color: Colors.grey.shade700, width: 1),
+    foregroundColor: Colors.grey.shade700,
+    backgroundColor: Colors.white,
+    disabledBackgroundColor: Colors.grey.shade300,
+    shadowColor: Colors.grey,
+    textStyle: const TextStyle(fontSize: 17),
+  );
+
   // todo add text theme
   const textTheme = TextTheme();
   return ThemeData(
