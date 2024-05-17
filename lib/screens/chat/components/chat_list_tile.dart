@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/models/chats/chat/chat.dart';
+import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
@@ -19,13 +20,24 @@ class ChatListTile extends StatelessWidget {
   final Chat chat;
   final FutureOr<Profile?> futureOrProfile;
   final void Function()? onTap;
+  final void Function()? onDelete;
 
   const ChatListTile({
     super.key,
     required this.chat,
     required this.futureOrProfile,
     this.onTap,
+    this.onDelete,
   });
+
+  String _getMessageText(BuildContext context, Message? message) {
+    final loc = AppLocalizations.of(context);
+    if (message == null) return "";
+    return switch (message) {
+      MessageData() => message.text,
+      MessageUnmatch() => loc.messages_unmatchedWithYou(message.senderFirstName)
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +60,8 @@ class ChatListTile extends StatelessWidget {
                           loc.chat_unmatchDialogTitle(profile?.firstName ?? ""),
                       contentText: loc
                           .chat_unmatchDialogContent(profile?.firstName ?? ""),
-                      confirmText: loc.chat_unmatchDialogButton),
+                      confirmText: loc.chat_unmatchDialogButton,
+                      onConfirm: onDelete),
                 );
               },
               background: Container(
@@ -74,7 +87,7 @@ class ChatListTile extends StatelessWidget {
                 ),
                 title: Text(profile?.firstName ?? ""),
                 subtitle: Text(
-                  chat.lastMessage?.text ?? "",
+                  _getMessageText(context, chat.lastMessage),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

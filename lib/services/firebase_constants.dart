@@ -10,6 +10,7 @@ class FieldName {
   static const participantIds = 'participantIds';
   static const pictures = 'pictures';
   static const profilePicture = 'profilePicture';
+  static const chatId = 'chatId';
   static const id = 'id';
 
   static String lastReadChat(userId) => "chatInfos.$userId.lastRead";
@@ -17,6 +18,7 @@ class FieldName {
 
 class Functions {
   static const createInitialMatch = 'createInitialMatch';
+  static const unmatch = 'unmatch';
 }
 
 class Regions {

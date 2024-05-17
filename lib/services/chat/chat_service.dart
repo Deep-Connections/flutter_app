@@ -245,7 +245,7 @@ class ChatService {
   Future<Response> createMatch() async {
     final app = Firebase.app();
     logger.d(app.name);
-    final callable = _functions.httpsCallable('createInitialMatch');
+    final callable = _functions.httpsCallable(Functions.createInitialMatch);
 
     try {
       await callable();
@@ -256,5 +256,12 @@ class ChatService {
           errorMessage: e.message,
           uiMessage: getInitialMatchUiErrorMessages(e));
     }
+  }
+
+  Future<Response> unmatch(String chatId) {
+    final callable = _functions.httpsCallable(Functions.unmatch);
+    return handleFirebaseErrors(() async => await callable({
+          FieldName.chatId: chatId,
+        }));
   }
 }

@@ -4,6 +4,7 @@ import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/chat/components/bubble/message_bubble.dart';
 import 'package:deep_connections/screens/chat/components/date_banner.dart';
 import 'package:deep_connections/screens/chat/components/match_profile_languages.dart';
+import 'package:deep_connections/screens/chat/components/unmatch_banner.dart';
 import 'package:deep_connections/utils/extensions/date_time_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -65,10 +66,13 @@ class MessageScrollView extends StatelessWidget {
                       children: [
                         if (isNewDay || index == messages.length - 1)
                           DateBanner(date: message.createdAt),
-                        MessageBubble(
-                          message: message,
-                          isRight: currentUserId == message.senderId,
-                        ),
+                        switch (message) {
+                          MessageData() => MessageBubble(
+                              message: message,
+                              isRight: currentUserId == message.senderId,
+                            ),
+                          MessageUnmatch() => UnmatchBanner(message),
+                        },
                       ],
                     ),
                   );

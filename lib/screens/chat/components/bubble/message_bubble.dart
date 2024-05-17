@@ -10,7 +10,7 @@ const startPadding = 40.0;
 const verticalPadding = 5.0;
 
 class MessageBubble extends StatelessWidget {
-  final Message message;
+  final MessageData message;
   final bool isRight;
 
   const MessageBubble(
