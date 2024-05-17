@@ -98,4 +98,17 @@ describe("Chat functionality", () => {
         await firebase.assertFails(chatRef.update(updateDataTime));
     });
 
+    it("forbids creating a chat", async () => {
+        const db = getFirestore(myAuth);
+        const chatRef = db.collection(Collections.CHATS).doc("newChat");
+        const participantIds = [UID, "otherUser"];
+        await firebase.assertFails(chatRef.set({
+            participantIds: participantIds,
+            originalParticipantIds: participantIds,
+            createdAt: FieldValue.serverTimestamp(),
+            lastUpdatedAt: FieldValue.serverTimestamp(),
+            score: 2.5,
+        }));
+    });
+
 });

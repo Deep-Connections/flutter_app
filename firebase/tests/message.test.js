@@ -27,12 +27,17 @@ const wrongDb = getFirestore(wrongAuth);
 
 describe("Messages", () => {
     const adminDb = getAdminFirestore();
+    let chatRef;
 
-    beforeEach(async () => { 
+    beforeEach(async () => {
         await clearFirestoreData();
-        await adminDb.collection(Collections.CHATS).doc(chatId).set({
+        chatRef = adminDb.collection(Collections.CHATS).doc(chatId);
+        await chatRef.set({
             participantIds: participantIds,
-            createdAt: firebase.firestore.Timestamp.now()
+            originalParticipantIds: participantIds,
+            createdAt: FieldValue.serverTimestamp(),
+            lastUpdatedAt: FieldValue.serverTimestamp(),
+            score: 2.5,
         });
         await adminDb.collection(Collections.CHATS).doc(chatId).collection(Collections.MESSAGES).add(getMessageData());
     });
@@ -68,12 +73,24 @@ describe("Messages", () => {
         await firebase.assertFails(wrongMessageRef.add(messageData));
     });
 
-    it("can only have the same participants as the chat or less participants", async () => {
+    it("can only have the same participants as the original participants of the chat", async () => {
         const messageData = getMessageData();
         messageData.participantIds = [UID, "wrongUser"];
         await firebase.assertFails(messageRef.add(messageData));
+    });
 
-        messageData.participantIds = [UID];
+    it("can't send messages if I'm the last participant", async () => {
+        await chatRef.update({ participantIds: [UID] });
+        const messageData = getMessageData();
+        await firebase.assertFails(messageRef.add(messageData));
+    });
+
+    it("can send messages after user leaves the chat", async () => {
+        const originalParticipantIds = participantIds.concat("yetAnotherUser");
+        const messageData = getMessageData();
+        messageData.participantIds = originalParticipantIds;
+        await firebase.assertFails(messageRef.add(messageData));
+        await chatRef.update({ participantIds: participantIds, originalParticipantIds: originalParticipantIds });
         await firebase.assertSucceeds(messageRef.add(messageData));
     });
 
@@ -123,6 +140,19 @@ describe("Messages", () => {
         await firebase.assertFails(messageRef.add(messageData));
         messageData.chatId = 123;
         await firebase.assertFails(messageRef.add(messageData));
+    });
+
+    it("runtimeType needs to be default", async () => {
+        const messageData = getMessageData();
+        messageData.runtimeType = "wrong";
+        await firebase.assertFails(messageRef.add(messageData));
+    });
+
+    it("can't be created without chat", async () => {
+        const nonExistingChatId = "nonExistingChat";
+        const messageData = getMessageData();
+        messageData.chatId = nonExistingChatId;
+        await firebase.assertFails(db.collection(Collections.CHATS).doc(nonExistingChatId).collection(Collections.MESSAGES).add(messageData));
     });
 
     it("can't contain other fields", async () => {
