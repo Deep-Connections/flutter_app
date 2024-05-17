@@ -25,10 +25,10 @@ function convertProfileFirebase(profile, matchedUserIds = null, firstName = null
 }
 
 
-function storeMyProfile(userId, matchedUserIds = null) {
+function storeMyProfile(userId, matchedUserIds = null, firstName = null) {
   const profileData = JSON.parse(fs.readFileSync(singleProfilePath, "utf8"));
   return admin.firestore().collection(Collections.PROFILES)
-      .doc(userId).set(convertProfileFirebase(profileData, matchedUserIds));
+      .doc(userId).set(convertProfileFirebase(profileData, matchedUserIds, firstName));
 }
 
 function storeOtherProfile(matchedUserIds = []) {

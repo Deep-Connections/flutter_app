@@ -79,6 +79,7 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
 
   const match = {
     participantIds: [userId, matchUserId],
+    originalParticipantIds: [userId, matchUserId],
     createdAt: FieldValue.serverTimestamp(),
     lastUpdatedAt: FieldValue.serverTimestamp(),
     score: profilesWithScores[0].score,
@@ -145,9 +146,10 @@ exports.unmatch = functions.region("europe-west6").https.onCall(async (data, con
       runtimeType: "unmatch",
       createdAt: FieldValue.serverTimestamp(),
       lastUpdatedAt: FieldValue.serverTimestamp(),
-      participantIds: [userId],
+      participantIds: chatData.participantIds.filter((id) => id !== userId),
       senderFirstName: firstName,
       senderId: userId,
     });
   });
+  return { message: "Unmatched successfully" };
 });
