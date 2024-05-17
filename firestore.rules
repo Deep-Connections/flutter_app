@@ -67,7 +67,7 @@ function validateCreateMessage(chat, chatId){
 }
 
 function isValidMessage(message, senderId, chat, chatId) {
-    return debug(message.keys()).hasAll(["senderId", "text", "chatId", "createdAt", "lastUpdatedAt", "participantIds"]) &&
+    return message.keys().hasAll(["senderId", "text", "chatId", "createdAt", "lastUpdatedAt", "participantIds", "runtimeType"]) && message.size() == 7 &&
         message.senderId == senderId &&
         message.chatId == chatId &&
         message.text is string &&
@@ -78,5 +78,6 @@ function isValidMessage(message, senderId, chat, chatId) {
         message.createdAt >= request.time - duration.value(7, "d") &&
         message.lastUpdatedAt >= message.createdAt &&
         message.participantIds.hasOnly(chat.participantIds) &&
-        senderId in message.participantIds;
+        senderId in message.participantIds &&
+        message.runtimeType == "default";
 }

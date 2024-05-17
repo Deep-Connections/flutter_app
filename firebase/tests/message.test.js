@@ -18,6 +18,7 @@ function getMessageData() {
         createdAt: firebase.firestore.Timestamp.now(),
         lastUpdatedAt: firebase.firestore.Timestamp.now(),
         participantIds: participantIds,
+        runtimeType: "default"
     };
 }
 
@@ -121,6 +122,12 @@ describe("Messages", () => {
         messageData.chatId = "wrongChat";
         await firebase.assertFails(messageRef.add(messageData));
         messageData.chatId = 123;
+        await firebase.assertFails(messageRef.add(messageData));
+    });
+
+    it("can't contain other fields", async () => {
+        const messageData = getMessageData();
+        messageData.wrongField = "wrong";
         await firebase.assertFails(messageRef.add(messageData));
     });
 
