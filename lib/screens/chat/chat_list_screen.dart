@@ -57,20 +57,23 @@ class ChatListScreen extends StatelessWidget {
                         ),
                       ),
                     StreamBuilder(
-                      stream: profileService.profileStream,
-                      builder: (context, snapshot) {
-                        final profile = snapshot.data;
-                        if (profile == null) return const SliverToBoxAdapter();
-                        return SliverToBoxAdapter(
-                          child: CreateMatchSection(
-                            createMatch: () async {
-                              final response = await chatService.createMatch();
-                              MessageHandler.showResponseError(response, loc);
-                            }, profile: profile,
-                          ),
-                        );
-                      }
-                    )
+                        stream: profileService.profileStream,
+                        builder: (context, snapshot) {
+                          final profile = snapshot.data;
+                          if (profile == null) {
+                            return const SliverToBoxAdapter();
+                          }
+                          return SliverToBoxAdapter(
+                            child: CreateMatchSection(
+                              createMatch: () async {
+                                final response =
+                                    await chatService.createMatch();
+                                MessageHandler.showResponseError(response, loc);
+                              },
+                              profile: profile,
+                            ),
+                          );
+                        })
                   ],
                 );
               },
