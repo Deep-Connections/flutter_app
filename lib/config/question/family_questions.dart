@@ -4,7 +4,7 @@ import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 final List<Question> familyQuestionList = [
-  MultipleChoiceQuestion(
+  /*MultipleChoiceQuestion(
     id: 'kids',
     questionText: LocKey((loc) => loc.questionFamily_kids_question),
     choices: [
@@ -42,7 +42,7 @@ final List<Question> familyQuestionList = [
     minChoices: 0,
     navigationPath: 'parenting',
     section: ProfileSection.family,
-  ),
+  ),*/
   MultipleChoiceQuestion(
     id: 'pets',
     questionText: LocKey((loc) => loc.questionFamily_pets_question),
@@ -55,6 +55,6 @@ final List<Question> familyQuestionList = [
       Choice('must', LocKey((loc) => loc.questionFamily_pets_answer_must))
     ],
     navigationPath: 'pets',
-    section: ProfileSection.family,
+    section: ProfileSection.freeTime,
   ),
 ];

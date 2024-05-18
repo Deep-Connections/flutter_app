@@ -74,6 +74,38 @@ final List<Question> freeTimeQuestionList = [
     navigationPath: 'new_activities',
     section: ProfileSection.freeTime,
   ),
+  /*MultipleChoiceQuestion(
+    id: 'see_partner',
+    questionText: LocKey((loc) => loc.questionFreeTime_seePartner_question),
+    choices: [
+      Choice('daily',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_daily)),
+      Choice('three',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_three)),
+      Choice(
+          'two', LocKey((loc) => loc.questionFreeTime_seePartner_answer_two)),
+      Choice('rarely',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_rarely))
+    ],
+    navigationPath: 'see_partner',
+    section: ProfileSection.freeTime,
+  ),*/
+  MultipleChoiceQuestion(
+    id: 'see_partner',
+    questionText: LocKey((loc) => loc.questionFreeTime_seePartner_question),
+    choices: [
+      Choice('daily',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_daily)),
+      Choice('three',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_three)),
+      Choice(
+          'two', LocKey((loc) => loc.questionFreeTime_seePartner_answer_two)),
+      Choice('rarely',
+          LocKey((loc) => loc.questionFreeTime_seePartner_answer_rarely))
+    ],
+    navigationPath: 'see_partner',
+    section: ProfileSection.freeTime,
+  ),
   MultipleChoiceQuestion(
     id: 'vacation',
     questionText: LocKey((loc) => loc.questionFreeTime_vacation_question),
@@ -93,12 +125,21 @@ final List<Question> freeTimeQuestionList = [
     navigationPath: 'vacation',
     section: ProfileSection.freeTime,
   ),
-  SliderQuestion(
-    id: 'planning',
-    questionText: LocKey((loc) => loc.questionFreeTime_planning_question),
-    minText: LocKey((loc) => loc.questionFreeTime_planning_answerMin),
-    maxText: LocKey((loc) => loc.questionFreeTime_planning_answerMax),
-    navigationPath: 'planning',
+  MultipleChoiceQuestion(
+    id: 'aeroplane',
+    questionText: LocKey((loc) => loc.questionFreeTime_aeroplane_question),
+    choices: [
+      Choice('never',
+          LocKey((loc) => loc.questionFreeTime_aeroplane_answer_never)),
+      Choice('rarely',
+          LocKey((loc) => loc.questionFreeTime_aeroplane_answer_rarely)),
+      Choice('frequently',
+          LocKey((loc) => loc.questionFreeTime_aeroplane_answer_frequently)),
+      Choice(
+          'love', LocKey((loc) => loc.questionFreeTime_aeroplane_answer_love)),
+    ],
+    maxChoices: 3,
+    navigationPath: 'aeroplane',
     section: ProfileSection.freeTime,
   ),
   MultipleChoiceQuestion(
