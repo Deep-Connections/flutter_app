@@ -4,7 +4,7 @@ import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 final List<Question> personalityQuestionList = [
-  MultipleChoiceQuestion(
+  /*MultipleChoiceQuestion(
     id: 'improving',
     questionText: LocKey((loc) => loc.questionPersonality_improving_question),
     choices: [
@@ -55,24 +55,44 @@ final List<Question> personalityQuestionList = [
     maxChoices: 3,
     navigationPath: 'improvement_focus',
     section: ProfileSection.personality,
-  ),
-  MultipleChoiceQuestion(
-    id: 'importance_comfort',
+  ),*/
+  /* MultipleChoiceQuestion(
+    id: 'importance_comfort_partner',
     questionText:
-        LocKey((loc) => loc.questionPersonality_importanceComfort_question),
+        LocKey((loc) => loc.questionPersonality_importanceComfortPartner_question),
     choices: [
       Choice(
           'total',
           LocKey(
-              (loc) => loc.questionPersonality_importanceComfort_answer_total)),
+              (loc) => loc.questionPersonality_importanceComfortPartner_answer_total)),
       Choice(
           'important',
           LocKey((loc) =>
-              loc.questionPersonality_importanceComfort_answer_important)),
+              loc.questionPersonality_importanceComfortPartner_answer_important)),
       Choice('no',
-          LocKey((loc) => loc.questionPersonality_importanceComfort_answer_no)),
+          LocKey((loc) => loc.questionPersonality_importanceComfortPartner_answer_no)),
     ],
-    navigationPath: 'importance_comfort',
+    navigationPath: 'importance_comfort_partner',
+    section: ProfileSection.personality,
+  ), */
+  MultipleChoiceQuestion(
+    id: 'importance_comfort_friend',
+    questionText: LocKey(
+        (loc) => loc.questionPersonality_importanceComfortFriend_question),
+    choices: [
+      Choice(
+          'total',
+          LocKey((loc) =>
+              loc.questionPersonality_importanceComfortFriend_answer_total)),
+      Choice(
+          'important',
+          LocKey((loc) => loc
+              .questionPersonality_importanceComfortFriend_answer_important)),
+      Choice('no',
+          LocKey((loc) =>
+              loc.questionPersonality_importanceComfortFriend_answer_no)),
+    ],
+    navigationPath: 'importance_comfort_friend',
     section: ProfileSection.personality,
   ),
   MultipleChoiceQuestion(
@@ -87,6 +107,15 @@ final List<Question> personalityQuestionList = [
           LocKey((loc) => loc.questionPersonality_emotions_answer_dont)),
     ],
     navigationPath: 'emotions',
+    section: ProfileSection.personality,
+  ),
+  SliderQuestion(
+    id: 'self_reflective',
+    questionText:
+        LocKey((loc) => loc.questionPersonality_selfReflective_question),
+    minText: LocKey((loc) => loc.questionPersonality_selfReflective_answerMin),
+    maxText: LocKey((loc) => loc.questionPersonality_selfReflective_answerMax),
+    navigationPath: 'self_reflective',
     section: ProfileSection.personality,
   ),
   MultipleChoiceQuestion(

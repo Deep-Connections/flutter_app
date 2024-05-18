@@ -17,8 +17,9 @@ class ProfileSection {
       LocKey((loc) => loc.section_spirituality), "spirituality");
   static final ProfileSection politics =
       ProfileSection._(LocKey((loc) => loc.section_politics), "politics");
-  static final ProfileSection family =
-      ProfileSection._(LocKey((loc) => loc.section_family), "family");
+
+  // static final ProfileSection family =
+  //     ProfileSection._(LocKey((loc) => loc.section_family), "family");
   static final ProfileSection freeTime =
       ProfileSection._(LocKey((loc) => loc.section_freeTime), "freeTime");
   static final values = [
@@ -27,7 +28,7 @@ class ProfileSection {
     habits,
     spirituality,
     politics,
-    family,
+    //family,
     freeTime,
   ];
 

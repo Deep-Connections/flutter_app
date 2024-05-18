@@ -4,7 +4,7 @@ import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 
 final List<Question> initialQuestionList = [
-  MultipleChoiceQuestion(
+  /* MultipleChoiceQuestion(
     id: 'relationship',
     questionText: LocKey((loc) => loc.questionBasic_relationshipType_question),
     choices: [
@@ -18,6 +18,18 @@ final List<Question> initialQuestionList = [
           LocKey((loc) => loc.questionBasic_relationshipType_answer_life)),
     ],
     navigationPath: 'relationship',
+    section: ProfileSection.basic,
+  ),*/
+  MultipleChoiceQuestion(
+    id: 'weird_normal',
+    questionText: LocKey((loc) => loc.questionBasic_weirdNormal_question),
+    choices: [
+      Choice('settle',
+          LocKey((loc) => loc.questionBasic_weirdNormal_answer_normal)),
+      Choice('career',
+          LocKey((loc) => loc.questionBasic_weirdNormal_answer_weird)),
+    ],
+    navigationPath: 'weird_normal',
     section: ProfileSection.basic,
   ),
   MultipleChoiceQuestion(
@@ -40,6 +52,14 @@ final List<Question> initialQuestionList = [
     minText: LocKey((loc) => loc.questionBasic_aloneTime_answerMin),
     maxText: LocKey((loc) => loc.questionBasic_aloneTime_answerMax),
     navigationPath: 'alone_time',
+    section: ProfileSection.basic,
+  ),
+  SliderQuestion(
+    id: 'planning',
+    questionText: LocKey((loc) => loc.questionBasic_planning_question),
+    minText: LocKey((loc) => loc.questionBasic_planning_answerMin),
+    maxText: LocKey((loc) => loc.questionBasic_planning_answerMax),
+    navigationPath: 'planning',
     section: ProfileSection.basic,
   ),
   SliderQuestion(
