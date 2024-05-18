@@ -44,7 +44,7 @@ describe("Unmatch", () => {
 
   beforeEach(async () => {
     await firebase.clearFirestoreData({ projectId });
-    const promise = Promise.all([storeMyProfile(UID_1, [UID_2], "Bob"), storeMyProfile(UID_2, [UID_1])]);
+    const promise = Promise.all([storeMyProfile(UID_1, [UID_2], "Bob"), storeMyProfile(UID_2, [UID_1], "Alice")]);
     chatRef = db.collection(Collections.CHATS).doc();
     await chatRef.set({
       participantIds: [UID_1, UID_2],
@@ -91,9 +91,30 @@ describe("Unmatch", () => {
     assert.equal(message.runtimeType, "unmatch");
   });
 
-  it("should not allow unmatching if the user is not a participant", async () => {
+  it("should not be allowed if the user is not a participant", async () => {
     const otherUser = await storeOtherProfile();
     const result = await unmatchProfile(otherUser.id, chatRef.id);
     assert.equal(result.code, FunctionErrors.PERMISSION_DENIED);
+  });
+
+  it("should delete chat if last user unmatches", async () => {
+    const result1 = await unmatchProfile(UID_1, chatRef.id);
+    assert.equal(result1.message, "Unmatched successfully");
+
+    const result2 = await unmatchProfile(UID_2, chatRef.id);
+    assert.equal(result2.message, "Unmatched successfully");
+
+    const chat = await chatRef.get();
+    assert.ok(!chat.exists);
+
+    const messages = await db.collection(Collections.CHATS).doc(chatRef.id).collection(Collections.MESSAGES).get();
+    assert.equal(messages.docs.length, 1);
+    const message = messages.docs[0].data();
+    assert.equal(message.senderFirstName, "Bob");
+
+    const profile1 = (await db.collection(Collections.PROFILES).doc(UID_1).get()).data();
+    const profile2 = (await db.collection(Collections.PROFILES).doc(UID_2).get()).data();
+    assert.equal(profile1.numMatches, 0);
+    assert.equal(profile2.numMatches, 0);
   });
 });

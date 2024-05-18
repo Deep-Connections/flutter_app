@@ -21,6 +21,7 @@ Chat _$ChatFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Chat {
   List<String> get participantIds => throw _privateConstructorUsedError;
+  List<String> get originalParticipantIds => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime get createdAt => throw _privateConstructorUsedError;
   Map<String, ChatInfo>? get chatInfos => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {List<String> participantIds,
+      List<String> originalParticipantIds,
       @TimestampConverter() DateTime createdAt,
       Map<String, ChatInfo>? chatInfos,
       @Freezed(fromJson: false, toJson: false) String? id,
@@ -69,6 +71,7 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
   @override
   $Res call({
     Object? participantIds = null,
+    Object? originalParticipantIds = null,
     Object? createdAt = null,
     Object? chatInfos = freezed,
     Object? id = freezed,
@@ -80,6 +83,10 @@ class _$ChatCopyWithImpl<$Res, $Val extends Chat>
       participantIds: null == participantIds
           ? _value.participantIds
           : participantIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      originalParticipantIds: null == originalParticipantIds
+          ? _value.originalParticipantIds
+          : originalParticipantIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -130,6 +137,7 @@ abstract class _$$ChatImplCopyWith<$Res> implements $ChatCopyWith<$Res> {
   @useResult
   $Res call(
       {List<String> participantIds,
+      List<String> originalParticipantIds,
       @TimestampConverter() DateTime createdAt,
       Map<String, ChatInfo>? chatInfos,
       @Freezed(fromJson: false, toJson: false) String? id,
@@ -152,6 +160,7 @@ class __$$ChatImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? participantIds = null,
+    Object? originalParticipantIds = null,
     Object? createdAt = null,
     Object? chatInfos = freezed,
     Object? id = freezed,
@@ -163,6 +172,10 @@ class __$$ChatImplCopyWithImpl<$Res>
       participantIds: null == participantIds
           ? _value._participantIds
           : participantIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      originalParticipantIds: null == originalParticipantIds
+          ? _value._originalParticipantIds
+          : originalParticipantIds // ignore: cast_nullable_to_non_nullable
               as List<String>,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -197,6 +210,7 @@ class __$$ChatImplCopyWithImpl<$Res>
 class _$ChatImpl extends _Chat {
   const _$ChatImpl(
       {required final List<String> participantIds,
+      required final List<String> originalParticipantIds,
       @TimestampConverter() required this.createdAt,
       final Map<String, ChatInfo>? chatInfos,
       @Freezed(fromJson: false, toJson: false) this.id,
@@ -204,6 +218,7 @@ class _$ChatImpl extends _Chat {
       @Freezed(fromJson: false, toJson: false) this.unreadMessages,
       @Freezed(fromJson: false, toJson: false) this.currentUserId})
       : _participantIds = participantIds,
+        _originalParticipantIds = originalParticipantIds,
         _chatInfos = chatInfos,
         super._();
 
@@ -216,6 +231,15 @@ class _$ChatImpl extends _Chat {
     if (_participantIds is EqualUnmodifiableListView) return _participantIds;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_participantIds);
+  }
+
+  final List<String> _originalParticipantIds;
+  @override
+  List<String> get originalParticipantIds {
+    if (_originalParticipantIds is EqualUnmodifiableListView)
+      return _originalParticipantIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_originalParticipantIds);
   }
 
   @override
@@ -246,7 +270,7 @@ class _$ChatImpl extends _Chat {
 
   @override
   String toString() {
-    return 'Chat(participantIds: $participantIds, createdAt: $createdAt, chatInfos: $chatInfos, id: $id, lastMessage: $lastMessage, unreadMessages: $unreadMessages, currentUserId: $currentUserId)';
+    return 'Chat(participantIds: $participantIds, originalParticipantIds: $originalParticipantIds, createdAt: $createdAt, chatInfos: $chatInfos, id: $id, lastMessage: $lastMessage, unreadMessages: $unreadMessages, currentUserId: $currentUserId)';
   }
 
   @override
@@ -256,6 +280,8 @@ class _$ChatImpl extends _Chat {
             other is _$ChatImpl &&
             const DeepCollectionEquality()
                 .equals(other._participantIds, _participantIds) &&
+            const DeepCollectionEquality().equals(
+                other._originalParticipantIds, _originalParticipantIds) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             const DeepCollectionEquality()
@@ -274,6 +300,7 @@ class _$ChatImpl extends _Chat {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_participantIds),
+      const DeepCollectionEquality().hash(_originalParticipantIds),
       createdAt,
       const DeepCollectionEquality().hash(_chatInfos),
       id,
@@ -298,6 +325,7 @@ class _$ChatImpl extends _Chat {
 abstract class _Chat extends Chat {
   const factory _Chat(
       {required final List<String> participantIds,
+      required final List<String> originalParticipantIds,
       @TimestampConverter() required final DateTime createdAt,
       final Map<String, ChatInfo>? chatInfos,
       @Freezed(fromJson: false, toJson: false) final String? id,
@@ -311,6 +339,8 @@ abstract class _Chat extends Chat {
 
   @override
   List<String> get participantIds;
+  @override
+  List<String> get originalParticipantIds;
   @override
   @TimestampConverter()
   DateTime get createdAt;
