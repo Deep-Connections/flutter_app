@@ -10,6 +10,9 @@ _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
       participantIds: (json['participantIds'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      originalParticipantIds: (json['originalParticipantIds'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       createdAt:
           const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
       chatInfos: (json['chatInfos'] as Map<String, dynamic>?)?.map(
@@ -26,6 +29,7 @@ _$ChatImpl _$$ChatImplFromJson(Map<String, dynamic> json) => _$ChatImpl(
 Map<String, dynamic> _$$ChatImplToJson(_$ChatImpl instance) {
   final val = <String, dynamic>{
     'participantIds': instance.participantIds,
+    'originalParticipantIds': instance.originalParticipantIds,
     'createdAt': const TimestampConverter().toJson(instance.createdAt),
   };
 
