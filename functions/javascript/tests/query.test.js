@@ -20,4 +20,11 @@ describe("Querys", () => {
         .limit(1).get();
     console.log(profiles.docs[0].data());
   });
+
+  it.skip("delete lastMatchedAt from all profiles", async () => {
+    const profiles = await db.collection(Collections.PROFILES).get();
+    /*profiles.docs.forEach((doc) => {
+      doc.ref.update({ lastMatchedAt: admin.firestore.FieldValue.delete() });
+    });*/
+  });
 });
