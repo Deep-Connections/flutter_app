@@ -131,25 +131,31 @@ exports.unmatch = functions.region("europe-west6").https.onCall(async (data, con
     if (!chatData.participantIds.includes(userId)) {
       throw new functions.https.HttpsError(FunctionErrors.PERMISSION_DENIED, "User is not a participant in this chat");
     }
-
-    transaction.update(chatRef, {
-      participantIds: FieldValue.arrayRemove(userId),
-      lastUpdatedAt: FieldValue.serverTimestamp(),
-    });
     transaction.update(db.collection(Collections.PROFILES).doc(userId), {
       numMatches: FieldValue.increment(-1),
     });
-    const messageRef = chatRef.collection(Collections.MESSAGES);
-    // create a message to indicate that the user has unmatched
-    transaction.create(messageRef.doc(), {
-      chatId: chatId,
-      runtimeType: "unmatch",
-      createdAt: FieldValue.serverTimestamp(),
-      lastUpdatedAt: FieldValue.serverTimestamp(),
-      participantIds: chatData.participantIds.filter((id) => id !== userId),
-      senderFirstName: firstName,
-      senderId: userId,
-    });
+
+    if (chatData.participantIds.length === 1) {
+      // if last user we delete the chat
+      transaction.delete(chatRef);
+    } else {
+      // remove the user from chat and create a message to notify the others about the unmatch
+      transaction.update(chatRef, {
+        participantIds: FieldValue.arrayRemove(userId),
+        lastUpdatedAt: FieldValue.serverTimestamp(),
+      });
+
+      const messageRef = chatRef.collection(Collections.MESSAGES);
+      transaction.create(messageRef.doc(), {
+        chatId: chatId,
+        runtimeType: "unmatch",
+        createdAt: FieldValue.serverTimestamp(),
+        lastUpdatedAt: FieldValue.serverTimestamp(),
+        participantIds: chatData.participantIds.filter((id) => id !== userId),
+        senderFirstName: firstName,
+        senderId: userId,
+      });
+    }
   });
   return { message: "Unmatched successfully" };
 });
