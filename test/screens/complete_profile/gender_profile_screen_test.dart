@@ -20,24 +20,6 @@ void main() {
     expect(profileService.profile?.gender, null);
   });
 
-  checkButtonEnabled(String buttonText, WidgetTester tester,
-      {bool enabled = true}) {
-    final ElevatedButton button = tester.widget<ElevatedButton>(
-      find.byWidgetPredicate(
-        (Widget widget) =>
-            widget is ElevatedButton &&
-            ((widget.child is Text &&
-                    (widget.child as Text).data == buttonText) ||
-                (widget.child is Row &&
-                    (((widget.child as Row).children[0] as Flexible).child
-                                as Text)
-                            .data ==
-                        buttonText)),
-        description: "ElevatedButton with text $buttonText not found",
-      ),
-    );
-    expect(button.onPressed != null, enabled);
-  }
 
   testWidgets('Test complete_profile screen selecting male and female',
       (WidgetTester tester) async {
@@ -51,10 +33,12 @@ void main() {
           navigateSuccess = true;
         }));
 
-    checkButtonEnabled(loc.general_next, tester, enabled: true);
-    checkButtonEnabled(loc.input_genderEnumWoman, tester, enabled: true);
-    checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: true);
-    checkButtonEnabled(loc.completeProfile_genderMore, tester, enabled: true);
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: true);
+    tester.checkSelectableButtonEnabled(loc.input_genderEnumWoman,
+        enabled: true);
+    tester.checkSelectableButtonEnabled(loc.input_genderEnumMan, enabled: true);
+    tester.checkSelectableButtonEnabled(loc.completeProfile_genderMore,
+        enabled: true);
 
     await tester.tap(find.text(loc.input_genderEnumWoman));
     await tester.tap(find.text(loc.general_next));
@@ -62,10 +46,13 @@ void main() {
 
     // Check disabling of buttons during request
     expect(navigateSuccess, false);
-    checkButtonEnabled(loc.general_next, tester, enabled: false);
-    checkButtonEnabled(loc.input_genderEnumWoman, tester, enabled: false);
-    checkButtonEnabled(loc.input_genderEnumMan, tester, enabled: false);
-    checkButtonEnabled(loc.completeProfile_genderMore, tester, enabled: false);
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
+    tester.checkSelectableButtonEnabled(loc.input_genderEnumWoman,
+        enabled: false);
+    tester.checkSelectableButtonEnabled(loc.input_genderEnumMan,
+        enabled: false);
+    tester.checkSelectableButtonEnabled(loc.completeProfile_genderMore,
+        enabled: false);
 
     completer.complete();
     await tester.pumpAndSettle();
@@ -131,6 +118,7 @@ void main() {
         .updateProfile((p) => p.copyWith(gender: Gender.nonBinary.enumValue));
 
     // Setup
+    tester.increaseScreenSize();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
         profileService: profileService,
         submitText: LocKey((loc) => loc.general_next),

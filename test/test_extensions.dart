@@ -1,3 +1,4 @@
+import 'package:deep_connections/screens/complete_profile/components/gender_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -37,6 +38,10 @@ extension LocalizedWidgetTester on WidgetTester {
     return context;
   }
 
+  increaseScreenSize() {
+    platformDispatcher.views.first.physicalSize = const Size(1080, 2400);
+  }
+
   Finder findTextFieldByHintText(String hintText) {
     return find.byWidgetPredicate(
       (Widget widget) =>
@@ -44,7 +49,7 @@ extension LocalizedWidgetTester on WidgetTester {
     );
   }
 
-  void checkButtonEnabled(String buttonText, {bool enabled = true}) {
+  void checkElevatedButtonEnabled(String buttonText, {bool enabled = true}) {
     final ElevatedButton button = widget<ElevatedButton>(
       find.byWidgetPredicate(
         (Widget widget) =>
@@ -60,5 +65,12 @@ extension LocalizedWidgetTester on WidgetTester {
       ),
     );
     expect(button.onPressed != null, enabled);
+  }
+
+  void checkSelectableButtonEnabled(String buttonText, {bool enabled = true}) {
+    final SelectableButton button = widget<SelectableButton>(
+      find.byKey(ValueKey(buttonText)),
+    );
+    expect(button.enabled, enabled);
   }
 }

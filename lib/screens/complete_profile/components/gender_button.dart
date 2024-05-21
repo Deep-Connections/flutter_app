@@ -1,4 +1,3 @@
-import 'package:deep_connections/config/theme.dart';
 import 'package:deep_connections/models/gender.dart';
 import 'package:deep_connections/screens/components/form/field_input/gender_field_input.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +49,7 @@ class MoreGenderButton extends StatelessWidget {
             onPressed: onPressed,
             selected: isSelected,
             enabled: genderInput.enabled,
-            icon: Icon(Icons.arrow_right,
+            trailing: Icon(Icons.arrow_right,
                 color: Theme.of(context).colorScheme.outline)
             //icon: Text(" >", style: TextStyle(inherit: true, color: Theme.of(context).colorScheme.outline))
             );
@@ -64,29 +63,90 @@ class SelectableButton extends StatelessWidget {
   final bool selected;
   final String text;
   final bool enabled;
-  final Widget? icon;
+  final Widget? trailing;
 
-  const SelectableButton(
-      {super.key,
+  SelectableButton(
+      {Key? key,
       required this.text,
       this.onPressed,
       this.selected = false,
       this.enabled = true,
-      this.icon});
+      this.trailing})
+      : super(key: key ?? ValueKey(text));
 
   @override
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final primary = theme.colorScheme.primary;
+    return GestureDetector(
+      onTap: enabled ? onPressed : null,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+        decoration: BoxDecoration(
+          color: selected ? primary : Colors.grey[300],
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(
+            color: selected ? primary : Colors.grey,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            /*selected
+                ? const Row(
+                    children: [
+                      Icon(Icons.check, color: Colors.white),
+                      SizedBox(width: standardPadding / 2)
+                    ],
+                  )
+                : Container(),*/
+            Flexible(
+              child: Text(
+                text,
+                style: theme.textTheme.headlineSmall
+                    ?.copyWith(color: selected ? Colors.white : Colors.black),
+                textAlign: TextAlign.center,
+                semanticsLabel: selected ? loc.semantic_selected(text) : text,
+              ),
+            ),
+            if (trailing != null) trailing!
+          ],
+        ),
+      ),
+    );
+    // previous implementations
+    /*return ChoiceChip(
+      selectedColor: Theme.of(context).colorScheme.primary,
+      surfaceTintColor: Theme.of(context).colorScheme.primary,
+      label: Flexible(
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.headlineSmall,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      selected: selected,
+      onSelected: enabled ? (_) => onPressed?.call() : null,
+    );
+    return GestureDetector(
+      onTap: enabled ? onPressed : null,
+      child: Container(
+        decoration: BoxDecoration(
+          color: selected ? Theme.of(context).colorScheme.primary : Colors.grey,
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(standardPadding),
+          child: Text(text, style: TextStyle(color: Colors.white)),
+        ),
+      ),
+    );
+
     return ElevatedButton(
       onPressed: enabled ? onPressed : null,
       style: ElevatedButton.styleFrom(
         backgroundColor: selected ? null : DcColors.grey,
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.circular(30.0),
-        //   side: selected
-        //       ? const BorderSide(color: Color(0xFF81a87b))
-        //       : BorderSide.none,
-        // ),
       ),
       child: Row(mainAxisSize: MainAxisSize.min, children: [
         Flexible(
@@ -98,6 +158,6 @@ class SelectableButton extends StatelessWidget {
         )),
         if (icon != null) icon!
       ]),
-    );
+    );*/
   }
 }
