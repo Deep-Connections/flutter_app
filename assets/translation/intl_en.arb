@@ -98,7 +98,7 @@
   "section_family": "Family",
   "section_freeTime": "Friends & Free time",
   "questionType_slider_tendency": "Tending towards: {answer}",
-  "questionType_multipleChoice_numberSelected": "{min} of {max} selected",
+  "questionType_multipleChoice_numberSelected": "select up to {max}",
   "questionBasic_relationshipType_question": "How long do you want your next relationship to last?",
   "questionBasic_relationshipType_answer_oneNight": "One night",
   "questionBasic_relationshipType_answer_short": "Short term",

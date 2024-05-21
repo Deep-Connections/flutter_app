@@ -31,8 +31,10 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(loc.questionType_multipleChoice_numberSelected(
-            widget.question.maxChoices, selectedChoices.length)),
+        Text(widget.question.maxChoices != 1
+            ? loc.questionType_multipleChoice_numberSelected(
+                widget.question.maxChoices)
+            : ""),
         const SizedBox(height: 10),
         Expanded(
           child: DcListView(
