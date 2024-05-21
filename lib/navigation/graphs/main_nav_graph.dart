@@ -7,13 +7,14 @@ import 'package:deep_connections/navigation/graphs/match_graph.dart';
 import 'package:deep_connections/navigation/refresh_listenable.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/services/user/user_status_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
   refreshListenable:
       GoRouterRefreshListenable(getIt<UserStatusService>().userStatusStream),
   initialLocation: homeRoute,
-  debugLogDiagnostics: true,
+  debugLogDiagnostics: !kReleaseMode,
   redirect: (context, state) async {
     final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
     final path = state.fullPath;
