@@ -29,8 +29,7 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => e as String)
               .toList(),
       pictures: (json['pictures'] as List<dynamic>?)
-          ?.map((e) =>
-              e == null ? null : Picture.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Picture.fromJson(e as Map<String, dynamic>))
           .toList(),
       questions: (json['questions'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, Answer.fromJson(e as Map<String, dynamic>)),
@@ -63,7 +62,7 @@ Map<String, dynamic> _$$ProfileImplToJson(_$ProfileImpl instance) {
   writeNotNull('height', instance.height);
   writeNotNull('languageCodes', instance.languageCodes);
   writeNotNull('languageWithCountryCodes', instance.languageWithCountryCodes);
-  writeNotNull('pictures', instance.pictures?.map((e) => e?.toJson()).toList());
+  writeNotNull('pictures', instance.pictures?.map((e) => e.toJson()).toList());
   writeNotNull(
       'questions', instance.questions?.map((k, e) => MapEntry(k, e.toJson())));
   return val;

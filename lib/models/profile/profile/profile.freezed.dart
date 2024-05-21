@@ -34,7 +34,7 @@ mixin _$Profile {
   List<String>? get languageCodes => throw _privateConstructorUsedError;
   List<String>? get languageWithCountryCodes =>
       throw _privateConstructorUsedError;
-  List<Picture?>? get pictures => throw _privateConstructorUsedError;
+  List<Picture>? get pictures => throw _privateConstructorUsedError;
   Map<String, Answer>? get questions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -59,7 +59,7 @@ abstract class $ProfileCopyWith<$Res> {
       int? height,
       List<String>? languageCodes,
       List<String>? languageWithCountryCodes,
-      List<Picture?>? pictures,
+      List<Picture>? pictures,
       Map<String, Answer>? questions});
 }
 
@@ -138,7 +138,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       pictures: freezed == pictures
           ? _value.pictures
           : pictures // ignore: cast_nullable_to_non_nullable
-              as List<Picture?>?,
+              as List<Picture>?,
       questions: freezed == questions
           ? _value.questions
           : questions // ignore: cast_nullable_to_non_nullable
@@ -166,7 +166,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       int? height,
       List<String>? languageCodes,
       List<String>? languageWithCountryCodes,
-      List<Picture?>? pictures,
+      List<Picture>? pictures,
       Map<String, Answer>? questions});
 }
 
@@ -243,7 +243,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
       pictures: freezed == pictures
           ? _value._pictures
           : pictures // ignore: cast_nullable_to_non_nullable
-              as List<Picture?>?,
+              as List<Picture>?,
       questions: freezed == questions
           ? _value._questions
           : questions // ignore: cast_nullable_to_non_nullable
@@ -267,7 +267,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       this.height,
       final List<String>? languageCodes,
       final List<String>? languageWithCountryCodes,
-      final List<Picture?>? pictures,
+      final List<Picture>? pictures,
       final Map<String, Answer>? questions})
       : _genderPreferences = genderPreferences,
         _languageCodes = languageCodes,
@@ -329,9 +329,9 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<Picture?>? _pictures;
+  final List<Picture>? _pictures;
   @override
-  List<Picture?>? get pictures {
+  List<Picture>? get pictures {
     final value = _pictures;
     if (value == null) return null;
     if (_pictures is EqualUnmodifiableListView) return _pictures;
@@ -449,7 +449,7 @@ abstract class _Profile extends Profile {
       final int? height,
       final List<String>? languageCodes,
       final List<String>? languageWithCountryCodes,
-      final List<Picture?>? pictures,
+      final List<Picture>? pictures,
       final Map<String, Answer>? questions}) = _$ProfileImpl;
   const _Profile._() : super._();
 
@@ -480,7 +480,7 @@ abstract class _Profile extends Profile {
   @override
   List<String>? get languageWithCountryCodes;
   @override
-  List<Picture?>? get pictures;
+  List<Picture>? get pictures;
   @override
   Map<String, Answer>? get questions;
   @override
