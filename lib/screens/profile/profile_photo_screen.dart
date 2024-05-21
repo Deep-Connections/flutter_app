@@ -19,7 +19,12 @@ class ProfilePhotoScreen extends StatelessWidget {
         body: GenericStreamBuilder(
           data: profileService.profileStream,
           builder: (BuildContext context, Profile profile) {
-            return PhotoGrid(photoUrls: profile.pictures ?? []);
+            return PhotoGrid(
+                photoUrls: profile.pictures ?? [],
+                submitNewPhotos: (newPhotos) {
+                  profileService.updateProfile(
+                      (profile) => profile.copyWith(pictures: newPhotos));
+                });
           },
         ));
   }
