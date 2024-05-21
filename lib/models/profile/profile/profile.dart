@@ -26,8 +26,7 @@ class Profile with _$Profile {
     int? height,
     List<String>? languageCodes,
     List<String>? languageWithCountryCodes,
-    Picture? profilePicture,
-    List<Picture>? pictures,
+    List<Picture?>? pictures,
     Map<String, Answer>? questions,
   }) = _Profile;
 
