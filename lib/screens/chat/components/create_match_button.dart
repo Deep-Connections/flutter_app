@@ -10,7 +10,7 @@ const maxMatches = 5;
 
 class CreateMatchSection extends StatefulWidget {
   final Profile profile;
-  final void Function() createMatch;
+  final Future Function() createMatch;
 
   const CreateMatchSection(
       {super.key, required this.profile, required this.createMatch});
@@ -22,6 +22,7 @@ class CreateMatchSection extends StatefulWidget {
 class _CreateMatchSectionState extends State<CreateMatchSection> {
   Timer? _timer;
   Duration? _duration;
+  bool _isCreatingMatch = false;
 
   @override
   void initState() {
@@ -59,14 +60,15 @@ class _CreateMatchSectionState extends State<CreateMatchSection> {
   }
 
   _durationToString(Duration duration, AppLocalizations loc) {
-    if (duration.inHours == 0)
+    if (duration.inHours == 0) {
       return '${duration.inMinutes % 60}:${duration.inSeconds % 60}';
+    }
     return loc.matching_matchAgainHoursHeadline(duration.inHours.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
     final duration = _duration;
     final reachedMaxMatches = widget.profile.numMatches == maxMatches;
     final needsToWaitForMatch = duration != null;
@@ -81,7 +83,7 @@ class _CreateMatchSectionState extends State<CreateMatchSection> {
                 ? loc.matching_tooManyMatchesDescription(maxMatches)
                 : loc.matching_readyToMatchDescription,
         textAlign: TextAlign.center,
-        style: textTheme.headlineSmall,
+        style: theme.textTheme.headlineSmall,
       ),
       Text(
         needsToWaitForMatch
@@ -90,13 +92,28 @@ class _CreateMatchSectionState extends State<CreateMatchSection> {
                 ? loc.matching_tooManyMatchesHeadline
                 : loc.matching_readyToMatchHeadline,
         textAlign: TextAlign.center,
-        style: textTheme.headlineMedium,
+        style: theme.textTheme.headlineMedium,
       ),
       ElevatedButton(
-        onPressed: canCreateMatch ? widget.createMatch : null,
-        child: Text(
-          loc.matching_createMatchButton,
-        ),
+        onPressed: canCreateMatch
+            ? () async {
+                if (_isCreatingMatch) return;
+                setState(() => _isCreatingMatch = true);
+                await widget.createMatch();
+                setState(() => _isCreatingMatch = false);
+              }
+            : null,
+        child: _isCreatingMatch
+            ? SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: theme.colorScheme.onPrimary,
+                ),
+              )
+            : Text(
+                loc.matching_createMatchButton,
+              ),
       )
     ]);
   }
