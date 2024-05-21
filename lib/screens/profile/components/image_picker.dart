@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
+@Deprecated("Not used anymore")
 class AvatarImagePicker extends StatefulWidget {
   final ProfileService profileService;
 
@@ -43,7 +44,7 @@ class _AvatarImagePickerState extends State<AvatarImagePicker> {
       onTap: () => _pickImage(loc),
       child: AvatarImage(
         size: 75,
-        imageUrl: url ?? widget.profileService.profile?.profilePicture?.url,
+        imageUrl: url ?? widget.profileService.profile?.mainPictureUrl,
         isLoading: isLoading,
       ),
     );

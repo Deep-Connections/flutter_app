@@ -39,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
                     onTap: () => context.go(ProfileRoutes.photos.fullPath),
                     child: AvatarImage(
                       size: 75,
-                      imageUrl: profileService.profile?.profilePicture?.url,
+                      imageUrl: profileService.profile?.mainPictureUrl,
                     ))),
             StreamBuilder(
                 stream: userStatusService.userStatusStream,
