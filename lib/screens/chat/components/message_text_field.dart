@@ -59,18 +59,22 @@ class _MessageTextFieldState extends State<MessageTextField> {
         const SizedBox(width: 8),
         ValueListenableBuilder(
           valueListenable: _controller,
-          builder: (context, value, child) => IconButton(
-              onPressed: value.text.trim().isNotEmpty ? _sendMessage : null,
-              icon: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: colors.primary,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.send,
-                    color: colors.onPrimary,
-                  ))),
+          builder: (context, value, child) => GestureDetector(
+            // makes sure the button doesn't focus and hides the keyboard
+            onTap: () {},
+            child: IconButton(
+                onPressed: value.text.trim().isNotEmpty ? _sendMessage : null,
+                icon: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: colors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.send,
+                      color: colors.onPrimary,
+                    ))),
+          ),
         )
       ],
     );
