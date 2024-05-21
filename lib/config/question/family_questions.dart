@@ -26,7 +26,6 @@ final List<Question> familyQuestionList = [
       Choice('five', LocKey((loc) => loc.questionFamily_kidsWhen_answer_five)),
       Choice('later', LocKey((loc) => loc.questionFamily_kidsWhen_answer_later))
     ],
-    minChoices: 0,
     navigationPath: 'when_kids',
     section: ProfileSection.family,
   ),
@@ -39,7 +38,6 @@ final List<Question> familyQuestionList = [
       Choice('parenting',
           LocKey((loc) => loc.questionFamily_parenting_answer_parenting))
     ],
-    minChoices: 0,
     navigationPath: 'parenting',
     section: ProfileSection.family,
   ),*/

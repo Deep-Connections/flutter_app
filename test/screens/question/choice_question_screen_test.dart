@@ -205,7 +205,7 @@ void main() {
     checkSelected(loc.questionBasic_relationshipType_answer_short, false);
     checkSelected(loc.questionBasic_relationshipType_answer_oneNight, false);
     checkSelected(loc.questionBasic_relationshipType_answer_long, false);
-    tester.checkButtonEnabled(loc.general_next, enabled: false);
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
 
     // Select answer 1 and 2, check that both are selected
     await tester
@@ -222,7 +222,7 @@ void main() {
     await tester
         .tap(find.text(loc.questionBasic_relationshipType_answer_short));
     await tester.pumpAndSettle();
-    tester.checkButtonEnabled(loc.general_next, enabled: false);
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
 
     // select all answers
     await tester

@@ -8,18 +8,22 @@ import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:go_router/go_router.dart';
 
 final additionalProfileRoutes = GoRoute(
-    path: ProfileRoutes.additional.path,
-    redirect: (context, state) async {
-      final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
-      if (state.fullPath == ProfileRoutes.additional.fullPath) {
-        return userStatus.additionalUncompletedStep
-                ?.navigationFromBasePath(ProfileRoutes.additional.fullPath) ??
-            homeRoute;
-      }
-      return null;
-    },
-    routes: generateProfileStepGraph(
-        additionalProfileStepList, ProfileRoutes.additional.fullPath,
-        navigateLast: (context) async => ProfileRoutes
-            .additional.parent?.fullPath
-            .let((path) => context.go(path))));
+  path: ProfileRoutes.additional.path,
+  redirect: (context, state) async {
+    final UserStatus userStatus = await getIt<UserStatusService>().userStatus;
+    if (state.fullPath == ProfileRoutes.additional.fullPath) {
+      return userStatus.additionalUncompletedStep
+              ?.navigationFromBasePath(ProfileRoutes.additional.fullPath) ??
+          homeRoute;
+    }
+    return null;
+  },
+  routes: generateProfileStepGraph(
+    additionalProfileStepList,
+    ProfileRoutes.additional.fullPath,
+    navigateLast: (context) async => ProfileRoutes.additional.parent?.fullPath
+        .let((path) => context.go(path)),
+    finishLater: (context) =>
+        StatefulNavigationShell.of(context).goBranch(1, initialLocation: true),
+  ),
+);
