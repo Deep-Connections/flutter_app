@@ -77,6 +77,7 @@
   "matching_createMatchButton": "Create match",
   "completeProfile_completeDescription": "Complete your profile to get better matches!",
   "completeProfile_completeButton": "Complete profile",
+  "completeProfile_finishLaterButton": "Finish later",
   "completeProfile_firstNameTitle": "What's your name?",
   "completeProfile_birthdayTitle": "When were you born?",
   "completeProfile_genderTitle": "What's your gender?",

@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
-    {Future<void> Function(BuildContext)? navigateLast}) {
+    {Future<void> Function(BuildContext)? navigateLast,
+    Function(BuildContext)? finishLater}) {
   return [
     ...List.generate(steps.length, (index) {
       final navigationStep = steps[index];
@@ -29,19 +30,21 @@ generateProfileStepGraph(List<ProfileNavigationStep> steps, String basePath,
 
           return CupertinoPage(
               child: ProfileNavScreen(
-                  navigatePrevious: index == 0
-                      ? null
-                      : (bool _) => context.canPop() || previousPath == null
-                          ? context.pop()
-                          : context.pushReplacement(previousPath),
-                  navigationStep: navigationStep,
-                  body: ProfileStepWidget(
-                    step: navigationStep,
-                    onSubmit: navigateToNext,
-                    submitText: LocKey((loc) => navigateNextPath != null
-                        ? loc.general_next
-                        : loc.general_submit),
-                  )));
+            navigatePrevious: index == 0
+                ? null
+                : (bool _) => context.canPop() || previousPath == null
+                    ? context.pop()
+                    : context.pushReplacement(previousPath),
+            navigationStep: navigationStep,
+            finishLater: finishLater,
+            body: ProfileStepWidget(
+              step: navigationStep,
+              onSubmit: navigateToNext,
+              submitText: LocKey((loc) => navigateNextPath != null
+                  ? loc.general_next
+                  : loc.general_submit),
+            ),
+          ));
         },
       );
     }),
