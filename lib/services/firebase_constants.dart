@@ -62,3 +62,7 @@ class FunctionErrors {
   static const String deadlineExceeded =
       'deadline-exceeded'; // (504) - Deadline expired before operation could complete.
 }
+
+class StorageErrors {
+  static const String objectNotFound = 'object-not-found';
+}

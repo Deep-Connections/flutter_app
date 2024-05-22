@@ -19,4 +19,6 @@ abstract class ProfileService {
   Future<Profile?> getNewMatch(List<String> excludedUserIds);
 
   Future<Response<Picture>> uploadPicture(Uint8List image, String? mimeType);
+
+  Future<Response<void>> deletePicture(Picture picture);
 }

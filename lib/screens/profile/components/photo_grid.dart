@@ -8,13 +8,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_reorderable_grid_view/entities/order_update_entity.dart';
 import 'package:flutter_reorderable_grid_view/widgets/widgets.dart';
 
-const maxNumPhotos = 6;
-
 class PhotoGrid extends StatefulWidget {
   final List<Picture> pictures;
   final void Function(List<Picture>) submitNewPhotos;
   final void Function() addPicture;
-  final void Function() deletePicture;
+  final void Function(Picture) deletePicture;
 
   const PhotoGrid({
     super.key,
@@ -62,8 +60,8 @@ class _PhotoGridState extends State<PhotoGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final numMissingPhotos = maxNumPhotos - _pictures.length;
-    final photoUrlsAndNull = _pictures + List.filled(numMissingPhotos, null);
+    final numMissingPhotos = maxNumProfilePhotos - _pictures.length;
+    final picturesAndNull = _pictures + List.filled(numMissingPhotos, null);
     final colorScheme = Theme.of(context).colorScheme;
     final loc = AppLocalizations.of(context);
     return Scaffold(
@@ -102,9 +100,9 @@ class _PhotoGridState extends State<PhotoGrid> {
               children: children,
             );
           },
-          children: photoUrlsAndNull
-              .mapIndexed((index, photo) {
-                if (photo == null || photo.url?.isEmpty == true) {
+          children: picturesAndNull
+              .mapIndexed((index, picture) {
+                if (picture == null || picture.url?.isEmpty == true) {
                   return GestureDetector(
                     key: Key(index.toString()),
                     onTap: widget.addPicture,
@@ -114,14 +112,14 @@ class _PhotoGridState extends State<PhotoGrid> {
                     ),
                   );
                 } else {
-                  final url = photo.url!;
+                  final url = picture.url!;
                   return PhotoItem(
                       key: Key(url),
                       url: url,
                       onDelete: () {
                         setState(() {
                           _pictures.removeAt(index);
-                          //_submitPhotos();
+                          widget.deletePicture(picture);
                         });
                       });
                 }

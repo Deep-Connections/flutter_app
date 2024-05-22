@@ -46,7 +46,7 @@ class ProfilePhotoScreen extends StatelessWidget {
                     (profile) => profile.copyWith(pictures: newPhotos));
               },
               addPicture: () => _pickImage(loc),
-              deletePicture: () {},
+              deletePicture: profileService.deletePicture,
             );
           },
         ));

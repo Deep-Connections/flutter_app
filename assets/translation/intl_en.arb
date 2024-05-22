@@ -19,6 +19,7 @@
   "matching_notFoundError": "No matches found, please try again tomorrow.",
   "matching_alreadyExistsError": "Match already created today, please try again tomorrow.",
   "matching_failedPreconditionError": "There's an issue with your profile, please contact the developers.",
+  "profilePhotos_imageSizeError": "The photo you uploaded is too large. Please upload a photo that is smaller than 2MB.",
   "authProvider_google": "Sign in with Google",
   "login_userDisabledError": "Your account is currently unavailable. Please contact support for assistance.",
   "login_wrongCredentialsError": "The email or password you entered is incorrect.",

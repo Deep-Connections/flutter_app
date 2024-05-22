@@ -4,9 +4,10 @@ rules_version = '2';
 // allow write: if firestore.get(
 //    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
 service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if false;
+    match /b/{bucket}/o {
+        match /profile_images/{userId}/{imageName} {
+            allow write, read: if request.auth != null && request.auth.uid == userId && request.resource.size < 2 * 1024 * 1024;
+            allow read: if request.auth != null;
+        }
     }
-  }
 }
