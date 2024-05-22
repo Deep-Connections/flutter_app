@@ -20,7 +20,7 @@ const assert = require("assert");
 
 const { Timestamp } = require("firebase-admin/firestore");
 
-const { Collections, FunctionErrors } = require("../constants");
+const { Collections, FunctionErrors } = require("../src/constants");
 
 const UID_1 = "test-uid-1";
 const UID_2 = "test-uid-2";

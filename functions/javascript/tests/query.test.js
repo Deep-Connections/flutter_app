@@ -1,6 +1,6 @@
 
 const admin = require("firebase-admin");
-const { Collections } = require("../constants");
+const { Collections } = require("../src/constants");
 
 const serviceAccount = require("../../../serviceAccountKey.json");
 admin.initializeApp({
@@ -21,10 +21,10 @@ describe("Querys", () => {
     console.log(profiles.docs[0].data());
   });
 
-  it.skip("delete lastMatchedAt from all profiles", async () => {
-    const profiles = await db.collection(Collections.PROFILES).get();
-    /*profiles.docs.forEach((doc) => {
-      doc.ref.update({ lastMatchedAt: admin.firestore.FieldValue.delete() });
-    });*/
-  });
+  // it.skip("delete lastMatchedAt from all profiles", async () => {
+  //   const profiles = await db.collection(Collections.PROFILES).get();
+  //   profiles.docs.forEach((doc) => {
+  //     doc.ref.update({ lastMatchedAt: admin.firestore.FieldValue.delete() });
+  //   });
+  // });
 });

@@ -21,7 +21,7 @@ const { storeMyProfile, storeOtherProfile, storeProfiles,
 const assert = require("assert");
 
 const fs = require("fs");
-const { Collections, FunctionErrors } = require("../constants");
+const { Collections, FunctionErrors } = require("../src/constants");
 
 const UID = "test-uid";
 
