@@ -11,15 +11,17 @@ import 'package:flutter_reorderable_grid_view/widgets/widgets.dart';
 const maxNumPhotos = 6;
 
 class PhotoGrid extends StatefulWidget {
-  final List<Picture> photoUrls;
+  final List<Picture> pictures;
   final void Function(List<Picture>) submitNewPhotos;
-  final void Function() addPhoto;
+  final void Function() addPicture;
+  final void Function() deletePicture;
 
   const PhotoGrid({
     super.key,
-    required this.photoUrls,
+    required this.pictures,
     required this.submitNewPhotos,
-    required this.addPhoto,
+    required this.addPicture,
+    required this.deletePicture,
   });
 
   @override
@@ -27,14 +29,14 @@ class PhotoGrid extends StatefulWidget {
 }
 
 class _PhotoGridState extends State<PhotoGrid> {
-  final List<Picture?> _photoUrls = [];
+  final List<Picture?> _pictures = [];
   final _scrollController = ScrollController();
   final _gridViewKey = GlobalKey();
 
   _initialize() {
-    _photoUrls
+    _pictures
       ..clear()
-      ..addAll(widget.photoUrls);
+      ..addAll(widget.pictures);
   }
 
   @override
@@ -46,13 +48,13 @@ class _PhotoGridState extends State<PhotoGrid> {
   @override
   void didUpdateWidget(covariant PhotoGrid oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.photoUrls != widget.photoUrls) {
+    if (oldWidget.pictures != widget.pictures) {
       _initialize();
     }
   }
 
   _submitPhotos() {
-    final newPhotos = _photoUrls.mapNotNull((e) => e).toList();
+    final newPhotos = _pictures.mapNotNull((e) => e).toList();
     if (newPhotos.isNotEmpty) {
       widget.submitNewPhotos(newPhotos);
     }
@@ -60,8 +62,8 @@ class _PhotoGridState extends State<PhotoGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final numMissingPhotos = maxNumPhotos - _photoUrls.length;
-    final photoUrlsAndNull = _photoUrls + List.filled(numMissingPhotos, null);
+    final numMissingPhotos = maxNumPhotos - _pictures.length;
+    final photoUrlsAndNull = _pictures + List.filled(numMissingPhotos, null);
     final colorScheme = Theme.of(context).colorScheme;
     final loc = AppLocalizations.of(context);
     return Scaffold(
@@ -81,13 +83,13 @@ class _PhotoGridState extends State<PhotoGrid> {
           ),
           onReorder: (List<OrderUpdateEntity> orderUpdateEntities) {
             for (final orderUpdateEntity in orderUpdateEntities) {
-              final photo = _photoUrls.removeAt(orderUpdateEntity.oldIndex);
-              _photoUrls.insert(orderUpdateEntity.newIndex, photo);
+              final photo = _pictures.removeAt(orderUpdateEntity.oldIndex);
+              _pictures.insert(orderUpdateEntity.newIndex, photo);
               _submitPhotos();
             }
           },
           lockedIndices: List.generate(
-              numMissingPhotos, (index) => _photoUrls.length + index),
+              numMissingPhotos, (index) => _pictures.length + index),
           builder: (children) {
             return GridView(
               key: _gridViewKey,
@@ -105,7 +107,7 @@ class _PhotoGridState extends State<PhotoGrid> {
                 if (photo == null || photo.url?.isEmpty == true) {
                   return GestureDetector(
                     key: Key(index.toString()),
-                    onTap: widget.addPhoto,
+                    onTap: widget.addPicture,
                     child: Container(
                       color: colorScheme.surface,
                       child: Icon(Icons.add, color: colorScheme.onSurface),
@@ -118,7 +120,7 @@ class _PhotoGridState extends State<PhotoGrid> {
                       url: url,
                       onDelete: () {
                         setState(() {
-                          _photoUrls.removeAt(index);
+                          _pictures.removeAt(index);
                           //_submitPhotos();
                         });
                       });

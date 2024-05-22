@@ -19,16 +19,16 @@ class ProfilePhotoScreen extends StatelessWidget {
       .pickImage(source: ImageSource.gallery, imageQuality: imageCompression)
       .then((image) async => await image?.let((path) async {
             /* setState(() {
-      isLoading = true;
-    });*/
+               isLoading = true;
+             });*/
 
             final response = await profileService.uploadPicture(
                 await image.readAsBytes(), image.mimeType);
             response.onFailure(
                 (failure) => MessageHandler.showResponseError(response, loc));
             /*setState(() {
-      isLoading = false;
-    });*/
+            isLoading = false;
+            });*/
           }));
 
   @override
@@ -40,12 +40,13 @@ class ProfilePhotoScreen extends StatelessWidget {
           data: profileService.profileStream,
           builder: (BuildContext context, Profile profile) {
             return PhotoGrid(
-              photoUrls: profile.pictures ?? [],
+              pictures: profile.pictures ?? [],
               submitNewPhotos: (newPhotos) {
                 profileService.updateProfile(
                     (profile) => profile.copyWith(pictures: newPhotos));
               },
-              addPhoto: () => _pickImage(loc),
+              addPicture: () => _pickImage(loc),
+              deletePicture: () {},
             );
           },
         ));
