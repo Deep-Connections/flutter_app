@@ -5,7 +5,7 @@ const admin = require("firebase-admin");
 const { Collections, FieldName, FunctionErrors } = require("../constants");
 
 const db = admin.firestore();
-
+const auth = admin.auth();
 
 function chunkArray(array, chunkSize) {
   const result = [];
@@ -16,17 +16,19 @@ function chunkArray(array, chunkSize) {
 }
 
 async function deleteAccountByUserId(userId) {
-  const allMessagesOfUser = await db.collectionGroup(Collections.MESSAGES)
+  let allMessagesOfUser = db.collectionGroup(Collections.MESSAGES)
       .where(FieldName.SENDER_ID, "==", userId).select().get();
+
+  const allChatsOfUser = await db.collection(Collections.CHATS)
+      .where(FieldName.PARTICIPANT_IDS, "array-contains", userId).get();
+
+  allMessagesOfUser = await allMessagesOfUser;
 
   const deleteMessagesFutures = chunkArray(allMessagesOfUser.docs, 500).map((chunk) => {
     const batch = db.batch();
     chunk.forEach((doc) => batch.delete(doc.ref));
     return batch.commit();
   });
-
-  const allChatsOfUser = await db.collection(Collections.CHATS)
-      .where(FieldName.PARTICIPANT_IDS, "array-contains", userId).get();
 
   const removeChatParticipantFutures = chunkArray(allChatsOfUser.docs, 500).map((chunk) => {
     chunk.forEach((doc) => {
@@ -45,11 +47,8 @@ async function deleteAccountByUserId(userId) {
 
   const deleteProfileFuture = db.collection(Collections.PROFILES).doc(userId).delete();
 
-  // const deletUserFuture = admin.auth().deleteUser(userId);
-
-  return Promise.all([deleteProfileFuture,
-    // deletUserFuture
-  ]+ deleteMessagesFutures + removeChatParticipantFutures);
+  await auth.deleteUser(userId);
+  await Promise.all([deleteProfileFuture] + deleteMessagesFutures + removeChatParticipantFutures);
 }
 
 exports.deleteAccountByUserId = deleteAccountByUserId;

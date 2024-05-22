@@ -6,7 +6,9 @@ const projectId = "account-delete-test";
 
 process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
-admin.initializeApp({ projectId });
+process.env.FIREBASE_AUTH_EMULATOR_HOST = "localhost:9099";
+admin.initializeApp({ projectId,
+  credential: admin.credential.applicationDefault() });
 
 // make sure cloud functions don't reinitialize firebase app
 require("sinon").stub(admin, "initializeApp");
@@ -41,26 +43,28 @@ async function createChat(participantIds) {
 
 describe("Delete account", () => {
   beforeEach(async () => {
-    await firebase.clearFirestoreData({ projectId });
+    const deleteFirestorePromise = firebase.clearFirestoreData({ projectId });
+    try {
+      await admin.auth().createUser({ uid: UID_1 });
+    } catch (e) {
+      console.log(e);
+    }
+    await deleteFirestorePromise;
   });
 
   it("removes all sensitive data of user", async () => {
-    // await admin.auth().createUser({
-    //   uid: UID_1,
-    // });
-
-    const profilePromise = db.collection(Collections.PROFILES).doc(UID_1).set({
+    let profilePromise = db.collection(Collections.PROFILES).doc(UID_1).set({
       firstName: "Alice",
     });
 
+    // create a chat with another user, and a chat with only the to be deleted user
     await Promise.all([createChat([UID_1, UID_2]), createChat([UID_1]), profilePromise]);
-
 
     await deleteAccount({}, { auth: { uid: UID_1 } });
 
     const allChatsPromise = db.collection(Collections.CHATS).get();
     const allMessagesPromise = db.collectionGroup(Collections.MESSAGES).get();
-    const profile = db.collection(Collections.PROFILES).doc(UID_1).get();
+    profilePromise = db.collection(Collections.PROFILES).doc(UID_1).get();
 
     const allMessages = await allMessagesPromise;
     const allChats = await allChatsPromise;
@@ -68,11 +72,18 @@ describe("Delete account", () => {
     assert.equal(allMessages.size, 1);
     assert.equal(allMessages.docs.filter((doc) => doc.data().senderId === UID_1).length, 0);
 
-    // the chat with the other user remains, the chat with only the user is deleted
+    // the chat with the other user remains
     assert.equal(allChats.size, 1);
     assert.equal(allChats.docs.filter((doc) => doc.data().participantIds.includes(UID_1)).length, 0);
 
-    assert.equal((await profile).exists, false);
+    assert.equal((await profilePromise).exists, false);
+    try {
+      await admin.auth().getUser(UID_1);
+      await admin.auth().deleteUser(UID_1);
+      assert.fail("User should be deleted");
+    } catch (e) {
+      assert.equal(e.code, "auth/user-not-found");
+    }
   });
 
   it("works even if user has no profile", async () => {
