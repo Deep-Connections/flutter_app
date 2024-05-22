@@ -64,8 +64,7 @@ class _MessageListScreenState extends State<MessageListScreen> {
                           .parameterPath([widget.chatId])),
                       behavior: HitTestBehavior.opaque,
                       child: Row(children: [
-                        AvatarImage(
-                            imageUrl: matchProfile?.profilePicture?.url),
+                        AvatarImage(imageUrl: matchProfile?.mainPictureUrl),
                         const SizedBox(width: standardPadding),
                         Expanded(child: Text(matchProfile?.firstName ?? "")),
                       ]),

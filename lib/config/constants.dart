@@ -12,6 +12,10 @@ _isTest() {
   }
 }
 
+const maxImageSize = 2 * 1024 * 1024; // 2MB
+const imageCompression = 50;
+const maxNumProfilePhotos = 6;
+
 final isTest = _isTest();
 
 const standardPadding = 16.0;
@@ -25,4 +29,3 @@ const matchImageSize = 40.0;
 const roundedBorderRadius = Radius.circular(18);
 
 const maxScreenWidth = 800.0;
-const imageCompression = 50;

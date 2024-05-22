@@ -5,6 +5,7 @@ import 'package:deep_connections/navigation/graphs/additional_profile_nav_graph.
 import 'package:deep_connections/navigation/route_constants.dart';
 import 'package:deep_connections/screens/chat/chat_list_screen.dart';
 import 'package:deep_connections/screens/components/bottom_nav_bar.dart';
+import 'package:deep_connections/screens/profile/profile_photo_screen.dart';
 import 'package:deep_connections/screens/profile/profile_screen.dart';
 import 'package:deep_connections/screens/profile/profile_section_screen.dart';
 import 'package:deep_connections/screens/profile/profile_section_step_screen.dart';
@@ -46,6 +47,11 @@ final bottomNavigation = StatefulShellRoute.indexedStack(
             ),
           ),
           routes: [
+            GoRoute(
+                path: ProfileRoutes.photos.path,
+                builder: (context, state) {
+                  return ProfilePhotoScreen(profileService: getIt());
+                }),
             additionalProfileRoutes,
             // child route
             GoRoute(

@@ -26,12 +26,11 @@ class Profile with _$Profile {
     int? height,
     List<String>? languageCodes,
     List<String>? languageWithCountryCodes,
-    Picture? profilePicture,
     List<Picture>? pictures,
     Map<String, Answer>? questions,
   }) = _Profile;
 
-  String? get mainPictureUrl => pictures?.lastOrNull?.url;
+  String? get mainPictureUrl => pictures?.firstOrNull?.url;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);

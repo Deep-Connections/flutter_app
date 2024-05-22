@@ -44,14 +44,14 @@ class BottomNavRoute extends NavRoute {
 const homeRoute = "/";
 
 class AuthRoutes {
-  static const NavRoute main = NavRoute('auth', null);
-  static const NavRoute login = NavRoute('login', main);
-  static const NavRoute register = NavRoute('register', main);
-  static const NavRoute forgotPassword = NavRoute('forgot_password', main);
+  static const main = NavRoute('auth', null);
+  static const login = NavRoute('login', main);
+  static const register = NavRoute('register', main);
+  static const forgotPassword = NavRoute('forgot_password', main);
 }
 
 class InitialProfileRoutes {
-  static const NavRoute main = NavRoute('initial_profile', null);
+  static const main = NavRoute('initial_profile', null);
 }
 
 class BottomNavigation {
@@ -64,12 +64,11 @@ class BottomNavigation {
 }
 
 class ProfileRoutes {
-  static final NavRoute additional =
-      NavRoute('additional', BottomNavigation.profile);
-  static final NavRoute section = NavRoute('section', BottomNavigation.profile,
+  static final additional = NavRoute('additional', BottomNavigation.profile);
+  static final photos = NavRoute('photos', BottomNavigation.profile);
+  static final section = NavRoute('section', BottomNavigation.profile,
       pathParameter: 'sectionPath');
-  static final NavRoute step =
-      NavRoute('step', section, pathParameter: 'stepPath');
+  static final step = NavRoute('step', section, pathParameter: 'stepPath');
 }
 
 class MainRoutes {

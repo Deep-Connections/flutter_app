@@ -53,6 +53,11 @@ extension IterableExtensions<T> on Iterable<T> {
     }
     return result;
   }
+
+  Iterable<R> mapIndexed<R>(R Function(int index, T e) transform) {
+    int index = 0;
+    return map((e) => transform(index++, e));
+  }
 }
 
 extension NullIterableExtensions<T> on Iterable<T>? {

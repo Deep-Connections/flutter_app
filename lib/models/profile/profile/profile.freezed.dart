@@ -34,7 +34,6 @@ mixin _$Profile {
   List<String>? get languageCodes => throw _privateConstructorUsedError;
   List<String>? get languageWithCountryCodes =>
       throw _privateConstructorUsedError;
-  Picture? get profilePicture => throw _privateConstructorUsedError;
   List<Picture>? get pictures => throw _privateConstructorUsedError;
   Map<String, Answer>? get questions => throw _privateConstructorUsedError;
 
@@ -60,11 +59,8 @@ abstract class $ProfileCopyWith<$Res> {
       int? height,
       List<String>? languageCodes,
       List<String>? languageWithCountryCodes,
-      Picture? profilePicture,
       List<Picture>? pictures,
       Map<String, Answer>? questions});
-
-  $PictureCopyWith<$Res>? get profilePicture;
 }
 
 /// @nodoc
@@ -91,7 +87,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? height = freezed,
     Object? languageCodes = freezed,
     Object? languageWithCountryCodes = freezed,
-    Object? profilePicture = freezed,
     Object? pictures = freezed,
     Object? questions = freezed,
   }) {
@@ -140,10 +135,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.languageWithCountryCodes
           : languageWithCountryCodes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      profilePicture: freezed == profilePicture
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
-              as Picture?,
       pictures: freezed == pictures
           ? _value.pictures
           : pictures // ignore: cast_nullable_to_non_nullable
@@ -153,18 +144,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           : questions // ignore: cast_nullable_to_non_nullable
               as Map<String, Answer>?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $PictureCopyWith<$Res>? get profilePicture {
-    if (_value.profilePicture == null) {
-      return null;
-    }
-
-    return $PictureCopyWith<$Res>(_value.profilePicture!, (value) {
-      return _then(_value.copyWith(profilePicture: value) as $Val);
-    });
   }
 }
 
@@ -187,12 +166,8 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       int? height,
       List<String>? languageCodes,
       List<String>? languageWithCountryCodes,
-      Picture? profilePicture,
       List<Picture>? pictures,
       Map<String, Answer>? questions});
-
-  @override
-  $PictureCopyWith<$Res>? get profilePicture;
 }
 
 /// @nodoc
@@ -217,7 +192,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? height = freezed,
     Object? languageCodes = freezed,
     Object? languageWithCountryCodes = freezed,
-    Object? profilePicture = freezed,
     Object? pictures = freezed,
     Object? questions = freezed,
   }) {
@@ -266,10 +240,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value._languageWithCountryCodes
           : languageWithCountryCodes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      profilePicture: freezed == profilePicture
-          ? _value.profilePicture
-          : profilePicture // ignore: cast_nullable_to_non_nullable
-              as Picture?,
       pictures: freezed == pictures
           ? _value._pictures
           : pictures // ignore: cast_nullable_to_non_nullable
@@ -297,7 +267,6 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       this.height,
       final List<String>? languageCodes,
       final List<String>? languageWithCountryCodes,
-      this.profilePicture,
       final List<Picture>? pictures,
       final Map<String, Answer>? questions})
       : _genderPreferences = genderPreferences,
@@ -360,8 +329,6 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
     return EqualUnmodifiableListView(value);
   }
 
-  @override
-  final Picture? profilePicture;
   final List<Picture>? _pictures;
   @override
   List<Picture>? get pictures {
@@ -384,7 +351,7 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(id: $id, firstName: $firstName, gender: $gender, customGender: $customGender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, lastMatchedAt: $lastMatchedAt, numMatches: $numMatches, height: $height, languageCodes: $languageCodes, languageWithCountryCodes: $languageWithCountryCodes, profilePicture: $profilePicture, pictures: $pictures, questions: $questions)';
+    return 'Profile(id: $id, firstName: $firstName, gender: $gender, customGender: $customGender, genderPreferences: $genderPreferences, dateOfBirth: $dateOfBirth, lastMatchedAt: $lastMatchedAt, numMatches: $numMatches, height: $height, languageCodes: $languageCodes, languageWithCountryCodes: $languageWithCountryCodes, pictures: $pictures, questions: $questions)';
   }
 
   @override
@@ -404,7 +371,6 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('languageCodes', languageCodes))
       ..add(DiagnosticsProperty(
           'languageWithCountryCodes', languageWithCountryCodes))
-      ..add(DiagnosticsProperty('profilePicture', profilePicture))
       ..add(DiagnosticsProperty('pictures', pictures))
       ..add(DiagnosticsProperty('questions', questions));
   }
@@ -433,8 +399,6 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
                 .equals(other._languageCodes, _languageCodes) &&
             const DeepCollectionEquality().equals(
                 other._languageWithCountryCodes, _languageWithCountryCodes) &&
-            (identical(other.profilePicture, profilePicture) ||
-                other.profilePicture == profilePicture) &&
             const DeepCollectionEquality().equals(other._pictures, _pictures) &&
             const DeepCollectionEquality()
                 .equals(other._questions, _questions));
@@ -455,7 +419,6 @@ class _$ProfileImpl extends _Profile with DiagnosticableTreeMixin {
       height,
       const DeepCollectionEquality().hash(_languageCodes),
       const DeepCollectionEquality().hash(_languageWithCountryCodes),
-      profilePicture,
       const DeepCollectionEquality().hash(_pictures),
       const DeepCollectionEquality().hash(_questions));
 
@@ -486,7 +449,6 @@ abstract class _Profile extends Profile {
       final int? height,
       final List<String>? languageCodes,
       final List<String>? languageWithCountryCodes,
-      final Picture? profilePicture,
       final List<Picture>? pictures,
       final Map<String, Answer>? questions}) = _$ProfileImpl;
   const _Profile._() : super._();
@@ -517,8 +479,6 @@ abstract class _Profile extends Profile {
   List<String>? get languageCodes;
   @override
   List<String>? get languageWithCountryCodes;
-  @override
-  Picture? get profilePicture;
   @override
   List<Picture>? get pictures;
   @override

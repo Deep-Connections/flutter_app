@@ -81,7 +81,7 @@ class ChatListTile extends StatelessWidget {
                   onTap: chat.id?.lambda((chatId) => context
                       .push(MainRoutes.matchProfile.parameterPath([chatId]))),
                   child: AvatarImage(
-                    imageUrl: profile?.profilePicture?.url,
+                    imageUrl: profile?.mainPictureUrl,
                     size: matchImageSize,
                   ),
                 ),
