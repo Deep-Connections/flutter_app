@@ -4,6 +4,11 @@ const Collections = {
   MESSAGES: "messages",
 };
 
+const FieldName = {
+  SENDER_ID: "senderId",
+  PARTICIPANT_IDS: "participantIds",
+};
+
 const FunctionErrors = {
   OK: "ok", // (200) - No error, operation successful.
   INVALID_ARGUMENT: "invalid-argument", // (400) - Client specified an invalid argument.
@@ -29,5 +34,5 @@ const FunctionErrors = {
   DEADLINE_EXCEEDED: "deadline-exceeded", // (504) - Deadline expired before operation could complete.
 };
 
-module.exports = { Collections, FunctionErrors };
+module.exports = { Collections, FieldName, FunctionErrors };
 

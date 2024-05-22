@@ -15,12 +15,11 @@ const unmatch = test.wrap(require("../index").unmatch);
 
 const firebase = require("@firebase/testing");
 
-const { storeMyProfile, storeOtherProfile } = require("./mockProfile");
+const { storeMyProfile, storeOtherProfile } = require("./mock/mockProfile");
 const assert = require("assert");
 
-const { Timestamp } = require("firebase-admin/firestore");
-
 const { Collections, FunctionErrors } = require("../src/constants");
+const { createMockChat, defaultTimestamp } = require("./mock/mockChat");
 
 const UID_1 = "test-uid-1";
 const UID_2 = "test-uid-2";
@@ -45,14 +44,7 @@ describe("Unmatch", () => {
   beforeEach(async () => {
     await firebase.clearFirestoreData({ projectId });
     const promise = Promise.all([storeMyProfile(UID_1, [UID_2], "Bob"), storeMyProfile(UID_2, [UID_1], "Alice")]);
-    chatRef = db.collection(Collections.CHATS).doc();
-    await chatRef.set({
-      participantIds: [UID_1, UID_2],
-      originalParticipantIds: [UID_1, UID_2],
-      createdAt: Timestamp.fromDate(new Date(2021, 1, 1)),
-      lastUpdatedAt: Timestamp.fromDate(new Date(2021, 1, 1)),
-      score: 2.5,
-    });
+    chatRef = await createMockChat([UID_1, UID_2]);
     await promise;
   });
 
@@ -71,8 +63,8 @@ describe("Unmatch", () => {
     assert.equal(chat.participantIds.length, 1);
     assert.equal(chat.participantIds[0], UID_2);
     assert.equal(chat.originalParticipantIds.length, 2);
-    assert.ok(chat.lastUpdatedAt.toDate() > new Date(2021, 1, 1));
-    assert.equal(chat.createdAt.toDate().getTime(), new Date(2021, 1, 1).getTime());
+    assert.ok(chat.lastUpdatedAt > defaultTimestamp);
+    assert.equal(chat.createdAt.toMillis(), defaultTimestamp.toMillis());
   });
 
   it("should create a unmatch message for the other users", async () => {

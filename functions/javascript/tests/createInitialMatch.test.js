@@ -17,7 +17,7 @@ const createInitialMatch = test.wrap(require("../index").createInitialMatch);
 const firebase = require("@firebase/testing");
 
 const { storeMyProfile, storeOtherProfile, storeProfiles,
-  convertProfileFirebase, singleProfilePath } = require("./mockProfile");
+  convertProfileFirebase, singleProfilePath } = require("./mock/mockProfile");
 const assert = require("assert");
 
 const fs = require("fs");
