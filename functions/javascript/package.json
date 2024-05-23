@@ -9,7 +9,7 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test": "mocha --parallel tests/*.js",
+    "test": "mocha --parallel tests/*.test.js",
     "testFile": "mocha tests/deleteAccount.test.js"
   },
   "engines": {

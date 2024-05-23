@@ -8,10 +8,7 @@ process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
 admin.initializeApp({ projectId });
 
-// make sure cloud functions don't reinitialize firebase app
-require("sinon").stub(admin, "initializeApp");
-
-const unmatch = test.wrap(require("../index").unmatch);
+const unmatch = test.wrap(require("../src/cloud_functions/unmatch").unmatch);
 
 const firebase = require("@firebase/testing");
 

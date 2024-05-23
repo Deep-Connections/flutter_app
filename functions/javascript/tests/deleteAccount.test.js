@@ -2,7 +2,7 @@
 const test = require("firebase-functions-test")();
 const admin = require("firebase-admin");
 
-const projectId = "deep-connections-7796d";
+const projectId = "delete-account-test";
 
 process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
@@ -14,10 +14,8 @@ admin.initializeApp({ projectId,
   storageBucket: "deep-connections-7796d.appspot.com",
 });
 
-// make sure cloud functions don't reinitialize firebase app
-require("sinon").stub(admin, "initializeApp");
 
-const deleteAccount = test.wrap(require("../index").deleteAccount);
+const deleteAccount = test.wrap(require("../src/cloud_functions/deleteAccount").deleteAccount);
 
 const firebase = require("@firebase/testing");
 

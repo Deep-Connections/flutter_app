@@ -1,20 +1,12 @@
 
-
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const { Collections, FieldName, FunctionErrors } = require("../constants");
+const { chunkArray } = require("../helpers");
 
 const db = admin.firestore();
 const auth = admin.auth();
 const bucket = admin.storage().bucket();
-
-function chunkArray(array, chunkSize) {
-  const result = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    result.push(array.slice(i, i + chunkSize));
-  }
-  return result;
-}
 
 async function deleteAccountByUserId(userId) {
   let allMessagesOfUser = db.collectionGroup(Collections.MESSAGES)
