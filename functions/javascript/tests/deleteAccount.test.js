@@ -2,7 +2,7 @@
 const test = require("firebase-functions-test")();
 const admin = require("firebase-admin");
 
-const projectId = "account-delete-test";
+const projectId = "deep-connections-7796d";
 
 process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
@@ -33,6 +33,7 @@ const UID_2 = "test-uid-2";
 const db = admin.firestore();
 
 const bucket = admin.storage().bucket();
+const auth = admin.auth();
 
 async function createChat(participantIds) {
   const chatRef = db.collection(Collections.CHATS).doc();
@@ -47,25 +48,37 @@ async function createChat(participantIds) {
   return chatRef;
 }
 
+async function deleteUser(userId) {
+  try {
+    await admin.auth().deleteUser(userId);
+  } catch (e) {/* ignore */}
+}
+
+async function createMockUserData(userId, otherUserId) {
+  await Promise.all([
+    auth.createUser({ uid: userId }),
+    bucket.file(`profile_images/${userId}/image.jpg`).save("test"),
+    db.collection(Collections.PROFILES).doc(userId).set({
+      firstName: userId,
+    }),
+    // create a chat with another user, and a chat with only the to be deleted user
+    createChat([userId, otherUserId]),
+    createChat([userId]),
+  ]);
+}
+
 describe("Delete account", () => {
   beforeEach(async () => {
-    const deleteFirestorePromise = firebase.clearFirestoreData({ projectId });
-    bucket.deleteFiles({ prefix: `profile_images/${UID_1}/` });
-    try {
-      await admin.auth().createUser({ uid: UID_1 });
-    } catch (e) {/* empty */}
-    await deleteFirestorePromise;
+    await Promise.all([
+      firebase.clearFirestoreData({ projectId }),
+      bucket.deleteFiles({}),
+      deleteUser(UID_1),
+      deleteUser(UID_2),
+    ]);
   });
 
   it("removes all sensitive data of user", async () => {
-    const createImagePromise = bucket.file(`profile_images/${UID_1}/image.jpg`).save("test");
-    const createProfilePromise = db.collection(Collections.PROFILES).doc(UID_1).set({
-      firstName: "Alice",
-    });
-
-    // create a chat with another user, and a chat with only the to be deleted user
-    await Promise.all([createChat([UID_1, UID_2]), createChat([UID_1]), createProfilePromise, createImagePromise]);
-
+    await createMockUserData(UID_1, UID_2);
     await deleteAccount({}, { auth: { uid: UID_1 } });
 
     const allChatsPromise = db.collection(Collections.CHATS).get();
@@ -89,7 +102,6 @@ describe("Delete account", () => {
     assert.equal((await profilePromise).exists, false);
     try {
       await admin.auth().getUser(UID_1);
-      await admin.auth().deleteUser(UID_1);
       assert.fail("User should be deleted");
     } catch (e) {
       assert.equal(e.code, "auth/user-not-found");
@@ -97,6 +109,26 @@ describe("Delete account", () => {
   });
 
   it("works even if user has no data", async () => {
+    await auth.createUser({ uid: UID_1 });
     await deleteAccount({}, { auth: { uid: UID_1 } });
+  });
+
+  it("should leave the other user's data intact", async () => {
+    await Promise.all([
+      createMockUserData(UID_1, UID_2),
+      createMockUserData(UID_2, UID_1),
+    ]);
+    await deleteAccount({}, { auth: { uid: UID_1 } });
+
+    const profile2 = db.collection(Collections.PROFILES).doc(UID_2).get();
+    const constChatsOfUser2 = db.collection(Collections.CHATS).where("participantIds", "array-contains", UID_2).get();
+    const constMessagesOfUser2 = db.collectionGroup(Collections.MESSAGES).where("senderId", "==", UID_2).get();
+    const user2 = admin.auth().getUser(UID_2);
+    const imagesOfUser2 = bucket.getFiles({ prefix: `profile_images/${UID_2}/` });
+    assert.equal((await profile2).data().firstName, UID_2);
+    assert.equal((await constChatsOfUser2).size, 3);
+    assert.equal((await constMessagesOfUser2).size, 4);
+    assert.equal((await user2).uid, UID_2);
+    assert.equal((await imagesOfUser2)[0].length, 1);
   });
 });
