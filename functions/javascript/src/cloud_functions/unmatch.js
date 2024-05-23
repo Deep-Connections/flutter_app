@@ -3,6 +3,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const { FieldValue } = require("firebase-admin/firestore");
 const { Collections, FunctionErrors } = require("../constants");
+const { chunkArray } = require("../helpers");
 
 const db = admin.firestore();
 
@@ -25,8 +26,11 @@ exports.unmatch = functions.region("europe-west6").https.onCall(async (data, con
     throw new functions.https.HttpsError(FunctionErrors.NOT_FOUND, "User not found");
   }
   const firstName = profileDoc.data().firstName;
+
+  let wasChatDeleted = false;
+  let chatRef;
   await db.runTransaction(async (transaction) => {
-    const chatRef = db.collection(Collections.CHATS).doc(chatId);
+    chatRef = db.collection(Collections.CHATS).doc(chatId);
     const chatDoc = await transaction.get(chatRef);
     if (!chatDoc.exists) {
       throw new functions.https.HttpsError(FunctionErrors.NOT_FOUND, "Chat not found");
@@ -43,6 +47,7 @@ exports.unmatch = functions.region("europe-west6").https.onCall(async (data, con
     if (chatData.participantIds.length === 1) {
       // if last user we delete the chat
       transaction.delete(chatRef);
+      wasChatDeleted = true;
     } else {
       // remove the user from chat and create a message to notify the others about the unmatch
       transaction.update(chatRef, {
@@ -62,5 +67,16 @@ exports.unmatch = functions.region("europe-west6").https.onCall(async (data, con
       });
     }
   });
+
+  if (wasChatDeleted) {
+    const allMessagesOfChat = await chatRef.collection(Collections.MESSAGES).select().get();
+
+    const deleteMessagesPromises = chunkArray(allMessagesOfChat.docs, 500).map((chunk) => {
+      const batch = db.batch();
+      chunk.forEach((doc) => batch.delete(doc.ref));
+      return batch.commit();
+    });
+    await Promise.all(deleteMessagesPromises);
+  }
   return { message: "Unmatched successfully" };
 });
