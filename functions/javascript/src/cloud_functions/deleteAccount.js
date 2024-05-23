@@ -6,6 +6,7 @@ const { Collections, FieldName, FunctionErrors } = require("../constants");
 
 const db = admin.firestore();
 const auth = admin.auth();
+const bucket = admin.storage().bucket();
 
 function chunkArray(array, chunkSize) {
   const result = [];
@@ -24,13 +25,13 @@ async function deleteAccountByUserId(userId) {
 
   allMessagesOfUser = await allMessagesOfUser;
 
-  const deleteMessagesFutures = chunkArray(allMessagesOfUser.docs, 500).map((chunk) => {
+  const deleteMessagesPromises = chunkArray(allMessagesOfUser.docs, 500).map((chunk) => {
     const batch = db.batch();
     chunk.forEach((doc) => batch.delete(doc.ref));
     return batch.commit();
   });
 
-  const removeChatParticipantFutures = chunkArray(allChatsOfUser.docs, 500).map((chunk) => {
+  const removeChatParticipantPromises = chunkArray(allChatsOfUser.docs, 500).map((chunk) => {
     chunk.forEach((doc) => {
       const batch = db.batch();
       if (doc.data().participantIds.length === 1) {
@@ -45,10 +46,16 @@ async function deleteAccountByUserId(userId) {
     });
   });
 
-  const deleteProfileFuture = db.collection(Collections.PROFILES).doc(userId).delete();
+  const deleteProfilePromise = db.collection(Collections.PROFILES).doc(userId).delete();
 
-  await auth.deleteUser(userId);
-  await Promise.all([deleteProfileFuture] + deleteMessagesFutures + removeChatParticipantFutures);
+  const deletUserPromise = auth.deleteUser(userId);
+
+  const deletFilesPromise = bucket.deleteFiles({ prefix: `profile_images/${userId}/` });
+
+  await Promise.all([deleteProfilePromise,
+    deletUserPromise,
+    deletFilesPromise,
+  ] + deleteMessagesPromises + removeChatParticipantPromises);
 }
 
 exports.deleteAccountByUserId = deleteAccountByUserId;
