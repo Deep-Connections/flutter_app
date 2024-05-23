@@ -65,4 +65,5 @@ class FunctionErrors {
 
 class StorageErrors {
   static const String objectNotFound = 'object-not-found';
+  static const String unauthorized = 'unauthorized';
 }

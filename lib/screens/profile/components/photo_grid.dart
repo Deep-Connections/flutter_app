@@ -151,6 +151,13 @@ class PhotoItem extends StatelessWidget {
         CachedNetworkImage(
           imageUrl: url,
           fit: BoxFit.cover,
+          errorWidget: (context, url, error) => Container(
+              color: colorScheme.surface,
+              child: Icon(
+                Icons.error,
+                size: 40.0,
+                color: colorScheme.error,
+              )),
         ),
         Align(
           alignment: Alignment.topRight,
