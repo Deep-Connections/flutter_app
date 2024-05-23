@@ -19,6 +19,7 @@ class FieldName {
 class Functions {
   static const createInitialMatch = 'createInitialMatch';
   static const unmatch = 'unmatch';
+  static const deleteAccount = 'deleteAccount';
 }
 
 class Regions {
