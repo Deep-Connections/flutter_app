@@ -37,8 +37,8 @@ async function deleteChats(userId, profilePromise) {
         batch.delete(chat.ref);
       } else {
         batch.update(chat.ref, {
-          participantIds: admin.firestore.FieldValue.arrayRemove(userId),
-          lastUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          participantIds: FieldValue.arrayRemove(userId),
+          lastUpdatedAt: FieldValue.serverTimestamp(),
         });
         if (firstName !== null) {
           batch.create(db.collection(Collections.CHATS).doc(chat.id).collection(Collections.MESSAGES).doc(), {
