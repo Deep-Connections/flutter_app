@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -9,7 +10,7 @@ import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/utils/language_helper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-//flutter test scripts/generate_random_profile.dart
+//flutter test scripts/generate_flutter.dart
 
 final random = Random();
 
@@ -64,14 +65,14 @@ void main() {
     return json;
   }
 
-  /*test('Generate random profile', () {
+  test('Generate random profile', () {
     File file = File('scripts/generated/single_profile.json');
     file.writeAsStringSync(jsonEncode(generateRandomProfile()));
     File fileMultiple = File('scripts/generated/multiple_profile.json');
     final profiles = List.generate(10, (_) => generateRandomProfile());
     fileMultiple.writeAsStringSync(
         jsonEncode(profiles));
-  });*/
+  });
 
   String newLineList(List<String> list) {
     return "[\n  ${list.map((e) => '"$e"').join(',\n  ')},\n]";

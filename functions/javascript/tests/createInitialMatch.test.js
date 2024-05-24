@@ -45,8 +45,8 @@ async function hasNoMatch() {
   assert.equal(e.code, FunctionErrors.NOT_FOUND, "Should not find a match");
 }
 
-const bestProfileName = "Profile 0";
-const bestProfileScore = 16;
+const bestProfileName = "Profile 7";
+const bestProfileScore = 12;
 
 describe("InitialMatch", () => {
   beforeEach(async () => {
