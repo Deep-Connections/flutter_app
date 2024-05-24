@@ -12,6 +12,8 @@ _isTest() {
   }
 }
 
+const durationUntilNextMatch = Duration(days: 1);
+
 const maxImageSize = 2 * 1024 * 1024; // 2MB
 const imageCompression = 50;
 const maxNumProfilePhotos = 6;
