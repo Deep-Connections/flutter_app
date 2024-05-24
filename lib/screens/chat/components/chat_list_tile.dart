@@ -19,15 +19,15 @@ const unreadSize = 20.0;
 class ChatListTile extends StatelessWidget {
   final Chat chat;
   final FutureOr<Profile?> futureOrProfile;
-  final void Function()? onTap;
-  final void Function()? onDelete;
+  final void Function() onTap;
+  final void Function() onDelete;
 
   const ChatListTile({
     super.key,
     required this.chat,
     required this.futureOrProfile,
-    this.onTap,
-    this.onDelete,
+    required this.onTap,
+    required this.onDelete,
   });
 
   String _getMessageText(BuildContext context, Message? message) {
@@ -35,7 +35,10 @@ class ChatListTile extends StatelessWidget {
     if (message == null) return "";
     return switch (message) {
       MessageData() => message.text,
-      MessageUnmatch() => loc.messages_unmatchedWithYou(message.senderFirstName)
+      MessageUnmatch() =>
+        loc.messages_unmatchedWithYou(message.senderFirstName),
+      MessageDelete() =>
+        loc.messages_matchDeletedAccount(message.senderFirstName),
     };
   }
 
@@ -48,10 +51,14 @@ class ChatListTile extends StatelessWidget {
         builder: (context, profile, _) {
           return Dismissible(
               key: ValueKey(chat.id),
-              direction: profile?.firstName != null
+              direction: profile?.firstName != null || chat.hasSingleParticipant
                   ? DismissDirection.endToStart
                   : DismissDirection.none,
               confirmDismiss: (_) async {
+                if (chat.hasSingleParticipant) {
+                  onDelete();
+                  return true;
+                }
                 return await showDialog(
                   context: context,
                   builder: (context) => ConfirmationDialog(

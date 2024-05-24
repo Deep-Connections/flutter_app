@@ -63,7 +63,6 @@ class _PhotoGridState extends State<PhotoGrid> {
     final numMissingPhotos = maxNumProfilePhotos - _pictures.length;
     final picturesAndNull = _pictures + List.filled(numMissingPhotos, null);
     final colorScheme = Theme.of(context).colorScheme;
-    final loc = AppLocalizations.of(context);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(standardPadding),

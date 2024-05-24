@@ -31,6 +31,8 @@ class Chat with _$Chat {
     return chatInfos?[currentUserId!];
   }
 
+  bool get hasSingleParticipant => participantIds.length == 1;
+
   bool get isUnread => unreadMessages != 0;
 
   DateTime? get lastRead => info?.lastRead;

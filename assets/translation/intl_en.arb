@@ -78,6 +78,7 @@
   "messages_startConversation": "Be the one to break the ice!",
   "messages_messageTextField": "Message",
   "messages_unmatchedWithYou": "{name} unmatched",
+  "messages_matchDeletedAccount": "Account of {name} was deleted",
   "matching_readyToMatchDescription": "Create your next match as soon as you're ready!",
   "matching_readyToMatchHeadline": "Want a new match?",
   "matching_tooManyMatchesDescription": "You can have up to {maxMatches} matches at a time. Swipe left to unmatch someone and free up a spot!",
