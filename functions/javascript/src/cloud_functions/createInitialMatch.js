@@ -51,7 +51,8 @@ exports.createInitialMatch = functions.region("europe-west6").https.onCall(async
     }
 
     if (!lastMatchedAt || hoursSinceLastMatch >= 24) {
-      transaction.update(profileRef, { lastMatchedAt: FieldValue.serverTimestamp() });
+      const numMatches = currentProfile.numMatches || 0;
+      transaction.update(profileRef, { lastMatchedAt: FieldValue.serverTimestamp(), numMatches: numMatches });
     } else {
       throw new functions.https.HttpsError(FunctionErrors.ALREADY_EXISTS, "User has already been matched today");
     }
