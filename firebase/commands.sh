@@ -2,6 +2,8 @@
 exit 1
 firebase emulators:start --import=./firebase/emulator_storage --export-on-exit
 
+firebase emulators:export firebase/emulator_storage
+
 npm test
 
 npm run lint -- --fix
