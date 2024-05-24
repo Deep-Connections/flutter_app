@@ -24,18 +24,30 @@ async function createMockChat(participantIds, chatRef=null, timestamp=defaultTim
   return chatRef;
 }
 
-async function createMockMessage(chatRef, participantIds, senderId=null, text="Hello", timestamp=defaultTimestamp) {
+async function createMockMessage(
+    chatRef,
+    participantIds,
+    senderId=null,
+    runtimeType="default",
+    text="Hello",
+    timestamp=defaultTimestamp,
+) {
   if (senderId == null) {
     senderId = participantIds[0];
   }
-  return chatRef.collection(Collections.MESSAGES).add({
+
+  const message = {
     chatId: chatRef.id,
     senderId: senderId,
     participantIds: participantIds,
     text: text,
     createdAt: timestamp,
     lastUpdatedAt: timestamp,
-  });
+  };
+  if (runtimeType) {
+    message.runtimeType = runtimeType;
+  }
+  return chatRef.collection(Collections.MESSAGES).add(message);
 }
 
 module.exports = { createMockChat, createMockMessage, defaultTimestamp };

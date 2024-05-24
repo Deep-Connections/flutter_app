@@ -40,7 +40,7 @@ async function createChat(participantIds) {
   const messagePromise = createMockMessage(chatRef, participantIds);
 
   const receivingParticipantIds = participantIds.reverse();
-  const receivingMessagePromise = createMockMessage(chatRef, receivingParticipantIds);
+  const receivingMessagePromise = createMockMessage(chatRef, receivingParticipantIds, null, false);
 
   await Promise.all([chatPromise, messagePromise, receivingMessagePromise]);
   return chatRef;
@@ -138,5 +138,19 @@ describe("Delete account", () => {
     assert.equal(user1SentMessages[0].data().runtimeType, "delete");
     assert.equal((await user2).uid, UID_2);
     assert.equal((await imagesOfUser2)[0].length, 1);
+  });
+
+  it("should not delete messages that inform about deletion", async () => {
+    const chatRef = await createChat([UID_1, UID_2]);
+
+    await Promise.all([
+      createMockUserData(UID_1),
+      createMockMessage(chatRef, [UID_1, UID_2], null, "delete"),
+    ]);
+
+    await deleteAccount({}, { auth: { uid: UID_1 } });
+
+    const messages = await db.collectionGroup(Collections.MESSAGES).where("senderId", "==", UID_1).get();
+    assert.equal(messages.size, 2);
   });
 });

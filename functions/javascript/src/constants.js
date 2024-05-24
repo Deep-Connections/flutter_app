@@ -7,6 +7,7 @@ const Collections = {
 const FieldName = {
   SENDER_ID: "senderId",
   PARTICIPANT_IDS: "participantIds",
+  RUNTIME_TYPE: "runtimeType",
 };
 
 const FunctionErrors = {

@@ -11,18 +11,24 @@ const bucket = admin.storage().bucket();
 
 async function deleteMessages(userId) {
   const allMessagesOfUser = await db.collectionGroup(Collections.MESSAGES)
-      .where(FieldName.SENDER_ID, "==", userId).select().get();
+      .where(FieldName.SENDER_ID, "==", userId).select(FieldName.RUNTIME_TYPE).get();
 
   return Promise.all(chunkArray(allMessagesOfUser.docs, 500).map((chunk) => {
     const batch = db.batch();
-    chunk.forEach((doc) => batch.delete(doc.ref));
+    chunk.forEach((doc) => {
+      // make sure the delete message we've just created are not deleted
+      if (doc.data().runtimeType !== "delete") {
+        batch.delete(doc.ref);
+      }
+    });
+
     return batch.commit();
   }));
 }
 
 async function deleteChats(userId, profilePromise) {
   const allChatsOfUser = await db.collection(Collections.CHATS)
-      .where(FieldName.PARTICIPANT_IDS, "array-contains", userId).get();
+      .where(FieldName.PARTICIPANT_IDS, "array-contains", userId).select(FieldName.PARTICIPANT_IDS).get();
   const firstName = await profilePromise.then((doc) => {
     if (!doc.exists || !doc.data().firstName) {
       return null;
