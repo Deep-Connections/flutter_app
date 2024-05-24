@@ -8,6 +8,7 @@ const FieldName = {
   SENDER_ID: "senderId",
   PARTICIPANT_IDS: "participantIds",
   RUNTIME_TYPE: "runtimeType",
+  CHAT_ID: "chatId",
 };
 
 const FunctionErrors = {

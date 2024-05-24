@@ -122,6 +122,7 @@ class FirebaseAuthService implements AuthService {
   Future<Response<void>> deleteAccount() {
     return handleFirebaseErrors(() async {
       await _functions.httpsCallable(Functions.deleteAccount)();
+      await signOut();
     });
   }
 }

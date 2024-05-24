@@ -1,3 +1,4 @@
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 
@@ -73,3 +74,17 @@ const firstLanguageCodes = [
   "et_EE",
   "sl_SI"
 ];
+
+List<MapEntry<String, String>> getLocaleNames(BuildContext context) {
+  final countryMap = LocaleNames.of(context)!
+      .sortedByName
+      .where((lang) => lang.key.split("_").length == 2)
+      .let((countryList) => Map.fromEntries(countryList));
+  final firstCountries = firstLanguageCodes.mapNotNull((lang) {
+    final removedCountry = countryMap.remove(lang);
+    if (removedCountry == null) return null;
+    return MapEntry(lang, removedCountry);
+  });
+
+  return firstCountries + countryMap.entries.toList();
+}

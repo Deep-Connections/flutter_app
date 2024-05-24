@@ -2,6 +2,7 @@ import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/components/dc_column.dart';
 import 'package:deep_connections/screens/components/dialogs/confirmation_dialog.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
+import 'package:deep_connections/services/utils/error_handling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -31,7 +32,8 @@ class ProfileSettingsScreen extends StatelessWidget {
                 titleText: loc.profileSettings_deleteAccountDialogTitle,
                 contentText: loc.profileSettings_deleteAccountDialogContent,
                 onConfirm: () async {
-                  await authService.deleteAccount();
+                  MessageHandler.showResponseError(
+                      await authService.deleteAccount(), loc);
                 },
                 confirmText: loc.profileSettings_deleteAccountButton,
               ),
