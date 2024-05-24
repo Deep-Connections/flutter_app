@@ -62,6 +62,15 @@ async function deleteChats(userId, profilePromise) {
     });
   }));
 }
+async function deleteUser(userId) {
+  try {
+    await auth.deleteUser(userId);
+  } catch (error) {
+    if (error.code !== "auth/user-not-found") {
+      throw error;
+    }
+  }
+}
 
 async function deleteAccountByUserId(userId) {
   const profilePromise = db.collection(Collections.PROFILES).doc(userId).get();
@@ -70,19 +79,22 @@ async function deleteAccountByUserId(userId) {
 
   const deleteChatsPromise = deleteChats(userId, profilePromise);
 
-  const deletUserPromise = auth.deleteUser(userId);
+  await Promise.all([
+    profilePromise,
+    deleteMessagesPromise,
+    deleteChatsPromise,
+  ]);
+
+  const deletUserPromise = deleteUser(userId);
 
   const deletFilesPromise = bucket.deleteFiles({ prefix: `profile_images/${userId}/` });
 
-  await profilePromise;
   const deleteProfilePromise = db.collection(Collections.PROFILES).doc(userId).delete();
 
   await Promise.all([
     deleteProfilePromise,
     deletUserPromise,
     deletFilesPromise,
-    deleteMessagesPromise,
-    deleteChatsPromise,
   ]);
 }
 
