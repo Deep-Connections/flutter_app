@@ -77,8 +77,10 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.singleton<_i7.UserService>(
         () => _i7.UserService(gh<_i3.FirebaseAuth>()));
-    gh.factory<_i8.AuthService>(
-        () => _i9.FirebaseAuthService(gh<_i3.FirebaseAuth>()));
+    gh.factory<_i8.AuthService>(() => _i9.FirebaseAuthService(
+          gh<_i3.FirebaseAuth>(),
+          gh<_i5.FirebaseFunctions>(),
+        ));
     gh.lazySingleton<_i10.ChatService>(() => _i10.ChatService(
           gh<_i7.UserService>(),
           gh<_i4.FirebaseFirestore>(),

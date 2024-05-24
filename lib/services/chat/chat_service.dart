@@ -9,7 +9,6 @@ import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:deep_connections/utils/logging.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -128,23 +127,7 @@ class ChatService {
                   }).toList()
                     ..sort((a, b) => b.createdAt.compareTo(a.createdAt)))
               .distinct());
-    })
-        // create a new chat if there are no chats or all chats are older than 24h
-        /*..firstWhere((chats) {
-        if (chats.isEmpty) return true;
-        final areAllChatsOlderThan24h = !chats.any((chat) {
-          final youngerThan24h = chat.timestamp
-                  ?.isAfter(DateTime.now().subtract(const Duration(days: 1))) ??
-              false;
-          return youngerThan24h;
-        });
-        return areAllChatsOlderThan24h;
-      }).let((asyncChatList) async {
-        final chats = await asyncChatList;
-        final excludedUsers = chats.mapNotNull((chat) => chat.otherUserId);
-        createChat(excludedUsers);
-      })*/
-        );
+    }));
 
   FutureOr<Chat> chatById(String chatId) {
     final chat =
@@ -215,21 +198,6 @@ class ChatService {
             }));
   }
 
-  /*Future<Response<String?>> createChat(List<String> excludedUsers) async {
-    final newMatch = await _profileService.getNewMatch(excludedUsers);
-    final matchUserId = newMatch?.id;
-
-    if (matchUserId != null) {
-      final chat = Chat(
-        timestamp: DateTime.now(),
-        participantIds: [_userService.userId, matchUserId],
-      );
-      return await handleFirebaseErrors(
-          () async => (await _chatRef.add(chat)).id);
-    }
-    return SuccessRes(null);
-  }*/
-
   LocKey? getInitialMatchUiErrorMessages(FirebaseFunctionsException exception) {
     switch (exception.code) {
       case FunctionErrors.notFound:
@@ -243,12 +211,8 @@ class ChatService {
   }
 
   Future<Response> createMatch() async {
-    final app = Firebase.app();
-    logger.d(app.name);
-    final callable = _functions.httpsCallable(Functions.createInitialMatch);
-
     try {
-      await callable();
+      await _functions.httpsCallable(Functions.createInitialMatch)();
       return SuccessRes(null);
     } on FirebaseFunctionsException catch (e) {
       return ErrorRes(

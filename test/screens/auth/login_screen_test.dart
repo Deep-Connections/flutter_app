@@ -3,13 +3,14 @@ import 'package:deep_connections/services/auth/firebase_auth_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../services/fake_firebase_auth.dart';
+import '../../services/mock_firebase_functions.dart';
 import '../../test_extensions.dart';
 
 void main() {
   testWidgets('Test login screen with wrong and correct credentials ',
       (WidgetTester tester) async {
     final firebaseAuth = UnauthFakeFirebaseAuth();
-    final auth = FirebaseAuthService(firebaseAuth);
+    final auth = FirebaseAuthService(firebaseAuth, MockFirebaseFunctions());
     var loginSuccess = false;
 
     final loc = await tester.pumpLocalizedWidget(LoginScreen(

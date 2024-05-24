@@ -78,3 +78,38 @@ Map<String, dynamic> _$$MessageUnmatchImplToJson(
   val['runtimeType'] = instance.$type;
   return val;
 }
+
+_$MessageDeleteImpl _$$MessageDeleteImplFromJson(Map<String, dynamic> json) =>
+    _$MessageDeleteImpl(
+      json['senderId'] as String,
+      json['senderFirstName'] as String,
+      json['chatId'] as String,
+      const TimestampConverter().fromJson(json['createdAt'] as Timestamp),
+      const TimestampConverter().fromJson(json['lastUpdatedAt'] as Timestamp),
+      (json['participantIds'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      id: json['id'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$MessageDeleteImplToJson(_$MessageDeleteImpl instance) {
+  final val = <String, dynamic>{
+    'senderId': instance.senderId,
+    'senderFirstName': instance.senderFirstName,
+    'chatId': instance.chatId,
+    'createdAt': const TimestampConverter().toJson(instance.createdAt),
+    'lastUpdatedAt': const TimestampConverter().toJson(instance.lastUpdatedAt),
+    'participantIds': instance.participantIds,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['runtimeType'] = instance.$type;
+  return val;
+}

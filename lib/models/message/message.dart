@@ -28,6 +28,16 @@ sealed class Message with _$Message {
     @Freezed(fromJson: false, toJson: false) String? id,
   }) = MessageUnmatch;
 
+  const factory Message.delete(
+      String senderId,
+      String senderFirstName,
+      String chatId,
+      @TimestampConverter() DateTime createdAt,
+      @TimestampConverter() DateTime lastUpdatedAt,
+      List<String> participantIds, {
+        @Freezed(fromJson: false, toJson: false) String? id,
+      }) = MessageDelete;
+
   factory Message.fromJson(Map<String, dynamic> json) =>
       _$MessageFromJson(json);
 }

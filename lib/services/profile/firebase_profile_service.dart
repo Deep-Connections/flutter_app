@@ -7,7 +7,6 @@ import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
-import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:deep_connections/utils/logging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -70,22 +69,6 @@ class FirebaseProfileService implements ProfileService {
     });
   }
 
-  @override
-  Future<Profile?> getNewMatch(List<String> excludedUserIds) async {
-    final excludedIds = [_userService.userId] + excludedUserIds;
-    final profiles = await _profileReference
-        .where(FieldPath.documentId,
-            whereNotIn: excludedIds.length <= 10
-                ? excludedIds
-                : excludedIds.sublist(0, 10))
-        .limit(5)
-        .get()
-        .then((value) => value.docs.map((doc) => doc.data()).toList());
-    profiles.shuffle();
-    return profiles
-        .firstWhereOrNull((profile) => !excludedIds.contains(profile.id));
-  }
-
   Reference get _imageRef => _storage
       .ref()
       .child(StorageCollection.profileImages)
@@ -136,8 +119,8 @@ class FirebaseProfileService implements ProfileService {
       try {
         await ref.delete();
       } on FirebaseException catch (e) {
-        if (e.code == StorageErrors.objectNotFound) {
-        } else {
+        if (![StorageErrors.objectNotFound, StorageErrors.unauthorized]
+            .contains(e.code)) {
           rethrow;
         }
       }

@@ -19,6 +19,7 @@ class FieldName {
 class Functions {
   static const createInitialMatch = 'createInitialMatch';
   static const unmatch = 'unmatch';
+  static const deleteAccount = 'deleteAccount';
 }
 
 class Regions {
@@ -65,4 +66,5 @@ class FunctionErrors {
 
 class StorageErrors {
   static const String objectNotFound = 'object-not-found';
+  static const String unauthorized = 'unauthorized';
 }

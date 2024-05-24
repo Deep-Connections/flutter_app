@@ -1,6 +1,5 @@
 import 'package:deep_connections/models/user/user.dart';
-
-import '../utils/response.dart';
+import 'package:deep_connections/services/utils/response.dart';
 
 abstract class AuthService {
   Future<Response<DcUser>> loginWithEmail({
@@ -17,5 +16,7 @@ abstract class AuthService {
 
   Future<Response<DcUser>> signInWithGoogle();
 
-  Future signOut();
+  Future<Response<void>> signOut();
+
+  Future<Response<void>> deleteAccount();
 }

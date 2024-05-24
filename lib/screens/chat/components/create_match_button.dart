@@ -21,36 +21,29 @@ class CreateMatchSection extends StatefulWidget {
 
 class _CreateMatchSectionState extends State<CreateMatchSection> {
   Timer? _timer;
-  Duration? _duration;
   bool _isCreatingMatch = false;
 
   @override
   void initState() {
     super.initState();
-    _updateTime();
     _startTimer();
   }
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _updateTime();
-      });
+      if (_getDurationUntilNextMatch() != null) {
+        setState(() {});
+      }
     });
   }
 
-  void _updateTime() {
+  Duration? _getDurationUntilNextMatch() {
     final now = DateTime.now();
     final lastMatchedAt = widget.profile.lastMatchedAt;
-    if (lastMatchedAt == null) return;
+    if (lastMatchedAt == null) return null;
     final difference =
-        lastMatchedAt.add(const Duration(days: 1)).difference(now);
-    if (difference.isNegative) {
-      _duration = null;
-      _timer?.cancel();
-    } else {
-      _duration = difference;
-    }
+        lastMatchedAt.add(durationUntilNextMatch).difference(now);
+    return difference.isNegative ? null : difference;
   }
 
   @override
@@ -69,7 +62,7 @@ class _CreateMatchSectionState extends State<CreateMatchSection> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final duration = _duration;
+    final duration = _getDurationUntilNextMatch();
     final reachedMaxMatches = widget.profile.numMatches == maxMatches;
     final needsToWaitForMatch = duration != null;
     final canCreateMatch = !reachedMaxMatches && !needsToWaitForMatch;

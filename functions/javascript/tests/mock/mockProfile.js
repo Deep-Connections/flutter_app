@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const admin = require("firebase-admin");
 
-const { Collections } = require("../constants");
+const { Collections } = require("../../src/constants");
 
 
 const generatedProfilePath = "../../scripts/generated";

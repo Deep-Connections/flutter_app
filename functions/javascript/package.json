@@ -9,8 +9,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test": "mocha --parallel tests/*.js",
-    "testFile": "mocha tests/unmatch.test.js"
+    "test": "mocha --parallel tests/*.test.js",
+    "testFile": "mocha tests/deleteAccount.test.js"
   },
   "engines": {
     "node": "18"

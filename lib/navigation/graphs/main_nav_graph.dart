@@ -1,7 +1,7 @@
 import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/user/user_status.dart';
 import 'package:deep_connections/navigation/graphs/auth_nav_graph.dart';
-import 'package:deep_connections/navigation/graphs/bottom_nav_graph.dart';
+import 'package:deep_connections/navigation/graphs/bottom/bottom_nav_graph.dart';
 import 'package:deep_connections/navigation/graphs/initial_profile_nav_graph.dart';
 import 'package:deep_connections/navigation/graphs/match_graph.dart';
 import 'package:deep_connections/navigation/refresh_listenable.dart';

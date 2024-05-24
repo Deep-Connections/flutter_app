@@ -1,5 +1,8 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:deep_connections/models/user/user.dart';
 import 'package:deep_connections/services/auth/auth_service.dart';
+import 'package:deep_connections/services/firebase_constants.dart';
+import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
 import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/logging.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,8 +15,9 @@ import '../../utils/loc_key.dart';
 @Injectable(as: AuthService)
 class FirebaseAuthService implements AuthService {
   final FirebaseAuth _auth;
+  final FirebaseFunctions _functions;
 
-  FirebaseAuthService(this._auth);
+  FirebaseAuthService(this._auth, this._functions);
 
   LocKey getAuthExceptionMessage(FirebaseAuthException e) {
     switch (e.code) {
@@ -81,7 +85,7 @@ class FirebaseAuthService implements AuthService {
   }
 
   @override
-  Future signOut() async {
+  Future<Response<void>> signOut() async {
     return handleAuthErrors(() => _auth.signOut());
   }
 
@@ -111,6 +115,13 @@ class FirebaseAuthService implements AuthService {
       } else {
         return _signInWithGoogleMobile();
       }
+    });
+  }
+
+  @override
+  Future<Response<void>> deleteAccount() {
+    return handleFirebaseErrors(() async {
+      await _functions.httpsCallable(Functions.deleteAccount)();
     });
   }
 }

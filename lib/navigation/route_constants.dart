@@ -66,6 +66,7 @@ class BottomNavigation {
 class ProfileRoutes {
   static final additional = NavRoute('additional', BottomNavigation.profile);
   static final photos = NavRoute('photos', BottomNavigation.profile);
+  static final settings = NavRoute('settings', BottomNavigation.profile);
   static final section = NavRoute('section', BottomNavigation.profile,
       pathParameter: 'sectionPath');
   static final step = NavRoute('step', section, pathParameter: 'stepPath');

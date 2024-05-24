@@ -91,7 +91,7 @@ const AllQuestions = ${newLineList(questionIds)};
 
 module.exports = { AllGenders, GenderEveryone, AllQuestions };
 """;
-    File file = File('functions/generated_flutter_constants.js');
+    File file = File('functions/javascript/src/generated_flutter_constants.js');
     file.writeAsStringSync(genderJS);
   });
 }

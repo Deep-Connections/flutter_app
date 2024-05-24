@@ -29,7 +29,8 @@ class ProfileScreen extends StatelessWidget {
         title: loc.profile_title,
         actions: [
           IconButton(
-              icon: const Icon(Icons.logout), onPressed: authService.signOut)
+              icon: const Icon(Icons.settings),
+              onPressed: () => context.go(ProfileRoutes.settings.fullPath))
         ],
         body: ListView(
           padding: const EdgeInsets.all(standardPadding),

@@ -9,19 +9,18 @@ process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
 admin.initializeApp({ projectId });
 
-// make sure cloud functions don't reinitialize firebase app
-require("sinon").stub(admin, "initializeApp");
+// require("sinon").stub(admin, "initializeApp");
 
-const createInitialMatch = test.wrap(require("../index").createInitialMatch);
+const createInitialMatch = test.wrap(require("../src/cloud_functions/createInitialMatch").createInitialMatch);
 
 const firebase = require("@firebase/testing");
 
 const { storeMyProfile, storeOtherProfile, storeProfiles,
-  convertProfileFirebase, singleProfilePath } = require("./mockProfile");
+  convertProfileFirebase, singleProfilePath } = require("./mock/mockProfile");
 const assert = require("assert");
 
 const fs = require("fs");
-const { Collections, FunctionErrors } = require("../constants");
+const { Collections, FunctionErrors } = require("../src/constants");
 
 const UID = "test-uid";
 
