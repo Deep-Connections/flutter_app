@@ -1,0 +1,30 @@
+name: Firebase CI
+
+on: [ push ]
+
+jobs:
+  firebase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Start Firebase Emulator
+        run: |
+          echo '{}' > ./.firebase/secret.json  # if you need to mock Firebase secrets
+          firebase emulators:start --only firestore,auth --project demo-project &
+          sleep 5  # Wait for emulators to fully start
+
+      - name: Run tests
+        run: npm test
+
+      - name: Shutdown Firebase Emulator
+        run: firebase emulators:exec --project demo-project "echo 'Emulator shutdown'"
