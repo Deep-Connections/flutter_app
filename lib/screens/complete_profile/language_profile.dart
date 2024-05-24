@@ -4,6 +4,7 @@ import 'package:deep_connections/screens/complete_profile/components/language/la
 import 'package:deep_connections/screens/complete_profile/components/language/language_notifier.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/language_helper.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:flutter/material.dart';
@@ -37,11 +38,12 @@ class _LanguageProfileScreenState extends State<LanguageProfileScreen> {
         stream: widget.profileService.profileStream,
         builder: (context, snap) {
           final codes = snap.data?.languageWithCountryCodes;
+          final localeNames = getLocaleNames(context);
           if (codes != null) {
-            languageNotifier.selectedLanguages = Map.fromEntries(
-                getLocaleNames(context)
-                    .where((lang) => codes.contains(lang.key))
-                    .map((lang) => MapEntry(lang.key, lang.value)));
+            languageNotifier.selectedLanguages = Map.fromEntries(codes
+                .mapNotNull((languageCode) => localeNames
+                    .firstWhereOrNull((element) => element.key == languageCode))
+                .toList());
           }
           return BaseProfileScreen(
               title: loc.completeProfile_languageTitle,
