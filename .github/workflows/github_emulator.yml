@@ -7,20 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '18'
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
       - name: Start Firebase Emulator
         run: |
-          echo '{}' > ./.firebase/secret.json  # if you need to mock Firebase secrets
-          firebase emulators:start --only firestore,auth --project demo-project &
+          # echo '{}' > ./.firebase/secret.json  # if you need to mock Firebase secrets
+          firebase emulators:start &
           sleep 5  # Wait for emulators to fully start
 
       - name: Run tests
