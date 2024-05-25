@@ -13,7 +13,7 @@
     "testFile": "mocha tests/deleteAccount.test.js"
   },
   "engines": {
-    "node": "18"
+    "node": "22"
   },
   "main": "index.js",
   "dependencies": {
