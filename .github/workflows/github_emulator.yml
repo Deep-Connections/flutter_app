@@ -23,7 +23,7 @@ jobs:
 
       - name: Run tests
         run:
-          cd firebase && npm test
+          cd firebase && npm install && npm test
 
       - name: Shutdown Firebase Emulator
         run: firebase emulators:exec "echo 'Emulator shutdown'"
