@@ -7,7 +7,7 @@ const projectId = "create-initial-match-test";
 
 process.env.GCLOUD_PROJECT = "deep-connections-7796d";
 process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
-admin.initializeApp({ projectId });
+admin.initializeApp({ projectId: projectId });
 
 // require("sinon").stub(admin, "initializeApp");
 
