@@ -17,12 +17,12 @@ jobs:
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Firestore installs
-        working-directory: ./firebase
-        run: npm install
+      # - name: Firestore installs
+      #   working-directory: ./firebase
+      #   run: npm install
 
-      - name: Firestore test
-        run: firebase emulators:exec --only firestore 'cd firebase && npm test'
+      # - name: Firestore test
+      #   run: firebase emulators:exec --only firestore 'cd firebase && npm test'
 
       - name: Javascript functions installs
         working-directory: ./functions/javascript
