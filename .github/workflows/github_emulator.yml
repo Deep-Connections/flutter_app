@@ -13,16 +13,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: NPM install
-        working-directory: ./firebase
-        run: npm install
  
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      - name: Firestore installs
+        working-directory: ./firebase
+        run: npm install
+
       - name: Firestore test
         run: firebase emulators:exec --only firestore 'cd firebase && npm test'
+
+      - name: Javascript functions installs
+        working-directory: ./functions/javascript
+        run: npm install
 
       - name: Javascript function tests
         run: firebase emulators:exec --only firestore, storage, auth 'cd functions/javascript && npm test'
