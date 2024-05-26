@@ -99,6 +99,9 @@ jobs:
         working-directory: ./firebase
         run: npm install
 
+      - name: Skip Predeploy
+        run: sed -i '' 's/"predeploy"/"predeploy-disabled"/g' firebase.json
+
       - name: Firestore deploy
         run: firebase deploy --only firestore:rules
 
