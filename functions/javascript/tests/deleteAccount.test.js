@@ -2,17 +2,7 @@
 const test = require("firebase-functions-test")();
 const admin = require("firebase-admin");
 
-const projectId = "delete-account-test";
-
-process.env.GCLOUD_PROJECT = "deep-connections-7796d";
-process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
-process.env.FIREBASE_AUTH_EMULATOR_HOST = "localhost:9099";
-process.env.FIREBASE_STORAGE_EMULATOR_HOST = "localhost:9199";
-
-admin.initializeApp({ projectId: projectId,
-  storageBucket: "deep-connections-7796d.appspot.com",
-});
-
+const { projectId } = require("./setup");
 
 const deleteAccount = test.wrap(require("../src/cloud_functions/deleteAccount").deleteAccount);
 
