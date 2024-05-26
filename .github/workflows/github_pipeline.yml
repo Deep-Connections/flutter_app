@@ -87,14 +87,8 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./firebase/package-lock.json
 
-      - name: Verify current directory
-        run: pwd
-  
-      - name: List files in the current directory
-        run: ls -la
-
       - name: Skip Predeploy
-        run: sed -i '' 's/"predeploy"/"predeploy-disabled"/g' firebase.json
+        run: perl -pi -e 's/"predeploy"/"predeploy-disabled"/g' firebase.json
 
       - name: 'Authenticate with Google Cloud'
         uses: 'google-github-actions/auth@v2'
