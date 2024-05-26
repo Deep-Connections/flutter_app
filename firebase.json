@@ -16,7 +16,7 @@
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json",
-    "predeploy-disabled": [
+    "predeploy": [
       "npm --prefix \"firebase\" test"
     ]
   },
@@ -33,7 +33,7 @@
         ".gitignore",
         "*.test.js"
       ],
-      "predeploy-disabled": [
+      "predeploy": [
         "npm --prefix \"$RESOURCE_DIR\" run lint",
         "npm --prefix \"$RESOURCE_DIR\" test"
       ]
