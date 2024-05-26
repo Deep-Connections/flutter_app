@@ -20,9 +20,7 @@ jobs:
           pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
 
       - name: Install dependencies
-        run:
-          flutter clean
-          flutter pub get
+        run: flutter pub get
 
       - name: Run tests
         run: flutter test
@@ -73,7 +71,7 @@ jobs:
       - name: Javascript function tests
         run: firebase emulators:exec --only firestore,storage,auth 'cd functions/javascript && npm test'
 
-  deploy:
+  deployWeb:
     needs: flutterTests
     runs-on: ubuntu-latest
     # Ensure this job runs only on push to main, not on pull requests
