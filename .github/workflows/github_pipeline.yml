@@ -7,7 +7,7 @@ on:
     branches: [ main, dev ]
 
 jobs:
-  buildAndTest:
+  flutterTests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +27,54 @@ jobs:
       - name: Run tests
         run: flutter test
 
+  firestoreTests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: ./firebase/package-lock.json
+  
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Firestore installs
+        working-directory: ./firebase
+        run: npm install
+
+      - name: Firestore test
+        run: firebase emulators:exec --only firestore 'cd firebase && npm test'
+
+  jsFunctionsTests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: ./functions/javascript/package-lock.json
+  
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Javascript functions installs
+        working-directory: ./functions/javascript
+        run: npm install
+
+      - name: Javascript function tests
+        run: firebase emulators:exec --only firestore,storage,auth 'cd functions/javascript && npm test'
+
   deploy:
-    needs: buildAndTest
+    needs: flutterTests
     runs-on: ubuntu-latest
     # Ensure this job runs only on push to main, not on pull requests
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

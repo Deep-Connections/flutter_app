@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "description": "Javascript Cloud Functions for Firebase",
   "scripts": {
     "lint": "eslint .",
     "lintFix": "eslint --fix .",
