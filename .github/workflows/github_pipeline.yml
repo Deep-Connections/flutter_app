@@ -75,7 +75,7 @@ jobs:
     needs: firestoreTests
     runs-on: ubuntu-latest
     # Ensure this job runs only on push to main, not on pull requests
-    if: github.event_name == 'push'
+    # if: github.event_name == 'push'
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -101,7 +101,7 @@ jobs:
   #   needs: flutterTests
   #   runs-on: ubuntu-latest
   #   # Ensure this job runs only on push to main, not on pull requests
-  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   if: github.event_name == 'push'
   #   steps:
   #     - uses: actions/checkout@v4
   #     - uses: subosito/flutter-action@v2
