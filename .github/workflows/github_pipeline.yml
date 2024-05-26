@@ -87,6 +87,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./firebase/package-lock.json
 
+      - name: Skip Predeploy
+        run: sed -i '' 's/"predeploy"/"predeploy-disabled"/g' firebase.json
+        
       - name: 'Authenticate with Google Cloud'
         uses: 'google-github-actions/auth@v2'
         with:
@@ -98,9 +101,6 @@ jobs:
       - name: Firestore installs
         working-directory: ./firebase
         run: npm install
-
-      - name: Skip Predeploy
-        run: sed -i '' 's/"predeploy"/"predeploy-disabled"/g' firebase.json
 
       - name: Firestore deploy
         run: firebase deploy --only firestore:rules
