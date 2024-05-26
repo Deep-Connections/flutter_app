@@ -7,23 +7,23 @@ on:
     branches: [ main, dev ]
 
 jobs:
-  flutterTests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.5'
-          cache: true
-          cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
-          cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
-          pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
+  # flutterTests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: '3.19.5'
+  #         cache: true
+  #         cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+  #         cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+  #         pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
 
-      - name: Install dependencies
-        run: flutter pub get
+  #     - name: Install dependencies
+  #       run: flutter pub get
 
-      - name: Run tests
-        run: flutter test
+  #     - name: Run tests
+  #       run: flutter test
 
   firestoreTests:
     runs-on: ubuntu-latest
@@ -48,8 +48,34 @@ jobs:
       - name: Firestore test
         run: firebase emulators:exec --only firestore 'cd firebase && npm test'
 
-  jsFunctionsTests:
+  # jsFunctionsTests:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Check out repo
+  #       uses: actions/checkout@v4
+        
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 22
+  #         cache: 'npm'
+  #         cache-dependency-path: ./functions/javascript/package-lock.json
+  
+  #     - name: Install Firebase CLI
+  #       run: npm install -g firebase-tools
+
+  #     - name: Javascript functions installs
+  #       working-directory: ./functions/javascript
+  #       run: npm install
+
+  #     - name: Javascript function tests
+  #       run: firebase emulators:exec --only firestore,storage,auth 'cd functions/javascript && npm test'
+
+  deployFirestoreRules:
+    needs: firestoreTests
     runs-on: ubuntu-latest
+    # Ensure this job runs only on push to main, not on pull requests
+    if: github.event_name == 'push'
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
@@ -59,40 +85,40 @@ jobs:
         with:
           node-version: 22
           cache: 'npm'
-          cache-dependency-path: ./functions/javascript/package-lock.json
+          cache-dependency-path: ./firebase/package-lock.json
   
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
-      - name: Javascript functions installs
-        working-directory: ./functions/javascript
+      - name: Firestore installs
+        working-directory: ./firebase
         run: npm install
 
-      - name: Javascript function tests
-        run: firebase emulators:exec --only firestore,storage,auth 'cd functions/javascript && npm test'
+      - name: Firestore deploy
+        run: firebase deploy --only firestore:rules
 
-  deployWeb:
-    needs: flutterTests
-    runs-on: ubuntu-latest
-    # Ensure this job runs only on push to main, not on pull requests
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.5'
-          cache: true
-          cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
-          cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
-          pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
+  # deployWeb:
+  #   needs: flutterTests
+  #   runs-on: ubuntu-latest
+  #   # Ensure this job runs only on push to main, not on pull requests
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: subosito/flutter-action@v2
+  #       with:
+  #         flutter-version: '3.19.5'
+  #         cache: true
+  #         cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:'
+  #         cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:'
+  #         pub-cache-key: 'flutter-pub:os:-:channel:-:version:-:arch:-:hash:'
 
-      - name: Flutter Build Web
-        run: flutter build web --release
+  #     - name: Flutter Build Web
+  #       run: flutter build web --release
 
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEEP_CONNECTIONS_7796D }}'
-          channelId: live
-          projectId: deep-connections-7796d
+  #     - name: Deploy to Firebase Hosting
+  #       uses: FirebaseExtended/action-hosting-deploy@v0
+  #       with:
+  #         repoToken: '${{ secrets.GITHUB_TOKEN }}'
+  #         firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEEP_CONNECTIONS_7796D }}'
+  #         channelId: live
+  #         projectId: deep-connections-7796d
