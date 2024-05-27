@@ -87,7 +87,6 @@ jobs:
           cache-dependency-path: ./firebase/package-lock.json
 
       - name: Cache global firebase npm
-        id: cache-npm
         uses: actions/cache@v4
         with:
           path: ~/.npm
@@ -99,8 +98,9 @@ jobs:
           credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEEP_CONNECTIONS_7796D }}'
   
       - name: Install Firebase CLI
-        if: steps.cache-npm.outputs.cache-hit != 'true'
-        run: npm install -g firebase-tools
+        run: |
+          npm config set cache ~/.npm --global
+          npm install -g firebase-tools
 
       - name: Firestore installs
         working-directory: ./firebase
