@@ -9,6 +9,7 @@ class Answer with _$Answer {
   const factory Answer({
     List<String>? choices,
     double? confidence,
+    double? importance,
   }) = _Answer;
 
   factory Answer.fromJson(Map<String, dynamic> json) =>
