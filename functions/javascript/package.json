@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "description": "Cloud Functions for Firebase",
+  "description": "Javascript Cloud Functions for Firebase",
   "scripts": {
     "lint": "eslint .",
     "lintFix": "eslint --fix .",
@@ -9,11 +9,11 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test": "mocha --parallel tests/*.test.js",
+    "test": "mocha tests/*.test.js",
     "testFile": "mocha tests/deleteAccount.test.js"
   },
   "engines": {
-    "node": "18"
+    "node": "20"
   },
   "main": "index.js",
   "dependencies": {

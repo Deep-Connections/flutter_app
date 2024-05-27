@@ -1,7 +1,7 @@
 {
   "name": "firebase",
   "version": "1.0.0",
-  "description": "Unit tests for the Smetter flutter app",
+  "description": "Firestore tests for the Smetter flutter app",
   "main": "test.js",
   "scripts": {
     "test": "mocha tests/*.test.js --exit",

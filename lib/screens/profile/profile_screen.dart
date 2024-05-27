@@ -38,9 +38,33 @@ class ProfileScreen extends StatelessWidget {
             Center(
                 child: GestureDetector(
                     onTap: () => context.go(ProfileRoutes.photos.fullPath),
-                    child: AvatarImage(
-                      size: 75,
-                      imageUrl: profileService.profile?.mainPictureUrl,
+                    child: Stack(
+                      children: [
+                        AvatarImage(
+                          size: 75,
+                          imageUrl: profileService.profile?.mainPictureUrl,
+                        ),
+                        if (profileService.profile?.mainPictureUrl == null)
+                          Positioned(
+                            top: 10,
+                            right: 0,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                    borderRadius: BorderRadius.circular(100)),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 2.0,
+                                      horizontal: standardPadding * 3 / 4),
+                                  child: Text(loc.profile_addPhoto,
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary)),
+                                )),
+                          )
+                      ],
                     ))),
             StreamBuilder(
                 stream: userStatusService.userStatusStream,

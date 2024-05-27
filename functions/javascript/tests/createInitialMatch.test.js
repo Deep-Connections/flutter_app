@@ -3,13 +3,7 @@
 const test = require("firebase-functions-test")();
 const admin = require("firebase-admin");
 
-const projectId = "create-initial-match-test";
-
-process.env.GCLOUD_PROJECT = "deep-connections-7796d";
-process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
-admin.initializeApp({ projectId });
-
-// require("sinon").stub(admin, "initializeApp");
+const { projectId } = require("./setup");
 
 const createInitialMatch = test.wrap(require("../src/cloud_functions/createInitialMatch").createInitialMatch);
 
@@ -45,8 +39,8 @@ async function hasNoMatch() {
   assert.equal(e.code, FunctionErrors.NOT_FOUND, "Should not find a match");
 }
 
-const bestProfileName = "Profile 0";
-const bestProfileScore = 16;
+const bestProfileName = "Profile 7";
+const bestProfileScore = 12;
 
 describe("InitialMatch", () => {
   beforeEach(async () => {
