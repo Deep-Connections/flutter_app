@@ -1,6 +1,7 @@
 import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/choice.dart';
+import 'package:deep_connections/models/question/importance.dart';
 import 'package:deep_connections/models/question/question.dart';
 import 'package:deep_connections/screens/question/question_screen.dart';
 import 'package:deep_connections/services/profile/firebase_profile_service.dart';
@@ -243,5 +244,54 @@ void main() {
     expect(navigateSuccess, true);
     navigateSuccess = false;
     checkQuestion(['1', '2', '3'], 0.4);
+  });
+
+  testWidgets('Test question importance', (WidgetTester tester) async {
+    profileService = getFakeProfileService();
+
+    // Setup
+    final loc = await tester.pumpLocalizedWidget(QuestionScreen(
+        question: singleChoiceQuestion,
+        profileService: profileService,
+        onSubmit: () => navigateSuccess = true,
+        submitText: LocKey((loc) => loc.general_next)));
+
+    checkQuestion(List<String> choices, double confidence, double importance) {
+      final answer =
+      profileService.profile?.questions?[singleChoiceQuestion.id];
+      expect(answer?.choices, choices);
+      expect(answer?.confidence, confidence);
+      expect(answer?.importance, importance);
+    }
+
+    // select high importance
+    await tester.tap(find.text(loc.question_importance_high));
+    await tester.pumpAndSettle();
+
+    // expect next button disabled
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
+
+    // select option 2 and submit
+    await tester.tap(find.text(loc.questionBasic_relationshipType_answer_short));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(loc.general_next));
+    await tester.pumpAndSettle();
+
+    expect(navigateSuccess, true);
+    navigateSuccess = false;
+
+    checkQuestion(['2'], 0.5, Importance.high.value);
+
+    // select low importance and submit
+    await tester.tap(find.text(loc.question_importance_low));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(loc.general_next));
+    await tester.pumpAndSettle();
+
+    expect(navigateSuccess, true);
+    navigateSuccess = false;
+
+    checkQuestion(['2'], 0.5, Importance.low.value);
+
   });
 }

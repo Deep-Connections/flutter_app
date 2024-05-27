@@ -78,16 +78,17 @@ class SelectableButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     final theme = Theme.of(context);
-    final primary = theme.colorScheme.primary;
+    final colorScheme = theme.colorScheme;
+
     return GestureDetector(
       onTap: enabled ? onPressed : null,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
         decoration: BoxDecoration(
-          color: selected ? primary : Colors.grey[300],
+          color: selected ? colorScheme.primary : colorScheme.surface,
           borderRadius: BorderRadius.circular(6),
           border: Border.all(
-            color: selected ? primary : Colors.grey,
+            color: selected ? colorScheme.primary : Colors.grey,
           ),
         ),
         child: Row(
@@ -104,8 +105,10 @@ class SelectableButton extends StatelessWidget {
             Flexible(
               child: Text(
                 text,
-                style: theme.textTheme.headlineSmall
-                    ?.copyWith(color: selected ? Colors.white : Colors.black),
+                style: theme.textTheme.headlineSmall?.copyWith(
+                    color: selected
+                        ? theme.colorScheme.onPrimary
+                        : theme.colorScheme.onSurface),
                 textAlign: TextAlign.center,
                 semanticsLabel: selected ? loc.semantic_selected(text) : text,
               ),

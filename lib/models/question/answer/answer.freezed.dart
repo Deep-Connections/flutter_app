@@ -22,6 +22,7 @@ Answer _$AnswerFromJson(Map<String, dynamic> json) {
 mixin _$Answer {
   List<String>? get choices => throw _privateConstructorUsedError;
   double? get confidence => throw _privateConstructorUsedError;
+  double? get importance => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -33,7 +34,7 @@ abstract class $AnswerCopyWith<$Res> {
   factory $AnswerCopyWith(Answer value, $Res Function(Answer) then) =
       _$AnswerCopyWithImpl<$Res, Answer>;
   @useResult
-  $Res call({List<String>? choices, double? confidence});
+  $Res call({List<String>? choices, double? confidence, double? importance});
 }
 
 /// @nodoc
@@ -51,6 +52,7 @@ class _$AnswerCopyWithImpl<$Res, $Val extends Answer>
   $Res call({
     Object? choices = freezed,
     Object? confidence = freezed,
+    Object? importance = freezed,
   }) {
     return _then(_value.copyWith(
       choices: freezed == choices
@@ -60,6 +62,10 @@ class _$AnswerCopyWithImpl<$Res, $Val extends Answer>
       confidence: freezed == confidence
           ? _value.confidence
           : confidence // ignore: cast_nullable_to_non_nullable
+              as double?,
+      importance: freezed == importance
+          ? _value.importance
+          : importance // ignore: cast_nullable_to_non_nullable
               as double?,
     ) as $Val);
   }
@@ -72,7 +78,7 @@ abstract class _$$AnswerImplCopyWith<$Res> implements $AnswerCopyWith<$Res> {
       __$$AnswerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String>? choices, double? confidence});
+  $Res call({List<String>? choices, double? confidence, double? importance});
 }
 
 /// @nodoc
@@ -88,6 +94,7 @@ class __$$AnswerImplCopyWithImpl<$Res>
   $Res call({
     Object? choices = freezed,
     Object? confidence = freezed,
+    Object? importance = freezed,
   }) {
     return _then(_$AnswerImpl(
       choices: freezed == choices
@@ -98,6 +105,10 @@ class __$$AnswerImplCopyWithImpl<$Res>
           ? _value.confidence
           : confidence // ignore: cast_nullable_to_non_nullable
               as double?,
+      importance: freezed == importance
+          ? _value.importance
+          : importance // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -105,7 +116,8 @@ class __$$AnswerImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
-  const _$AnswerImpl({final List<String>? choices, this.confidence})
+  const _$AnswerImpl(
+      {final List<String>? choices, this.confidence, this.importance})
       : _choices = choices;
 
   factory _$AnswerImpl.fromJson(Map<String, dynamic> json) =>
@@ -123,10 +135,12 @@ class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
 
   @override
   final double? confidence;
+  @override
+  final double? importance;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Answer(choices: $choices, confidence: $confidence)';
+    return 'Answer(choices: $choices, confidence: $confidence, importance: $importance)';
   }
 
   @override
@@ -135,7 +149,8 @@ class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
     properties
       ..add(DiagnosticsProperty('type', 'Answer'))
       ..add(DiagnosticsProperty('choices', choices))
-      ..add(DiagnosticsProperty('confidence', confidence));
+      ..add(DiagnosticsProperty('confidence', confidence))
+      ..add(DiagnosticsProperty('importance', importance));
   }
 
   @override
@@ -145,13 +160,15 @@ class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
             other is _$AnswerImpl &&
             const DeepCollectionEquality().equals(other._choices, _choices) &&
             (identical(other.confidence, confidence) ||
-                other.confidence == confidence));
+                other.confidence == confidence) &&
+            (identical(other.importance, importance) ||
+                other.importance == importance));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_choices), confidence);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_choices), confidence, importance);
 
   @JsonKey(ignore: true)
   @override
@@ -169,7 +186,9 @@ class _$AnswerImpl with DiagnosticableTreeMixin implements _Answer {
 
 abstract class _Answer implements Answer {
   const factory _Answer(
-      {final List<String>? choices, final double? confidence}) = _$AnswerImpl;
+      {final List<String>? choices,
+      final double? confidence,
+      final double? importance}) = _$AnswerImpl;
 
   factory _Answer.fromJson(Map<String, dynamic> json) = _$AnswerImpl.fromJson;
 
@@ -177,6 +196,8 @@ abstract class _Answer implements Answer {
   List<String>? get choices;
   @override
   double? get confidence;
+  @override
+  double? get importance;
   @override
   @JsonKey(ignore: true)
   _$$AnswerImplCopyWith<_$AnswerImpl> get copyWith =>
