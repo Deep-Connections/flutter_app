@@ -109,8 +109,8 @@ jobs:
       - name: Skip Predeploy
         run: perl -pi -e 's/"predeploy"/"predeploy-disabled"/g' firebase.json
 
-      - name: Firestore deploy
-        run: firebase deploy --only firestore:rules
+      # - name: Firestore deploy
+      #   run: firebase deploy --only firestore:rules
 
   # deployJsFunctions:
   #   needs: jsFunctionsTests
