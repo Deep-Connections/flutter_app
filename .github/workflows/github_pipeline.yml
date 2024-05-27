@@ -103,7 +103,7 @@ jobs:
         run: npm install
 
       - name: Firestore deploy
-        run: firebase deploy --only firestore:rules
+        run: firebase deploy --only firestore:rules --debug
 
   # deployWeb:
   #   needs: flutterTests
