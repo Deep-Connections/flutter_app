@@ -110,14 +110,14 @@ class ChatListTile extends StatelessWidget {
                         width: unreadSize,
                         height: unreadSize,
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.secondary,
+                          color: theme.colorScheme.tertiary,
                           shape: BoxShape.circle,
                         ),
                         child: Center(
                           child: Text(
                             chat.unreadMessages?.toString() ?? "",
                             style: theme.textTheme.labelSmall?.copyWith(
-                              color: theme.colorScheme.onSecondary,
+                              color: theme.colorScheme.onTertiary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

@@ -106,13 +106,14 @@ class ChatService {
               .map((messages) => chatList.map((chat) {
                     Message? lastMessage;
                     int? unreadMessages;
-                    final chatLastRead = chat.lastRead ?? DateTime(0);
+                    final chatLastRead = chat.lastRead;
                     for (final message in messages) {
                       if (message.chatId == chat.id) {
                         lastMessage ??= message;
-                        if (message.senderId != userId &&
-                            message.createdAt.isAfter(chatLastRead)) {
-                          unreadMessages ??= 0;
+                        if (chatLastRead != null &&
+                            message.createdAt.isBefore(chatLastRead)) break;
+                        unreadMessages ??= 0;
+                        if (message.senderId != userId) {
                           unreadMessages++;
                         } else {
                           break;

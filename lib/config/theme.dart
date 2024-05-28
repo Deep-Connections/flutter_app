@@ -20,6 +20,7 @@ ThemeData theme() {
       secondary: Color(0xFFfed05c),
       onSecondary: Color(0xFF281d00),
       tertiary: Color(0xFF947695),
+      onTertiary: Color(0xFFf9f8f9),
       surfaceVariant: Color(0xFFc4c9c4),
       // left bubble
       error: Colors.red,
