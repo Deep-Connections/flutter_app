@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:deep_connections/models/chats/reviews/review.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
@@ -223,10 +224,17 @@ class ChatService {
     }
   }
 
-  Future<Response> unmatch(String chatId) {
+  Future<Response> unmatch(String chatId, Review? review) {
     final callable = _functions.httpsCallable(Functions.unmatch);
-    return handleFirebaseErrors(() async => await callable({
-          FieldName.chatId: chatId,
-        }));
+    final Map<String, dynamic> reviewJson = {
+      FieldName.chatId: chatId,
+    };
+    if (review != null) {
+      reviewJson[FieldName.review] = review.toJson();
+      reviewJson[FieldName.review][FieldName.createdAt] =
+          FieldValue.serverTimestamp();
+    }
+
+    return handleFirebaseErrors(() async => await callable(reviewJson));
   }
 }

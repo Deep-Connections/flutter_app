@@ -49,10 +49,10 @@ class ChatListScreen extends StatelessWidget {
                                     .parameterPath([chatId]));
                                 chatService.markChatRead(chatId);
                               },
-                              onDelete: () async {
-                                final response =
-                                    await chatService.unmatch(chatId);
-                                MessageHandler.showResponseError(response, loc);
+                              onUnmatch: (chatId, {review}) async {
+                                MessageHandler.showResponseError(
+                                    await chatService.unmatch(chatId, review),
+                                    loc);
                               },
                               futureOrProfile: profileService
                                   .profileByUserId(chat.otherUserId),
