@@ -23,7 +23,7 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final email = EmailInput();
-  final password = PasswordInput();
+  final password = PasswordInput(isRegistration: true);
   late final buttonInput = ButtonInput(fields: [email, password]);
   String? apiError;
 

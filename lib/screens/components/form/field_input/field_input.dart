@@ -11,6 +11,7 @@ abstract class FieldInput<T> extends ChangeNotifier {
   final bool obscureText;
   final bool readOnly;
   final TextEditingController controller = TextEditingController();
+  final Iterable<String>? autoFillHints;
 
   FieldInput({
     this.keyboardType,
@@ -19,6 +20,7 @@ abstract class FieldInput<T> extends ChangeNotifier {
     this.inputFormatter,
     this.obscureText = false,
     this.readOnly = false,
+    this.autoFillHints,
   });
 
   void Function(BuildContext context)? onTap;
