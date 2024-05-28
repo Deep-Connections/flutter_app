@@ -10,11 +10,13 @@ abstract class TextFieldInput extends FieldInput<String> {
     LocKey? placeholder,
     List<TextInputFormatter>? inputFormatters,
     bool obscureText = false,
+    Iterable<String>? autoFillHints,
   }) : super(
           keyboardType: keyboardType,
           placeholder: placeholder,
           obscureText: obscureText,
           inputFormatter: inputFormatters,
+          autoFillHints: autoFillHints,
         );
 
   @override
@@ -25,6 +27,7 @@ class EmailInput extends TextFieldInput {
   EmailInput()
       : super(
             keyboardType: TextInputType.emailAddress,
+            autoFillHints: [AutofillHints.email],
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9._%+-@]'))
             ],
@@ -43,13 +46,18 @@ class EmailInput extends TextFieldInput {
 }
 
 class PasswordInput extends TextFieldInput {
-  final bool verifyPassword;
+  final bool isRegistration;
 
-  PasswordInput({this.verifyPassword = true})
+  PasswordInput({this.isRegistration = false})
       : super(
             keyboardType: TextInputType.visiblePassword,
             placeholder: LocKey((loc) => loc.input_passwordPlaceholder),
-            obscureText: true);
+            obscureText: true,
+            autoFillHints: [
+              isRegistration
+                  ? AutofillHints.newPassword
+                  : AutofillHints.password
+            ]);
 
   final minPasswordLength = 8;
   final uppercaseRegex = RegExp(r'[A-Z]');
@@ -61,7 +69,7 @@ class PasswordInput extends TextFieldInput {
     if (value == null || value.isEmpty) {
       return loc.auth_passwordNoneError;
     }
-    if (verifyPassword) {
+    if (isRegistration) {
       if (value.length < minPasswordLength) {
         return loc.auth_passwordLengthError;
       }
@@ -84,7 +92,9 @@ class PasswordInput extends TextFieldInput {
 
 class FirstNameInput extends TextFieldInput {
   FirstNameInput()
-      : super(placeholder: LocKey((loc) => loc.input_firstNamePlaceholder));
+      : super(
+            placeholder: LocKey((loc) => loc.input_firstNamePlaceholder),
+            autoFillHints: [AutofillHints.givenName]);
 
   final _nameRegex =
       RegExp(r"^[\p{L}\s\-']+$", unicode: true, caseSensitive: false);

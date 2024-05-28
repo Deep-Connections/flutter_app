@@ -35,6 +35,7 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
           keyboardType: fieldInput.keyboardType,
           maxLength: fieldInput.maxLength,
           inputFormatters: fieldInput.inputFormatter,
+          autofillHints: fieldInput.autoFillHints,
           decoration: InputDecoration(
             hintText: fieldInput.placeholder?.localize(loc),
             errorText: widget.error,

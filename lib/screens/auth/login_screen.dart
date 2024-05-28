@@ -30,7 +30,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final email = EmailInput();
-  final password = PasswordInput(verifyPassword: false);
+  final password = PasswordInput();
   late final buttonInput = ButtonInput(fields: [email, password]);
   String? apiError;
 
