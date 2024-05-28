@@ -17,13 +17,17 @@ const { createMockChat, createMockMessage, defaultTimestamp } = require("./mock/
 const UID_1 = "test-uid-1";
 const UID_2 = "test-uid-2";
 
-async function unmatchUserFromChat(uid, chatId) {
+async function unmatchUserFromChat(uid, chatId, review=null) {
   const context = {};
   if (uid) {
     context.auth = { uid: uid };
   }
   try {
-    return await unmatch({ "chatId": chatId }, context);
+    const json = { "chatId": chatId };
+    if (review) {
+      json.review = review;
+    }
+    return await unmatch(json, context);
   } catch (e) {
     return e;
   }
@@ -101,5 +105,26 @@ describe("Unmatch", () => {
     const profile2 = (await db.collection(Collections.PROFILES).doc(UID_2).get()).data();
     assert.equal(profile1.numMatches, 0);
     assert.equal(profile2.numMatches, 0);
+  });
+
+  it("should be allowed to add a review", async () => {
+    const review = {
+      chatId: chatRef.id,
+      text: "This is a review",
+      rating: 5,
+      reviewerId: UID_1,
+      connectedToId: UID_2,
+    };
+    const result = await unmatchUserFromChat(UID_1, chatRef.id, review);
+    assert.equal(result.message, "Unmatched successfully");
+
+    const reviews = await db.collection(Collections.REVIEWS).get();
+    assert.equal(reviews.docs.length, 1);
+    const reviewDoc = reviews.docs[0].data();
+    // reviewDoc createdAt should not be null
+    assert.ok(reviewDoc.createdAt);
+    delete reviewDoc.createdAt;
+    delete review.createdAt;
+    assert.deepEqual(reviewDoc, review);
   });
 });

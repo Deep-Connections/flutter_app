@@ -7,6 +7,21 @@ const { chunkArray } = require("../helpers");
 
 const db = admin.firestore();
 
+exports.isValidReview = function isValidReview(review, chat, userId) {
+  const allowedFields = ["rating", "text", "chatId", "reviewerId", "connectedToId"];
+  const reviewKeys = Object.keys(review);
+  if (reviewKeys.length !== allowedFields.length && !reviewKeys.every((key) => allowedFields.includes(key))) {
+    return false;
+  }
+  const chatData = chat.data();
+  const isValidRating = review.rating >= 1 && review.rating <= 5 && Number.isInteger(review.rating);
+  const isValidText = typeof review.text === "string";
+  const isValidChatId = review.chatId === chat.id;
+  const isValidReviewerId = review.reviewerId === userId;
+  const isValidConnectedToId = chatData.participantIds.includes(review.connectedToId);
+  return isValidRating && isValidText && isValidChatId && isValidReviewerId && isValidConnectedToId;
+};
+
 exports.unmatch = functions.region("europe-west6").https.onCall(async (data, context) => {
   if (!context.auth || !context.auth.uid) {
     throw new functions.https.HttpsError(
@@ -29,9 +44,10 @@ exports.unmatch = functions.region("europe-west6").https.onCall(async (data, con
 
   let wasChatDeleted = false;
   let chatRef;
+  let chatDoc;
   await db.runTransaction(async (transaction) => {
     chatRef = db.collection(Collections.CHATS).doc(chatId);
-    const chatDoc = await transaction.get(chatRef);
+    chatDoc = await transaction.get(chatRef);
     if (!chatDoc.exists) {
       throw new functions.https.HttpsError(FunctionErrors.NOT_FOUND, "Chat not found");
     }
@@ -67,6 +83,16 @@ exports.unmatch = functions.region("europe-west6").https.onCall(async (data, con
       });
     }
   });
+
+  if (data.review) {
+    const review = data.review;
+    if (this.isValidReview(review, chatDoc, userId)) {
+      review.createdAt = FieldValue.serverTimestamp();
+      await db.collection(Collections.REVIEWS).add(review);
+    } else {
+      console.log("Invalid review", review);
+    }
+  }
 
   if (wasChatDeleted) {
     const allMessagesOfChat = await chatRef.collection(Collections.MESSAGES).select().get();

@@ -2,6 +2,7 @@ const Collections = {
   PROFILES: "profiles",
   CHATS: "chats",
   MESSAGES: "messages",
+  REVIEWS: "reviews",
 };
 
 const FieldName = {

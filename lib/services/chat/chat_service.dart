@@ -231,8 +231,6 @@ class ChatService {
     };
     if (review != null) {
       reviewJson[FieldName.review] = review.toJson();
-      reviewJson[FieldName.review][FieldName.createdAt] =
-          FieldValue.serverTimestamp();
     }
 
     return handleFirebaseErrors(() async => await callable(reviewJson));
