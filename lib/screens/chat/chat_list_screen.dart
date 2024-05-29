@@ -52,7 +52,7 @@ class ChatListScreen extends StatelessWidget {
                               onUnmatch: (chatId, {review}) async {
                                 MessageHandler.showResponseError(
                                     await chatService.unmatch(chatId, review),
-                                    loc);
+                                );
                               },
                               futureOrProfile: profileService
                                   .profileByUserId(chat.otherUserId),
@@ -73,7 +73,7 @@ class ChatListScreen extends StatelessWidget {
                               createMatch: () async {
                                 final response =
                                     await chatService.createMatch();
-                                MessageHandler.showResponseError(response, loc);
+                                MessageHandler.showResponseError(response);
                               },
                               profile: profile,
                             ),
