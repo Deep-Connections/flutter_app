@@ -7,10 +7,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: ./.github/workflows/firebase_setup.yml@test-pipeline
-      with:
-        work_dir: 'firebase'
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Firestore test
-      run: firebase emulators:exec --only firestore 'cd firebase && npm test'
+      - name: Setup Firebase
+        uses: ./.github/workflows/firebase_node_setup.yml
+        with:
+          work_dir: 'firebase'
+          
+      - name: Firestore test
+        run: firebase emulators:exec --only firestore 'cd firebase && npm test'
