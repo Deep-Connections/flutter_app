@@ -54,6 +54,7 @@ class _MatchReviewDialogState extends State<MatchReviewDialog> {
               child: TextField(
                 minLines: 1,
                 maxLines: null,
+                controller: _controller,
                 decoration: InputDecoration(
                   hintText: loc.chat_unmatchDialogTextReviewPlaceholder,
                 ),
