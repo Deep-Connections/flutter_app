@@ -1,0 +1,19 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Firebase
+        uses: ./.github/workflows/firebase_setup.yml@main
+        with:
+          work_dir: 'firebase'
+          
+      - name: Firestore test
+        run: firebase emulators:exec --only firestore 'cd firebase && npm test'
