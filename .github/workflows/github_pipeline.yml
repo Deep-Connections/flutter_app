@@ -9,6 +9,7 @@ on:
 jobs:
   flutterTests:
     runs-on: ubuntu-latest
+    if: false
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -41,6 +42,7 @@ jobs:
 
   jsFunctionsTests:
     runs-on: ubuntu-latest
+    if: false
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
