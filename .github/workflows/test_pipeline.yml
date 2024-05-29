@@ -6,10 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Setup Firebase
         uses: ./.github/actions/firebase_setup
         with:
           work_dir: 'firebase'
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEEP_CONNECTIONS_7796D }}
 
       - name: Firestore test
         run: firebase emulators:exec --only firestore 'cd firebase && npm test'
