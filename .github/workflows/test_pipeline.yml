@@ -8,30 +8,9 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+      uses: ./.github/actions/firebase_setup.yml
       with:
-        node-version: '20'
-
-    - name: Cache node modules and Firebase CLI
-      uses: actions/cache@v2
-      with:
-        path: |
-          firebase/node_modules
-          ~/.npm
-          ~/.cache/firebase
-        key: ${{ runner.os }}-node-firebase-${{ hashFiles('firebase/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-firebase-
-
-    - name: Install dependencies for firebase
-      run: npm ci
-      working-directory: firebase
-
-    - name: Install Firebase CLI
-      run: npm install -g firebase-tools
+        work_dir: 'firebase'
 
     - name: Firestore test
       run: firebase emulators:exec --only firestore 'cd firebase && npm test'
