@@ -1,6 +1,12 @@
 name: Firebase Node Setup
 
-on: workflow_call
+on: 
+  workflow_call:
+    inputs:
+      work_dir:
+        description: 'The directory where the Firebase project is located'
+        required: true
+        type: string
 
 jobs:
   setup:
