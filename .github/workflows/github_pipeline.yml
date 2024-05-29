@@ -24,6 +24,7 @@ jobs:
 
       - name: Run tests
         run: flutter test
+        
 
   firestoreTests:
     runs-on: ubuntu-latest
