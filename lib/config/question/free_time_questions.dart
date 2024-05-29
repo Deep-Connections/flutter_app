@@ -122,7 +122,6 @@ final List<Question> freeTimeQuestionList = [
       Choice(
           'love', LocKey((loc) => loc.questionFreeTime_aeroplane_answer_love)),
     ],
-    maxChoices: 3,
     navigationPath: 'aeroplane',
     section: ProfileSection.freeTime,
   ),
