@@ -31,6 +31,8 @@ runs:
     - name: Install dependencies for firebase
       run: npm ci
       working-directory: ${{ inputs.work_dir }}
+      shell: bash
 
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
+      shell: bash
