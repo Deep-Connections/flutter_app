@@ -1,5 +1,5 @@
-name: "Setup Action"
-description: "A composite action for setup"
+name: "Firebase Setup"
+description: "A composite action to set up a Firebase project"
 inputs:
   work_dir:
     description: "The directory where the Firebase project is located"
@@ -22,7 +22,7 @@ runs:
       with:
         path: |
           ${{ inputs.work_dir }}/node_modules
-          ~/.npm
+          ~/.npm  
           ~/.cache/firebase
         key: ${{ runner.os }}-node-${{ inputs.work_dir }}-${{ hashFiles('${{ inputs.work_dir }}/package-lock.json') }}
         restore-keys: |
