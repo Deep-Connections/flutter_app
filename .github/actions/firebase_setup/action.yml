@@ -28,7 +28,7 @@ runs:
           ${{ inputs.work_dir }}/node_modules
           ~/.npm  
           ~/.cache/firebase
-        key: ${{ runner.os }}-node-${{ inputs.work_dir }}-${{ hashFiles(inputs.work_dir + '/package-lock.json') }
+        key: ${{ runner.os }}-node-${{ inputs.work_dir }}-${{ hashFiles(inputs.work_dir + '/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-${{ inputs.work_dir }}-
 
