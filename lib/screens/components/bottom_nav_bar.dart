@@ -40,7 +40,7 @@ class BottomNavBar extends StatelessWidget {
               label: route.title.localize(loc),
               icon: Icon(
                 route.icon,
-                color: theme.colorScheme.background,
+                color: theme.colorScheme.onTertiary,
                 size: bottomBarIconSize,
               ),
             ),

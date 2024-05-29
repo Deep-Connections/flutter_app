@@ -54,7 +54,10 @@ class _CreateMatchSectionState extends State<CreateMatchSection> {
 
   _durationToString(Duration duration, AppLocalizations loc) {
     if (duration.inHours == 0) {
-      return '${duration.inMinutes % 60}:${duration.inSeconds % 60}';
+      String twoDigits(int n) => n.toString().padLeft(2, '0');
+      String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+      String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+      return "$twoDigitMinutes:$twoDigitSeconds";
     }
     return loc.matching_matchAgainHoursHeadline(duration.inHours.toString());
   }
