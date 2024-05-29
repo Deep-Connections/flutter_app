@@ -1,0 +1,49 @@
+name: "Firebase Setup"
+description: "A composite action to set up a Firebase project"
+inputs:
+  work_dir:
+    description: "The directory where the Firebase project is located"
+    required: true
+    type: string
+  credentials_json:
+    description: "Firebase service account JSON credentials"
+    required: false
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Cache node modules and Firebase CLI
+      uses: actions/cache@v4
+      with:
+        path: |
+          ${{ inputs.work_dir }}/node_modules
+          ~/.npm  
+          ~/.cache/firebase
+        key: ${{ runner.os }}-node-${{ inputs.work_dir }}-${{ hashFiles(format('{0}/package-lock.json', inputs.work_dir)) }}
+
+        restore-keys: |
+          ${{ runner.os }}-node-${{ inputs.work_dir }}-
+
+    - name: Install dependencies for firebase
+      run: npm ci
+      working-directory: ${{ inputs.work_dir }}
+      shell: bash
+
+    - name: Install Firebase CLI
+      run: npm install -g firebase-tools
+      shell: bash
+
+    - name: 'Authenticate with Google Cloud'
+      if: ${{ inputs.credentials_json }}
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: '${{ inputs.credentials_json }}'
