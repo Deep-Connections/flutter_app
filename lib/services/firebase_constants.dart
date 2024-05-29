@@ -11,6 +11,7 @@ class FieldName {
   static const pictures = 'pictures';
   static const profilePicture = 'profilePicture';
   static const chatId = 'chatId';
+  static const review = 'review';
   static const id = 'id';
 
   static String lastReadChat(userId) => "chatInfos.$userId.lastRead";

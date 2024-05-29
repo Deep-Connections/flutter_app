@@ -1,0 +1,9 @@
+early_access: true
+reviews:
+  poem: false
+  path_filters:
+    - "!*.g.dart"
+    - "!*.freezed.dart"
+  auto_review:
+    base_branches:
+      - dev

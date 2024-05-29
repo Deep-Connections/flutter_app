@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:deep_connections/models/chats/reviews/review.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
 import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
@@ -106,13 +107,14 @@ class ChatService {
               .map((messages) => chatList.map((chat) {
                     Message? lastMessage;
                     int? unreadMessages;
-                    final chatLastRead = chat.lastRead ?? DateTime(0);
+                    final chatLastRead = chat.lastRead;
                     for (final message in messages) {
                       if (message.chatId == chat.id) {
                         lastMessage ??= message;
-                        if (message.senderId != userId &&
-                            message.createdAt.isAfter(chatLastRead)) {
-                          unreadMessages ??= 0;
+                        if (chatLastRead != null &&
+                            message.createdAt.isBefore(chatLastRead)) break;
+                        unreadMessages ??= 0;
+                        if (message.senderId != userId) {
                           unreadMessages++;
                         } else {
                           break;
@@ -222,10 +224,15 @@ class ChatService {
     }
   }
 
-  Future<Response> unmatch(String chatId) {
+  Future<Response> unmatch(String chatId, Review? review) {
     final callable = _functions.httpsCallable(Functions.unmatch);
-    return handleFirebaseErrors(() async => await callable({
-          FieldName.chatId: chatId,
-        }));
+    final Map<String, dynamic> reviewJson = {
+      FieldName.chatId: chatId,
+    };
+    if (review != null) {
+      reviewJson[FieldName.review] = review.toJson();
+    }
+
+    return handleFirebaseErrors(() async => await callable(reviewJson));
   }
 }

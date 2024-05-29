@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/models/chats/chat/chat.dart';
+import 'package:deep_connections/models/chats/reviews/review.dart';
 import 'package:deep_connections/models/message/message.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/navigation/route_constants.dart';
+import 'package:deep_connections/screens/chat/components/match_review_dialog.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
-import 'package:deep_connections/screens/components/dialogs/confirmation_dialog.dart';
 import 'package:deep_connections/screens/components/image/avatar_image.dart';
 import 'package:deep_connections/utils/extensions/date_time_extensions.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
@@ -20,14 +21,14 @@ class ChatListTile extends StatelessWidget {
   final Chat chat;
   final FutureOr<Profile?> futureOrProfile;
   final void Function() onTap;
-  final void Function() onDelete;
+  final Future Function(String chatId, {Review? review}) onUnmatch;
 
   const ChatListTile({
     super.key,
     required this.chat,
     required this.futureOrProfile,
     required this.onTap,
-    required this.onDelete,
+    required this.onUnmatch,
   });
 
   String _getMessageText(BuildContext context, Message? message) {
@@ -48,28 +49,24 @@ class ChatListTile extends StatelessWidget {
     final loc = AppLocalizations.of(context);
     return FutureOrBuilder(
         futureOr: futureOrProfile,
-        builder: (context, profile, _) {
+        builder: (context, profile, snapshot) {
           return Dismissible(
               key: ValueKey(chat.id),
-              direction: profile?.firstName != null || chat.hasSingleParticipant
+              direction: snapshot.completed
                   ? DismissDirection.endToStart
                   : DismissDirection.none,
               confirmDismiss: (_) async {
-                if (chat.hasSingleParticipant) {
-                  onDelete();
+                if (snapshot.completed && profile?.firstName == null) {
+                  onUnmatch(chat.id!);
                   return true;
                 }
                 return await showDialog(
-                  context: context,
-                  builder: (context) => ConfirmationDialog(
-                      context: context,
-                      titleText:
-                          loc.chat_unmatchDialogTitle(profile?.firstName ?? ""),
-                      contentText: loc
-                          .chat_unmatchDialogContent(profile?.firstName ?? ""),
-                      confirmText: loc.chat_unmatchDialogButton,
-                      onConfirm: onDelete),
-                );
+                    context: context,
+                    builder: (context) => MatchReviewDialog(
+                          profileToReview: profile!,
+                          chat: chat,
+                          onUnmatch: onUnmatch,
+                        ));
               },
               background: Container(
                 color: Theme.of(context).colorScheme.error,
@@ -77,7 +74,7 @@ class ChatListTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: standardPadding),
                   child: Icon(
-                    Icons.delete,
+                    Icons.block,
                     color: Theme.of(context).colorScheme.onError,
                   ),
                 ),
@@ -110,14 +107,14 @@ class ChatListTile extends StatelessWidget {
                         width: unreadSize,
                         height: unreadSize,
                         decoration: BoxDecoration(
-                          color: theme.colorScheme.secondary,
+                          color: theme.colorScheme.tertiary,
                           shape: BoxShape.circle,
                         ),
                         child: Center(
                           child: Text(
                             chat.unreadMessages?.toString() ?? "",
                             style: theme.textTheme.labelSmall?.copyWith(
-                              color: theme.colorScheme.onSecondary,
+                              color: theme.colorScheme.onTertiary,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
