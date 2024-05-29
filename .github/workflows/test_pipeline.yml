@@ -6,9 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Setup Firebase
         uses: ./.github/actions/firebase_setup
         with:
