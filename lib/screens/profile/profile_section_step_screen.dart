@@ -18,7 +18,7 @@ class ProfileSectionStepScreen extends StatelessWidget {
         title: step.section.title.localize(loc),
         body: ProfileStepWidget(
             step: step,
-            onSubmit: () async => context.pop(),
+            navigate: (_) => context.pop(),
             submitText: LocKey((loc) => loc.general_submit)));
   }
 }

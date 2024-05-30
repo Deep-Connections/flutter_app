@@ -4,19 +4,18 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/models/profile/picture/picture.dart';
+import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/services/firebase/firebase_extension.dart';
+import 'package:deep_connections/services/firebase_constants.dart';
 import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:deep_connections/services/user/user_service.dart';
+import 'package:deep_connections/services/utils/handle_firebase_errors.dart';
+import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/loc_key.dart';
 import 'package:deep_connections/utils/logging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-
-import '../../models/profile/profile/profile.dart';
-import '../firebase_constants.dart';
-import '../utils/handle_firebase_errors.dart';
-import '../utils/response.dart';
 
 @Singleton(as: ProfileService)
 class FirebaseProfileService implements ProfileService {
@@ -46,11 +45,12 @@ class FirebaseProfileService implements ProfileService {
   Stream<Profile?> get profileStream => _profileSubject.stream;
 
   @override
-  Future<Response<void>> updateProfile(
-      Profile Function(Profile p) callback) async {
+  Future<Response<void>> updateProfile(Profile Function(Profile p) transform,
+      {void Function(Profile)? onUpdatedProfile}) async {
+    onUpdatedProfile?.call(transform(profile ?? const Profile()));
     return handleFirebaseErrors(() => _profileReference
         .doc(_userService.userId)
-        .set(callback(const Profile()), SetOptions(merge: true)));
+        .set(transform(const Profile()), SetOptions(merge: true)));
   }
 
   @override
