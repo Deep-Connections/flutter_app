@@ -14,18 +14,17 @@ class UserStatus {
 
   bool get isAdditionalProfileComplete => additionalUncompletedStep == null;
 
-  ProfileNavigationStep? _firstUncompletedStep(
-      Profile? profile, List<ProfileNavigationStep> stepList) {
-    if (profile == null) return stepList.first;
-    return stepList
-        .firstWhereOrNull((step) => step.fromProfile(profile) == null);
-  }
-
   ProfileNavigationStep? get uncompletedStep {
-    return _firstUncompletedStep(profile, initialProfileStepList);
+    return firstUncompletedStep(profile, initialProfileStepList);
   }
 
   ProfileNavigationStep? get additionalUncompletedStep {
-    return _firstUncompletedStep(profile, additionalProfileStepList);
+    return firstUncompletedStep(profile, additionalProfileStepList);
   }
+}
+
+ProfileNavigationStep? firstUncompletedStep(
+    Profile? profile, List<ProfileNavigationStep> stepList) {
+  if (profile == null) return stepList.first;
+  return stepList.firstWhereOrNull((step) => step.fromProfile(profile) == null);
 }
