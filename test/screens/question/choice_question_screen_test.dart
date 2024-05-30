@@ -140,7 +140,7 @@ void main() {
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: singleChoiceQuestion,
         profileService: profileService,
-        onSubmit: () => navigateSuccess = true,
+        navigate: (_) => navigateSuccess = true,
         submitText: LocKey((loc) => loc.general_next)));
 
     checkSelected(String buttonText, bool selected) {
@@ -187,7 +187,7 @@ void main() {
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: multipleChoiceQuestion,
         profileService: profileService,
-        onSubmit: () => navigateSuccess = true,
+        navigate: (_) => navigateSuccess = true,
         submitText: LocKey((loc) => loc.general_next)));
 
     checkSelected(String buttonText, bool selected) {
@@ -253,7 +253,7 @@ void main() {
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: singleChoiceQuestion,
         profileService: profileService,
-        onSubmit: () => navigateSuccess = true,
+        navigate: (_) => navigateSuccess = true,
         submitText: LocKey((loc) => loc.general_next)));
 
     checkQuestion(List<String> choices, double confidence, double importance) {
