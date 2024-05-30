@@ -38,6 +38,15 @@ flutter doctor
 
 The command for flutter should exist, but still show some uncompleted tasks.
 
+### Run flutter web on Visual Studio Code (Optional)
+
+This requires Chrome to be installed.
+
+1. Open the project in Visual Studio Code
+2. Install the Flutter extensions
+3. Go to Run and Debug (cmd + shift + D)
+4. Next to the play button, select "Dart & Flutter" and press play.
+
 ### Download and install Android Studio
 
 Download Android Studio and install it:
