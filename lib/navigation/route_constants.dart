@@ -57,14 +57,16 @@ class InitialProfileRoutes {
 class BottomNavigation {
   static final profile = BottomNavRoute(
       'profile', null, LocKey((loc) => loc.profile_title), Icons.person);
-  static final chat = BottomNavRoute(
-      'smatches', null, LocKey((loc) => loc.chat_title), Icons.message_rounded);
+  static final chat = BottomNavRoute('connections', null,
+      LocKey((loc) => loc.chat_title), Icons.message_rounded);
   static final values = [chat, profile];
   static final main = values.first;
 }
 
 class ProfileRoutes {
   static final additional = NavRoute('additional', BottomNavigation.profile);
+  static final complete =
+      NavRoute('complete', BottomNavigation.profile, pathParameter: "stepPath");
   static final photos = NavRoute('photos', BottomNavigation.profile);
   static final settings = NavRoute('settings', BottomNavigation.profile);
   static final section = NavRoute('section', BottomNavigation.profile,
@@ -73,7 +75,7 @@ class ProfileRoutes {
 }
 
 class MainRoutes {
-  static const match = NavRoute('smatch', null);
+  static const match = NavRoute('connection', null);
   static const messages = NavRoute('messages', match, pathParameter: 'chatId');
   static const matchProfile = NavRoute('profile', messages);
 }

@@ -58,6 +58,8 @@ extension IterableExtensions<T> on Iterable<T> {
     int index = 0;
     return map((e) => transform(index++, e));
   }
+
+  int get lastIndex => length - 1;
 }
 
 extension NullIterableExtensions<T> on Iterable<T>? {

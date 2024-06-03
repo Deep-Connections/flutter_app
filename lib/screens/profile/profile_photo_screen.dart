@@ -15,7 +15,7 @@ class ProfilePhotoScreen extends StatelessWidget {
 
   const ProfilePhotoScreen({super.key, required this.profileService});
 
-  void _pickImage(AppLocalizations loc) => ImagePicker()
+  void _pickImage() => ImagePicker()
       .pickImage(source: ImageSource.gallery, imageQuality: imageCompression)
       .then((image) async => await image?.let((path) async {
             /* setState(() {
@@ -25,7 +25,7 @@ class ProfilePhotoScreen extends StatelessWidget {
             final response = await profileService.uploadPicture(
                 await image.readAsBytes(), image.mimeType);
             response.onFailure(
-                (failure) => MessageHandler.showResponseError(response, loc));
+                (failure) => MessageHandler.showResponseError(response));
             /*setState(() {
             isLoading = false;
             });*/
@@ -45,10 +45,10 @@ class ProfilePhotoScreen extends StatelessWidget {
                 profileService.updateProfile(
                     (profile) => profile.copyWith(pictures: newPhotos));
               },
-              addPicture: () => _pickImage(loc),
+              addPicture: () => _pickImage(),
               deletePicture: (picture) async =>
                   MessageHandler.showResponseError(
-                      await profileService.deletePicture(picture), loc),
+                      await profileService.deletePicture(picture)),
             );
           },
         ));

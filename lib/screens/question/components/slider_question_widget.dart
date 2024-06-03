@@ -83,12 +83,14 @@ class _QuestionSliderState extends State<QuestionSlider> {
       min: minAnswerValue,
       max: maxAnswerValue,
       divisions: widget.question.divisions - 1,
-      onChanged: (value) {
-        logger.d('Slider value: $value');
-        setState(() {
-          sliderValue = value;
-        });
-      },
+      onChanged: widget.answerNotifier.enabled
+          ? (value) {
+              logger.d('Slider value: $value');
+              setState(() {
+                sliderValue = value;
+              });
+            }
+          : null,
       onChangeEnd: (value) {
         widget.answerNotifier.answer = Answer(confidence: value);
       },

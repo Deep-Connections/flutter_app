@@ -1,6 +1,7 @@
 import 'package:deep_connections/config/theme.dart';
 import 'package:deep_connections/services/chat/chat_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MessageTextField extends StatefulWidget {
@@ -20,6 +21,21 @@ class MessageTextField extends StatefulWidget {
 
 class _MessageTextFieldState extends State<MessageTextField> {
   final TextEditingController _controller = TextEditingController();
+  late final _focusNode = FocusNode(onKeyEvent: (node, event) {
+    final enterPressedWithoutShift = event is KeyDownEvent &&
+        event.physicalKey == PhysicalKeyboardKey.enter &&
+        !HardwareKeyboard.instance.physicalKeysPressed
+            .any((key) => <PhysicalKeyboardKey>{
+                  PhysicalKeyboardKey.shiftLeft,
+                  PhysicalKeyboardKey.shiftRight,
+                }.contains(key));
+    if (enterPressedWithoutShift) {
+      _sendMessage();
+      return KeyEventResult.handled;
+    } else {
+      return KeyEventResult.ignored;
+    }
+  });
 
   void _sendMessage() {
     final String text = _controller.text.trim();
@@ -43,8 +59,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
       children: <Widget>[
         Expanded(
           child: TextField(
+            focusNode: _focusNode,
             controller: _controller,
-            maxLines: null,
+            minLines: 1,
+            maxLines: 6,
             decoration: InputDecoration(
               hintText: loc.messages_messageTextField,
               filled: true,

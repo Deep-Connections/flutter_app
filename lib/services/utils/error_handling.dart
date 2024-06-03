@@ -20,7 +20,12 @@ class MessageHandler {
     globalSnackBarMessengerKey.currentState?.showSnackBar(snackBar);
   }
 
-  static void showResponseError<T>(Response<T> response, AppLocalizations loc) {
+  static void showResponseError<T>(Response<T> response) {
+    final context = globalSnackBarMessengerKey.currentContext;
+    if (context == null) {
+      return;
+    }
+    final loc = AppLocalizations.of(context);
     response.onFailure((failureRes) {
       final message =
           failureRes.getUiErrOrNull(loc) ?? defaultError.localize(loc);

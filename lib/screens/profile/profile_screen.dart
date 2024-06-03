@@ -66,17 +66,7 @@ class ProfileScreen extends StatelessWidget {
                           )
                       ],
                     ))),
-            StreamBuilder(
-                stream: userStatusService.userStatusStream,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.data?.isAdditionalProfileComplete == false) {
-                    return const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: standardPadding),
-                        child: CompleteProfileCard());
-                  }
-                  return const SizedBox(height: standardPadding);
-                }),
+            const CompleteProfileCard(),
             ...ProfileSection.values.map((section) => ListTile(
                 title: Text(section.title.localize(loc),
                     style: Theme.of(context).textTheme.headlineSmall),

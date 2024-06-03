@@ -33,7 +33,7 @@ class ProfileSettingsScreen extends StatelessWidget {
                 contentText: loc.profileSettings_deleteAccountDialogContent,
                 onConfirm: () async {
                   MessageHandler.showResponseError(
-                      await authService.deleteAccount(), loc);
+                      await authService.deleteAccount());
                 },
                 confirmText: loc.profileSettings_deleteAccountButton,
               ),

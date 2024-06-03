@@ -26,11 +26,13 @@ void main() {
     // Setup
     final completer = Completer();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
-        profileService: profileService,
+        profileStream: profileService.profileStream,
         submitText: LocKey((loc) => loc.general_next),
-        navigateToNext: () async {
+        updateProfile: (transformation) async {
           await completer.future;
+          final response = await profileService.updateProfile(transformation);
           navigateSuccess = true;
+          return response;
         }));
 
     tester.checkElevatedButtonEnabled(loc.general_next, enabled: true);
@@ -72,9 +74,13 @@ void main() {
       (WidgetTester tester) async {
     // Setup
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
-        profileService: profileService,
+        profileStream: profileService.profileStream,
         submitText: LocKey((loc) => loc.general_next),
-        navigateToNext: () async => navigateSuccess = true));
+        updateProfile: (transformation) async {
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        }));
 
     // open more and select non-binary
     await tester.tap(find.text(loc.completeProfile_genderMore));
@@ -120,9 +126,13 @@ void main() {
     // Setup
     tester.increaseScreenSize();
     final loc = await tester.pumpLocalizedWidget(GenderProfileScreen(
-        profileService: profileService,
+        profileStream: profileService.profileStream,
         submitText: LocKey((loc) => loc.general_next),
-        navigateToNext: () async => navigateSuccess = true));
+        updateProfile: (transformation) async {
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        }));
 
     // Now we need to press non-binary to go to more
     await tester.tap(find.text(loc.input_genderEnumNonBinary));

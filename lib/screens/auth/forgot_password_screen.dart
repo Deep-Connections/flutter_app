@@ -44,7 +44,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         await _auth.sendPasswordResetEmail(email: email.value);
                     response.onSuccess(
                         (result) => setState(() => isSuccess = true));
-                    MessageHandler.showResponseError(response, loc);
+                    MessageHandler.showResponseError(response);
                   })
             ])
           : DcColumn(

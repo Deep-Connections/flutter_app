@@ -42,6 +42,7 @@ class _ChoiceQuestionWidgetState extends State<ChoiceQuestionWidget> {
               ...widget.question.choices.map((a) => SelectableButton(
                   onPressed: () => _onChoicePressed(a),
                   selected: selectedChoices.contains(a),
+                  enabled: widget.answerNotifier.enabled,
                   text: a.text.localize(loc)))
             ],
           ),

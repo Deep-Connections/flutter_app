@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/question.dart';
@@ -71,8 +73,12 @@ void main() {
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: oddDivisionQuestion,
-        profileService: profileService,
-        onSubmit: () => navigateSuccess = true,
+        profileStream: profileService.profileStream,
+        updateProfile: (transformation) async {
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        },
         submitText: LocKey((loc) => loc.general_next)));
 
     // Check next disabled in the beginning
@@ -107,8 +113,12 @@ void main() {
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: evenDivisionQuestion,
-        profileService: profileService,
-        onSubmit: () => navigateSuccess = true,
+        profileStream: profileService.profileStream,
+        updateProfile: (transformation) async {
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        },
         submitText: LocKey((loc) => loc.general_next)));
 
     // Check next disabled in the beginning
@@ -134,5 +144,51 @@ void main() {
     await tester.drag(find.byType(Slider), const Offset(20, 0));
     await tester.pumpAndSettle();
     await checkSelected(0.6);
+  });
+
+  testWidgets('Test slider question disables inputs when updating',
+      (WidgetTester tester) async {
+    final completer = Completer();
+    // Setup
+    final loc = await tester.pumpLocalizedWidget(QuestionScreen(
+        question: oddDivisionQuestion,
+        profileStream: profileService.profileStream,
+        updateProfile: (transformation) async {
+          await completer.future;
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        },
+        submitText: LocKey((loc) => loc.general_next)));
+
+    checkSliderEnabled(bool enabled) {
+      final Slider slider = tester.widget(find.byType(Slider));
+      expect(slider.onChanged != null, enabled);
+    }
+
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
+    checkSliderEnabled(true);
+
+    await tester.drag(find.byType(Slider), const Offset(300, 0));
+    await tester.pumpAndSettle();
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: true);
+    checkSliderEnabled(true);
+
+    await tester.tap(find.text(loc.general_next));
+    await tester.pumpAndSettle();
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
+    checkSliderEnabled(false);
+    expect(navigateSuccess, false);
+
+    completer.complete();
+    await tester.pumpAndSettle();
+
+    expect(navigateSuccess, true);
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: true);
+    checkSliderEnabled(true);
+    expect(navigateSuccess, true);
+    expect(
+        profileService.profile?.questions?[oddDivisionQuestion.id]?.confidence,
+        1.0);
   });
 }
