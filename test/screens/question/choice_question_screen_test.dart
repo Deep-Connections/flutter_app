@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:deep_connections/models/navigation/profile_section.dart';
 import 'package:deep_connections/models/question/answer/answer.dart';
 import 'package:deep_connections/models/question/choice.dart';
@@ -305,5 +307,63 @@ void main() {
 
     checkQuestion(['2'], 0.5, Importance.low.value);
 
+  });
+
+  testWidgets('Test choice question disables inputs when updating',
+      (WidgetTester tester) async {
+    profileService = getFakeProfileService();
+
+    final completer = Completer();
+    // Setup
+    final loc = await tester.pumpLocalizedWidget(QuestionScreen(
+        question: singleChoiceQuestion,
+        profileStream: profileService.profileStream,
+        updateProfile: (transformation) async {
+          await completer.future;
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        },
+        submitText: LocKey((loc) => loc.general_next)));
+
+    for (final choice in singleChoiceQuestion.choices) {
+      tester.checkSelectableButtonEnabled(choice.text.localize(loc),
+          enabled: true);
+    }
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
+
+    await tester
+        .tap(find.text(loc.questionBasic_relationshipType_answer_oneNight));
+    await tester.pumpAndSettle();
+
+    for (final choice in singleChoiceQuestion.choices) {
+      tester.checkSelectableButtonEnabled(choice.text.localize(loc),
+          enabled: true);
+    }
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: true);
+
+    await tester.tap(find.text(loc.general_next));
+    await tester.pumpAndSettle();
+    expect(navigateSuccess, false);
+
+    for (final choice in singleChoiceQuestion.choices) {
+      tester.checkSelectableButtonEnabled(choice.text.localize(loc),
+          enabled: false);
+    }
+
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: false);
+
+    completer.complete();
+    await tester.pumpAndSettle();
+    expect(navigateSuccess, true);
+    navigateSuccess = false;
+    expect(profileService.profile?.questions?[singleChoiceQuestion.id]?.choices,
+        ['1']);
+
+    for (final choice in singleChoiceQuestion.choices) {
+      tester.checkSelectableButtonEnabled(choice.text.localize(loc),
+          enabled: true);
+    }
+    tester.checkElevatedButtonEnabled(loc.general_next, enabled: true);
   });
 }
