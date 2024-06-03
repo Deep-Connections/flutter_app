@@ -21,18 +21,6 @@ final List<Question> initialQuestionList = [
     section: ProfileSection.basic,
   ),*/
   MultipleChoiceQuestion(
-    id: 'weird_normal',
-    questionText: LocKey((loc) => loc.questionBasic_weirdNormal_question),
-    choices: [
-      Choice('settle',
-          LocKey((loc) => loc.questionBasic_weirdNormal_answer_normal)),
-      Choice('career',
-          LocKey((loc) => loc.questionBasic_weirdNormal_answer_weird)),
-    ],
-    navigationPath: 'weird_normal',
-    section: ProfileSection.basic,
-  ),
-  MultipleChoiceQuestion(
     id: 'current_life',
     questionText: LocKey((loc) => loc.questionBasic_currentLife_question),
     choices: [
@@ -76,6 +64,18 @@ final List<Question> initialQuestionList = [
     minText: LocKey((loc) => loc.questionBasic_looks_answerMin),
     maxText: LocKey((loc) => loc.questionBasic_looks_answerMax),
     navigationPath: 'looks',
+    section: ProfileSection.basic,
+  ),
+  MultipleChoiceQuestion(
+    id: 'weird_normal',
+    questionText: LocKey((loc) => loc.questionBasic_weirdNormal_question),
+    choices: [
+      Choice('settle',
+          LocKey((loc) => loc.questionBasic_weirdNormal_answer_normal)),
+      Choice('career',
+          LocKey((loc) => loc.questionBasic_weirdNormal_answer_weird)),
+    ],
+    navigationPath: 'weird_normal',
     section: ProfileSection.basic,
   ),
 ];

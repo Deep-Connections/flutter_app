@@ -45,12 +45,16 @@ class FirebaseProfileService implements ProfileService {
   Stream<Profile?> get profileStream => _profileSubject.stream;
 
   @override
-  Future<Response<void>> updateProfile(Profile Function(Profile p) transform,
+  Future<Response<Profile>> updateProfile(Profile Function(Profile p) transform,
       {void Function(Profile)? onUpdatedProfile}) async {
-    onUpdatedProfile?.call(transform(profile ?? const Profile()));
-    return handleFirebaseErrors(() => _profileReference
-        .doc(_userService.userId)
-        .set(transform(const Profile()), SetOptions(merge: true)));
+    final updatedProfile = transform(profile ?? const Profile());
+    onUpdatedProfile?.call(updatedProfile);
+    return handleFirebaseErrors(() async {
+      await _profileReference
+          .doc(_userService.userId)
+          .set(transform(const Profile()), SetOptions(merge: true));
+      return updatedProfile;
+    });
   }
 
   @override

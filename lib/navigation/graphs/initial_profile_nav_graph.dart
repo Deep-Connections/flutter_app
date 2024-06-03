@@ -23,8 +23,13 @@ final initialProfileRoutes = GoRoute(
     return null;
   },
   routes: generateProfileStepGraph(
-      initialProfileStepList, InitialProfileRoutes.main.fullPath,
-      navigateLast: (context) async {
-    MessageHandler.showResponseError(await getIt<ChatService>().createMatch());
-  }),
+    initialProfileStepList,
+    InitialProfileRoutes.main.fullPath,
+    onFinishProfile: (profile) async {
+      if (profile.numMatches == null) {
+        MessageHandler.showResponseError(
+            await getIt<ChatService>().createMatch());
+      }
+    },
+  ),
 );

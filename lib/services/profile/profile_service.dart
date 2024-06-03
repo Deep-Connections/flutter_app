@@ -11,7 +11,7 @@ abstract class ProfileService {
 
   Profile? get profile;
 
-  Future<Response<void>> updateProfile(
+  Future<Response<Profile>> updateProfile(
       Profile Function(Profile profile) transform,
       {void Function(Profile)? onUpdatedProfile});
 
