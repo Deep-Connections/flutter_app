@@ -41,26 +41,34 @@ class _QuestionScreenState extends State<QuestionScreen> {
         builder: (context, profile) {
           final initialAnswer = widget.question.fromProfile(profile);
           answerNotifier.answer = initialAnswer;
-          return DcColumn(children: [
-            Text(widget.question.questionText.localize(loc),
-                style: Theme.of(context).textTheme.headlineSmall),
-            Expanded(
-                child: QuestionWidget(
-                    question: widget.question, answerNotifier: answerNotifier)),
-            ListenableBuilder(
-                listenable: answerNotifier,
-                builder: (context, child) {
-                  return ElevatedButton(
-                      onPressed: answerNotifier.answer?.let((answer) {
-                        if (!widget.question.isAnswerValid(answer)) {
-                          return null;
-                        }
-                        return () async => await widget.updateProfile(
-                            (p) => widget.question.updateProfile(p, answer));
-                      }),
-                      child: Text(widget.submitText.localize(loc)));
-                })
-          ]);
+          return ListenableBuilder(
+              listenable: answerNotifier,
+              child: Text(widget.question.questionText.localize(loc),
+                  style: Theme.of(context).textTheme.headlineSmall),
+              builder: (context, child) {
+                return DcColumn(children: [
+                  if (child != null) child,
+                  Expanded(
+                      child: QuestionWidget(
+                          question: widget.question,
+                          answerNotifier: answerNotifier)),
+                  ElevatedButton(
+                      onPressed: answerNotifier.enabled
+                          ? answerNotifier.answer?.let((answer) {
+                              if (!widget.question.isAnswerValid(answer)) {
+                                return null;
+                              }
+                              return () async {
+                                answerNotifier.enabled = false;
+                                await widget.updateProfile((p) =>
+                                    widget.question.updateProfile(p, answer));
+                                answerNotifier.enabled = true;
+                              };
+                            })
+                          : null,
+                      child: Text(widget.submitText.localize(loc)))
+                ]);
+              });
         },
       ),
     );

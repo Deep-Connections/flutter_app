@@ -3,17 +3,28 @@ import 'package:flutter/material.dart';
 
 class AnswerNotifier extends ChangeNotifier {
   Answer? _answer;
+  bool _enabled = true;
 
   Answer? get answer => _answer;
 
+  bool get enabled => _enabled;
+
+  set enabled(bool enabled) {
+    if (_enabled != enabled) {
+      _enabled = enabled;
+      notifyListeners();
+    }
+  }
+
   set answer(Answer? answer) {
-    if (_answer?.confidence != answer?.confidence ||
-        _answer?.choices != answer?.choices) {
-      if (answer?.importance == null) {
-        _answer = answer?.copyWith(importance: _answer?.importance);
-      } else {
-        _answer = answer;
-      }
+    final oldAnswer = _answer ?? const Answer();
+
+    final newAnswer = (answer ?? const Answer()).copyWith(
+      importance: oldAnswer.importance,
+    );
+    if (oldAnswer.confidence != newAnswer.confidence ||
+        oldAnswer.choices != newAnswer.choices) {
+      _answer = newAnswer;
       notifyListeners();
     }
   }

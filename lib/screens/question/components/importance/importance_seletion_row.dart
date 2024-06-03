@@ -21,23 +21,21 @@ class ImportanceSelectionRow extends StatelessWidget {
           style: Theme.of(context).textTheme.labelLarge,
         ),
         const SizedBox(height: standardPadding),
-        ListenableBuilder(
-            listenable: answerNotifier,
-            builder: (context, _) {
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(standardPadding),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: spaceChildren(Importance.values
-                      .map((importance) => ImportanceSelectable(
-                            importance: importance,
-                            answerNotifier: answerNotifier,
-                          ))
-                      .toList(), 2.0),
-                ),
-              );
-            }),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(standardPadding),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: spaceChildren(
+                Importance.values
+                    .map((importance) => ImportanceSelectable(
+                          importance: importance,
+                          answerNotifier: answerNotifier,
+                        ))
+                    .toList(),
+                2.0),
+          ),
+        ),
         const SizedBox(height: standardPadding),
       ],
     );
