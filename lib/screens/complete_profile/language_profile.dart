@@ -1,9 +1,10 @@
 import 'package:deep_connections/config/constants.dart';
+import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/complete_profile/components/future_profile_screen.dart';
 import 'package:deep_connections/screens/complete_profile/components/language/language_dropdown_field.dart';
 import 'package:deep_connections/screens/complete_profile/components/language/language_notifier.dart';
 import 'package:deep_connections/screens/components/dc_list_view.dart';
-import 'package:deep_connections/services/profile/profile_service.dart';
+import 'package:deep_connections/services/utils/response.dart';
 import 'package:deep_connections/utils/extensions/general_extensions.dart';
 import 'package:deep_connections/utils/language_helper.dart';
 import 'package:deep_connections/utils/loc_key.dart';
@@ -11,14 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LanguageProfileScreen extends StatefulWidget {
-  final ProfileService profileService;
-  final void Function() navigateToNext;
+  final Stream<Profile?> profileStream;
+  final Future<Response<void>> Function(
+      Profile Function(Profile profile) transform) updateProfile;
   final LocKey submitText;
 
   const LanguageProfileScreen({
     super.key,
-    required this.profileService,
-    required this.navigateToNext,
+    required this.profileStream,
+    required this.updateProfile,
     required this.submitText,
   });
 
@@ -35,7 +37,7 @@ class _LanguageProfileScreenState extends State<LanguageProfileScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context);
     return StreamBuilder(
-        stream: widget.profileService.profileStream,
+        stream: widget.profileStream,
         builder: (context, snap) {
           final codes = snap.data?.languageWithCountryCodes;
           final localeNames = getLocaleNames(context);
@@ -50,17 +52,15 @@ class _LanguageProfileScreenState extends State<LanguageProfileScreen> {
               bottom: ElevatedButton(
                 onPressed: () {
                   if (!languageNotifier.isValid(loc)) return;
-                  widget.navigateToNext();
-                  widget.profileService.updateProfile((profile) {
-                    final languages =
-                        languageNotifier.selectedLanguages.keys.toList();
-                    return profile.copyWith(
-                        languageCodes: languages
-                            .map((lang) => lang.split("_").first)
-                            .toSet()
-                            .toList(),
-                        languageWithCountryCodes: languages);
-                  });
+                  final languageWithCountryCodes =
+                      languageNotifier.selectedLanguages.keys.toList();
+                  final languageCodes = languageWithCountryCodes
+                      .map((lang) => lang.split("_").first)
+                      .toSet()
+                      .toList();
+                  widget.updateProfile((profile) => profile.copyWith(
+                      languageCodes: languageCodes,
+                      languageWithCountryCodes: languageWithCountryCodes));
                 },
                 child: Text(widget.submitText.localize(loc)),
               ),

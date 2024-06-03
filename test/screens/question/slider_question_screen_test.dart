@@ -71,8 +71,12 @@ void main() {
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: oddDivisionQuestion,
-        profileService: profileService,
-        navigate: (_) => navigateSuccess = true,
+        profileStream: profileService.profileStream,
+        updateProfile: (transformation) async {
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        },
         submitText: LocKey((loc) => loc.general_next)));
 
     // Check next disabled in the beginning
@@ -107,8 +111,12 @@ void main() {
     // Setup
     final loc = await tester.pumpLocalizedWidget(QuestionScreen(
         question: evenDivisionQuestion,
-        profileService: profileService,
-        navigate: (_) => navigateSuccess = true,
+        profileStream: profileService.profileStream,
+        updateProfile: (transformation) async {
+          final response = await profileService.updateProfile(transformation);
+          navigateSuccess = true;
+          return response;
+        },
         submitText: LocKey((loc) => loc.general_next)));
 
     // Check next disabled in the beginning

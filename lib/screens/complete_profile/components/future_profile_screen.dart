@@ -4,7 +4,6 @@ import 'package:deep_connections/screens/components/form/button_input.dart';
 import 'package:deep_connections/screens/components/form/field_input/field_input.dart';
 import 'package:deep_connections/screens/components/form/form_button.dart';
 import 'package:deep_connections/screens/components/stream_builder.dart';
-import 'package:deep_connections/services/profile/profile_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -46,14 +45,14 @@ class BaseProfileScreen extends StatelessWidget {
 class FutureFieldProfileScreen extends StatefulWidget {
   final String title;
   final List<FieldInput> fields;
-  final ProfileService profileService;
+  final Stream<Profile?> profileStream;
   final Future<void> Function() onSubmit;
   final String? submitText;
   final Widget Function(BuildContext context, Profile profile) builder;
 
   const FutureFieldProfileScreen(
       {super.key,
-      required this.profileService,
+      required this.profileStream,
       required this.title,
       required this.builder,
       required this.onSubmit,
@@ -80,7 +79,7 @@ class _FutureFieldProfileScreenState extends State<FutureFieldProfileScreen> {
         actionIfValid: widget.onSubmit,
       ),
       child: GenericStreamBuilder(
-        data: widget.profileService.profileStream,
+        data: widget.profileStream,
         builder: widget.builder,
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:deep_connections/config/injectable/injectable.dart';
 import 'package:deep_connections/models/navigation/profile_navigation_step.dart';
 import 'package:deep_connections/screens/components/base_screen.dart';
 import 'package:deep_connections/screens/profile/step/profile_step_widget.dart';
@@ -18,6 +19,7 @@ class ProfileSectionStepScreen extends StatelessWidget {
         title: step.section.title.localize(loc),
         body: ProfileStepWidget(
             step: step,
+            profileService: getIt(),
             navigate: (_) => context.pop(),
             submitText: LocKey((loc) => loc.general_submit)));
   }

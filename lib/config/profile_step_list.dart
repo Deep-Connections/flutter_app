@@ -13,10 +13,10 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     navigationPath: 'name',
     fromProfile: (profile) => profile.firstName,
     title: LocKey((loc) => loc.completeProfile_firstNameTitle),
-    createWidget: (profileService, navigateToNext, submitText) =>
+    createWidget: (profileStream, updateProfile, submitText) =>
         NameProfileScreen(
-      profileService: profileService,
-      navigateToNext: navigateToNext,
+      profileStream: profileStream,
+      updateProfile: updateProfile,
       submitText: submitText,
     ),
     isEditable: false,
@@ -25,10 +25,10 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     navigationPath: 'birthdate',
     fromProfile: (profile) => profile.dateOfBirth,
     title: LocKey((loc) => loc.completeProfile_birthdayTitle),
-    createWidget: (profileService, navigateToNext, submitText) =>
+    createWidget: (profileStream, updateProfile, submitText) =>
         BirthdayProfileScreen(
-      profileService: profileService,
-      navigateToNext: navigateToNext,
+      profileStream: profileStream,
+      updateProfile: updateProfile,
       submitText: submitText,
     ),
     isEditable: false,
@@ -37,10 +37,10 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     navigationPath: 'gender',
     fromProfile: (profile) => profile.gender,
     title: LocKey((loc) => loc.completeProfile_genderTitle),
-    createWidget: (profileService, navigateToNext, submitText) =>
+    createWidget: (profileStream, updateProfile, submitText) =>
         GenderProfileScreen(
-      profileService: profileService,
-      navigateToNext: navigateToNext,
+      profileStream: profileStream,
+      updateProfile: updateProfile,
       submitText: submitText,
     ),
   ),
@@ -48,10 +48,10 @@ final List<ProfileNavigationStep> initialProfileStepList = [
     navigationPath: 'gender_preferences',
     fromProfile: (profile) => profile.genderPreferences,
     title: LocKey((loc) => loc.completeProfile_genderPreferencesTitle),
-    createWidget: (profileService, navigateToNext, submitText) =>
+    createWidget: (profileStream, updateProfile, submitText) =>
         GenderPreferencesProfileScreen(
-      profileService: profileService,
-      navigateToNext: navigateToNext,
+      profileStream: profileStream,
+      updateProfile: updateProfile,
       submitText: submitText,
     ),
   ),
@@ -65,10 +65,10 @@ final List<ProfileNavigationStep> initialProfileStepList = [
       }
     },
     title: LocKey((loc) => loc.completeProfile_languageTitle),
-    createWidget: (profileService, navigateToNext, submitText) =>
+    createWidget: (profileStream, updateProfile, submitText) =>
         LanguageProfileScreen(
-      profileService: profileService,
-      navigateToNext: navigateToNext,
+      profileStream: profileStream,
+      updateProfile: updateProfile,
       submitText: submitText,
     ),
   ),
