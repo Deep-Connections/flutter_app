@@ -38,34 +38,19 @@ class ProfileScreen extends StatelessWidget {
             Center(
                 child: GestureDetector(
                     onTap: () => context.go(ProfileRoutes.photos.fullPath),
-                    child: Stack(
-                      children: [
-                        AvatarImage(
-                          size: 75,
-                          imageUrl: profileService.profile?.mainPictureUrl,
-                        ),
-                        if (profileService.profile?.mainPictureUrl == null)
-                          Positioned(
-                            top: 10,
-                            right: 0,
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    borderRadius: BorderRadius.circular(100)),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 2.0,
-                                      horizontal: standardPadding * 3 / 4),
-                                  child: Text(loc.profile_addPhoto,
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .onPrimary)),
-                                )),
-                          )
-                      ],
+                    child: AvatarImage(
+                      size: 75,
+                      imageUrl: profileService.profile?.mainPictureUrl,
                     ))),
+            if (profileService.profile?.mainPictureUrl == null)
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.only(top: standardPadding),
+                child: ElevatedButton.icon(
+                    icon: const Icon(Icons.add),
+                    onPressed: () => context.go(ProfileRoutes.photos.fullPath),
+                    label: Text(loc.profile_addPhoto)),
+              )),
             const CompleteProfileCard(),
             ...ProfileSection.values.map((section) => ListTile(
                 title: Text(section.title.localize(loc),
