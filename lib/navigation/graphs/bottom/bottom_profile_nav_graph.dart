@@ -67,8 +67,11 @@ final bottomProfileNavGraph = [
               navigate: (profile) {
                 final route = firstUncompletedStep(profile, allProfileStepList)
                     ?.navigationFromBasePath(ProfileRoutes.complete.fullPath);
-                if (route != null) context.push(route);
-                goToInitialLocation(context);
+                if (route != null) {
+                  context.push(route);
+                } else {
+                  goToInitialLocation(context);
+                }
               },
               submitText: LocKey(
                   (loc) => !isLastStep ? loc.general_next : loc.general_submit),
