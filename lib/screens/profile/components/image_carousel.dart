@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:deep_connections/config/constants.dart';
 import 'package:deep_connections/models/profile/picture/picture.dart';
 import 'package:deep_connections/models/profile/profile/profile.dart';
 import 'package:deep_connections/screens/components/builders/future_or_builder.dart';
@@ -41,9 +44,10 @@ class _ImageCarouselState extends State<ImageCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    final size = min(MediaQuery.of(context).size.width, maxScreenWidth);
     if (widget.isLoading) {
       return SizedBox(
-          height: MediaQuery.of(context).size.width, // squared
+          height: size, // squared
           child: const Center(child: (DcProgressIndicator())));
     }
     final pictures =
@@ -52,7 +56,8 @@ class _ImageCarouselState extends State<ImageCarousel> {
       return const Spacer();
     }
     return SizedBox(
-        height: MediaQuery.of(context).size.width, // squared
+        height: size,
+        width: size, // squared
         child: PageView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: pictures.length,

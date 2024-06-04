@@ -123,8 +123,7 @@ class FirebaseProfileService implements ProfileService {
       try {
         await ref.delete();
       } on FirebaseException catch (e) {
-        if (![StorageErrors.objectNotFound, StorageErrors.unauthorized]
-            .contains(e.code)) {
+        if (![StorageErrors.objectNotFound].contains(e.code)) {
           rethrow;
         }
       }
