@@ -9,9 +9,13 @@ class AvatarImage extends StatelessWidget {
   final String? imageUrl;
   final double? size;
   final bool isLoading;
+  final Widget? noImageWidget;
 
-  const AvatarImage(
-      {super.key, required this.imageUrl, this.size, this.isLoading = false});
+  const AvatarImage({super.key,
+    required this.imageUrl,
+    this.size,
+    this.isLoading = false,
+    this.noImageWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class AvatarImage extends StatelessWidget {
       child: isLoading
           ? const DcProgressIndicator()
           : imageUrl == null
-              ? NoImageIcon(size: size)
+              ? noImageWidget ?? NoImageIcon(size: size)
               : null,
     );
   }
