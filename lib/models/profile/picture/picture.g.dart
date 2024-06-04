@@ -10,8 +10,8 @@ _$PictureImpl _$$PictureImplFromJson(Map<String, dynamic> json) =>
     _$PictureImpl(
       url: json['url'] as String?,
       name: json['name'] as String?,
-      timestamp: _$JsonConverterFromJson<Timestamp, DateTime>(
-          json['timestamp'], const TimestampConverter().fromJson),
+      date:
+          json['date'] == null ? null : DateTime.parse(json['date'] as String),
     );
 
 Map<String, dynamic> _$$PictureImplToJson(_$PictureImpl instance) {
@@ -25,21 +25,6 @@ Map<String, dynamic> _$$PictureImplToJson(_$PictureImpl instance) {
 
   writeNotNull('url', instance.url);
   writeNotNull('name', instance.name);
-  writeNotNull(
-      'timestamp',
-      _$JsonConverterToJson<Timestamp, DateTime>(
-          instance.timestamp, const TimestampConverter().toJson));
+  writeNotNull('date', instance.date?.toIso8601String());
   return val;
 }
-
-Value? _$JsonConverterFromJson<Json, Value>(
-  Object? json,
-  Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

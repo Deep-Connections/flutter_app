@@ -100,12 +100,11 @@ class FirebaseProfileService implements ProfileService {
             contentType: mimeType,
           ));
       final url = await ref.getDownloadURL();
-      final picture =
-          Picture(url: url, timestamp: timestamp, name: pictureName);
+      final picture = Picture(url: url, date: timestamp, name: pictureName);
       _profileReference.doc(userId).update({
         FieldName.pictures: FieldValue.arrayUnion([picture.toJson()])
       });
-      return Picture(url: url, timestamp: timestamp);
+      return picture;
     });
   }
 
@@ -130,8 +129,9 @@ class FirebaseProfileService implements ProfileService {
       final pictureToRemove =
           profile?.pictures?.firstWhere((p) => p.name == pictureName);
       if (pictureToRemove == null) return;
+      final json = pictureToRemove.toJson();
       _profileReference.doc(userId).update({
-        FieldName.pictures: FieldValue.arrayRemove([pictureToRemove.toJson()])
+        FieldName.pictures: FieldValue.arrayRemove([json])
       });
     });
   }
